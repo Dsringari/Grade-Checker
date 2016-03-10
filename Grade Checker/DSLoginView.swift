@@ -16,10 +16,22 @@ class DSLoginView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func login(sender: AnyObject) {
+        let user: User = User(username: usernameField.text!, password: passwordField.text!, pin: passwordField.text!)
+        let loginService = LoginService(userToBeLoggedIn: user)
+        loginService.login { successful in
+            if (successful) {
+                let alert = UIAlertController(title: "Hello", message: "It Works", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

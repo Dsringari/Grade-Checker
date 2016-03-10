@@ -16,12 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sapphire Login." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6L-jR-sRi">
-                                <rect key="frame" x="193" y="28" width="214" height="37"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account? Click" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXP-oE-sek">
                                 <rect key="frame" x="170" y="573" width="261" height="21"/>
                                 <constraints>
@@ -38,103 +32,93 @@
                                     <color key="titleColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Password" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pcI-pH-FwP">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pcI-pH-FwP">
                                 <rect key="frame" x="175" y="182" width="250" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="75" y="182" width="250" height="30"/>
-                                </variation>
-                                <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="275" y="252" width="250" height="30"/>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="275" y="182" width="250" height="30"/>
-                                </variation>
                                 <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="275" y="352" width="250" height="30"/>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Pin" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jT6-JU-vRI">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pin" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jT6-JU-vRI">
                                 <rect key="frame" x="175" y="222" width="250" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="75" y="220" width="250" height="30"/>
-                                </variation>
-                                <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="275" y="292" width="250" height="30"/>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="275" y="222" width="250" height="30"/>
-                                </variation>
                                 <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="275" y="392" width="250" height="30"/>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="User ID" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w1m-js-rWw">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w1m-js-rWw">
                                 <rect key="frame" x="175" y="142" width="250" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="LA9-Wq-Ol4"/>
+                                </constraints>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="75" y="142" width="250" height="30"/>
-                                </variation>
-                                <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="275" y="212" width="250" height="30"/>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="275" y="142" width="250" height="30"/>
-                                </variation>
                                 <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="275" y="312" width="250" height="30"/>
                                 </variation>
                             </textField>
-                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTK-0b-YUK">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTK-0b-YUK">
                                 <rect key="frame" x="175" y="270" width="250" height="48"/>
                                 <state key="normal" image="buttonBackground"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="75" y="271" width="250" height="45"/>
-                                </variation>
-                                <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="275" y="340" width="250" height="48"/>
+                                <variation key="widthClass=regular" misplaced="YES">
+                                    <rect key="frame" x="275" y="268" width="250" height="42"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="275" y="440" width="250" height="48"/>
                                 </variation>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ntg-Yj-ExN">
-                                <rect key="frame" x="276" y="270" width="48" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sapphire Login." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6L-jR-sRi">
+                                <rect key="frame" x="193" y="28" width="214" height="37"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ntg-Yj-ExN">
+                                <rect key="frame" x="175" y="270" width="250" height="48"/>
                                 <state key="normal" image="Unlock-48"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="176" y="270" width="48" height="48"/>
-                                </variation>
-                                <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="376" y="340" width="48" height="48"/>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="376" y="270" width="48" height="48"/>
-                                </variation>
                                 <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="376" y="440" width="48" height="48"/>
                                 </variation>
+                                <connections>
+                                    <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rxf-dE-tPQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.25098039215686274" green="0.6470588235294118" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="sTK-0b-YUK" firstAttribute="top" secondItem="Ntg-Yj-ExN" secondAttribute="top" id="AjV-xV-NPx">
+                                <variation key="widthClass=regular" constant="3"/>
+                            </constraint>
                             <constraint firstItem="O4u-pW-4pX" firstAttribute="leading" secondItem="PXP-oE-sek" secondAttribute="trailing" constant="2" id="B6V-l5-6d9"/>
+                            <constraint firstItem="pcI-pH-FwP" firstAttribute="width" secondItem="w1m-js-rWw" secondAttribute="width" id="EaV-5H-JOr"/>
                             <constraint firstItem="O4u-pW-4pX" firstAttribute="leading" secondItem="PXP-oE-sek" secondAttribute="trailing" constant="-37" id="If5-wD-1NI"/>
+                            <constraint firstItem="jT6-JU-vRI" firstAttribute="width" secondItem="w1m-js-rWw" secondAttribute="width" id="J3X-YJ-kUd"/>
+                            <constraint firstItem="sTK-0b-YUK" firstAttribute="centerX" secondItem="Ntg-Yj-ExN" secondAttribute="centerX" id="K0P-n0-psD"/>
+                            <constraint firstItem="jT6-JU-vRI" firstAttribute="top" secondItem="pcI-pH-FwP" secondAttribute="bottom" constant="10" id="MFs-E0-eLK"/>
+                            <constraint firstItem="jT6-JU-vRI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OHk-Y8-VGb"/>
                             <constraint firstItem="PXP-oE-sek" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OR5-ts-2hT"/>
+                            <constraint firstItem="w1m-js-rWw" firstAttribute="top" secondItem="J6L-jR-sRi" secondAttribute="bottom" constant="77" id="PDE-hx-0aA"/>
                             <constraint firstItem="O4u-pW-4pX" firstAttribute="centerY" secondItem="PXP-oE-sek" secondAttribute="centerY" id="Qr7-V6-gSb"/>
                             <constraint firstItem="J6L-jR-sRi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Rpm-ME-gyz"/>
+                            <constraint firstItem="Ntg-Yj-ExN" firstAttribute="top" secondItem="jT6-JU-vRI" secondAttribute="bottom" constant="18" id="SsS-VT-q01">
+                                <variation key="widthClass=regular" constant="13"/>
+                            </constraint>
+                            <constraint firstItem="pcI-pH-FwP" firstAttribute="top" secondItem="w1m-js-rWw" secondAttribute="bottom" constant="10" id="VJI-mw-VZw"/>
+                            <constraint firstItem="sTK-0b-YUK" firstAttribute="leading" secondItem="jT6-JU-vRI" secondAttribute="leading" id="Waj-4D-Ysa"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="PXP-oE-sek" secondAttribute="bottom" constant="6" id="Z8p-mq-ea9"/>
                             <constraint firstItem="J6L-jR-sRi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="bMz-Cf-QUX"/>
+                            <constraint firstItem="pcI-pH-FwP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hFA-DB-Pp0"/>
+                            <constraint firstItem="w1m-js-rWw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qke-RA-o4p"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="PXP-oE-sek" secondAttribute="bottom" constant="4" id="v39-RA-dJs"/>
+                            <constraint firstItem="sTK-0b-YUK" firstAttribute="leading" secondItem="Ntg-Yj-ExN" secondAttribute="leading" id="xUR-1A-FEc"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
