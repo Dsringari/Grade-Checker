@@ -1,0 +1,6 @@
+framework module Pods_Grade_Checker {
+  umbrella header "Pods-Grade Checker-umbrella.h"
+
+  export *
+  module * { export * }
+}
