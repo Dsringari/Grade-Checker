@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class DSLoginView: UIViewController {
     @IBOutlet var loginButton: UIButton!
@@ -17,16 +18,61 @@ class DSLoginView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        // TODO: Check for a user in the database and push to homescreen while updating it
     }
 
+    @IBAction func herebutton(sender: AnyObject) {
+        // TODO: Add new account functionality
+        print("nice u dont have an account")
+    }
+    
     @IBAction func login(sender: AnyObject) {
-        let user: User = User(username: usernameField.text!, password: passwordField.text!, pin: passwordField.text!)
-        let loginService = LoginService(userToBeLoggedIn: user)
-        loginService.login { successful in
+        // create a new user in the database
+        let moc = DataController().managedObjectContext
+        var user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! User
+        
+        // This is the Indicator that will show while the app retrieves all the required data
+        let activityAlert = UIAlertController(title: "Logging In\n", message: nil, preferredStyle: .Alert)
+        
+        let indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = UIColor.blackColor()
+        activityAlert.view.addSubview(indicator)
+        
+        let views = ["pending" : activityAlert.view, "indicator" : indicator]
+        var constraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[indicator]-(10)-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[indicator]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        activityAlert.view.addConstraints(constraints)
+        
+        indicator.userInteractionEnabled = false
+        indicator.startAnimating()
+        
+        self.presentViewController(activityAlert, animated: true, completion: nil)
+        
+        
+        let _ = LoginService(userToBeLoggedIn: user) { successful, error, updatedUser in
+            
             if (successful) {
-                let alert = UIAlertController(title: "Hello", message: "It Works", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                dispatch_async(dispatch_get_main_queue(), {
+                    user = updatedUser!
+                    activityAlert.dismissViewControllerAnimated(false, completion: nil)
+                    let alert = UIAlertController(title: "Hello, " + user.id!, message: "It Works", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: false, completion: nil)
+                    
+                    do {
+                        try moc.save()
+                    } catch {
+                        abort()
+                    }
+                })
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    activityAlert.dismissViewControllerAnimated(false, completion: nil)
+                    let alert = UIAlertController(title: error!.localizedDescription, message: error!.localizedFailureReason, preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: false, completion: nil)
+                })
             }
         }
     }

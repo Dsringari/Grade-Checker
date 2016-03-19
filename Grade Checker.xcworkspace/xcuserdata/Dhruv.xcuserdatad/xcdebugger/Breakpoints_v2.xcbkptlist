@@ -73,14 +73,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Grade Checker/DSLoginService.swift"
-            timestampString = "479426233.963095"
+            filePath = "Grade Checker/DSLoginView.swift"
+            timestampString = "480054526.255123"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "login(_:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Grade_Checker.DSLoginView.login (Grade_Checker.DSLoginView)(Swift.AnyObject) -&gt; ()"
+                  moduleName = "Grade Checker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dhruv/Documents/Programs/Grade%20Checker/Grade%20Checker/DSLoginView.swift"
+                  timestampString = "480054526.256601"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "5544">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Grade_Checker.DSLoginView.(login (Grade_Checker.DSLoginView) -&gt; (Swift.AnyObject) -&gt; ()).(closure #1)"
+                  moduleName = "Grade Checker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dhruv/Documents/Programs/Grade%20Checker/Grade%20Checker/DSLoginView.swift"
+                  timestampString = "480054526.25672"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "283">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -89,12 +121,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Grade Checker/DSLoginService.swift"
-            timestampString = "479426804.003281"
+            filePath = "Grade Checker/DSLoginView.swift"
+            timestampString = "480054538.621895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "login(_:)"
             landmarkType = "5">
          </BreakpointContent>
