@@ -13,5 +13,10 @@ import CoreData
 class Subject: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
-
+    var percentGrade: Int? {
+        if (possiblePoints != nil && totalPoints != nil) {
+            return (totalPoints!.integerValue/possiblePoints!.integerValue) * 100
+        }
+        return nil
+    }
 }

@@ -30,6 +30,9 @@ class DSLoginView: UIViewController {
         // create a new user in the database
         let moc = DataController().managedObjectContext
         var user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! User
+        user.username = usernameField.text!
+        user.password = passwordField.text!
+        user.pin = pinField.text!
         
         // This is the Indicator that will show while the app retrieves all the required data
         let activityAlert = UIAlertController(title: "Logging In\n", message: nil, preferredStyle: .Alert)
@@ -49,16 +52,22 @@ class DSLoginView: UIViewController {
         
         self.presentViewController(activityAlert, animated: true, completion: nil)
         
-        
-        let _ = LoginService(userToBeLoggedIn: user) { successful, error, updatedUser in
+        // This is the LoginService Completion Handler
+        let _ = LoginService(userToBeLoggedIn: user) { successful, error, legitamateUser in
             
             if (successful) {
                 dispatch_async(dispatch_get_main_queue(), {
-                    user = updatedUser!
+                    user = legitamateUser!
                     activityAlert.dismissViewControllerAnimated(false, completion: nil)
                     let alert = UIAlertController(title: "Hello, " + user.id!, message: "It Works", preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
                     self.presentViewController(alert, animated: false, completion: nil)
+                    
+                    let _ = UpdateService(legitamateUser: legitamateUser!) { successful, error, user in
+                        if (successful) {
+                            print("we updated the user")
+                        }
+                    }
                     
                     do {
                         try moc.save()

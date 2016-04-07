@@ -21,12 +21,5 @@ extension Subject {
     @NSManaged var possiblePoints: NSNumber?
     @NSManaged var room: String
     @NSManaged var user: User
-    
-    var percentGrade: Int? {
-        if (possiblePoints != nil && totalPoints != nil) {
-            return (totalPoints!.integerValue/possiblePoints!.integerValue) * 100
-        }
-        return nil
-    }
 
 }

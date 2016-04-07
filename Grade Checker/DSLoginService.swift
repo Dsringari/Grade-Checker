@@ -38,7 +38,7 @@ class LoginService {
 		let session = NSURLSession.sharedSession()
 		let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
-
+                print(error)
 				self.completion(successful: false, error: error, user: nil)
 				return
 			} else {

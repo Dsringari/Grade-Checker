@@ -8,6 +8,7 @@
 
 import Foundation
 import Kanna
+import CoreData
 
 class UpdateService {
 	let user: User
@@ -27,7 +28,9 @@ class UpdateService {
 		let session = NSURLSession.sharedSession()
 
 		// Courses & Grades Page Request
-		let coursesPageRequest = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + user.id!)!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+        let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + user.id!)!
+        print(backpackUrl)
+		let coursesPageRequest = NSMutableURLRequest(URL: backpackUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 		coursesPageRequest.HTTPMethod = "GET"
 
 		dispatch_group_enter(self.updateGroup)
@@ -36,11 +39,15 @@ class UpdateService {
 			if (error != nil) {
 				self.result = (false, error)
 			} else {
-				if let html = NSString(data: data!, encoding: NSUTF8StringEncoding) {
-					dispatch_group_enter(self.updateGroup)
-					self.updateSubjects(coursesAndGradePageHtml: html as String)
-					dispatch_group_leave(self.updateGroup)
-				}
+                
+                if let html = NSString(data: data!, encoding: NSASCIIStringEncoding)  {
+                    dispatch_group_enter(self.updateGroup)
+                    self.updateSubjects(coursesAndGradePageHtml: html as String)
+                    dispatch_group_leave(self.updateGroup)
+                } else {
+                    self.result = (false, unknownResponseError)
+                }
+                
 			}
 			dispatch_group_leave(self.updateGroup)
 		}
@@ -50,15 +57,23 @@ class UpdateService {
 		dispatch_group_notify(updateGroup, dispatch_get_main_queue()) {
 		}
 	}
-
+    
+    // TODO: Make sure to leave the update group when the user has updated sujects
 	private func updateSubjects(coursesAndGradePageHtml html: String) {
-		if let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding) {
-            let table = doc.xpath("//*[@id=\"contentPipe\"]/table/tbody") ////*[@id="contentPipe"]/table/tbody/tr[3]/td[2]
-            for row in table {
-                if (row["class"] != "classNotGraded") {
-                    var subject = Subject()
-                }
+        
+		if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
+            
+            let xpath = "//*[@id=\"contentPipe\"]/table//tr[@class!=\"classNotGraded\"]//td/a" // finds all the links on the visable table NOTE: DO NOT INCLUDE /tbody FOR SIMPLE TABLES WITHOUT A HEADER AND FOOTER
+            
+            let nodes = doc.xpath(xpath)
+            
+            for node: XMLElement in nodes {
+                    print(node.toHTML!)
+                
+                   // print(node.text!)
+                    //print(node["href"]!)
             }
+            
         } else {
             self.result = (false,unknownResponseError)
         }

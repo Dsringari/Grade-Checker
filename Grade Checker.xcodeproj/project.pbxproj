@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CC6E16077FC7AD43C87E724C /* Pods_Grade_Checker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C57412B7654F474FBFD2E773 /* Pods_Grade_Checker.framework */; };
+		FC0044011CB6FF8000392323 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */; };
+		FC0044021CB6FF8000392323 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0044001CB6FF8000392323 /* libxml2.tbd */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC2B85CB1C95DCFF005F7D5B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */; };
 		FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */; };
@@ -30,6 +32,8 @@
 		3208EDC8B5E76087B6856933 /* Pods-Grade Checker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.release.xcconfig"; sourceTree = "<group>"; };
 		C57412B7654F474FBFD2E773 /* Pods_Grade_Checker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grade_Checker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB064FCDE264CF6578CB26D7 /* Pods-Grade Checker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.debug.xcconfig"; sourceTree = "<group>"; };
+		FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		FC0044001CB6FF8000392323 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "Pods/../build/Debug-iphoneos/Kanna.framework"; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Grade Checker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grade Checker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC0044011CB6FF8000392323 /* libxml2.2.tbd in Frameworks */,
+				FC0044021CB6FF8000392323 /* libxml2.tbd in Frameworks */,
 				FC2B85CB1C95DCFF005F7D5B /* Kanna.framework in Frameworks */,
 				CC6E16077FC7AD43C87E724C /* Pods_Grade_Checker.framework in Frameworks */,
 			);
@@ -75,6 +81,8 @@
 		3A39DB40D025CD77D3B363B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */,
+				FC0044001CB6FF8000392323 /* libxml2.tbd */,
 				FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */,
 				C57412B7654F474FBFD2E773 /* Pods_Grade_Checker.framework */,
 			);

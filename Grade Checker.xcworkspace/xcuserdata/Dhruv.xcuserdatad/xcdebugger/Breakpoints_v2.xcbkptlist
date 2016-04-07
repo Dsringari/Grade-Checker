@@ -73,46 +73,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Grade Checker/DSLoginView.swift"
-            timestampString = "480054526.255123"
+            filePath = "Grade Checker/DSDataService.swift"
+            timestampString = "481760627.5076"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "login(_:)"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "updateSubjects(coursesAndGradePageHtml:)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Grade_Checker.DSLoginView.login (Grade_Checker.DSLoginView)(Swift.AnyObject) -&gt; ()"
-                  moduleName = "Grade Checker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Dhruv/Documents/Programs/Grade%20Checker/Grade%20Checker/DSLoginView.swift"
-                  timestampString = "480054526.256601"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "50"
-                  endingLineNumber = "50"
-                  offsetFromSymbolStart = "5544">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Grade_Checker.DSLoginView.(login (Grade_Checker.DSLoginView) -&gt; (Swift.AnyObject) -&gt; ()).(closure #1)"
-                  moduleName = "Grade Checker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Dhruv/Documents/Programs/Grade%20Checker/Grade%20Checker/DSLoginView.swift"
-                  timestampString = "480054526.25672"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "52"
-                  endingLineNumber = "52"
-                  offsetFromSymbolStart = "283">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,12 +90,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Grade Checker/DSLoginView.swift"
-            timestampString = "480054538.621895"
+            timestampString = "481670615.065079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "login(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Grade Checker/DSDataService.swift"
+            timestampString = "481760710.112324"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "updateSubjects(coursesAndGradePageHtml:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
