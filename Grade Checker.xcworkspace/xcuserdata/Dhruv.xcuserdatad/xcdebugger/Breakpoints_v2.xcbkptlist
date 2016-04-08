@@ -74,28 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Grade Checker/DSDataService.swift"
-            timestampString = "481760627.5076"
+            timestampString = "481847890.376213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "createSubjects(coursesAndGradePageHtml:user:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Grade Checker/DSLoginView.swift"
-            timestampString = "481670615.065079"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "login(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Grade Checker/DSDataService.swift"
-            timestampString = "481760710.112324"
+            timestampString = "481847890.376213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "createSubjects(coursesAndGradePageHtml:user:)"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "parseMarkingPeriodPage(html:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

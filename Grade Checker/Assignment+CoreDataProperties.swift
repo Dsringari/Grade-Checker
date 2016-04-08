@@ -15,8 +15,8 @@ import CoreData
 extension Assignment {
 
     @NSManaged var name: String?
-    @NSManaged var totalPoints: NSDecimalNumber?
-    @NSManaged var possiblePoints: NSDecimalNumber?
+    @NSManaged var totalPoints: NSNumber?
+    @NSManaged var possiblePoints: NSNumber?
     @NSManaged var markingPeriod: MarkingPeriod?
 
 }

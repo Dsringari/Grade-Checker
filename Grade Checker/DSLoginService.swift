@@ -25,7 +25,7 @@ class LoginService {
 			"content-type": "application/x-www-form-urlencoded"
 		]
 
-		let postString = "javascript=true&j_username=" + user.username + "&j_password=" + user.password + "&j_pin=" + user.pin
+		let postString = "javascript=true&j_username=" + user.username! + "&j_password=" + user.password! + "&j_pin=" + user.pin!
 		let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
 
 		let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
@@ -49,7 +49,7 @@ class LoginService {
 		dataTask.resume()
 	}
 
-	// Because of sapphire's strange cookie detection, we have to make a seperate request for the main page. Depending on the title of the page, we can determine whether the user has inputted the correct credentials.
+	// Because of sapphire's strange cookie detection, we have to make a seperate request for the main page. Depending on the title of the page, we can determine whether the user has inputed the correct credentials.
 
 	private func getMainPageHtml() {
 

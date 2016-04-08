@@ -14,8 +14,6 @@
 		FC0519BF1CB8478900D502EA /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B71CB8478900D502EA /* Assignment.swift */; };
 		FC0519C01CB8478900D502EA /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B81CB8478900D502EA /* Subject+CoreDataProperties.swift */; };
 		FC0519C11CB8478900D502EA /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B91CB8478900D502EA /* Subject.swift */; };
-		FC0519C21CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BA1CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift */; };
-		FC0519C31CB8478900D502EA /* MarkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BB1CB8478900D502EA /* MarkingPeriod.swift */; };
 		FC0519C41CB8478900D502EA /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BC1CB8478900D502EA /* User+CoreDataProperties.swift */; };
 		FC0519C51CB8478900D502EA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BD1CB8478900D502EA /* User.swift */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
@@ -28,6 +26,8 @@
 		FC639FA51C8F8FFD006C71A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */; };
 		FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */; };
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
+		FCBCB1FF1CB87489001F0032 /* MarkingPeriod+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBCB1FD1CB87489001F0032 /* MarkingPeriod+CoreDataProperties.swift */; };
+		FCBCB2001CB87489001F0032 /* MarkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBCB1FE1CB87489001F0032 /* MarkingPeriod.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCEF55E21C9DCE9200F0190E /* DSDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55E11C9DCE9200F0190E /* DSDataController.swift */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
@@ -43,8 +43,6 @@
 		FC0519B71CB8478900D502EA /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		FC0519B81CB8478900D502EA /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC0519B91CB8478900D502EA /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
-		FC0519BA1CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MarkingPeriod+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FC0519BB1CB8478900D502EA /* MarkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkingPeriod.swift; sourceTree = "<group>"; };
 		FC0519BC1CB8478900D502EA /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC0519BD1CB8478900D502EA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
@@ -59,6 +57,8 @@
 		FC639FA61C8F8FFD006C71A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSDataService.swift; sourceTree = "<group>"; };
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
+		FCBCB1FD1CB87489001F0032 /* MarkingPeriod+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MarkingPeriod+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FCBCB1FE1CB87489001F0032 /* MarkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkingPeriod.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCEF55E11C9DCE9200F0190E /* DSDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSDataController.swift; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
@@ -104,12 +104,12 @@
 			children = (
 				FC0519B71CB8478900D502EA /* Assignment.swift */,
 				FC0519B91CB8478900D502EA /* Subject.swift */,
-				FC0519BB1CB8478900D502EA /* MarkingPeriod.swift */,
 				FC0519BD1CB8478900D502EA /* User.swift */,
 				FC0519B61CB8478900D502EA /* Assignment+CoreDataProperties.swift */,
 				FC0519B81CB8478900D502EA /* Subject+CoreDataProperties.swift */,
-				FC0519BA1CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift */,
 				FC0519BC1CB8478900D502EA /* User+CoreDataProperties.swift */,
+				FCBCB1FD1CB87489001F0032 /* MarkingPeriod+CoreDataProperties.swift */,
+				FCBCB1FE1CB87489001F0032 /* MarkingPeriod.swift */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -295,10 +295,11 @@
 				FC0519C41CB8478900D502EA /* User+CoreDataProperties.swift in Sources */,
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
 				FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */,
-				FC0519C21CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift in Sources */,
+				FCBCB2001CB87489001F0032 /* MarkingPeriod.swift in Sources */,
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
 				FC0519C51CB8478900D502EA /* User.swift in Sources */,
 				FC0519BF1CB8478900D502EA /* Assignment.swift in Sources */,
+				FCBCB1FF1CB87489001F0032 /* MarkingPeriod+CoreDataProperties.swift in Sources */,
 				FCEF55E21C9DCE9200F0190E /* DSDataController.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FC639F9D1C8F8FFD006C71A7 /* ViewController.swift in Sources */,
@@ -306,7 +307,6 @@
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
-				FC0519C31CB8478900D502EA /* MarkingPeriod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

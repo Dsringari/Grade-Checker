@@ -14,10 +14,12 @@ import CoreData
 
 extension MarkingPeriod {
 
-    @NSManaged var number: String?
-    @NSManaged var totalPoints: NSDecimalNumber?
     @NSManaged var htmlPage: String?
-    @NSManaged var possiblePoints: NSDecimalNumber?
+    @NSManaged var number: String?
+    @NSManaged var possiblePoints: NSNumber?
+    @NSManaged var totalPoints: NSNumber?
+    @NSManaged var percentGrade: String?
+    @NSManaged var empty: NSNumber?
     @NSManaged var assignments: NSSet?
     @NSManaged var subject: Subject?
 

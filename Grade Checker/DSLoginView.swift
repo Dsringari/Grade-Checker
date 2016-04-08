@@ -34,6 +34,12 @@ class DSLoginView: UIViewController {
         user.password = passwordField.text!
         user.pin = pinField.text!
         
+        do {
+            try moc.save()
+        } catch {
+            fatalError("Failed to save MOC")
+        }
+        
         // This is the Indicator that will show while the app retrieves all the required data
         let activityAlert = UIAlertController(title: "Logging In\n", message: nil, preferredStyle: .Alert)
         

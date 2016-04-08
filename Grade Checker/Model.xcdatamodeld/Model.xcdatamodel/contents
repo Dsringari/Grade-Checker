@@ -2,15 +2,17 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15D21" minimumToolsVersion="Xcode 7.0">
     <entity name="Assignment" representedClassName=".Assignment" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="possiblePoints" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
-        <attribute name="totalPoints" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
+        <attribute name="possiblePoints" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalPoints" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <relationship name="markingPeriod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MarkingPeriod" inverseName="assignments" inverseEntity="MarkingPeriod" syncable="YES"/>
     </entity>
     <entity name="MarkingPeriod" representedClassName=".MarkingPeriod" syncable="YES">
+        <attribute name="empty" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="htmlPage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="possiblePoints" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
-        <attribute name="totalPoints" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="percentGrade" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="possiblePoints" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalPoints" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="assignments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Assignment" inverseName="markingPeriod" inverseEntity="Assignment" syncable="YES"/>
         <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" inverseName="markingPeriods" inverseEntity="Subject" syncable="YES"/>
     </entity>
@@ -30,8 +32,8 @@
         <relationship name="subjects" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subject" inverseName="user" inverseEntity="Subject" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Assignment" positionX="-369" positionY="369" width="128" height="103"/>
-        <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="135"/>
+        <element name="Assignment" positionX="-369" positionY="369" width="128" height="105"/>
+        <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="165"/>
         <element name="Subject" positionX="-387" positionY="9" width="128" height="133"/>
         <element name="User" positionX="-369" positionY="-154" width="128" height="118"/>
     </elements>

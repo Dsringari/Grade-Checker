@@ -11,9 +11,10 @@ import Kanna
 import CoreData
 
 class UpdateService {
-	let user: User
+	var user: User
 	let completion: (successful: Bool, error: NSError?, user: User?) -> Void
 	let updateGroup = dispatch_group_create()
+    let session = NSURLSession.sharedSession()
     // Storing the error so we can call the completion from one spot in the class
     var result: (successful: Bool,error: NSError?)?
 
@@ -25,7 +26,6 @@ class UpdateService {
 	}
 
 	private func updateUserInfo() {
-		let session = NSURLSession.sharedSession()
 
 		// Courses & Grades Page Request
         let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + user.id!)!
@@ -33,10 +33,12 @@ class UpdateService {
 		coursesPageRequest.HTTPMethod = "GET"
 
 		dispatch_group_enter(self.updateGroup)
-		let getCoursePage = session.dataTaskWithRequest(coursesPageRequest) { data, response, error in
+		let getCoursePage = self.session.dataTaskWithRequest(coursesPageRequest) { data, response, error in
 
 			if (error != nil) {
 				self.result = (false, error)
+                dispatch_group_leave(self.updateGroup)
+                return
 			} else {
                 
                 if let html = NSString(data: data!, encoding: NSASCIIStringEncoding)  {
@@ -59,8 +61,9 @@ class UpdateService {
     
     // TODO: Make sure to leave the update group when the user has updated sujects
     // Adds the subjects to the user when the correct page is given
-    private func createSubjects(coursesAndGradePageHtml html: String, user: User) {
+    private func createSubjects(coursesAndGradePageHtml html: String, user oldUser: User) {
         let moc = DataController().managedObjectContext
+        let user = moc.objectWithID(oldUser.objectID) as! User
         
 		if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
             
@@ -81,64 +84,134 @@ class UpdateService {
                 let newSubject: Subject = NSEntityDescription.insertNewObjectForEntityForName("Subject", inManagedObjectContext: moc) as! Subject
                 // set properties
                 newSubject.user = user
-                newSubject.htmlPage = "https://pamet-sapphire.k12system.com/" + node["href"]!
+                let subjectAddress = node["href"]!
+                newSubject.htmlPage = "https://pamet-sapphire.k12system.com" + subjectAddress // The node link includes a / before the page link so we leave the normal / off
                 
                 // Because the marking period html pages' urls repeat themselves we can use a shortcut
                 // There are only 4 marking periods
+                
+                // We have to isolate the section guide query paramter from the url because StudentClassPage.cfm changes to StudentClassGrades.cfm
+                let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1]
                 for index in 1...4 {
                     // Create 4 marking periods
                     let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: moc) as! MarkingPeriod
                     // Add the marking periods to the subject
                     newMP.subject = newSubject
                     newMP.number = String(index)
-                    newMP.htmlPage = newSubject.htmlPage! + "&MP_CODE=" + newMP.number!
+                    newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + user.id! + "&" + sectionGuidText + "&MP_CODE=" + newMP.number!
                 }
                 // save for later
                 subjects.append(newSubject)
             }
             
-            // Get all the information for the subject from their respective pages
+            do {
+                try moc.save()
+            } catch {
+                print("\nMOC FAILED TO SAVE!\n")
+                abort()
+            }
+            // This updates the to-many relationships
+            moc.refreshAllObjects()
+            
+            // Get the information from the marking period pages
             for subject in subjects {
-                let requestUrl = NSURL(string: subject.htmlPage!)!
-                let request = NSMutableURLRequest(URL: requestUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
-                request.HTTPMethod = "GET"
+                // For each marking period for the subject get the respective information
                 
-                let session = NSURLSession.sharedSession()
-                dispatch_group_enter(self.updateGroup)
-                let _ = session.dataTaskWithRequest(request) { data ,response , error in
-                    if (error != nil) {
-                        self.result = (false, error)
-                        // FIXME: Find better error handling / validate error
-                        // If we failed to load we don't want to save the subject
-                        moc.deleteObject(subject)
-                        subjects.removeObject(subject)
-                    } else {
-                        if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
-                            // TODO: start to parse the subject here
-                            self.parseSubjectPage(subjectToBeUpdated: subject, subjectMainPageHtml: html as String)
+                for mp in subject.markingPeriods! {
+                    let markingPeriod = mp as! MarkingPeriod
+                    let markingPeriodUrl = NSURL(string: markingPeriod.htmlPage!)!
+                    
+                    print("Current Marking Period Html Page: " + markingPeriod.htmlPage! + "\n")
+                    
+                    let mpRequest = NSURLRequest(URL: markingPeriodUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+                    
+                    // Request the mp page
+                    dispatch_group_enter(self.updateGroup)
+                    let _ = self.session.dataTaskWithRequest(mpRequest) { data, response, error in
+                        if (error != nil) {
+                            self.result = (false, error!)
+                            dispatch_group_leave(self.updateGroup)
                         } else {
-                            // TODO: Failed
-                            self.result = (false, unknownResponseError)
+                            
+                            // After recieving the marking period's page store the data
+                            let html = String(data: data!, encoding: NSUTF8StringEncoding)
+                            guard let mpPageHtml = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
+                                self.result = (false, unknownResponseError)
+                                return
+                            }
+                            // Parse the page
+                            let result = self.parseMarkingPeriodPage(html: mpPageHtml)
+                            if result != nil {
+                                let formatter = NSNumberFormatter()
+                                formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+                                markingPeriod.possiblePoints = formatter.numberFromString(result!.possiblePoints)
+                                markingPeriod.totalPoints = formatter.numberFromString(result!.totalPoints)
+                                markingPeriod.percentGrade = result!.percentGrade
+                                
+                                for assignment in result!.assignments {
+                                    let newA = NSEntityDescription.insertNewObjectForEntityForName("Assignment", inManagedObjectContext: moc) as! Assignment
+                                    newA.name = assignment.name
+                                    newA.totalPoints = formatter.numberFromString(assignment.totalPoints)
+                                    newA.possiblePoints = formatter.numberFromString(assignment.possiblePoints)
+                                    newA.markingPeriod = markingPeriod
+                                }
+                                
+                                do {
+                                    try moc.save()
+                                } catch {
+                                    abort()
+                                }
+                                
+                                dispatch_group_leave(self.updateGroup)
+                                
+                            } else {
+                                markingPeriod.empty = NSNumber(bool: true)
+                            }
                         }
-                    }
-                    dispatch_group_leave(self.updateGroup)
-                }.resume()
+                        
+                    }.resume()
+                }
             }
             
-        } else {
-            self.result = (false,unknownResponseError)
         }
 	}
-    
-    
-    private func parseSubjectPage(subjectToBeUpdated subject: Subject, subjectMainPageHtml html: String) {
-        if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
-            // The first step is to
-            
+
+    private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String)], possiblePoints: String, totalPoints: String, percentGrade: String)? {
+        var percentGrade: String = ""
+        var totalPoints: String = ""
+        var possiblePoints: String = ""
+        
+        print(doc.title!)
+        // Get the possible points, total points, and the percent grade
+        let percentageTextXpath = "//*[@id=\"assignmentFinalGrade\"]/b[1]/following-sibling::text()"
+        let pointsTextXpath = "//*[@id=\"assignmentFinalGrade\"]/b[2]/following-sibling::text()"
+        
+        if let percentageTextElement = doc.at_xpath(percentageTextXpath) {
+            // Check for only a percent symbol, if so the marking period is empty
+            var text = percentageTextElement.text!
+            // Remove all the spaces and other characters
+            text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "123456790.%").invertedSet).joinWithSeparator("")
+            if (text == "%") {
+                return nil
+            }
         } else {
-            self.result = (false, unknownResponseError)
+            print("Failed to find percentageTextElement!")
+            return nil
         }
+        
+        if let pointsTextElement = doc.at_xpath(pointsTextXpath) {
+            print(pointsTextElement.text!)
+        } else {
+            print("Failed to find pointsTextElement!")
+            return nil
+        }
+        
+        
+        return nil
     }
+
 }
+
+
 
 
