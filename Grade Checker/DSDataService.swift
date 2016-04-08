@@ -70,10 +70,11 @@ class UpdateService {
             
             // FIXME: If the parsing failed we have to return an error, make a proper error, and use it with self.result
             if (nodes.count == 0) {
-                
+                self.result = (false,unknownResponseError)
+                return
             }
             
-            // Parse the subjects
+            // Store the subject's url into a subject
             var subjects: [Subject] = []
             for node: XMLElement in nodes {
                 // insert the subject into core data
@@ -81,13 +82,24 @@ class UpdateService {
                 // set properties
                 newSubject.user = user
                 newSubject.htmlPage = "https://pamet-sapphire.k12system.com/" + node["href"]!
+                
+                // Because the marking period html pages' urls repeat themselves we can use a shortcut
+                // There are only 4 marking periods
+                for index in 1...4 {
+                    // Create 4 marking periods
+                    let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: moc) as! MarkingPeriod
+                    // Add the marking periods to the subject
+                    newMP.subject = newSubject
+                    newMP.number = String(index)
+                    newMP.htmlPage = newSubject.htmlPage! + "&MP_CODE=" + newMP.number!
+                }
                 // save for later
                 subjects.append(newSubject)
             }
             
-            // Update the individual subjects
+            // Get all the information for the subject from their respective pages
             for subject in subjects {
-                let requestUrl = NSURL(string: subject.htmlPage)!
+                let requestUrl = NSURL(string: subject.htmlPage!)!
                 let request = NSMutableURLRequest(URL: requestUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
                 request.HTTPMethod = "GET"
                 
@@ -96,17 +108,20 @@ class UpdateService {
                 let _ = session.dataTaskWithRequest(request) { data ,response , error in
                     if (error != nil) {
                         self.result = (false, error)
-                        // FIXME: Find better error handling
+                        // FIXME: Find better error handling / validate error
                         // If we failed to load we don't want to save the subject
                         moc.deleteObject(subject)
                         subjects.removeObject(subject)
                     } else {
                         if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
                             // TODO: start to parse the subject here
+                            self.parseSubjectPage(subjectToBeUpdated: subject, subjectMainPageHtml: html as String)
                         } else {
                             // TODO: Failed
+                            self.result = (false, unknownResponseError)
                         }
                     }
+                    dispatch_group_leave(self.updateGroup)
                 }.resume()
             }
             
@@ -115,9 +130,14 @@ class UpdateService {
         }
 	}
     
-    // TODO:
-    private func parseSubjectPage(subjectToBeUpdated subject: Subject, subjectMainPage html: String) {
-        
+    
+    private func parseSubjectPage(subjectToBeUpdated subject: Subject, subjectMainPageHtml html: String) {
+        if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
+            // The first step is to
+            
+        } else {
+            self.result = (false, unknownResponseError)
+        }
     }
 }
 

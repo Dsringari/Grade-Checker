@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  Assignment.swift
 //  Grade Checker
 //
 //  Created by Dhruv Sringari on 4/8/16.
@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-class User: NSManagedObject {
+class Assignment: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 

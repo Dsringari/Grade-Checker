@@ -10,6 +10,14 @@
 		CC6E16077FC7AD43C87E724C /* Pods_Grade_Checker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C57412B7654F474FBFD2E773 /* Pods_Grade_Checker.framework */; };
 		FC0044011CB6FF8000392323 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */; };
 		FC0044021CB6FF8000392323 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0044001CB6FF8000392323 /* libxml2.tbd */; };
+		FC0519BE1CB8478900D502EA /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B61CB8478900D502EA /* Assignment+CoreDataProperties.swift */; };
+		FC0519BF1CB8478900D502EA /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B71CB8478900D502EA /* Assignment.swift */; };
+		FC0519C01CB8478900D502EA /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B81CB8478900D502EA /* Subject+CoreDataProperties.swift */; };
+		FC0519C11CB8478900D502EA /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B91CB8478900D502EA /* Subject.swift */; };
+		FC0519C21CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BA1CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift */; };
+		FC0519C31CB8478900D502EA /* MarkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BB1CB8478900D502EA /* MarkingPeriod.swift */; };
+		FC0519C41CB8478900D502EA /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BC1CB8478900D502EA /* User+CoreDataProperties.swift */; };
+		FC0519C51CB8478900D502EA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BD1CB8478900D502EA /* User.swift */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
 		FC2B85CB1C95DCFF005F7D5B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */; };
@@ -22,10 +30,6 @@
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCEF55E21C9DCE9200F0190E /* DSDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55E11C9DCE9200F0190E /* DSDataController.swift */; };
-		FCEF55E71C9DCEF400F0190E /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55E31C9DCEF400F0190E /* User+CoreDataProperties.swift */; };
-		FCEF55E81C9DCEF400F0190E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55E41C9DCEF400F0190E /* User.swift */; };
-		FCEF55E91C9DCEF400F0190E /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55E51C9DCEF400F0190E /* Subject+CoreDataProperties.swift */; };
-		FCEF55EA1C9DCEF400F0190E /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55E61C9DCEF400F0190E /* Subject.swift */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +39,14 @@
 		DB064FCDE264CF6578CB26D7 /* Pods-Grade Checker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.debug.xcconfig"; sourceTree = "<group>"; };
 		FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		FC0044001CB6FF8000392323 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		FC0519B61CB8478900D502EA /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC0519B71CB8478900D502EA /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		FC0519B81CB8478900D502EA /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC0519B91CB8478900D502EA /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
+		FC0519BA1CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MarkingPeriod+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC0519BB1CB8478900D502EA /* MarkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkingPeriod.swift; sourceTree = "<group>"; };
+		FC0519BC1CB8478900D502EA /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC0519BD1CB8478900D502EA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
 		FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "Pods/../build/Debug-iphoneos/Kanna.framework"; sourceTree = "<group>"; };
@@ -49,10 +61,6 @@
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCEF55E11C9DCE9200F0190E /* DSDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSDataController.swift; sourceTree = "<group>"; };
-		FCEF55E31C9DCEF400F0190E /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FCEF55E41C9DCEF400F0190E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		FCEF55E51C9DCEF400F0190E /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FCEF55E61C9DCEF400F0190E /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +99,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FC0519C61CB8479100D502EA /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				FC0519B71CB8478900D502EA /* Assignment.swift */,
+				FC0519B91CB8478900D502EA /* Subject.swift */,
+				FC0519BB1CB8478900D502EA /* MarkingPeriod.swift */,
+				FC0519BD1CB8478900D502EA /* User.swift */,
+				FC0519B61CB8478900D502EA /* Assignment+CoreDataProperties.swift */,
+				FC0519B81CB8478900D502EA /* Subject+CoreDataProperties.swift */,
+				FC0519BA1CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift */,
+				FC0519BC1CB8478900D502EA /* User+CoreDataProperties.swift */,
+			);
+			name = ManagedObjects;
+			sourceTree = "<group>";
+		};
 		FC639F8E1C8F8FFD006C71A7 = {
 			isa = PBXGroup;
 			children = (
@@ -120,11 +143,8 @@
 				FCF028221C9DC690008AC891 /* ErrorTypes.swift */,
 				FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */,
 				FCEF55E11C9DCE9200F0190E /* DSDataController.swift */,
-				FCEF55E31C9DCEF400F0190E /* User+CoreDataProperties.swift */,
-				FCEF55E41C9DCEF400F0190E /* User.swift */,
-				FCEF55E51C9DCEF400F0190E /* Subject+CoreDataProperties.swift */,
-				FCEF55E61C9DCEF400F0190E /* Subject.swift */,
 				FC2953181CB73BA400DD38CE /* DSHelper.swift */,
+				FC0519C61CB8479100D502EA /* ManagedObjects */,
 				FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */,
 				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
 				FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */,
@@ -270,19 +290,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC0519C01CB8478900D502EA /* Subject+CoreDataProperties.swift in Sources */,
+				FC0519C11CB8478900D502EA /* Subject.swift in Sources */,
+				FC0519C41CB8478900D502EA /* User+CoreDataProperties.swift in Sources */,
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
 				FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */,
-				FCEF55EA1C9DCEF400F0190E /* Subject.swift in Sources */,
+				FC0519C21CB8478900D502EA /* MarkingPeriod+CoreDataProperties.swift in Sources */,
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
+				FC0519C51CB8478900D502EA /* User.swift in Sources */,
+				FC0519BF1CB8478900D502EA /* Assignment.swift in Sources */,
 				FCEF55E21C9DCE9200F0190E /* DSDataController.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
-				FCEF55E71C9DCEF400F0190E /* User+CoreDataProperties.swift in Sources */,
-				FCEF55E81C9DCEF400F0190E /* User.swift in Sources */,
 				FC639F9D1C8F8FFD006C71A7 /* ViewController.swift in Sources */,
+				FC0519BE1CB8478900D502EA /* Assignment+CoreDataProperties.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
-				FCEF55E91C9DCEF400F0190E /* Subject+CoreDataProperties.swift in Sources */,
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
+				FC0519C31CB8478900D502EA /* MarkingPeriod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
