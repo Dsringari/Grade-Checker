@@ -11,6 +11,7 @@
 		FC0044011CB6FF8000392323 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */; };
 		FC0044021CB6FF8000392323 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0044001CB6FF8000392323 /* libxml2.tbd */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
+		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
 		FC2B85CB1C95DCFF005F7D5B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */; };
 		FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */; };
 		FC639F9D1C8F8FFD006C71A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9C1C8F8FFD006C71A7 /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 		FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		FC0044001CB6FF8000392323 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
+		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
 		FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "Pods/../build/Debug-iphoneos/Kanna.framework"; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Grade Checker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grade Checker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				FCEF55E41C9DCEF400F0190E /* User.swift */,
 				FCEF55E51C9DCEF400F0190E /* Subject+CoreDataProperties.swift */,
 				FCEF55E61C9DCEF400F0190E /* Subject.swift */,
+				FC2953181CB73BA400DD38CE /* DSHelper.swift */,
 				FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */,
 				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
 				FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */,
@@ -279,6 +282,7 @@
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
 				FCEF55E91C9DCEF400F0190E /* Subject+CoreDataProperties.swift in Sources */,
+				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
