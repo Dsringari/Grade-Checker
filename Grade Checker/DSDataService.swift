@@ -56,6 +56,7 @@ class UpdateService {
 
 		// Runs when the User has been completely updated
 		dispatch_group_notify(updateGroup, dispatch_get_main_queue()) {
+            print("im done")
 		}
 	}
     
@@ -134,7 +135,6 @@ class UpdateService {
                         } else {
                             
                             // After recieving the marking period's page store the data
-                            let html = String(data: data!, encoding: NSUTF8StringEncoding)
                             guard let mpPageHtml = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
                                 self.result = (false, unknownResponseError)
                                 return
@@ -181,8 +181,7 @@ class UpdateService {
         var totalPoints: String = ""
         var possiblePoints: String = ""
         
-        print(doc.title!)
-        // Get the possible points, total points, and the percent grade
+        // Parse percent grade
         let percentageTextXpath = "//*[@id=\"assignmentFinalGrade\"]/b[1]/following-sibling::text()"
         let pointsTextXpath = "//*[@id=\"assignmentFinalGrade\"]/b[2]/following-sibling::text()"
         
@@ -194,18 +193,34 @@ class UpdateService {
             if (text == "%") {
                 return nil
             }
+            percentGrade = text
         } else {
             print("Failed to find percentageTextElement!")
             return nil
         }
         
+        // Parse total points
         if let pointsTextElement = doc.at_xpath(pointsTextXpath) {
-            print(pointsTextElement.text!)
+            var text = pointsTextElement.text!
+            // Remove all the spaces and other characters
+            text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890./").invertedSet).joinWithSeparator("")
+            // Seperate the String into Possible / Total Points
+            possiblePoints = text.componentsSeparatedByString("/")[0]
+            totalPoints = text.componentsSeparatedByString("/")[1]
         } else {
             print("Failed to find pointsTextElement!")
             return nil
         }
         
+        // Parse all the assignments while ignoring the assignment descriptions
+        let assignmentsXpath = "//*[@id=\"assignments\"]/tr[count(td)=6]"
+        
+        
+        // For all the assignment elements in the page
+        for aE: XMLElement in doc.xpath(assignmentsXpath) {
+            aE.
+        }
+            
         
         return nil
     }
