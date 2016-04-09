@@ -78,7 +78,7 @@ class UpdateService {
                 return
             }
             
-            // Store the subject's url into a subject
+            // Store the subject's url into a subject object and get the name
             var subjects: [Subject] = []
             for node: XMLElement in nodes {
                 // insert the subject into core data
@@ -87,6 +87,9 @@ class UpdateService {
                 newSubject.user = user
                 let subjectAddress = node["href"]!
                 newSubject.htmlPage = "https://pamet-sapphire.k12system.com" + subjectAddress // The node link includes a / before the page link so we leave the normal / off
+                newSubject.name = node.text!
+                
+                // Get the course
                 
                 // Because the marking period html pages' urls repeat themselves we can use a shortcut
                 // There are only 4 marking periods
@@ -105,24 +108,25 @@ class UpdateService {
                 subjects.append(newSubject)
             }
             
+            // TODO: Get the teachers
+            
             do {
                 try moc.save()
             } catch {
                 print("\nMOC FAILED TO SAVE!\n")
                 abort()
             }
-            // This updates the to-many relationships
+            // This updates the to-many relationships, this is also the reason why we don't include the below marking period for loop in the previous node for loop
             moc.refreshAllObjects()
             
-            // Get the information from the marking period pages
+            // Get the marking period information for the subjects
             for subject in subjects {
-                // For each marking period for the subject get the respective information
-                
+                // For each marking period for the subject, get the respective information
                 for mp in subject.markingPeriods! {
                     let markingPeriod = mp as! MarkingPeriod
                     let markingPeriodUrl = NSURL(string: markingPeriod.htmlPage!)!
                     
-                    print("Current Marking Period Html Page: " + markingPeriod.htmlPage! + "\n")
+                   // print("Current Marking Period Html Page: " + markingPeriod.htmlPage! + "\n")
                     
                     let mpRequest = NSURLRequest(URL: markingPeriodUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
                     
@@ -134,12 +138,13 @@ class UpdateService {
                             dispatch_group_leave(self.updateGroup)
                         } else {
                             
-                            // After recieving the marking period's page store the data
+                            // Test if we recieved valid information, if not return aka fail
                             guard let mpPageHtml = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
                                 self.result = (false, unknownResponseError)
                                 return
                             }
-                            // Parse the page
+                            
+                            // After recieving the marking period's page store the data
                             let result = self.parseMarkingPeriodPage(html: mpPageHtml)
                             if result != nil {
                                 let formatter = NSNumberFormatter()
@@ -148,12 +153,14 @@ class UpdateService {
                                 markingPeriod.totalPoints = formatter.numberFromString(result!.totalPoints)
                                 markingPeriod.percentGrade = result!.percentGrade
                                 
+                                var assignments: [Assignment] = []
                                 for assignment in result!.assignments {
                                     let newA = NSEntityDescription.insertNewObjectForEntityForName("Assignment", inManagedObjectContext: moc) as! Assignment
                                     newA.name = assignment.name
                                     newA.totalPoints = formatter.numberFromString(assignment.totalPoints)
                                     newA.possiblePoints = formatter.numberFromString(assignment.possiblePoints)
                                     newA.markingPeriod = markingPeriod
+                                    assignments.append(newA)
                                 }
                                 
                                 do {
@@ -162,21 +169,26 @@ class UpdateService {
                                     abort()
                                 }
                                 
-                                dispatch_group_leave(self.updateGroup)
-                                
                             } else {
                                 markingPeriod.empty = NSNumber(bool: true)
                             }
+                            dispatch_group_leave(self.updateGroup)
                         }
                         
                     }.resume()
+                }
+                do {
+                    try moc.save()
+                } catch {
+                    print("FAILED TO SAVE")
+                    abort()
                 }
             }
             
         }
 	}
 
-    private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String)], possiblePoints: String, totalPoints: String, percentGrade: String)? {
+    private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
         var percentGrade: String = ""
         var totalPoints: String = ""
         var possiblePoints: String = ""
@@ -205,8 +217,8 @@ class UpdateService {
             // Remove all the spaces and other characters
             text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890./").invertedSet).joinWithSeparator("")
             // Seperate the String into Possible / Total Points
-            possiblePoints = text.componentsSeparatedByString("/")[0]
-            totalPoints = text.componentsSeparatedByString("/")[1]
+            totalPoints = text.componentsSeparatedByString("/")[0]
+            possiblePoints = text.componentsSeparatedByString("/")[1]
         } else {
             print("Failed to find pointsTextElement!")
             return nil
@@ -215,14 +227,38 @@ class UpdateService {
         // Parse all the assignments while ignoring the assignment descriptions
         let assignmentsXpath = "//*[@id=\"assignments\"]/tr[count(td)=6]"
         
+        // Get all the assignment names
+        var aNames: [String] = []
+        for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[1]") {
+            aNames.append(aE.text!)
+        }
         
-        // For all the assignment elements in the page
-        for aE: XMLElement in doc.xpath(assignmentsXpath) {
-            aE.
+        // Get all total points
+        var aTotalPoints: [String] = []
+        for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[2]") {
+            var text = aE.text!
+            text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("")
+            aTotalPoints.append(text)
+        }
+        
+        // Get All possible points
+        var aPossiblePoints: [String] = []
+        for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[3]") {
+            var text = aE.text!
+            text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("")
+            aPossiblePoints.append(text)
+        }
+        
+        // Build the assignment tuples
+        var assignments: [(name: String, totalPoints: String, possiblePoints: String)] = []
+        for index in 0...(aNames.count - 1) {
+            let newA = (aNames[index],aTotalPoints[index],aPossiblePoints[index])
+            assignments.append(newA)
+            print(newA)
         }
             
         
-        return nil
+        return (assignments, totalPoints, possiblePoints, percentGrade)
     }
 
 }

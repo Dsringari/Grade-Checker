@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC6E16077FC7AD43C87E724C /* Pods_Grade_Checker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C57412B7654F474FBFD2E773 /* Pods_Grade_Checker.framework */; };
-		FC0044011CB6FF8000392323 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */; };
-		FC0044021CB6FF8000392323 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0044001CB6FF8000392323 /* libxml2.tbd */; };
+		C193E7F30B9FF30536B32143 /* Pods_Grade_Checker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */; };
 		FC0519BE1CB8478900D502EA /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B61CB8478900D502EA /* Assignment+CoreDataProperties.swift */; };
 		FC0519BF1CB8478900D502EA /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B71CB8478900D502EA /* Assignment.swift */; };
 		FC0519C01CB8478900D502EA /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519B81CB8478900D502EA /* Subject+CoreDataProperties.swift */; };
@@ -18,7 +16,6 @@
 		FC0519C51CB8478900D502EA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0519BD1CB8478900D502EA /* User.swift */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
-		FC2B85CB1C95DCFF005F7D5B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */; };
 		FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */; };
 		FC639F9D1C8F8FFD006C71A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9C1C8F8FFD006C71A7 /* ViewController.swift */; };
 		FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */; };
@@ -34,11 +31,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3208EDC8B5E76087B6856933 /* Pods-Grade Checker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.release.xcconfig"; sourceTree = "<group>"; };
-		C57412B7654F474FBFD2E773 /* Pods_Grade_Checker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grade_Checker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DB064FCDE264CF6578CB26D7 /* Pods-Grade Checker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.debug.xcconfig"; sourceTree = "<group>"; };
-		FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
-		FC0044001CB6FF8000392323 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		21C45DA85B0B0E9AE16C5C63 /* Pods-Grade Checker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.release.xcconfig"; sourceTree = "<group>"; };
+		542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grade_Checker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE8D4962F0BB482B8EAF461D /* Pods-Grade Checker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.debug.xcconfig"; sourceTree = "<group>"; };
 		FC0519B61CB8478900D502EA /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC0519B71CB8478900D502EA /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		FC0519B81CB8478900D502EA /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -47,7 +42,6 @@
 		FC0519BD1CB8478900D502EA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
-		FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "Pods/../build/Debug-iphoneos/Kanna.framework"; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Grade Checker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grade Checker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC639F9C1C8F8FFD006C71A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,34 +63,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC0044011CB6FF8000392323 /* libxml2.2.tbd in Frameworks */,
-				FC0044021CB6FF8000392323 /* libxml2.tbd in Frameworks */,
-				FC2B85CB1C95DCFF005F7D5B /* Kanna.framework in Frameworks */,
-				CC6E16077FC7AD43C87E724C /* Pods_Grade_Checker.framework in Frameworks */,
+				C193E7F30B9FF30536B32143 /* Pods_Grade_Checker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3926DC3D1F7D40F1BC3CA9B7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				DB064FCDE264CF6578CB26D7 /* Pods-Grade Checker.debug.xcconfig */,
-				3208EDC8B5E76087B6856933 /* Pods-Grade Checker.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		3A39DB40D025CD77D3B363B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FC0043FF1CB6FF8000392323 /* libxml2.2.tbd */,
-				FC0044001CB6FF8000392323 /* libxml2.tbd */,
-				FC2B85CA1C95DCFF005F7D5B /* Kanna.framework */,
-				C57412B7654F474FBFD2E773 /* Pods_Grade_Checker.framework */,
+				542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2D025B05CC0189902108D46 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EE8D4962F0BB482B8EAF461D /* Pods-Grade Checker.debug.xcconfig */,
+				21C45DA85B0B0E9AE16C5C63 /* Pods-Grade Checker.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		FC0519C61CB8479100D502EA /* ManagedObjects */ = {
@@ -119,8 +107,8 @@
 			children = (
 				FC639F991C8F8FFD006C71A7 /* Grade Checker */,
 				FC639F981C8F8FFD006C71A7 /* Products */,
-				3926DC3D1F7D40F1BC3CA9B7 /* Pods */,
 				3A39DB40D025CD77D3B363B3 /* Frameworks */,
+				E2D025B05CC0189902108D46 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,13 +148,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC639FA91C8F8FFD006C71A7 /* Build configuration list for PBXNativeTarget "Grade Checker" */;
 			buildPhases = (
+				3A04484A54A869DEA878AE70 /* Check Pods Manifest.lock */,
 				FCC71DA71C950DD6000913D1 /* Check for Warning Tags */,
-				C441185F66AD9D2E639E17EB /* Check Pods Manifest.lock */,
 				FC639F931C8F8FFD006C71A7 /* Sources */,
 				FC639F941C8F8FFD006C71A7 /* Frameworks */,
 				FC639F951C8F8FFD006C71A7 /* Resources */,
-				8A10349603308E0812AF19C0 /* Embed Pods Frameworks */,
-				D11BFA62CBB98C06C399437B /* Copy Pods Resources */,
+				B58CCB62E5A93420770811E9 /* Embed Pods Frameworks */,
+				2BE80CE663D2C0BAA3DE87CD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -224,22 +212,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8A10349603308E0812AF19C0 /* Embed Pods Frameworks */ = {
+		2BE80CE663D2C0BAA3DE87CD /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C441185F66AD9D2E639E17EB /* Check Pods Manifest.lock */ = {
+		3A04484A54A869DEA878AE70 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -254,19 +242,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D11BFA62CBB98C06C399437B /* Copy Pods Resources */ = {
+		B58CCB62E5A93420770811E9 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FCC71DA71C950DD6000913D1 /* Check for Warning Tags */ = {
@@ -415,7 +403,7 @@
 		};
 		FC639FAA1C8F8FFD006C71A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB064FCDE264CF6578CB26D7 /* Pods-Grade Checker.debug.xcconfig */;
+			baseConfigurationReference = EE8D4962F0BB482B8EAF461D /* Pods-Grade Checker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -432,7 +420,7 @@
 		};
 		FC639FAB1C8F8FFD006C71A7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3208EDC8B5E76087B6856933 /* Pods-Grade Checker.release.xcconfig */;
+			baseConfigurationReference = 21C45DA85B0B0E9AE16C5C63 /* Pods-Grade Checker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
