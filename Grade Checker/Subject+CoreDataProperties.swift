@@ -2,7 +2,7 @@
 //  Subject+CoreDataProperties.swift
 //  Grade Checker
 //
-//  Created by Dhruv Sringari on 4/8/16.
+//  Created by Dhruv Sringari on 4/9/16.
 //  Copyright © 2016 Dhruv Sringari. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,7 +18,7 @@ extension Subject {
     @NSManaged var name: String?
     @NSManaged var room: String?
     @NSManaged var teacher: String?
-    @NSManaged var user: User?
     @NSManaged var markingPeriods: NSSet?
+    @NSManaged var user: User?
 
 }

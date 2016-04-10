@@ -11,9 +11,9 @@ import Kanna
 
 class LoginService {
 	var user: User
-	let completion: (successful: Bool, error: NSError?, user: User?) -> Void
+    let completion: (successful: Bool, error: NSError?, user: User?) -> Void
 
-	init(userToBeLoggedIn: User, completionHandler completion: (successful: Bool, error: NSError?, user: User?) -> Void) {
+    init(userToBeLoggedIn: User, completionHandler completion: (successful: Bool, error: NSError?, user: User?) -> Void) {
 		user = userToBeLoggedIn
 		self.completion = completion
 		login()
@@ -39,7 +39,7 @@ class LoginService {
 		let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
                 print(error)
-				self.completion(successful: false, error: error, user: nil)
+                self.completion(successful: false, error: error, user: nil)
 				return
 			} else {
 				self.getMainPageHtml()
@@ -63,29 +63,28 @@ class LoginService {
 			if (error != nil) {
 				print(error)
 				print(error!.userInfo[NSLocalizedRecoverySuggestionErrorKey])
-				self.completion(successful: false, error: error, user: nil)
+                self.completion(successful: false, error: error, user: nil)
 			} else {
 				if let html: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
 
 					if let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding) {
-
-						print(doc)
+                        
 						if (doc.title! == " Student Backpack - Sapphire Community Web Portal ") {
 
 							// we can retrieve the student id from their current grade page link's query parameter
 							let idString: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
 							let id = idString.componentsSeparatedByString("=")[1]
 							self.user.id = id
-							self.completion(successful: true, error: nil, user: self.user)
+                            self.completion(successful: true, error: nil, user: self.user)
 						} else {
 
-							self.completion(successful: false, error: badLoginError, user: nil)
+                            self.completion(successful: false, error: badLoginError, user: nil)
 						}
 					} else {
-						self.completion(successful: false, error: unknownResponseError, user: nil)
+                        self.completion(successful: false, error: unknownResponseError, user: nil)
 					}
 				} else {
-					self.completion(successful: false, error: unknownResponseError, user: nil)
+                    self.completion(successful: false, error: unknownResponseError, user: nil)
 				}
 			}
 		})

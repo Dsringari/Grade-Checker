@@ -9,44 +9,28 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Grade Checker/DSDataService.swift"
-            timestampString = "481913256.64374"
+            filePath = "Grade Checker/DSLoginView.swift"
+            timestampString = "481944390.300775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "createSubjects(coursesAndGradePageHtml:user:)"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "login(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Grade Checker/DSDataService.swift"
-            timestampString = "481913622.314394"
+            timestampString = "481944336.353803"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "createSubjects(coursesAndGradePageHtml:user:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Grade Checker/DSDataService.swift"
-            timestampString = "481913761.283574"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "createSubjects(coursesAndGradePageHtml:user:)"
             landmarkType = "5">
          </BreakpointContent>

@@ -19,6 +19,7 @@ class DSLoginView: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         // TODO: Check for a user in the database and push to homescreen while updating it
+        
     }
 
     @IBAction func herebutton(sender: AnyObject) {
@@ -27,7 +28,25 @@ class DSLoginView: UIViewController {
     }
     
     @IBAction func login(sender: AnyObject) {
+        // TESTING REMOVE FOR RELEASE
+        let nMoc = DataController().managedObjectContext
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("User", inManagedObjectContext: nMoc)
+        fetchRequest.entity = entityDescription
+        
+        do {
+            let nUser = try nMoc.executeFetchRequest(fetchRequest)
+            for user in nUser {
+                let us = user as! User
+                nMoc.deleteObject(us)
+            }
+        } catch {
+            print(error)
+            abort()
+        }
+        
         // create a new user in the database
+        // FIXME: DO NOT INSERT THE USER HERE WAIT TILL WE ARE VALIDATED
         let moc = DataController().managedObjectContext
         var user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! User
         user.username = usernameField.text!
@@ -65,13 +84,58 @@ class DSLoginView: UIViewController {
                 dispatch_async(dispatch_get_main_queue(), {
                     user = legitamateUser!
                     activityAlert.dismissViewControllerAnimated(false, completion: nil)
-                    let alert = UIAlertController(title: "Hello, " + user.id!, message: "It Works", preferredStyle: .Alert)
+                    let alert = UIAlertController(title: "Hello, " + user.username!, message: "It Works", preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
                     self.presentViewController(alert, animated: false, completion: nil)
                     
-                    let _ = UpdateService(legitamateUser: legitamateUser!) { successful, error, user in
+                    let _ = UpdateService(legitamateUser: legitamateUser!) { successful, error in
                         if (successful) {
-                            print("we updated the user")
+                            
+                            // TEST STUFF
+                            // refetch the user
+                            let nMoc = DataController().managedObjectContext
+                            let fetchRequest = NSFetchRequest()
+                            let entityDescription = NSEntityDescription.entityForName("User", inManagedObjectContext: nMoc)
+                            fetchRequest.entity = entityDescription
+                            
+                            do {
+                                let nUser = try nMoc.executeFetchRequest(fetchRequest)[0] as! User
+                                print("")
+                                print("Nice Grades! " + nUser.username!)
+                                print("")
+                                
+                                for subject in nUser.subjects! {
+                                    
+                                    let s = subject as! Subject
+                                    print(subject.name! + ":")
+                                    
+                                    for markingPeriod in s.markingPeriods! {
+                                        let mp = markingPeriod as! MarkingPeriod
+                                        if (!mp.empty!.boolValue) {
+                                        
+                                            print("\t" + mp.number! + " (Percent Grade: " + mp.percentGrade! + "):" )
+                                        
+                                            if (mp.number! == "4") {
+                                            
+                                            }
+                                        
+                                            for assignment in mp.assignments! {
+                                            
+                                                let a = assignment as! Assignment
+                                                let score = a.totalPoints! + "/" + a.possiblePoints!
+                                                let s = "\t\t" + a.name! + "\t Score: " + score
+                                                print(s)
+                                            
+                                            }
+                                        }
+                                    }
+                                }
+                            } catch {
+                                print(error)
+                                abort()
+                            }
+                            
+                            
                         }
                     }
                     
@@ -83,10 +147,11 @@ class DSLoginView: UIViewController {
                 })
             } else {
                 dispatch_async(dispatch_get_main_queue(), {
-                    activityAlert.dismissViewControllerAnimated(false, completion: nil)
-                    let alert = UIAlertController(title: error!.localizedDescription, message: error!.localizedFailureReason, preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-                    self.presentViewController(alert, animated: false, completion: nil)
+                    activityAlert.dismissViewControllerAnimated(false) {
+                        let alert = UIAlertController(title: error!.localizedDescription, message: error!.localizedFailureReason, preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                        self.presentViewController(alert, animated: false, completion: nil)
+                    }
                 })
             }
         }
