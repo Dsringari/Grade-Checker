@@ -40,6 +40,7 @@ class DSLoginView: UIViewController {
                 let us = user as! User
                 nMoc.deleteObject(us)
             }
+            try nMoc.save()
         } catch {
             print(error)
             abort()
@@ -47,14 +48,13 @@ class DSLoginView: UIViewController {
         
         // create a new user in the database
         // FIXME: DO NOT INSERT THE USER HERE WAIT TILL WE ARE VALIDATED
-        let moc = DataController().managedObjectContext
-        var user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! User
+        var user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: nMoc) as! User
         user.username = usernameField.text!
         user.password = passwordField.text!
         user.pin = pinField.text!
         
         do {
-            try moc.save()
+            try nMoc.save()
         } catch {
             fatalError("Failed to save MOC")
         }
@@ -93,13 +93,19 @@ class DSLoginView: UIViewController {
                             
                             // TEST STUFF
                             // refetch the user
-                            let nMoc = DataController().managedObjectContext
+                            let newMoc = DataController().managedObjectContext
                             let fetchRequest = NSFetchRequest()
-                            let entityDescription = NSEntityDescription.entityForName("User", inManagedObjectContext: nMoc)
+                            let entityDescription = NSEntityDescription.entityForName("User", inManagedObjectContext: newMoc)
                             fetchRequest.entity = entityDescription
                             
                             do {
-                                let nUser = try nMoc.executeFetchRequest(fetchRequest)[0] as! User
+                                let nUsers = try nMoc.executeFetchRequest(fetchRequest)
+                                if (nUsers.count > 1) {
+                                    print("GG")
+                                    abort()
+                                }
+                                let nUser = nUsers[0] as! User
+                                
                                 print("")
                                 print("Nice Grades! " + nUser.username!)
                                 print("")
@@ -111,9 +117,10 @@ class DSLoginView: UIViewController {
                                     
                                     for markingPeriod in s.markingPeriods! {
                                         let mp = markingPeriod as! MarkingPeriod
+                                        print("\tMarking Period: " + mp.number!)
                                         if (!mp.empty!.boolValue) {
                                         
-                                            print("\t" + mp.number! + " (Percent Grade: " + mp.percentGrade! + "):" )
+                                           print("\t" + "(Percent Grade: " + mp.percentGrade! + "):" )
                                         
                                             if (mp.number! == "4") {
                                             
@@ -137,12 +144,6 @@ class DSLoginView: UIViewController {
                             
                             
                         }
-                    }
-                    
-                    do {
-                        try moc.save()
-                    } catch {
-                        abort()
                     }
                 })
             } else {

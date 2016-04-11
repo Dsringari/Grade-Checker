@@ -33,6 +33,7 @@ class DataController: NSObject {
         This code uses a file named "DataModel.sqlite" in the application's documents directory.
         */
         let storeURL = docURL.URLByAppendingPathComponent("Model.sqlite")
+        print("Store Url: " + storeURL.absoluteString)
         do {
             try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
         } catch {
