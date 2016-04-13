@@ -1,5 +1,5 @@
 //
-//  Assignment+CoreDataProperties.swift
+//  Student+CoreDataProperties.swift
 //  Grade Checker
 //
 //  Created by Dhruv Sringari on 4/12/16.
@@ -12,12 +12,13 @@
 import Foundation
 import CoreData
 
-extension Assignment {
+extension Student {
 
-    @NSManaged var date: NSDate?
     @NSManaged var name: String?
-    @NSManaged var possiblePoints: String?
-    @NSManaged var totalPoints: String?
-    @NSManaged var markingPeriod: MarkingPeriod?
+    @NSManaged var grade: String?
+    @NSManaged var school: String?
+    @NSManaged var id: String?
+    @NSManaged var subjects: NSSet?
+    @NSManaged var user: User?
 
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 // Array Extensions
 extension Array where Element: Equatable {
@@ -23,4 +24,81 @@ extension Array where Element: Equatable {
             self.removeObject(object)
         }
     }
+    
+    // Returns a random object from a swift array
+    var randomObject: Element? {
+        if (self.count == 0) {
+            return nil
+        }
+        let index = Int(arc4random_uniform(UInt32(self.count)))
+        return self[index]
+    }
+    
+    
+}
+
+extension NSManagedObjectContext {
+     func getObjectsFromStore(entityName: String, predicateString: String?, args: [AnyObject]?) -> [AnyObject] {
+        
+        var predicate: NSPredicate?
+        if let p = predicateString {
+            predicate = NSPredicate(format: p, argumentArray: args)
+        }
+        
+        let objectRequest = NSFetchRequest()
+        objectRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: self)
+        objectRequest.predicate = predicate
+        
+        do {
+            let objects = try self.executeFetchRequest(objectRequest)
+            return objects
+        } catch {
+            print("***************************")
+            print("Failed to Fetch", entityName + ":", error, separator: " ", terminator: "\n")
+            return []
+        }
+    }
+    
+     func getObjectFromStore(entityName: String, predicateString: String?, args: [AnyObject]?) -> AnyObject? {
+        var predicate: NSPredicate?
+        if let p = predicateString {
+            predicate = NSPredicate(format: p, argumentArray: args)
+        }
+        
+        let objectRequest = NSFetchRequest()
+        objectRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: self)
+        objectRequest.predicate = predicate
+        
+        do {
+            let objects = try self.executeFetchRequest(objectRequest)
+            
+            if (objects.count > 1 || objects.count == 0) {
+                print("***************************")
+                print("Failed to Fetch", entityName + ".", "Recieved", objects.count, "when 1 was requested. Returning nil.", separator: " ", terminator: "\n")
+                return nil
+            }
+            
+            return objects[0]
+        } catch {
+            print("***************************")
+            print("Failed to Fetch", entityName + ":", error, separator: " ", terminator: "\n")
+            return []
+        }
+    }
+    
+    func saveContext () {
+        if self.hasChanges {
+            do {
+                try self.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+                abort()
+            }
+        }
+    }
+    
+    
 }

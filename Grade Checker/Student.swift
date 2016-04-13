@@ -1,5 +1,5 @@
 //
-//  Subject.swift
+//  Student.swift
 //  Grade Checker
 //
 //  Created by Dhruv Sringari on 4/12/16.
@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-class Subject: NSManagedObject {
+class Student: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 

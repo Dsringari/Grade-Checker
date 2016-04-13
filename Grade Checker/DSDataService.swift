@@ -1,4 +1,4 @@
-//
+ //
 //  DSDataService.swift
 //  Grade Checker
 //
@@ -6,58 +6,58 @@
 //  Copyright © 2016 Dhruv Sringari. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Kanna
 import CoreData
 
+
 class UpdateService {
-	var user: User
 	let completion: (successful: Bool, error: NSError?) -> Void
-	let updateGroup = dispatch_group_create()
 	let session = NSURLSession.sharedSession()
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 	// Storing the error so we can call the completion from one spot in the class
 	var result: (successful: Bool, error: NSError?)?
 
 	let timer: ParkBenchTimer?
+    
 
 	// The class should only be used with a valid user
-	init(legitamateUser user: User, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
-		self.user = user
+	init(student: Student, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
 		self.completion = completion
 		self.timer = ParkBenchTimer()
-		self.updateUserInfo()
+        
+        let outDatedStudent = appDelegate.managedObjectContext.objectWithID(student.objectID) as! Student
+		
+        // Courses & Grades Page Request
+        let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + outDatedStudent.id!)!
+        let coursesPageRequest = NSMutableURLRequest(URL: backpackUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+        coursesPageRequest.HTTPMethod = "GET"
+        
+        let getCoursePage = self.session.dataTaskWithRequest(coursesPageRequest) { data, response, error in
+            
+            if (error != nil) {
+                self.result = (false, error)
+                return
+            } else {
+                
+                if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
+                    self.createSubjects(coursesAndGradePageHtml: html as String, student: outDatedStudent)
+                } else {
+                    self.result = (false, unknownResponseError)
+                }
+            }
+        }
+        getCoursePage.resume()
 	}
-
-	private func updateUserInfo() {
-
-		// Courses & Grades Page Request
-		let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + user.id!)!
-		let coursesPageRequest = NSMutableURLRequest(URL: backpackUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
-		coursesPageRequest.HTTPMethod = "GET"
-
-		let getCoursePage = self.session.dataTaskWithRequest(coursesPageRequest) { data, response, error in
-
-			if (error != nil) {
-				self.result = (false, error)
-				return
-			} else {
-
-				if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
-					self.createSubjects(coursesAndGradePageHtml: html as String, user: self.user)
-				} else {
-					self.result = (false, unknownResponseError)
-				}
-			}
-		}
-		getCoursePage.resume()
-	}
-
+    
 	// TODO: Make sure to leave the update group when the user has updated sujects
 	// Adds the subjects to the user when the correct page is given
-	private func createSubjects(coursesAndGradePageHtml html: String, user oldUser: User) {
-        dispatch_group_enter(self.updateGroup); self.timer!.entries += 1 //1
-		let moc = DataController().managedObjectContext
-		let user = moc.objectWithID(oldUser.objectID) as! User
+    // MAY BE CALLED FROM NON_MAIN THREAD
+	private func createSubjects(coursesAndGradePageHtml html: String, student: Student) {
+        let updateGroup = dispatch_group_create()
+		let backgroundMOC = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        backgroundMOC.parentContext = self.appDelegate.managedObjectContext
+		let updatingStudent = backgroundMOC.objectWithID(student.objectID) as! Student
 
 		if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
 
@@ -75,9 +75,9 @@ class UpdateService {
 			var subjects: [Subject] = []
 			for node: XMLElement in nodes {
 				// insert the subject into core data
-				let newSubject: Subject = NSEntityDescription.insertNewObjectForEntityForName("Subject", inManagedObjectContext: moc) as! Subject
+				let newSubject: Subject = NSEntityDescription.insertNewObjectForEntityForName("Subject", inManagedObjectContext: backgroundMOC) as! Subject
 				// set properties
-				newSubject.user = user
+				newSubject.student = updatingStudent
 				let subjectAddress = node["href"]!
 				newSubject.htmlPage = "https://pamet-sapphire.k12system.com" + subjectAddress // The node link includes a / before the page link so we leave the normal / off
 				newSubject.name = node.text!.substringToIndex(node.text!.endIndex.predecessor()) // Remove the space after the name
@@ -91,11 +91,11 @@ class UpdateService {
 				let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1]
 				for index in 1 ... 4 {
 					// Create 4 marking periods
-					let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: moc) as! MarkingPeriod
+					let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: backgroundMOC) as! MarkingPeriod
 					// Add the marking periods to the subject
 					newMP.subject = newSubject
 					newMP.number = String(index)
-					newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + user.id! + "&" + sectionGuidText + "&MP_CODE=" + newMP.number!
+					newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + updatingStudent.id! + "&" + sectionGuidText + "&MP_CODE=" + newMP.number!
 					newMP.empty = NSNumber(bool: false)
 				}
 				// save for later
@@ -122,80 +122,49 @@ class UpdateService {
 				subjects[index].room = r[index]
 			}
 
-			do {
-				try moc.save()
-			} catch {
-				print("\nMOC FAILED TO SAVE!\n")
-				abort()
-			}
+			
 			// This updates the to-many relationships, this is also the reason why we don't include the below marking period for loop in the previous node for loop
-			moc.refreshAllObjects()
 
 			// Get the marking period information for the subjects
 			for subject in subjects {
 				// For each marking period for the subject, get the respective information
 				for mp in subject.markingPeriods! {
-                    dispatch_group_enter(self.updateGroup); self.timer!.entries += 1 // 2
+					
 					let markingPeriod = mp as! MarkingPeriod
 					let markingPeriodUrl = NSURL(string: markingPeriod.htmlPage!)!
-					// print("Current Marking Period Html Page: " + markingPeriod.htmlPage! + "\n")
 
-					do {
-						try moc.save()
-					} catch {
-						print("FAILED TO SAVE")
-						abort()
-					}
+					backgroundMOC.saveContext()
 
-					let mpRequest = NSURLRequest(URL: markingPeriodUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+					let mpRequest = NSURLRequest(URL: markingPeriodUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 1000) // FIXME: RETURN TO NORMAL
 
 					// Request the mp page
-					
-					let _ = self.session.dataTaskWithRequest(mpRequest) { data, response, error in
+                    dispatch_group_enter(updateGroup); self.timer!.entries += 1 // 2
+                    
+					let getMarkingPeriodPage = self.session.dataTaskWithRequest(mpRequest) { data, response, error in
 						if (error != nil) {
 							self.result = (false, error!)
-                            dispatch_group_leave(self.updateGroup); self.timer!.exits += 1 // 2
+							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 						} else {
 
 							// Get the correct marking period object
-							let nMoc = DataController().managedObjectContext
-							let eRequest = NSFetchRequest()
-
-							let entityDesc = NSEntityDescription.entityForName("MarkingPeriod", inManagedObjectContext: nMoc)
-							eRequest.entity = entityDesc
-
-							let predicate = NSPredicate(format: "htmlPage == %@", argumentArray: [response!.URL!.absoluteString])
-							eRequest.predicate = predicate
-
-							var mP: MarkingPeriod
-
-							do {
-								mP = try moc.executeFetchRequest(eRequest)[0] as! MarkingPeriod
-							} catch {
-								print("Failed to Retrieve the marking periods")
-								abort()
-							}
+							let mP: MarkingPeriod = backgroundMOC.getObjectsFromStore("MarkingPeriod", predicateString: "htmlPage == %@", args: [response!.URL!.absoluteString])[0] as! MarkingPeriod
 
 							// Test if we recieved valid information, if not return aka fail
 							guard let mpPageHtml = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
 								self.result = (false, unknownResponseError)
-                                dispatch_group_leave(self.updateGroup); self.timer!.exits += 1 // 2
+								dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 								return
 							}
 
-							//print(response!.URL!)
-
 							// After recieving the marking period's page store the data
 							if let result = self.parseMarkingPeriodPage(html: mpPageHtml) {
-                                
-                                print("Imputing Results")
 
 								mP.possiblePoints = result.possiblePoints
 								mP.totalPoints = result.totalPoints
 								mP.percentGrade = result.percentGrade
 
 								for assignment in result.assignments {
-									let newA = NSEntityDescription.insertNewObjectForEntityForName("Assignment", inManagedObjectContext: moc) as! Assignment
+									let newA = NSEntityDescription.insertNewObjectForEntityForName("Assignment", inManagedObjectContext: backgroundMOC) as! Assignment
 									newA.name = assignment.name
 									newA.totalPoints = assignment.totalPoints
 									newA.possiblePoints = assignment.possiblePoints
@@ -209,51 +178,39 @@ class UpdateService {
 									newA.date = date!
 								}
                                 
-                                do {
-                                    try moc.save()
-                                } catch {
-                                    print("FAILED TO SAVE")
-                                    abort()
-                                }
-                                
+								backgroundMOC.saveContext()
 							} else {
 								mP.empty = NSNumber(bool: true)
 							}
 
-							do {
-								try moc.save()
-							} catch {
-								print("FAILED TO SAVE")
-								abort()
-							}
+							backgroundMOC.saveContext()
 
-							dispatch_group_leave(self.updateGroup); self.timer!.exits += 1 //2
+							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 						}
-					}.resume()
+					}
+                    getMarkingPeriodPage.resume()
 				} // Marking Period Loop
 			} // Subject Loop
-
-			
 		} // Html Check
-        dispatch_group_leave(self.updateGroup); self.timer!.exits += 1 //1
 
 		// Runs when the User has been completely updated
-		dispatch_group_notify(updateGroup, dispatch_get_main_queue()) {
-			self.timer!.stop()
-			print("------------------------------------------------------")
-			print("Completed in: " + String(self.timer!.duration!))
-            print ("Entries: " + String(self.timer!.entries) + ", Exits: " + String(self.timer!.exits))
-			print("------------------------------------------------------")
-			print("")
-			self.completion(successful: true, error: nil)
-		}
+        dispatch_group_notify(updateGroup, dispatch_get_main_queue()) {
+            self.timer!.stop()
+            print("------------------------------------------------------")
+            print("Completed in: " + String(self.timer!.duration!))
+            print("Entries: " + String(self.timer!.entries) + ", Exits: " + String(self.timer!.exits))
+            print("------------------------------------------------------")
+            print("")
+            self.appDelegate.managedObjectContext.saveContext()
+            self.completion(successful: true, error: nil)
+        }
 	}
 
 	private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
-        
+
 		// Parse percent grade
 		let percentageTextXpath = "//*[@id=\"assignmentFinalGrade\"]/b[1]/following-sibling::text()"
 		if let percentageTextElement = doc.at_xpath(percentageTextXpath) {
@@ -326,14 +283,16 @@ class UpdateService {
 
 		return (assignments, totalPoints, possiblePoints, percentGrade)
 	}
+    
+    
 }
 
 class ParkBenchTimer {
 
 	let startTime: CFAbsoluteTime
 	var endTime: CFAbsoluteTime?
-    var entries: Int = 0
-    var exits: Int = 0
+	var entries: Int = 0
+	var exits: Int = 0
 
 	init() {
 		startTime = CFAbsoluteTimeGetCurrent()

@@ -16,15 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account? Click" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXP-oE-sek">
-                                <rect key="frame" x="170" y="573" width="261" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="261" id="ohx-iz-8MU"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pin" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jT6-JU-vRI">
                                 <rect key="frame" x="175" y="222" width="250" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -84,51 +75,29 @@
                                     <rect key="frame" x="275" y="352" width="250" height="30"/>
                                 </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O4u-pW-4pX">
-                                <rect key="frame" x="394" y="567" width="37" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Here">
-                                    <color key="titleColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="herebutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VqO-Lt-iSz"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.25098039215686274" green="0.6470588235294118" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="sTK-0b-YUK" firstAttribute="top" secondItem="Ntg-Yj-ExN" secondAttribute="top" id="AjV-xV-NPx">
                                 <variation key="widthClass=regular" constant="3"/>
                             </constraint>
-                            <constraint firstItem="O4u-pW-4pX" firstAttribute="leading" secondItem="PXP-oE-sek" secondAttribute="trailing" constant="2" id="B6V-l5-6d9"/>
                             <constraint firstItem="pcI-pH-FwP" firstAttribute="width" secondItem="w1m-js-rWw" secondAttribute="width" id="EaV-5H-JOr"/>
-                            <constraint firstItem="O4u-pW-4pX" firstAttribute="leading" secondItem="PXP-oE-sek" secondAttribute="trailing" constant="-37" id="If5-wD-1NI"/>
                             <constraint firstItem="jT6-JU-vRI" firstAttribute="width" secondItem="w1m-js-rWw" secondAttribute="width" id="J3X-YJ-kUd"/>
                             <constraint firstItem="sTK-0b-YUK" firstAttribute="centerX" secondItem="Ntg-Yj-ExN" secondAttribute="centerX" id="K0P-n0-psD"/>
                             <constraint firstItem="jT6-JU-vRI" firstAttribute="top" secondItem="pcI-pH-FwP" secondAttribute="bottom" constant="10" id="MFs-E0-eLK"/>
                             <constraint firstItem="jT6-JU-vRI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OHk-Y8-VGb"/>
-                            <constraint firstItem="PXP-oE-sek" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OR5-ts-2hT"/>
                             <constraint firstItem="w1m-js-rWw" firstAttribute="top" secondItem="J6L-jR-sRi" secondAttribute="bottom" constant="77" id="PDE-hx-0aA"/>
-                            <constraint firstItem="O4u-pW-4pX" firstAttribute="centerY" secondItem="PXP-oE-sek" secondAttribute="centerY" id="Qr7-V6-gSb"/>
                             <constraint firstItem="J6L-jR-sRi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Rpm-ME-gyz"/>
                             <constraint firstItem="Ntg-Yj-ExN" firstAttribute="top" secondItem="jT6-JU-vRI" secondAttribute="bottom" constant="18" id="SsS-VT-q01">
                                 <variation key="widthClass=regular" constant="13"/>
                             </constraint>
                             <constraint firstItem="pcI-pH-FwP" firstAttribute="top" secondItem="w1m-js-rWw" secondAttribute="bottom" constant="10" id="VJI-mw-VZw"/>
                             <constraint firstItem="sTK-0b-YUK" firstAttribute="leading" secondItem="jT6-JU-vRI" secondAttribute="leading" id="Waj-4D-Ysa"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="PXP-oE-sek" secondAttribute="bottom" constant="6" id="Z8p-mq-ea9"/>
                             <constraint firstItem="J6L-jR-sRi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="bMz-Cf-QUX"/>
                             <constraint firstItem="pcI-pH-FwP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hFA-DB-Pp0"/>
                             <constraint firstItem="w1m-js-rWw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qke-RA-o4p"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="PXP-oE-sek" secondAttribute="bottom" constant="4" id="v39-RA-dJs"/>
                             <constraint firstItem="sTK-0b-YUK" firstAttribute="leading" secondItem="Ntg-Yj-ExN" secondAttribute="leading" id="xUR-1A-FEc"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="v39-RA-dJs"/>
-                                <exclude reference="B6V-l5-6d9"/>
-                            </mask>
-                        </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="sTK-0b-YUK"/>

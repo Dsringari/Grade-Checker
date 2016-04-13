@@ -17,25 +17,33 @@
         <relationship name="assignments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Assignment" inverseName="markingPeriod" inverseEntity="Assignment" syncable="YES"/>
         <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" inverseName="markingPeriods" inverseEntity="Subject" syncable="YES"/>
     </entity>
+    <entity name="Student" representedClassName=".Student" syncable="YES">
+        <attribute name="grade" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="school" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="subjects" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subject" inverseName="student" inverseEntity="Subject" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
+    </entity>
     <entity name="Subject" representedClassName=".Subject" syncable="YES">
         <attribute name="htmlPage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="room" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="teacher" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="markingPeriods" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MarkingPeriod" inverseName="subject" inverseEntity="MarkingPeriod" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="subjects" inverseEntity="User" syncable="YES"/>
+        <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="subjects" inverseEntity="Student" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pin" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="subjects" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subject" inverseName="user" inverseEntity="Subject" syncable="YES"/>
+        <relationship name="students" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Student" syncable="YES"/>
     </entity>
     <elements>
         <element name="Assignment" positionX="-369" positionY="369" width="128" height="120"/>
         <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="165"/>
         <element name="Subject" positionX="-387" positionY="9" width="128" height="135"/>
-        <element name="User" positionX="-369" positionY="-154" width="128" height="118"/>
+        <element name="User" positionX="-369" positionY="-154" width="128" height="105"/>
+        <element name="Student" positionX="-378" positionY="0" width="128" height="135"/>
     </elements>
 </model>

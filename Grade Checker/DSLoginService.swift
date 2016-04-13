@@ -8,9 +8,11 @@
 
 import Foundation
 import Kanna
+import CoreData
 
 class LoginService {
 	var user: User
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let completion: (successful: Bool, error: NSError?, user: User?) -> Void
 
     init(userToBeLoggedIn: User, completionHandler completion: (successful: Bool, error: NSError?, user: User?) -> Void) {
@@ -59,6 +61,8 @@ class LoginService {
 		request.HTTPMethod = "GET"
 
 		let session = NSURLSession.sharedSession()
+        let temporaryContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        temporaryContext.parentContext = appDelegate.managedObjectContext
 		let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
 				print(error)
@@ -69,17 +73,67 @@ class LoginService {
 
 					if let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding) {
                         
-						if (doc.title! == " Student Backpack - Sapphire Community Web Portal ") {
-
-							// we can retrieve the student id from their current grade page link's query parameter
-							let idString: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
-							let id = idString.componentsSeparatedByString("=")[1]
-							self.user.id = id
-                            self.completion(successful: true, error: nil, user: self.user)
-						} else {
-
+                        switch (doc.title!) {
+                        // This user is a student account so it has one student.
+                        case " Student Backpack - Sapphire Community Web Portal ":
+                            let user = temporaryContext.objectWithID(self.user.objectID) as! User
+                            
+                            // Retrieve student information from backpack screen
+                            let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: temporaryContext) as! Student
+                            let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
+                            let id = i.componentsSeparatedByString("=")[1]
+                            let name: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/a")[0]["title"]!
+                            let g: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[1]")[0]["title"]!
+                            let grade = g.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890").invertedSet).joinWithSeparator("")
+                            let school: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[2]")[0]["title"]!
+                            
+                            student.id = id
+                            student.name = name
+                            student.grade = grade
+                            student.school = school
+                            student.user = user
+                            temporaryContext.saveContext()
+                            self.completion(successful: true, error: nil, user: user)
+                        // This user is a parent
+                        case " Welcome - Sapphire Community Web Portal ":
+                            let user = temporaryContext.objectWithID(self.user.objectID) as! User
+                            
+                            var ids: [String] = []
+                            var names: [String] = []
+                            for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/a") {
+                                let i = e["href"]!
+                                let id = i.componentsSeparatedByString("=")[1]
+                                let name = e["title"]!
+                                ids.append(id)
+                                names.append(name)
+                            }
+                            
+                            var grades: [String] = []
+                            for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/div[1]") {
+                                let g = e["title"]!
+                                let grade = g.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890").invertedSet).joinWithSeparator("")
+                                grades.append(grade)
+                            }
+                            
+                            var schools: [String] = []
+                            for e in doc.xpath("/*[@id=\"leftPipe\"]/ul//li/div[2]") {
+                                let school = e["title"]!
+                                schools.append(school)
+                            }
+                            
+                            for index in 0...(ids.count - 1) {
+                                let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: temporaryContext) as! Student
+                                student.id = ids[index]
+                                student.name = names[index]
+                                student.grade = grades[index]
+                                student.school = schools[index]
+                                student.user = user
+                            }
+                            temporaryContext.saveContext()
+                            self.completion(successful: true, error: nil, user: user)
+                        default:
                             self.completion(successful: false, error: badLoginError, user: nil)
-						}
+                        }
 					} else {
                         self.completion(successful: false, error: unknownResponseError, user: nil)
 					}

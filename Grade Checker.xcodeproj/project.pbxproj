@@ -8,16 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		C193E7F30B9FF30536B32143 /* Pods_Grade_Checker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */; };
+		FC00EBF31CBDBDEF00A461AC /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBE91CBDBDEF00A461AC /* Assignment+CoreDataProperties.swift */; };
+		FC00EBF41CBDBDEF00A461AC /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEA1CBDBDEF00A461AC /* Assignment.swift */; };
+		FC00EBF51CBDBDEF00A461AC /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEB1CBDBDEF00A461AC /* Subject+CoreDataProperties.swift */; };
+		FC00EBF61CBDBDEF00A461AC /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEC1CBDBDEF00A461AC /* Subject.swift */; };
+		FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBED1CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift */; };
+		FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */; };
+		FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */; };
+		FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBF01CBDBDEF00A461AC /* User.swift */; };
+		FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */; };
+		FC00EC021CBDBFE700A461AC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EC001CBDBFE700A461AC /* Student.swift */; };
+		FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC06632C1CBC3AA9005D1310 /* CoreData.framework */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
-		FC5BDC1B1CB9D31600FB68FD /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BDC131CB9D31600FB68FD /* Subject+CoreDataProperties.swift */; };
-		FC5BDC1C1CB9D31600FB68FD /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BDC141CB9D31600FB68FD /* Subject.swift */; };
-		FC5BDC1F1CB9D31600FB68FD /* MarkingPeriod+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BDC171CB9D31600FB68FD /* MarkingPeriod+CoreDataProperties.swift */; };
-		FC5BDC201CB9D31600FB68FD /* MarkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BDC181CB9D31600FB68FD /* MarkingPeriod.swift */; };
-		FC5BDC211CB9D31600FB68FD /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BDC191CB9D31600FB68FD /* User+CoreDataProperties.swift */; };
-		FC5BDC221CB9D31600FB68FD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BDC1A1CB9D31600FB68FD /* User.swift */; };
-		FC5BDC251CB9D66900FB68FD /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BDC231CB9D66900FB68FD /* Assignment+CoreDataProperties.swift */; };
-		FC5BDC261CB9D66900FB68FD /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BDC241CB9D66900FB68FD /* Assignment.swift */; };
 		FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */; };
 		FC639F9D1C8F8FFD006C71A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9C1C8F8FFD006C71A7 /* ViewController.swift */; };
 		FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */; };
@@ -26,7 +29,6 @@
 		FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */; };
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
-		FCEF55E21C9DCE9200F0190E /* DSDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55E11C9DCE9200F0190E /* DSDataController.swift */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,16 +36,19 @@
 		21C45DA85B0B0E9AE16C5C63 /* Pods-Grade Checker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.release.xcconfig"; sourceTree = "<group>"; };
 		542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grade_Checker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE8D4962F0BB482B8EAF461D /* Pods-Grade Checker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.debug.xcconfig"; sourceTree = "<group>"; };
+		FC00EBE91CBDBDEF00A461AC /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC00EBEA1CBDBDEF00A461AC /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		FC00EBEB1CBDBDEF00A461AC /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC00EBEC1CBDBDEF00A461AC /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
+		FC00EBED1CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MarkingPeriod+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkingPeriod.swift; sourceTree = "<group>"; };
+		FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC00EBF01CBDBDEF00A461AC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC00EC001CBDBFE700A461AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		FC06632C1CBC3AA9005D1310 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
-		FC5BDC131CB9D31600FB68FD /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FC5BDC141CB9D31600FB68FD /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
-		FC5BDC171CB9D31600FB68FD /* MarkingPeriod+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MarkingPeriod+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FC5BDC181CB9D31600FB68FD /* MarkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkingPeriod.swift; sourceTree = "<group>"; };
-		FC5BDC191CB9D31600FB68FD /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FC5BDC1A1CB9D31600FB68FD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		FC5BDC231CB9D66900FB68FD /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FC5BDC241CB9D66900FB68FD /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Grade Checker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grade Checker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC639F9C1C8F8FFD006C71A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,7 +59,6 @@
 		FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSDataService.swift; sourceTree = "<group>"; };
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		FCEF55E11C9DCE9200F0190E /* DSDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSDataController.swift; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */,
 				C193E7F30B9FF30536B32143 /* Pods_Grade_Checker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +78,7 @@
 		3A39DB40D025CD77D3B363B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC06632C1CBC3AA9005D1310 /* CoreData.framework */,
 				542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */,
 			);
 			name = Frameworks;
@@ -90,14 +96,16 @@
 		FC0519C61CB8479100D502EA /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				FC5BDC131CB9D31600FB68FD /* Subject+CoreDataProperties.swift */,
-				FC5BDC141CB9D31600FB68FD /* Subject.swift */,
-				FC5BDC171CB9D31600FB68FD /* MarkingPeriod+CoreDataProperties.swift */,
-				FC5BDC181CB9D31600FB68FD /* MarkingPeriod.swift */,
-				FC5BDC191CB9D31600FB68FD /* User+CoreDataProperties.swift */,
-				FC5BDC1A1CB9D31600FB68FD /* User.swift */,
-				FC5BDC231CB9D66900FB68FD /* Assignment+CoreDataProperties.swift */,
-				FC5BDC241CB9D66900FB68FD /* Assignment.swift */,
+				FC00EBE91CBDBDEF00A461AC /* Assignment+CoreDataProperties.swift */,
+				FC00EBEA1CBDBDEF00A461AC /* Assignment.swift */,
+				FC00EBEB1CBDBDEF00A461AC /* Subject+CoreDataProperties.swift */,
+				FC00EBEC1CBDBDEF00A461AC /* Subject.swift */,
+				FC00EBED1CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift */,
+				FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */,
+				FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */,
+				FC00EBF01CBDBDEF00A461AC /* User.swift */,
+				FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */,
+				FC00EC001CBDBFE700A461AC /* Student.swift */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -130,7 +138,6 @@
 				FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */,
 				FCF028221C9DC690008AC891 /* ErrorTypes.swift */,
 				FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */,
-				FCEF55E11C9DCE9200F0190E /* DSDataController.swift */,
 				FC2953181CB73BA400DD38CE /* DSHelper.swift */,
 				FC0519C61CB8479100D502EA /* ManagedObjects */,
 				FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */,
@@ -278,23 +285,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC5BDC261CB9D66900FB68FD /* Assignment.swift in Sources */,
+				FC00EBF41CBDBDEF00A461AC /* Assignment.swift in Sources */,
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
-				FC5BDC1C1CB9D31600FB68FD /* Subject.swift in Sources */,
-				FC5BDC251CB9D66900FB68FD /* Assignment+CoreDataProperties.swift in Sources */,
-				FC5BDC211CB9D31600FB68FD /* User+CoreDataProperties.swift in Sources */,
+				FC00EBF61CBDBDEF00A461AC /* Subject.swift in Sources */,
 				FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */,
-				FC5BDC1F1CB9D31600FB68FD /* MarkingPeriod+CoreDataProperties.swift in Sources */,
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
-				FC5BDC221CB9D31600FB68FD /* User.swift in Sources */,
-				FCEF55E21C9DCE9200F0190E /* DSDataController.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FC639F9D1C8F8FFD006C71A7 /* ViewController.swift in Sources */,
-				FC5BDC1B1CB9D31600FB68FD /* Subject+CoreDataProperties.swift in Sources */,
+				FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */,
+				FC00EBF31CBDBDEF00A461AC /* Assignment+CoreDataProperties.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
+				FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
+				FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */,
+				FC00EC021CBDBFE700A461AC /* Student.swift in Sources */,
+				FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */,
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
-				FC5BDC201CB9D31600FB68FD /* MarkingPeriod.swift in Sources */,
+				FC00EBF51CBDBDEF00A461AC /* Subject+CoreDataProperties.swift in Sources */,
+				FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
