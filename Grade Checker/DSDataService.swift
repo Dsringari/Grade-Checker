@@ -50,7 +50,6 @@ class UpdateService {
         getCoursePage.resume()
 	}
     
-	// TODO: Make sure to leave the update group when the user has updated sujects
 	// Adds the subjects to the user when the correct page is given
     // MAY BE CALLED FROM NON_MAIN THREAD
 	private func createSubjects(coursesAndGradePageHtml html: String, student: Student) {
@@ -124,7 +123,7 @@ class UpdateService {
 
 			
 			// This updates the to-many relationships, this is also the reason why we don't include the below marking period for loop in the previous node for loop
-
+            backgroundMOC.refreshAllObjects()
 			// Get the marking period information for the subjects
 			for subject in subjects {
 				// For each marking period for the subject, get the respective information
@@ -210,18 +209,32 @@ class UpdateService {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
+        
+        // Parse all the assignments while ignoring the assignment descriptions
+        let assignmentsXpath = "//*[@id=\"assignments\"]/tr[count(td)=6]"
+        
+        // Get all the assignment names
+        var aNames: [String] = []
+        for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[1]") {
+            aNames.append(aE.text!)
+        }
+        
+        // Check if we have an empty marking period
+        if (aNames.count == 0) {
+            return nil
+        }
 
 		// Parse percent grade
 		let percentageTextXpath = "//*[@id=\"assignmentFinalGrade\"]/b[1]/following-sibling::text()"
 		if let percentageTextElement = doc.at_xpath(percentageTextXpath) {
-			// Check for only a percent symbol, if so the marking period is empty
 			var text = percentageTextElement.text!
 			// Remove all the spaces and other characters
 			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.%").invertedSet).joinWithSeparator("")
-			if (text == "%") {
-				return nil
-			}
-			percentGrade = text
+            // If we have a marking period with assignments but 0/0 points change the % to 0.00%
+            if (text == "%") {
+                text = "0.00%"
+            }
+            percentGrade = text
 		} else {
 			print("Failed to find percentageTextElement!")
 			return nil
@@ -241,14 +254,9 @@ class UpdateService {
 			return nil
 		}
 
-		// Parse all the assignments while ignoring the assignment descriptions
-		let assignmentsXpath = "//*[@id=\"assignments\"]/tr[count(td)=6]"
+		
 
-		// Get all the assignment names
-		var aNames: [String] = []
-		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[1]") {
-			aNames.append(aE.text!)
-		}
+		
 
 		// Get all total points
 		var aTotalPoints: [String] = []

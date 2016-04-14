@@ -16,12 +16,14 @@ class DSLoginView: UIViewController {
 	@IBOutlet var pinField: UITextField!
 
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    // This is the Indicator that will show while the app retrieves all the required data
+    let activityAlert = UIAlertController(title: "Logging In\n", message: nil, preferredStyle: .Alert)
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 		// TODO: Check for a user in the database and push to homescreen while updating it
-        appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
+		appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
 	}
 
 	@IBAction func herebutton(sender: AnyObject) {
@@ -40,8 +42,8 @@ class DSLoginView: UIViewController {
 
 		appDelegate.saveContext()
 
-		// This is the Indicator that will show while the app retrieves all the required data
-		let activityAlert = UIAlertController(title: "Logging In\n", message: nil, preferredStyle: .Alert)
+		
+		
 
 		let indicator = UIActivityIndicatorView()
 		indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -59,100 +61,132 @@ class DSLoginView: UIViewController {
 		self.presentViewController(activityAlert, animated: true, completion: nil)
 
 		// This is the LoginService Completion Handler
-		let _ = LoginService(userToBeLoggedIn: user, completionHandler:  { successful, error, legitamateUser in
+		let _ = LoginService(userToBeLoggedIn: user, completionHandler: { successful, error, legitamateUser in
 
 			if (successful) {
-
-				let _ = UpdateService(legitamateUser: user, completionHandler:  { successful, error in // FIXME: From here everything is outdated, make sure to ask for what student they want to display
-
-					// TEST STUFF
-					// fetch the user
-					let updatedUser = self.appDelegate.managedObjectContext.objectWithID(user.objectID) as! User
-
-					print("")
-					print("Nice Grades! " + updatedUser.username!)
-					print("")
-
-					// Sort Alphabetically
-					let sortedSubjects = updatedUser.subjects!.allObjects.sort { ($0 as! Subject).name! < ($1 as! Subject).name! } as! [Subject]
-
-					for s in sortedSubjects {
-						print(s.name! + ":")
-
-						// Sort by MP Number
-						let sortedMarkingPeriods = s.markingPeriods!.allObjects.sort { ($0 as! MarkingPeriod).number! < ($1 as! MarkingPeriod).number! } as! [MarkingPeriod]
-                        
-                        // Alert String
-                        
-
-						for mp in sortedMarkingPeriods {
-							
-							print("\tMarking Period: " + mp.number!)
-							if (!mp.empty!.boolValue) {
-
-								print("\t\t" + "(Percent Grade: " + mp.percentGrade! + "):")
-
-								if (mp.number! == "4") {
-								}
-
-								// Sort by Date
-                                let sortedAssignments = mp.assignments!.allObjects.sort {
-									let one = $0 as! Assignment
-									let two = $1 as! Assignment
-
-									return one.date!.compare(two.date!) == NSComparisonResult.OrderedDescending
-								}  as! [Assignment]
-
-								for a in sortedAssignments {
-									let score = a.totalPoints! + "/" + a.possiblePoints!
-									let s = "\t\t\t" + a.name! + "\t Score: " + score
-									print(s)
-								}
-							}
-						}
-					}
+                
+                if (legitamateUser!.students!.allObjects.count > 1) {
+                    let chooseStudentAlert = UIAlertController(title: "Students", message: "Pick a Student", preferredStyle: .ActionSheet)
                     
-                    // This section of code prevents an empty marking period from being displayed
-                    
-                    let subjects = updatedUser.subjects!.allObjects as! [Subject]
-                    var someSubject = subjects.randomObject!
-                    
-                    // Select a random subject and marking period
-                    var someMarkingPeriod = (someSubject.markingPeriods!.allObjects as! [MarkingPeriod]).randomObject!
-                    
-                    
-                    while(someMarkingPeriod.empty!.boolValue) {
-                        someSubject = subjects.randomObject!
-                        someMarkingPeriod = (someSubject.markingPeriods!.allObjects as! [MarkingPeriod]).randomObject!
+                    let students: [Student] = user.students!.allObjects as! [Student]
+                    var buttons: [UIAlertAction] = []
+                    for index in 0 ... (students.count - 1) {
+                        let button = UIAlertAction(title: students[index].name!, style: .Default, handler: { button in
+                            if let index = buttons.indexOf(button) {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.presentViewController(self.activityAlert, animated: false, completion: nil)
+                                    self.callUpdateService(students[index])
+                                })
+                                
+                            }
+                        })
+                        buttons.append(button)
                     }
-                    
+                    for b in buttons {
+                        chooseStudentAlert.addAction(b)
+                    }
                     dispatch_async(dispatch_get_main_queue(), {
-                        activityAlert.dismissViewControllerAnimated(false, completion: {
-                            
-                            let randomGradeAlert = UIAlertController(title: someSubject.name!, message: "MP " + someMarkingPeriod.number! + ": " + someMarkingPeriod.percentGrade!, preferredStyle: .Alert)
-                            let ok = UIAlertAction(title: "K?", style: .Default, handler: { alertAction in
-                                let moc = self.appDelegate.managedObjectContext
-                                self.appDelegate.deleteAllUsers(moc)
-                                moc.saveContext()
-                            })
-                            randomGradeAlert.addAction(ok)
-                            self.presentViewController(randomGradeAlert, animated: true, completion: nil)
+                        self.activityAlert.dismissViewControllerAnimated(false, completion: {
+                            self.presentViewController(chooseStudentAlert, animated: true, completion: nil)
                         })
                     })
-				})
+                } else {
+                    self.callUpdateService(legitamateUser!.students!.allObjects[0] as! Student)
+                }
+
+				
 			} else {
 				dispatch_async(dispatch_get_main_queue(), {
-					activityAlert.dismissViewControllerAnimated(false) {
+					self.activityAlert.dismissViewControllerAnimated(false) {
 						let alert = UIAlertController(title: error!.localizedDescription, message: error!.localizedFailureReason, preferredStyle: .Alert)
 						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-                        self.presentViewController(alert, animated: false, completion: {
-                            let moc = self.appDelegate.managedObjectContext
-                            self.appDelegate.deleteAllUsers(moc)
-                            moc.saveContext()
-                        })
+						self.presentViewController(alert, animated: false, completion: {
+							let moc = self.appDelegate.managedObjectContext
+							self.appDelegate.deleteAllUsers(moc)
+							moc.saveContext()
+						})
 					}
 				})
 			}
+		})
+	}
+
+    func callUpdateService(student: Student) {
+		let _ = UpdateService(student: student, completionHandler: { successful, error in
+
+			// TEST STUFF
+			// fetch the user
+			
+			let student = self.appDelegate.managedObjectContext.objectWithID(student.objectID) as! Student
+
+			print("")
+			print("Nice Grades! " + student.name!)
+			print("")
+
+			// Sort Alphabetically
+			let sortedSubjects = student.subjects!.allObjects.sort { ($0 as! Subject).name! < ($1 as! Subject).name! } as! [Subject]
+
+			for s in sortedSubjects {
+				print(s.name! + ":")
+
+				// Sort by MP Number
+				let sortedMarkingPeriods = s.markingPeriods!.allObjects.sort { ($0 as! MarkingPeriod).number! < ($1 as! MarkingPeriod).number! } as! [MarkingPeriod]
+
+				// Alert String
+
+				for mp in sortedMarkingPeriods {
+
+					print("\tMarking Period: " + mp.number!)
+					if (!mp.empty!.boolValue) {
+
+						print("\t\t" + "(Percent Grade: " + mp.percentGrade! + "):")
+
+						if (mp.number! == "4") {
+						}
+
+						// Sort by Date
+						let sortedAssignments = mp.assignments!.allObjects.sort {
+							let one = $0 as! Assignment
+							let two = $1 as! Assignment
+
+							return one.date!.compare(two.date!) == NSComparisonResult.OrderedDescending
+						} as! [Assignment]
+
+						for a in sortedAssignments {
+							let score = a.totalPoints! + "/" + a.possiblePoints!
+							let s = "\t\t\t" + a.name! + "\t Score: " + score
+							print(s)
+						}
+					}
+				}
+			}
+
+			// This section of code prevents an empty marking period from being displayed
+
+			let subjects = student.subjects!.allObjects as! [Subject]
+			var someSubject = subjects.randomObject!
+
+			// Select a random subject and marking period
+			var someMarkingPeriod = (someSubject.markingPeriods!.allObjects as! [MarkingPeriod]).randomObject!
+
+			while (someMarkingPeriod.empty!.boolValue) {
+				someSubject = subjects.randomObject!
+				someMarkingPeriod = (someSubject.markingPeriods!.allObjects as! [MarkingPeriod]).randomObject!
+			}
+
+			dispatch_async(dispatch_get_main_queue(), {
+				self.activityAlert.dismissViewControllerAnimated(false, completion: {
+
+					let randomGradeAlert = UIAlertController(title: someSubject.name!, message: "MP " + someMarkingPeriod.number! + ": " + someMarkingPeriod.percentGrade!, preferredStyle: .Alert)
+					let ok = UIAlertAction(title: "K?", style: .Default, handler: { alertAction in
+						let moc = self.appDelegate.managedObjectContext
+						self.appDelegate.deleteAllUsers(moc)
+						moc.saveContext()
+					})
+					randomGradeAlert.addAction(ok)
+					self.presentViewController(randomGradeAlert, animated: true, completion: nil)
+				})
+			})
 		})
 	}
 

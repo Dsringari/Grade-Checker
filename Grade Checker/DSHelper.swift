@@ -33,8 +33,31 @@ extension Array where Element: Equatable {
         let index = Int(arc4random_uniform(UInt32(self.count)))
         return self[index]
     }
+}
+
+extension NSArray {
+    func getObjectInArray(predicateString: String, args: [AnyObject]?) -> AnyObject? {
+        let predicate = NSPredicate(format: predicateString, argumentArray: args)
+        let result = self.filteredArrayUsingPredicate(predicate)
+        if result.count == 0 {
+            return nil
+        } else if result.count > 1 {
+            print("Wanted one object got multiple returning nil")
+            return nil
+        }
+        return result[0]
+    }
     
     
+    class func getObjectsInArray(predicateString: String, args: [AnyObject]?, array: NSArray) -> [AnyObject] {
+        let predicate = NSPredicate(format: predicateString, argumentArray: args)
+        let result = array.filteredArrayUsingPredicate(predicate)
+        if result.count == 0 {
+            return []
+        }
+        return result
+    }
+
 }
 
 extension NSManagedObjectContext {

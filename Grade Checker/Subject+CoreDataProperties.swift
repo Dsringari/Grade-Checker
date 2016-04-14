@@ -19,6 +19,6 @@ extension Subject {
     @NSManaged var room: String?
     @NSManaged var teacher: String?
     @NSManaged var markingPeriods: NSSet?
-    @NSManaged var student: Child?
+    @NSManaged var student: Student?
 
 }
