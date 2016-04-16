@@ -14,6 +14,7 @@ class DSLoginView: UIViewController {
 	@IBOutlet var usernameField: UITextField!
 	@IBOutlet var passwordField: UITextField!
 	@IBOutlet var pinField: UITextField!
+    @IBOutlet var scrollView: UIScrollView!
 
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     // This is the Indicator that will show while the app retrieves all the required data
@@ -24,7 +25,53 @@ class DSLoginView: UIViewController {
 		// Do any additional setup after loading the view.
 		// TODO: Check for a user in the database and push to homescreen while updating it
 		appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
-	}
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        registerKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        unregisterKeyboardNotifications()
+    }
+    
+    // - MARK: SETUP
+    
+    // Make sure we can always see all the text fields
+    func registerKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidShow), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unregisterKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func keyboardDidShow(notification: NSNotification) {
+        let info = notification.userInfo!
+        let keyPadFrame: CGRect = UIApplication.sharedApplication().keyWindow!.convertRect(info[UIKeyboardFrameEndUserInfoKey]!.CGRectValue(), fromView: self.view)
+        let kbSize = keyPadFrame.size
+        let activeRect = self.view.convertRect(pinField.frame, toView: pinField.superview)
+        var rect = self.view.bounds
+        rect.size.height -= kbSize.height
+        
+        var origin = activeRect.origin
+        origin.y = scrollView.contentOffset.y
+        if (!CGRectContainsPoint(rect, origin)) {
+            let scrollPoint = CGPointMake(0.0, CGRectGetMaxX(activeRect)-rect.size.height)
+            scrollView.setContentOffset(scrollPoint, animated: true)
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset = UIEdgeInsetsZero
+        scrollView.scrollIndicatorInsets = UIEdgeInsetsZero
+    }
+    
+    // - MARK: Functions
 
 	@IBAction func herebutton(sender: AnyObject) {
 		// TODO: Add new account functionality
@@ -110,7 +157,8 @@ class DSLoginView: UIViewController {
 			}
 		})
 	}
-
+    
+    // - MARK: HELPER FUNCTIONS
     func callUpdateService(student: Student) {
 		let _ = UpdateService(student: student, completionHandler: { successful, error in
 

@@ -28,7 +28,7 @@ class LoginService {
 				self.completion(successful: false, error: error, user: nil)
 				return
 			}
-            printt("Logout Successful")
+            print("Logout Successful")
 			let session = NSURLSession.sharedSession()
 			let headers = [
 				"content-type": "application/x-www-form-urlencoded"
@@ -152,6 +152,7 @@ class LoginService {
 							}
 							temporaryContext.saveContext()
 							self.completion(successful: true, error: nil, user: user)
+                        // Failed to Login
 						default:
 							self.completion(successful: false, error: badLoginError, user: nil)
 						}
