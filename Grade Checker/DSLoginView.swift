@@ -139,7 +139,7 @@ class DSLoginView: UIViewController {
                         chooseStudentAlert.addAction(b)
                     }
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.activityAlert.dismissViewControllerAnimated(false, completion: {
+                        self.activityAlert.dismissViewControllerAnimated(true, completion: {
                             self.presentViewController(chooseStudentAlert, animated: true, completion: nil)
                         })
                     })
@@ -150,14 +150,14 @@ class DSLoginView: UIViewController {
 				
 			} else {
 				dispatch_async(dispatch_get_main_queue(), {
-					self.activityAlert.dismissViewControllerAnimated(false) {
+					self.activityAlert.dismissViewControllerAnimated(true) {
                         var err = error
                         if (error!.code == NSURLErrorTimedOut) {
                             err = badConnectionError
                         }
 						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
 						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: false, completion: {
+						self.presentViewController(alert, animated: true, completion: {
 							let moc = self.appDelegate.managedObjectContext
 							self.appDelegate.deleteAllUsers(moc)
 							moc.saveContext()
@@ -234,7 +234,7 @@ class DSLoginView: UIViewController {
 			}
 
 			dispatch_async(dispatch_get_main_queue(), {
-				self.activityAlert.dismissViewControllerAnimated(false, completion: {
+				self.activityAlert.dismissViewControllerAnimated(true, completion: {
 
 					let randomGradeAlert = UIAlertController(title: someSubject.name!, message: "MP " + someMarkingPeriod.number! + ": " + someMarkingPeriod.percentGrade!, preferredStyle: .Alert)
 					let ok = UIAlertAction(title: "K?", style: .Default, handler: { alertAction in

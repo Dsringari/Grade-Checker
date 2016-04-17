@@ -62,7 +62,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                             </textField>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox3" translatesAutoresizingMaskIntoConstraints="NO" id="NXN-RP-Jjb">
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox" translatesAutoresizingMaskIntoConstraints="NO" id="NXN-RP-Jjb">
                                                 <rect key="frame" x="20" y="130" width="332" height="38"/>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pin" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QRW-wC-xnN">
@@ -289,8 +289,8 @@
     <resources>
         <image name="AppIcon" width="229" height="143"/>
         <image name="Custom Shadow" width="345" height="106"/>
+        <image name="Textbox" width="375" height="38"/>
         <image name="Textbox1" width="375" height="38"/>
         <image name="Textbox2" width="375" height="38"/>
-        <image name="Textbox3" width="375" height="38"/>
     </resources>
 </document>
