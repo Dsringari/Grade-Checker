@@ -5,5 +5,6 @@ use_frameworks!
 
 target 'Grade Checker' do
 pod 'Kanna', '~> 1.0.0'
+pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
 end
 

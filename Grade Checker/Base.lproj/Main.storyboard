@@ -14,18 +14,18 @@
                         <viewControllerLayoutGuide type="top" id="QP8-yG-ffX"/>
                         <viewControllerLayoutGuide type="bottom" id="JkM-oA-sSs"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="50Y-4K-O4a">
+                    <view key="view" contentMode="scaleToFill" id="50Y-4K-O4a" customClass="SpringView" customModule="Spring">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u0i-of-x6A">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="u0i-of-x6A">
                                 <rect key="frame" x="0.0" y="8" width="400" height="402"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LV1-9L-x3F">
-                                        <rect key="frame" x="104" y="20" width="192" height="64"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LV1-9L-x3F">
+                                        <rect key="frame" x="104" y="20" width="341" height="143"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="AppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="5xN-TQ-UUR">
-                                                <rect key="frame" x="20" y="20" width="80" height="64"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="AppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="5xN-TQ-UUR">
+                                                <rect key="frame" x="0.0" y="0.0" width="229" height="143"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="80" id="8xf-T1-1yg"/>
                                                     <constraint firstAttribute="height" constant="64" id="hYH-ha-cKd"/>
@@ -43,37 +43,37 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GRADES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15D-LN-Q19">
-                                                <rect key="frame" x="108" y="35" width="102" height="33"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="GRADES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15D-LN-Q19">
+                                                <rect key="frame" x="239" y="0.0" width="102" height="143"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpa-v6-JZA">
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tpa-v6-JZA">
                                         <rect key="frame" x="20" y="92" width="360" height="188"/>
                                         <subviews>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" image="Textbox1" translatesAutoresizingMaskIntoConstraints="NO" id="UQw-Wj-tHZ">
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox1" translatesAutoresizingMaskIntoConstraints="NO" id="UQw-Wj-tHZ">
                                                 <rect key="frame" x="20" y="20" width="332" height="38"/>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="myU-Fz-vue">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="myU-Fz-vue">
                                                 <rect key="frame" x="35" y="20" width="317" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                             </textField>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" image="Textbox3" translatesAutoresizingMaskIntoConstraints="NO" id="NXN-RP-Jjb">
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox3" translatesAutoresizingMaskIntoConstraints="NO" id="NXN-RP-Jjb">
                                                 <rect key="frame" x="20" y="130" width="332" height="38"/>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pin" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QRW-wC-xnN">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pin" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QRW-wC-xnN">
                                                 <rect key="frame" x="35" y="130" width="317" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" returnKeyType="done" secureTextEntry="YES"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" returnKeyType="done" secureTextEntry="YES"/>
                                             </textField>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" image="Textbox2" translatesAutoresizingMaskIntoConstraints="NO" id="awD-df-Nu3">
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox2" translatesAutoresizingMaskIntoConstraints="NO" id="awD-df-Nu3">
                                                 <rect key="frame" x="20" y="75" width="332" height="38"/>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ven-4y-K3C">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ven-4y-K3C">
                                                 <rect key="frame" x="35" y="75" width="317" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
@@ -162,10 +162,10 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="Custom Shadow" translatesAutoresizingMaskIntoConstraints="NO" id="RzP-M3-r5p">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" ambiguous="YES" misplaced="YES" image="Custom Shadow" translatesAutoresizingMaskIntoConstraints="NO" id="RzP-M3-r5p">
                                         <rect key="frame" x="28" y="296" width="345" height="86"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtK-VB-GJu">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtK-VB-GJu">
                                         <rect key="frame" x="38" y="306" width="325" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="jtK-VB-GJu" secondAttribute="height" multiplier="65:12" id="jHD-33-SbA"/>
@@ -191,6 +191,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailingMargin" secondItem="RzP-M3-r5p" secondAttribute="trailing" constant="19" id="2hZ-nm-SEh"/>
+                                    <constraint firstItem="Tpa-v6-JZA" firstAttribute="leading" secondItem="u0i-of-x6A" secondAttribute="leading" constant="20" id="5h9-IX-rtu"/>
                                     <constraint firstItem="jtK-VB-GJu" firstAttribute="bottom" secondItem="RzP-M3-r5p" secondAttribute="bottom" constant="-16" id="CTc-uR-EuZ"/>
                                     <constraint firstAttribute="bottom" secondItem="LV1-9L-x3F" secondAttribute="bottom" constant="508" id="Dco-T4-mMQ"/>
                                     <constraint firstItem="LV1-9L-x3F" firstAttribute="top" secondItem="u0i-of-x6A" secondAttribute="top" constant="28" id="MMa-7o-bth"/>
@@ -198,20 +199,17 @@
                                     <constraint firstItem="Tpa-v6-JZA" firstAttribute="top" secondItem="LV1-9L-x3F" secondAttribute="bottom" constant="8" symbolic="YES" id="SSW-Ar-su0"/>
                                     <constraint firstItem="RzP-M3-r5p" firstAttribute="top" secondItem="Tpa-v6-JZA" secondAttribute="bottom" constant="16" id="W4U-Tn-85A"/>
                                     <constraint firstItem="jtK-VB-GJu" firstAttribute="leading" secondItem="RzP-M3-r5p" secondAttribute="leading" constant="10" id="WRK-6W-7D2"/>
-                                    <constraint firstItem="Tpa-v6-JZA" firstAttribute="leading" secondItem="u0i-of-x6A" secondAttribute="leading" constant="20" id="ZaK-en-1rw"/>
-                                    <constraint firstAttribute="trailing" secondItem="Tpa-v6-JZA" secondAttribute="trailing" constant="20" id="ddj-Si-FGu"/>
                                     <constraint firstItem="LV1-9L-x3F" firstAttribute="centerX" secondItem="Tpa-v6-JZA" secondAttribute="centerX" id="jeo-5e-tDi"/>
-                                    <constraint firstItem="Tpa-v6-JZA" firstAttribute="centerX" secondItem="u0i-of-x6A" secondAttribute="centerX" id="lnP-bw-Mxu"/>
+                                    <constraint firstAttribute="trailing" secondItem="Tpa-v6-JZA" secondAttribute="trailing" constant="20" id="oON-2k-gue"/>
                                     <constraint firstItem="jtK-VB-GJu" firstAttribute="trailing" secondItem="RzP-M3-r5p" secondAttribute="trailing" constant="-10" id="p0d-PX-Ix8"/>
                                     <constraint firstItem="RzP-M3-r5p" firstAttribute="leading" secondItem="u0i-of-x6A" secondAttribute="leadingMargin" constant="20" id="uA1-w3-ejd"/>
                                     <constraint firstItem="RzP-M3-r5p" firstAttribute="centerX" secondItem="u0i-of-x6A" secondAttribute="centerX" id="wXG-QF-Ojf"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="5h9-IX-rtu"/>
                                         <exclude reference="SSW-Ar-su0"/>
-                                        <exclude reference="ZaK-en-1rw"/>
-                                        <exclude reference="ddj-Si-FGu"/>
-                                        <exclude reference="lnP-bw-Mxu"/>
+                                        <exclude reference="oON-2k-gue"/>
                                         <exclude reference="Dco-T4-mMQ"/>
                                         <exclude reference="MMa-7o-bth"/>
                                         <exclude reference="jeo-5e-tDi"/>
@@ -227,10 +225,9 @@
                                 </variation>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
+                                        <include reference="5h9-IX-rtu"/>
                                         <include reference="SSW-Ar-su0"/>
-                                        <include reference="ZaK-en-1rw"/>
-                                        <include reference="ddj-Si-FGu"/>
-                                        <include reference="lnP-bw-Mxu"/>
+                                        <include reference="oON-2k-gue"/>
                                         <include reference="Dco-T4-mMQ"/>
                                         <include reference="MMa-7o-bth"/>
                                         <include reference="jeo-5e-tDi"/>
@@ -248,17 +245,24 @@
                         </subviews>
                         <color key="backgroundColor" red="0.20392156862745098" green="0.32941176470588235" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="JkM-oA-sSs" firstAttribute="top" secondItem="u0i-of-x6A" secondAttribute="bottom" id="Myp-oe-Z8d"/>
                             <constraint firstAttribute="trailing" secondItem="u0i-of-x6A" secondAttribute="trailing" id="RNw-gu-Y51"/>
                             <constraint firstItem="u0i-of-x6A" firstAttribute="leading" secondItem="50Y-4K-O4a" secondAttribute="leading" id="hyC-MB-Pep"/>
                             <constraint firstItem="u0i-of-x6A" firstAttribute="top" secondItem="50Y-4K-O4a" secondAttribute="top" id="xER-HO-Y8c"/>
-                            <constraint firstItem="JkM-oA-sSs" firstAttribute="top" secondItem="u0i-of-x6A" secondAttribute="bottom" id="y8R-Ec-NQZ"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="animation" value="zoomIn"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="delay">
+                                <real key="value" value="0.25"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="string" keyPath="curve" value="spring"/>
+                        </userDefinedRuntimeAttributes>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="RNw-gu-Y51"/>
                                 <exclude reference="hyC-MB-Pep"/>
                                 <exclude reference="xER-HO-Y8c"/>
-                                <exclude reference="y8R-Ec-NQZ"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -266,7 +270,6 @@
                                 <include reference="RNw-gu-Y51"/>
                                 <include reference="hyC-MB-Pep"/>
                                 <include reference="xER-HO-Y8c"/>
-                                <include reference="y8R-Ec-NQZ"/>
                             </mask>
                         </variation>
                     </view>

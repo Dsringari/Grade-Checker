@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Spring
 
 class DSLoginView: UIViewController {
 	@IBOutlet var loginButton: UIButton!
@@ -25,17 +26,20 @@ class DSLoginView: UIViewController {
 		// Do any additional setup after loading the view.
 		// TODO: Check for a user in the database and push to homescreen while updating it
 		appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
-        
+        // If the user taps outside the textfields close the keyboard
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
+    // TODO: Fix scrolling to textview functions
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        registerKeyboardNotifications()
+        //registerKeyboardNotifications()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        unregisterKeyboardNotifications()
+       // unregisterKeyboardNotifications()
     }
     
     // - MARK: SETUP
@@ -79,6 +83,8 @@ class DSLoginView: UIViewController {
 	}
 
 	@IBAction func login(sender: AnyObject) {
+        scrollView.endEditing(true)
+        
 
 		// create a new user in the database
 		// FIXME: DO NOT INSERT THE USER HERE WAIT TILL WE ARE VALIDATED
@@ -145,7 +151,11 @@ class DSLoginView: UIViewController {
 			} else {
 				dispatch_async(dispatch_get_main_queue(), {
 					self.activityAlert.dismissViewControllerAnimated(false) {
-						let alert = UIAlertController(title: error!.localizedDescription, message: error!.localizedFailureReason, preferredStyle: .Alert)
+                        var err = error
+                        if (error!.code == NSURLErrorTimedOut) {
+                            err = badConnectionError
+                        }
+						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
 						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
 						self.presentViewController(alert, animated: false, completion: {
 							let moc = self.appDelegate.managedObjectContext
@@ -161,6 +171,7 @@ class DSLoginView: UIViewController {
     // - MARK: HELPER FUNCTIONS
     func callUpdateService(student: Student) {
 		let _ = UpdateService(student: student, completionHandler: { successful, error in
+            // TODO: ADD ERROR HANDLING
 
 			// TEST STUFF
 			// fetch the user

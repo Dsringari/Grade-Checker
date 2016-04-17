@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2C570691A61B48BD602D2C76'
-               BlueprintName = 'Pods-Grade Checker'
+               BlueprintIdentifier = 'BFACFC2E6E4AD6A2A359F130'
+               BlueprintName = 'Spring'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods_Grade_Checker.framework'>
+               BuildableName = 'Spring.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

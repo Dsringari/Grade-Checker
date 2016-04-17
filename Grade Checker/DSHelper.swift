@@ -8,6 +8,8 @@
 
 import Foundation
 import CoreData
+import UIKit
+
 
 // Array Extensions
 extension Array where Element: Equatable {
@@ -124,4 +126,15 @@ extension NSManagedObjectContext {
     }
     
     
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

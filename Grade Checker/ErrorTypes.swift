@@ -17,4 +17,5 @@ private let badLogin = [NSLocalizedDescriptionKey: NSLocalizedString("Check Your
 let badLoginError = NSError(domain: "Bad Login", code: 1, userInfo: badLogin)
 
 // This is the NSError for a bad connection
-private let badConnection = [NSLocalizedDescriptionKey: NSLocalizedString("No Internet Connection", comment: ""), NSLocalizedFailureReasonErrorKey: NSLocalizedString("We couldn't connect to the internet.", comment: ""), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Check your internet connection", comment: "")]
+private let badConnection = [NSLocalizedDescriptionKey: NSLocalizedString("Slow Internet Connection", comment: ""), NSLocalizedFailureReasonErrorKey: NSLocalizedString("The process took to long.", comment: ""), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Check your internet connection", comment: "")]
+let badConnectionError = NSError(domain: "Bad Connection", code: 1, userInfo: badConnection)
