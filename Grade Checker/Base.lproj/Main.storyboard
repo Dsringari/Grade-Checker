@@ -57,15 +57,15 @@
                                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox1" translatesAutoresizingMaskIntoConstraints="NO" id="UQw-Wj-tHZ">
                                                 <rect key="frame" x="20" y="20" width="332" height="38"/>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="myU-Fz-vue">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="myU-Fz-vue">
                                                 <rect key="frame" x="35" y="20" width="317" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                             </textField>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox" translatesAutoresizingMaskIntoConstraints="NO" id="NXN-RP-Jjb">
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox3" translatesAutoresizingMaskIntoConstraints="NO" id="NXN-RP-Jjb">
                                                 <rect key="frame" x="20" y="130" width="332" height="38"/>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pin" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QRW-wC-xnN">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QRW-wC-xnN">
                                                 <rect key="frame" x="35" y="130" width="317" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" returnKeyType="done" secureTextEntry="YES"/>
@@ -73,7 +73,7 @@
                                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" misplaced="YES" image="Textbox2" translatesAutoresizingMaskIntoConstraints="NO" id="awD-df-Nu3">
                                                 <rect key="frame" x="20" y="75" width="332" height="38"/>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ven-4y-K3C">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ven-4y-K3C">
                                                 <rect key="frame" x="35" y="75" width="317" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
@@ -243,7 +243,7 @@
                                 </variation>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="0.20392156862745098" green="0.32941176470588235" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.17254901960784313" green="0.24313725490196078" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="JkM-oA-sSs" firstAttribute="top" secondItem="u0i-of-x6A" secondAttribute="bottom" id="Myp-oe-Z8d"/>
                             <constraint firstAttribute="trailing" secondItem="u0i-of-x6A" secondAttribute="trailing" id="RNw-gu-Y51"/>
@@ -283,14 +283,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YW5-m2-dTE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="519" y="326"/>
+            <point key="canvasLocation" x="505.5" y="314"/>
         </scene>
     </scenes>
     <resources>
         <image name="AppIcon" width="229" height="143"/>
         <image name="Custom Shadow" width="345" height="106"/>
-        <image name="Textbox" width="375" height="38"/>
         <image name="Textbox1" width="375" height="38"/>
         <image name="Textbox2" width="375" height="38"/>
+        <image name="Textbox3" width="375" height="38"/>
     </resources>
 </document>

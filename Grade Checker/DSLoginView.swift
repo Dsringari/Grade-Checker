@@ -29,6 +29,15 @@ class DSLoginView: UIViewController {
         // If the user taps outside the textfields close the keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+        // Change the placeholder text color
+        let darkGrayColor = UIColor(red: 127.0/255, green: 140.0/255, blue: 141.0/255, alpha: 1.0)
+        let usernamePlaceholder = NSAttributedString.init(string: "Username", attributes: [NSForegroundColorAttributeName: darkGrayColor])
+        let passwordPlaceholder = NSAttributedString.init(string: "Password", attributes: [NSForegroundColorAttributeName: darkGrayColor])
+        let pinPlaceholder = NSAttributedString.init(string: "Pin", attributes: [NSForegroundColorAttributeName: darkGrayColor])
+        usernameField.attributedPlaceholder = usernamePlaceholder
+        passwordField.attributedPlaceholder = passwordPlaceholder
+        pinField.attributedPlaceholder = pinPlaceholder
+        
     }
     
     // TODO: Fix scrolling to textview functions
@@ -97,7 +106,7 @@ class DSLoginView: UIViewController {
 
 		
 		
-
+        // add the spinning indicator
 		let indicator = UIActivityIndicatorView()
 		indicator.translatesAutoresizingMaskIntoConstraints = false
 		indicator.color = UIColor.blackColor()
