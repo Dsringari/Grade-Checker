@@ -28,7 +28,6 @@
 		FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */; };
 		FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */; };
 		FC6AD9791CC976BE00CE7ED2 /* DSGradesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD9781CC976BE00CE7ED2 /* DSGradesView.swift */; };
-		FC6AD97B1CC9828700CE7ED2 /* SelectStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD97A1CC9828700CE7ED2 /* SelectStudentVC.swift */; };
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
@@ -60,7 +59,6 @@
 		FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSDataService.swift; sourceTree = "<group>"; };
 		FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectTableViewCell.swift; sourceTree = "<group>"; };
 		FC6AD9781CC976BE00CE7ED2 /* DSGradesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSGradesView.swift; sourceTree = "<group>"; };
-		FC6AD97A1CC9828700CE7ED2 /* SelectStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectStudentVC.swift; sourceTree = "<group>"; };
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 				FC6AD9781CC976BE00CE7ED2 /* DSGradesView.swift */,
 				FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */,
 				FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */,
-				FC6AD97A1CC9828700CE7ED2 /* SelectStudentVC.swift */,
 				FC19E3271C923340002401D8 /* DSLoginService.swift */,
 				FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */,
 				FCF028221C9DC690008AC891 /* ErrorTypes.swift */,
@@ -295,7 +292,6 @@
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
 				FC00EBF61CBDBDEF00A461AC /* Subject.swift in Sources */,
 				FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */,
-				FC6AD97B1CC9828700CE7ED2 /* SelectStudentVC.swift in Sources */,
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */,
