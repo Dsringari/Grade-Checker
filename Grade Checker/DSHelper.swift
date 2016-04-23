@@ -97,9 +97,11 @@ extension NSManagedObjectContext {
         do {
             let objects = try self.executeFetchRequest(objectRequest)
             
-            if (objects.count > 1 || objects.count == 0) {
+            if (objects.count > 1) {
                 print("***************************")
                 print("Failed to Fetch", entityName + ".", "Recieved", objects.count, "when 1 was requested. Returning nil.", separator: " ", terminator: "\n")
+                return nil
+            } else if (objects.count == 0) {
                 return nil
             }
             

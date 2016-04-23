@@ -10,14 +10,19 @@ import UIKit
 import CoreData
 import Spring
 
-class DSLoginView: UIViewController {
+class DSLoginView: UIViewController, SelectStudentVCDelegate {
 	@IBOutlet var loginButton: UIButton!
 	@IBOutlet var usernameField: UITextField!
 	@IBOutlet var passwordField: UITextField!
 	@IBOutlet var pinField: UITextField!
     @IBOutlet var scrollView: UIScrollView!
+   
+    
 
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var validatedUser: User!
+    var selectedStudentIndex: Int = 0
+    
     // This is the Indicator that will show while the app retrieves all the required data
     let activityAlert = UIAlertController(title: "Logging In\n", message: nil, preferredStyle: .Alert)
 
@@ -25,18 +30,30 @@ class DSLoginView: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 		// TODO: Check for a user in the database and push to homescreen while updating it
+        
+       // if let user = self.appDelegate.managedObjectContext.getObjectFromStore("User", predicateString: nil, args: []) {
+        //    loginUser(user as! User)
+        //}
+        
 		appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
         // If the user taps outside the textfields close the keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
-        // Change the placeholder text color
-        let darkGrayColor = UIColor(red: 127.0/255, green: 140.0/255, blue: 141.0/255, alpha: 1.0)
-        let usernamePlaceholder = NSAttributedString.init(string: "Username", attributes: [NSForegroundColorAttributeName: darkGrayColor])
-        let passwordPlaceholder = NSAttributedString.init(string: "Password", attributes: [NSForegroundColorAttributeName: darkGrayColor])
-        let pinPlaceholder = NSAttributedString.init(string: "Pin", attributes: [NSForegroundColorAttributeName: darkGrayColor])
-        usernameField.attributedPlaceholder = usernamePlaceholder
-        passwordField.attributedPlaceholder = passwordPlaceholder
-        pinField.attributedPlaceholder = pinPlaceholder
+        
+        
+        // add the spinning indicator to the loading alert
+        let indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = UIColor.blackColor()
+        activityAlert.view.addSubview(indicator)
+        
+        let views = ["pending": activityAlert.view, "indicator": indicator]
+        var constraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[indicator]-(10)-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[indicator]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        activityAlert.view.addConstraints(constraints)
+        
+        indicator.userInteractionEnabled = false
+        indicator.startAnimating()
         
     }
     
@@ -79,6 +96,59 @@ class DSLoginView: UIViewController {
         }
     }
     
+    func loginUser(user: User) {
+        // Start the Loading Animation
+        self.presentViewController(activityAlert, animated: true, completion: nil)
+        // Try to Login
+        let _ = LoginService(userToBeLoggedIn: user, completionHandler: { successful, error, legitamateUser in
+            
+            if (successful) {
+                // Go to Respective Pages
+                let moc = self.appDelegate.managedObjectContext
+                self.validatedUser = moc.objectWithID(legitamateUser!.objectID) as! User
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activityAlert.dismissViewControllerAnimated(false, completion:  {
+                        if (self.validatedUser.students!.allObjects.count > 1) {
+                            self.performSegueWithIdentifier("selectStudent", sender: nil)
+                        } else {
+                            self.performSegueWithIdentifier("pushToHomeScreen", sender: nil)
+                        }
+                    })
+                })
+                
+            } else {
+                // If we failed
+                dispatch_async(dispatch_get_main_queue(), {
+                    let moc = self.appDelegate.managedObjectContext
+                    moc.deleteObject(moc.objectWithID(user.objectID))
+                    self.activityAlert.dismissViewControllerAnimated(true) {
+                        var err = error
+                        if (error!.code == NSURLErrorTimedOut) {
+                            err = badConnectionError
+                        }
+                        let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: {
+                            let moc = self.appDelegate.managedObjectContext
+                            self.appDelegate.deleteAllUsers(moc)
+                            moc.saveContext()
+                        })
+                    }
+                })
+            }
+        })
+    }
+    
+    @IBAction func login(sender: AnyObject) {
+        let user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.appDelegate.managedObjectContext) as! User
+        user.username = usernameField.text!
+        user.password = passwordField.text!
+        user.pin = pinField.text!
+        
+        loginUser(user)
+
+    }
+    
     func keyboardWillHide(notification: NSNotification) {
         scrollView.contentInset = UIEdgeInsetsZero
         scrollView.scrollIndicatorInsets = UIEdgeInsetsZero
@@ -91,185 +161,34 @@ class DSLoginView: UIViewController {
 		print("nice u dont have an account")
 	}
 
-	@IBAction func login(sender: AnyObject) {
-        scrollView.endEditing(true)
-        
-
-		// create a new user in the database
-		// FIXME: DO NOT INSERT THE USER HERE WAIT TILL WE ARE VALIDATED
-		let user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.appDelegate.managedObjectContext) as! User
-		user.username = usernameField.text!
-		user.password = passwordField.text!
-		user.pin = pinField.text!
-
-		appDelegate.saveContext()
-
-		
-		
-        // add the spinning indicator
-		let indicator = UIActivityIndicatorView()
-		indicator.translatesAutoresizingMaskIntoConstraints = false
-		indicator.color = UIColor.blackColor()
-		activityAlert.view.addSubview(indicator)
-
-		let views = ["pending": activityAlert.view, "indicator": indicator]
-		var constraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[indicator]-(10)-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
-		constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[indicator]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
-		activityAlert.view.addConstraints(constraints)
-
-		indicator.userInteractionEnabled = false
-		indicator.startAnimating()
-
-		self.presentViewController(activityAlert, animated: true, completion: nil)
-
-		// This is the LoginService Completion Handler
-		let _ = LoginService(userToBeLoggedIn: user, completionHandler: { successful, error, legitamateUser in
-
-			if (successful) {
-                
-                if (legitamateUser!.students!.allObjects.count > 1) {
-                    let chooseStudentAlert = UIAlertController(title: "Students", message: "Pick a Student", preferredStyle: .ActionSheet)
-                    
-                    let students: [Student] = user.students!.allObjects as! [Student]
-                    var buttons: [UIAlertAction] = []
-                    for index in 0 ... (students.count - 1) {
-                        let button = UIAlertAction(title: students[index].name!, style: .Default, handler: { button in
-                            if let index = buttons.indexOf(button) {
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    self.presentViewController(self.activityAlert, animated: false, completion: nil)
-                                    self.callUpdateService(students[index])
-                                })
-                                
-                            }
-                        })
-                        buttons.append(button)
-                    }
-                    for b in buttons {
-                        chooseStudentAlert.addAction(b)
-                    }
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.activityAlert.dismissViewControllerAnimated(true, completion: {
-                            self.presentViewController(chooseStudentAlert, animated: true, completion: nil)
-                        })
-                    })
-                } else {
-                    self.callUpdateService(legitamateUser!.students!.allObjects[0] as! Student)
-                }
-
-				
-			} else {
-				dispatch_async(dispatch_get_main_queue(), {
-					self.activityAlert.dismissViewControllerAnimated(true) {
-                        var err = error
-                        if (error!.code == NSURLErrorTimedOut) {
-                            err = badConnectionError
-                        }
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: {
-							let moc = self.appDelegate.managedObjectContext
-							self.appDelegate.deleteAllUsers(moc)
-							moc.saveContext()
-						})
-					}
-				})
-			}
-		})
-	}
-    
-    // - MARK: HELPER FUNCTIONS
-    func callUpdateService(student: Student) {
-		let _ = UpdateService(student: student, completionHandler: { successful, error in
-            // TODO: ADD ERROR HANDLING
-
-			// TEST STUFF
-			// fetch the user
-			
-			let student = self.appDelegate.managedObjectContext.objectWithID(student.objectID) as! Student
-
-			print("")
-			print("Nice Grades! " + student.name!)
-			print("")
-
-			// Sort Alphabetically
-			let sortedSubjects = student.subjects!.allObjects.sort { ($0 as! Subject).name! < ($1 as! Subject).name! } as! [Subject]
-
-			for s in sortedSubjects {
-				print(s.name! + ":")
-
-				// Sort by MP Number
-				let sortedMarkingPeriods = s.markingPeriods!.allObjects.sort { ($0 as! MarkingPeriod).number! < ($1 as! MarkingPeriod).number! } as! [MarkingPeriod]
-
-				// Alert String
-
-				for mp in sortedMarkingPeriods {
-
-					print("\tMarking Period: " + mp.number!)
-					if (!mp.empty!.boolValue) {
-
-						print("\t\t" + "(Percent Grade: " + mp.percentGrade! + "):")
-
-						if (mp.number! == "4") {
-						}
-
-						// Sort by Date
-						let sortedAssignments = mp.assignments!.allObjects.sort {
-							let one = $0 as! Assignment
-							let two = $1 as! Assignment
-
-							return one.date!.compare(two.date!) == NSComparisonResult.OrderedDescending
-						} as! [Assignment]
-
-						for a in sortedAssignments {
-							let score = a.totalPoints! + "/" + a.possiblePoints!
-							let s = "\t\t\t" + a.name! + "\t Score: " + score
-							print(s)
-						}
-					}
-				}
-			}
-
-			// This section of code prevents an empty marking period from being displayed
-
-			let subjects = student.subjects!.allObjects as! [Subject]
-			var someSubject = subjects.randomObject!
-
-			// Select a random subject and marking period
-			var someMarkingPeriod = (someSubject.markingPeriods!.allObjects as! [MarkingPeriod]).randomObject!
-
-			while (someMarkingPeriod.empty!.boolValue) {
-				someSubject = subjects.randomObject!
-				someMarkingPeriod = (someSubject.markingPeriods!.allObjects as! [MarkingPeriod]).randomObject!
-			}
-
-			dispatch_async(dispatch_get_main_queue(), {
-				self.activityAlert.dismissViewControllerAnimated(true, completion: {
-
-					let randomGradeAlert = UIAlertController(title: someSubject.name!, message: "MP " + someMarkingPeriod.number! + ": " + someMarkingPeriod.percentGrade!, preferredStyle: .Alert)
-					let ok = UIAlertAction(title: "K?", style: .Default, handler: { alertAction in
-						let moc = self.appDelegate.managedObjectContext
-						self.appDelegate.deleteAllUsers(moc)
-						moc.saveContext()
-					})
-					randomGradeAlert.addAction(ok)
-					self.presentViewController(randomGradeAlert, animated: true, completion: nil)
-				})
-			})
-		})
-	}
-
+	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
 
-	/*
+	
 	 // MARK: - Navigation
+    
+    // Set the selected Student
+    func selectStudent(index: Int) {
+        self.dismissViewControllerAnimated(true, completion: {
+            self.selectedStudentIndex = index
+            self.performSegueWithIdentifier("pushToHomeScreen", sender: nil)
+        })
+    }
 
 	 // In a storyboard-based application, you will often want to do a little preparation before navigation
 	 override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-	 // Get the new view controller using segue.destinationViewController.
-	 // Pass the selected object to the new view controller.
+        if segue.identifier == "pushToHomeScreen" {
+            let nVC = segue.destinationViewController as! UINavigationController
+            let dVC = nVC.viewControllers.first as! DSGradesView
+            dVC.student = (validatedUser.students!.allObjects[selectedStudentIndex] as! Student)
+        } else if segue.identifier == "selectStudent" {
+            let dVC = segue.destinationViewController as! SelectStudentVC
+            dVC.students = (validatedUser.students!.allObjects as! [Student])
+            dVC.delegate = self
+        }
 	 }
-	 */
+	 
 }
