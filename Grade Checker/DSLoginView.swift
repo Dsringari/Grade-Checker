@@ -10,12 +10,11 @@ import UIKit
 import CoreData
 import Spring
 
-class DSLoginView: UIViewController, SelectStudentVCDelegate {
+class DSLoginView: UITableViewController, SelectStudentVCDelegate {
 	@IBOutlet var loginButton: UIButton!
 	@IBOutlet var usernameField: UITextField!
 	@IBOutlet var passwordField: UITextField!
 	@IBOutlet var pinField: UITextField!
-    @IBOutlet var scrollView: UIScrollView!
    
     
 
@@ -55,9 +54,21 @@ class DSLoginView: UIViewController, SelectStudentVCDelegate {
         indicator.userInteractionEnabled = false
         indicator.startAnimating()
         
+        // Change the layout margins for the table view
+        self.tableView.layoutMargins = UIEdgeInsetsZero
+        self.tableView.delegate = self
+        
+        // Change the placeholder text color
+        let lighterBlueColor = UIColor(colorLiteralRed: 86/255, green: 100/255, blue: 116/255, alpha: 1.0)
+        let attributedUsernamePlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: lighterBlueColor])
+        let attributedPasswordPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: lighterBlueColor])
+        let attributedPinPlaceholder = NSAttributedString(string: "Pin", attributes: [NSForegroundColorAttributeName: lighterBlueColor])
+        usernameField.attributedPlaceholder = attributedUsernamePlaceholder
+        passwordField.attributedPlaceholder = attributedPasswordPlaceholder
+        pinField.attributedPlaceholder = attributedPinPlaceholder
+
     }
     
-    // TODO: Fix scrolling to textview functions
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         //registerKeyboardNotifications()
@@ -70,31 +81,19 @@ class DSLoginView: UIViewController, SelectStudentVCDelegate {
     
     // - MARK: SETUP
     
-    // Make sure we can always see all the text fields
-    func registerKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidShow), name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    func unregisterKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    func keyboardDidShow(notification: NSNotification) {
-        let info = notification.userInfo!
-        let keyPadFrame: CGRect = UIApplication.sharedApplication().keyWindow!.convertRect(info[UIKeyboardFrameEndUserInfoKey]!.CGRectValue(), fromView: self.view)
-        let kbSize = keyPadFrame.size
-        let activeRect = self.view.convertRect(pinField.frame, toView: pinField.superview)
-        var rect = self.view.bounds
-        rect.size.height -= kbSize.height
+    // Change Cell Margins
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        // Remove seperator inset
+        cell.separatorInset = UIEdgeInsetsZero
         
-        var origin = activeRect.origin
-        origin.y = scrollView.contentOffset.y
-        if (!CGRectContainsPoint(rect, origin)) {
-            let scrollPoint = CGPointMake(0.0, CGRectGetMaxX(activeRect)-rect.size.height)
-            scrollView.setContentOffset(scrollPoint, animated: true)
-        }
+        // Prevent Cell from inheriting the table view's margin settings
+        cell.preservesSuperviewLayoutMargins = false
+        
+        // Set Cell layout margins explicitly
+        cell.layoutMargins = UIEdgeInsetsZero
+        
     }
+    
     
     func loginUser(user: User) {
         // Start the Loading Animation
@@ -149,10 +148,6 @@ class DSLoginView: UIViewController, SelectStudentVCDelegate {
 
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset = UIEdgeInsetsZero
-        scrollView.scrollIndicatorInsets = UIEdgeInsetsZero
-    }
     
     // - MARK: Functions
 
