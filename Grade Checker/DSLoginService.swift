@@ -20,6 +20,39 @@ class LoginService {
 		self.completion = completion
 		login()
 	}
+    
+    // refreshes a logged in user
+    init(refreshUser: User, completion: (successful: Bool, error: NSError?, user: User?) -> Void) {
+        self.user = refreshUser
+        self.completion = completion
+        
+        let session = NSURLSession.sharedSession()
+        let headers = [
+            "content-type": "application/x-www-form-urlencoded"
+        ]
+        
+        let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
+        let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
+                                          cachePolicy: .UseProtocolCachePolicy,
+                                          timeoutInterval: 10)
+        request.HTTPMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.HTTPBody = postData
+        
+        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+                self.completion(successful: false, error: error, user: nil)
+                return
+            } else {
+                self.completion(successful: true, error: nil, user: nil)
+            }
+        })
+        
+        dataTask.resume()
+    }
 
 	func login() {
 		// Logout First to avoid problems with logging in with the parent account and then a student account

@@ -31,6 +31,7 @@
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */; };
 		FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */; };
+		FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,7 @@
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesVC.swift; sourceTree = "<group>"; };
 		FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
+		FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,7 @@
 				FC6AD9781CC976BE00CE7ED2 /* DSGradesView.swift */,
 				FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */,
 				FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */,
+				FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */,
 				FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */,
 				FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */,
 				FC19E3271C923340002401D8 /* DSLoginService.swift */,
@@ -304,6 +307,7 @@
 				FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */,
 				FC00EBF31CBDBDEF00A461AC /* Assignment+CoreDataProperties.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
+				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,
 				FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
 				FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */,

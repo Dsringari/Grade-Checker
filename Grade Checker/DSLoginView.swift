@@ -210,7 +210,11 @@ class DSLoginView: UITableViewController {
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "home" {
-			print("Something Supposed To Happen")
+			let tBC = segue.destinationViewController as! UITabBarController
+            tBC.selectedIndex = 0
+            let nVC = tBC.viewControllers![0] as! UINavigationController
+            let gVC = nVC.viewControllers[0] as! GradesVC
+            gVC.student = validatedUser.students!.allObjects[selectedStudentIndex] as! Student
 		}
 	}
 }

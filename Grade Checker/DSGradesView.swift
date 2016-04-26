@@ -95,14 +95,14 @@ class DSGradesView: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         if markingPeriods.count == 0 {
             cell.letterGradeLabel.text = "N/A"
-            cell.numericGradeLabel.text = "0/0"
+           // cell.numericGradeLabel.text = "0/0"
             return cell
         }
         // sort marking periods by descending number
         markingPeriods = markingPeriods.sort {Int($0.number!) > Int($1.number!)}
         let recentMP = markingPeriods[0]
         cell.letterGradeLabel.text = self.percentToLetterGrade(recentMP.percentGrade!)
-        cell.numericGradeLabel.text = recentMP.totalPoints! + "/" + recentMP.possiblePoints!
+       // cell.numericGradeLabel.text = recentMP.totalPoints! + "/" + recentMP.possiblePoints!
         
       //  cell.backgroundColor = lightB
 		return cell

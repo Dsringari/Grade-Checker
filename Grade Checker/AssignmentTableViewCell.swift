@@ -1,17 +1,16 @@
 //
-//  SubjectTableViewCell.swift
+//  AssignmentTableViewCell.swift
 //  Grade Checker
 //
-//  Created by Dhruv Sringari on 4/21/16.
+//  Created by Dhruv Sringari on 4/26/16.
 //  Copyright © 2016 Dhruv Sringari. All rights reserved.
 //
 
 import UIKit
 
-class SubjectTableViewCell: UITableViewCell {
-    @IBOutlet var subjectNameLabel: UILabel!
-    @IBOutlet var letterGradeLabel: UILabel!
-    @IBOutlet var percentGradeLabel: UILabel!
+class AssignmentTableViewCell: UITableViewCell {
+    @IBOutlet var assignmentNameLabel: UILabel!
+    @IBOutlet var pointsGradeLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
