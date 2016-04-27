@@ -160,6 +160,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         selectedSubject = subjects[indexPath.row]
         performSegueWithIdentifier("subjectView", sender: nil)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func percentToLetterGrade(percentGrade: Int) -> String {
@@ -196,6 +197,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if (segue.identifier == "subjectView") {
             let sV = segue.destinationViewController as! DetailVC
             sV.subject = selectedSubject
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
         }
     }
  

@@ -82,7 +82,23 @@ class DSGradesView: UIViewController, UITableViewDelegate, UITableViewDataSource
 
 		// Configure the cell...
         var subjects = student.subjects!.allObjects as! [Subject]
-        subjects.sortInPlace{$0.name! < $1.name!}
+        // Sort by Most Recently Updated
+        subjects.sortInPlace {
+            let subject1 = $0
+            let subject2 = $1
+            
+            let s1MarkingPeriods = subject1.markingPeriods!.allObjects as! [MarkingPeriod]
+            var s1Assignments = s1MarkingPeriods.filter{!$0.empty!.boolValue}.sort{Int($0.number!) > Int($1.number!)}[0].assignments!.allObjects as! [Assignment]
+            s1Assignments.sortInPlace{ $0.date!.compare($1.date!) == NSComparisonResult.OrderedAscending }
+            let s1MostRecentDate = s1Assignments[0].date!
+            
+            let s2MarkingPeriods = subject2.markingPeriods!.allObjects as! [MarkingPeriod]
+            var s2Assignments = s2MarkingPeriods.filter{!$0.empty!.boolValue}.sort{Int($0.number!) > Int($1.number!)}[0].assignments!.allObjects as! [Assignment]
+            s2Assignments.sortInPlace{ $0.date!.compare($1.date!) == NSComparisonResult.OrderedAscending }
+            let s2MostRecentDate = s2Assignments[0].date!
+            
+            return s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedDescending
+        }
 		cell.subjectNameLabel.text = subjects[indexPath.row].name
         
         // Get most recent marking period

@@ -11,7 +11,6 @@ import UIKit
 class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var percentGradeLabel: UILabel!
-    @IBOutlet var courseNameLabel: UILabel!
     @IBOutlet var pointsLabel: UILabel!
     @IBOutlet var segmentedControl: UISegmentedControl!
     @IBOutlet var toolbar: UIView!
@@ -27,16 +26,19 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
-        
+        self.title = subject.name
         
         // Find the hairline so we can hide it
         for view in self.navigationController!.navigationBar.subviews {
             for aView in view.subviews {
                 if (aView.isKindOfClass(UIImageView) &&  aView.bounds.size.width == self.navigationController!.navigationBar.frame.size.width && aView.bounds.size.height < 2) {
-                    self.navHairLine = aView as! UIImageView
+                    aView.removeFromSuperview()
                 }
             }
         }
+        // Remove toolbar's border
+        self.navigationController!.toolbar.clipsToBounds = true
+        
         // Setup Segmented Control
         // Get all the Valid Marking Periods
         let mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
@@ -46,27 +48,11 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             segmentedControl.insertSegmentWithTitle("MP " + markingPeriods[index].number!, atIndex: index, animated: false)
         }
         segmentedControl.selectedSegmentIndex = selectedMPIndex
+        segmentedControl.sizeToFit()
         
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        moveHairLineToToolbar(true)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        moveHairLineToToolbar(false)
-    }
-    
-    func moveHairLineToToolbar(appearing: Bool) {
-        var hairLineFrame = self.navHairLine.frame
-        if (appearing) {
-            hairLineFrame.origin.y += self.toolbar.bounds.size.height
-        } else {
-            hairLineFrame.origin.y -= self.toolbar.bounds.size.height
-        }
-        self.navHairLine.frame = hairLineFrame
+        percentGradeLabel.text = markingPeriods[selectedMPIndex].percentGrade
+        pointsLabel.text = markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,12 +63,20 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func segmentedControlChanged(sender: AnyObject) {
         selectedMPIndex = segmentedControl.selectedSegmentIndex
+        percentGradeLabel.text = markingPeriods[selectedMPIndex].percentGrade
+        pointsLabel.text = markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!
         self.tableView.reloadData()
     }
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor(colorLiteralRed: 86/255, green: 100/255, blue: 115/255, alpha: 1.0)
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel!.textColor = UIColor.whiteColor()
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

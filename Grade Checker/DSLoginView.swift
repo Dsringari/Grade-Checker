@@ -102,6 +102,7 @@ class DSLoginView: UITableViewController {
 		loginButton.frame = footerView.frame
 		// Add Hidden Activity Indicator
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
+        activityIndicator.color = titleColor
 		activityIndicator.center = CGPointMake(loginButton.frame.size.width / 2, loginButton.frame.size.height / 2)
 		activityIndicator.hidden = true
 		loginButton.addSubview(activityIndicator)

@@ -44,7 +44,7 @@
                     } else {
                         
                         if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
-                            self.createSubjects(coursesAndGradePageHtml: html as String, student: outDatedStudent, pageUrl: response!.URL!.absoluteString)
+                            self.createSubjects(coursesAndGradePageHtml: html as String, student: outDatedStudent)
                         } else {
                             self.result = (false, unknownResponseError)
                         }
@@ -57,7 +57,7 @@
     
     // Adds the subjects to the user when the correct page is given
     // MAY BE CALLED FROM NON_MAIN THREAD
-    private func createSubjects(coursesAndGradePageHtml html: String, student: Student, pageUrl: String) {
+    private func createSubjects(coursesAndGradePageHtml html: String, student: Student) {
         let updateGroup = dispatch_group_create()
         let backgroundMOC = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         backgroundMOC.parentContext = self.appDelegate.managedObjectContext
@@ -80,14 +80,13 @@
             for node: XMLElement in nodes {
                 
                 // Check if we have this subject already
-                if let oldSubject = (backgroundMOC.getObjectFromStore("Subject", predicateString: "htmlPage == %@ AND student.name == %@", args: [pageUrl, student.name!])){
-                    let realSubject = oldSubject as! Subject
-                    // delete it
-                    backgroundMOC.deleteObject(realSubject)
-                    backgroundMOC.saveContext()
+                // TODO: Fix this for multiple subjects with the same name
+                let storedSubjects = backgroundMOC.getObjectsFromStore("Subject", predicateString: "name == %@ AND student.name == %@", args:[node.text!.substringToIndex(node.text!.endIndex.predecessor()), student.name!])
+                for subject in storedSubjects {
+                    let s = subject as! Subject
+                    backgroundMOC.deleteObject(s)
                 }
-                
-                print(updatingStudent.name!)
+                backgroundMOC.saveContext()
                 
                 // insert the subject into core data
                 let newSubject: Subject = NSEntityDescription.insertNewObjectForEntityForName("Subject", inManagedObjectContext: backgroundMOC) as! Subject
