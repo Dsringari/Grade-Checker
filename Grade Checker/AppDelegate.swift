@@ -19,6 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         // Set the UINavigationBar Back button tint color to the green color
         UINavigationBar.appearance().tintColor = UIColor(colorLiteralRed: 86/255, green: 100/255, blue: 115/255, alpha: 1.0)
+        // Set default preferences
+        let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false)]
+        NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
         return true
     }
 

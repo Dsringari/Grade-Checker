@@ -93,7 +93,7 @@ class LoginService {
 
 	func logout(completionHandler: (failed: Bool, error: NSError?) -> Void) {
 		let session = NSURLSession.sharedSession()
-		let request = NSURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 1)
+		let request = NSURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 
 		let logoutTask = session.dataTaskWithRequest(request, completionHandler: { data, response, error in
 			if (error != nil) {
@@ -131,6 +131,10 @@ class LoginService {
 							// This user is a student account so it has one student.
 						case " Student Backpack - Sapphire Community Web Portal ":
 							let user = temporaryContext.objectWithID(self.user.objectID) as! User
+                            // Clear Old Students
+                            for student in user.students!.allObjects as! [Student] {
+                                temporaryContext.deleteObject(student)
+                            }
 
 							// Retrieve student information from backpack screen
 							let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: temporaryContext) as! Student
@@ -151,6 +155,11 @@ class LoginService {
 							// This user is a parent
 						case " Welcome - Sapphire Community Web Portal ":
 							let user = temporaryContext.objectWithID(self.user.objectID) as! User
+                            
+                            // Clear Old Students
+                            for student in user.students!.allObjects as! [Student] {
+                                temporaryContext.deleteObject(student)
+                            }
 
 							var ids: [String] = []
 							var names: [String] = []

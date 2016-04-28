@@ -27,10 +27,12 @@
 		FC639FA51C8F8FFD006C71A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */; };
 		FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */; };
 		FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */; };
-		FC6AD9791CC976BE00CE7ED2 /* DSGradesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD9781CC976BE00CE7ED2 /* DSGradesView.swift */; };
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */; };
 		FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */; };
+		FCC29A6D1CD177FD004002B5 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */; };
+		FCC29A6F1CD198A1004002B5 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */; };
+		FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */; };
 		FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
@@ -61,10 +63,12 @@
 		FC639FA61C8F8FFD006C71A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSDataService.swift; sourceTree = "<group>"; };
 		FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectTableViewCell.swift; sourceTree = "<group>"; };
-		FC6AD9781CC976BE00CE7ED2 /* DSGradesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSGradesView.swift; sourceTree = "<group>"; };
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesVC.swift; sourceTree = "<group>"; };
 		FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
+		FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDSelectionCell.swift; sourceTree = "<group>"; };
 		FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
@@ -75,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCC29A6D1CD177FD004002B5 /* LocalAuthentication.framework in Frameworks */,
 				FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */,
 				C193E7F30B9FF30536B32143 /* Pods_Grade_Checker.framework in Frameworks */,
 			);
@@ -86,6 +91,7 @@
 		3A39DB40D025CD77D3B363B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */,
 				FC06632C1CBC3AA9005D1310 /* CoreData.framework */,
 				542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */,
 			);
@@ -140,24 +146,65 @@
 			isa = PBXGroup;
 			children = (
 				FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */,
-				FC6AD9781CC976BE00CE7ED2 /* DSGradesView.swift */,
-				FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */,
-				FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */,
-				FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */,
-				FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */,
-				FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */,
-				FC19E3271C923340002401D8 /* DSLoginService.swift */,
-				FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */,
-				FCF028221C9DC690008AC891 /* ErrorTypes.swift */,
+				FCC29A701CD198BE004002B5 /* Services */,
+				FCC29A711CD198E0004002B5 /* Table View Cells */,
+				FCC29A721CD19902004002B5 /* View Controllers */,
 				FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */,
-				FC2953181CB73BA400DD38CE /* DSHelper.swift */,
-				FC0519C61CB8479100D502EA /* ManagedObjects */,
-				FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */,
+				FCC29A741CD19918004002B5 /* Swift Helpers */,
+				FCC29A751CD19931004002B5 /* CoreData */,
 				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
 				FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */,
 				FC639FA61C8F8FFD006C71A7 /* Info.plist */,
 			);
 			path = "Grade Checker";
+			sourceTree = "<group>";
+		};
+		FCC29A701CD198BE004002B5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FC19E3271C923340002401D8 /* DSLoginService.swift */,
+				FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		FCC29A711CD198E0004002B5 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */,
+				FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */,
+				FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */,
+			);
+			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		FCC29A721CD19902004002B5 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */,
+				FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */,
+				FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */,
+				FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		FCC29A741CD19918004002B5 /* Swift Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FCF028221C9DC690008AC891 /* ErrorTypes.swift */,
+				FC2953181CB73BA400DD38CE /* DSHelper.swift */,
+			);
+			name = "Swift Helpers";
+			sourceTree = "<group>";
+		};
+		FCC29A751CD19931004002B5 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				FC0519C61CB8479100D502EA /* ManagedObjects */,
+				FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */,
+			);
+			name = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,13 +355,14 @@
 				FC00EBF31CBDBDEF00A461AC /* Assignment+CoreDataProperties.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,
+				FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */,
+				FCC29A6F1CD198A1004002B5 /* SettingsVC.swift in Sources */,
 				FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
 				FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */,
 				FC00EC021CBDBFE700A461AC /* Student.swift in Sources */,
 				FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */,
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
-				FC6AD9791CC976BE00CE7ED2 /* DSGradesView.swift in Sources */,
 				FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */,
 				FC00EBF51CBDBDEF00A461AC /* Subject+CoreDataProperties.swift in Sources */,
 				FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */,

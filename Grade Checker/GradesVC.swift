@@ -103,7 +103,27 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return 0
         }
         subjects = student.subjects!.allObjects as! [Subject]
-        subjects = subjects.sort{$0.name! < $1.name!}
+        // Sort by Most Recently Updated
+        subjects = subjects.sort {
+            let subject1 = $0
+            let subject2 = $1
+            
+            let s1MarkingPeriods = subject1.markingPeriods!.allObjects as! [MarkingPeriod]
+            var s1Assignments = s1MarkingPeriods.filter{!$0.empty!.boolValue}.sort{Int($0.number!) > Int($1.number!)}[0].assignments!.allObjects as! [Assignment]
+            s1Assignments.sortInPlace{ $0.date!.compare($1.date!) == NSComparisonResult.OrderedDescending }
+            let s1MostRecentDate = s1Assignments[0].date!
+            
+            let s2MarkingPeriods = subject2.markingPeriods!.allObjects as! [MarkingPeriod]
+            var s2Assignments = s2MarkingPeriods.filter{!$0.empty!.boolValue}.sort{Int($0.number!) > Int($1.number!)}[0].assignments!.allObjects as! [Assignment]
+            s2Assignments.sortInPlace{ $0.date!.compare($1.date!) == NSComparisonResult.OrderedDescending }
+            let s2MostRecentDate = s2Assignments[0].date!
+            // If the dates are the same sort by name
+            if (s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedSame) {
+                return subject1.name! > subject2.name!
+            }
+            
+            return s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedDescending
+        }
         for subject in subjects {
             var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
             mps = mps.filter{!$0.empty!.boolValue} // filter marking periods with no assignments

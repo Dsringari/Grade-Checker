@@ -9,12 +9,14 @@
 import UIKit
 import CoreData
 import Spring
+import LocalAuthentication
 
 class DSLoginView: UITableViewController {
 
 	@IBOutlet var usernameField: UITextField!
 	@IBOutlet var passwordField: UITextField!
 	@IBOutlet var pinField: UITextField!
+	var hasUser: Bool = false
 	var loginButton: SpringButton!
 
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -23,17 +25,26 @@ class DSLoginView: UITableViewController {
 
 	// This is the Indicator that will show while the app retrieves all the required data
 	var activityIndicator: UIActivityIndicatorView!
+	// This is the indicator for an old user
+	let activityAlert = UIAlertController(title: "Logging In\n", message: nil, preferredStyle: .Alert)
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view.
-		// TODO: Check for a user in the database and push to homescreen while updating it
 
-		// if let user = self.appDelegate.managedObjectContext.getObjectFromStore("User", predicateString: nil, args: []) {
-		// loginUser(user as! User)
-		// }
+		// Setup the old user loading indicator
+		let indicator = UIActivityIndicatorView()
+		indicator.translatesAutoresizingMaskIntoConstraints = false
+		indicator.color = UIColor.blackColor()
+		activityAlert.view.addSubview(indicator)
 
-		appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
+		let views = ["pending": activityAlert.view, "indicator": indicator]
+		var constraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[indicator]-(10)-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+		constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[indicator]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+		activityAlert.view.addConstraints(constraints)
+
+		indicator.userInteractionEnabled = false
+		indicator.startAnimating()
+
 		// If the user taps outside the textfields close the keyboard
 		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
 		view.addGestureRecognizer(tap)
@@ -57,16 +68,42 @@ class DSLoginView: UITableViewController {
 		passwordField.contentVerticalAlignment = .Center
 		pinField.contentVerticalAlignment = .Center
 	}
+    
+    override func viewDidAppear(animated: Bool) {
+        // Check If we have a user already
+        if let user = self.appDelegate.managedObjectContext.getObjectFromStore("User", predicateString: nil, args: []) {
+            hasUser = true
+            let settings = NSUserDefaults.standardUserDefaults()
+            let useTouchID = settings.boolForKey("useTouchID")
+            if (useTouchID) {
+                var error: NSError?
+                if LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
+                    loginWithTouchID(user as! User)
+                } else {
+                    var title: String!
+                    var message: String!
+                    switch error!.code {
+                    case LAError.TouchIDNotEnrolled.rawValue:
+                        title = "Touch ID Not Enabled"
+                        message = "Setup Touch ID in your settings"
+                    case LAError.PasscodeNotSet.rawValue:
+                        title = "Passcode Not Set"
+                        message = "Setup a Passcode to use Touch ID"
+                    default:
+                        title = "Touch ID Not Availabe"
+                        message = "We couldn't access Touch ID"
+                    }
+                    
+                    let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            } else {
+                loginUser(user as! User)
+            }
+        }
 
-	override func viewWillAppear(animated: Bool) {
-		super.viewWillAppear(animated)
-		// registerKeyboardNotifications()
-	}
-
-	override func viewWillDisappear(animated: Bool) {
-		super.viewWillDisappear(animated)
-		// unregisterKeyboardNotifications()
-	}
+    }
 
 	// - MARK: SETUP
 
@@ -88,6 +125,7 @@ class DSLoginView: UITableViewController {
 
 	// Add the login button to the footer view
 	override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+
 		// Setup View
 		let footerView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, 50))
 		let titleColor = UIColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.45) // Slightly Opaque
@@ -102,7 +140,7 @@ class DSLoginView: UITableViewController {
 		loginButton.frame = footerView.frame
 		// Add Hidden Activity Indicator
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
-        activityIndicator.color = titleColor
+		activityIndicator.color = titleColor
 		activityIndicator.center = CGPointMake(loginButton.frame.size.width / 2, loginButton.frame.size.height / 2)
 		activityIndicator.hidden = true
 		loginButton.addSubview(activityIndicator)
@@ -113,13 +151,32 @@ class DSLoginView: UITableViewController {
 
 	// - MARK: Functions
 
+	func loginWithTouchID(user: User) {
+		let context: LAContext = LAContext()
+		let localizedReasonString = "Use Touch ID to Login"
+
+		context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
+			if (success) {
+				self.loginUser(user)
+			} else {
+                self.appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
+				if (error!.code == LAError.AuthenticationFailed.rawValue) {
+					let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match.", preferredStyle: .Alert)
+					let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+					failed.addAction(Ok)
+					self.presentViewController(failed, animated: true, completion: nil)
+				}
+			}
+		})
+	}
+
+	// Ask if the user wants to use touch id every time they log in with a new account
 	func login(sender: AnyObject) {
 		let user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.appDelegate.managedObjectContext) as! User
 		user.username = usernameField.text!
 		user.password = passwordField.text!
 		user.pin = pinField.text!
-
-		loginUser(user)
+        loginUser(user)
 	}
 
 	func loginUser(user: User) {
@@ -143,7 +200,26 @@ class DSLoginView: UITableViewController {
 							let button = UIAlertAction(title: students[index].name!, style: .Default, handler: { button in
 								if let index = buttons.indexOf(button) {
 									self.selectedStudentIndex = index
-									self.performSegueWithIdentifier("home", sender: nil)
+                                    
+                                    let settings = NSUserDefaults.standardUserDefaults()
+                                    if (LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil) && !self.hasUser) {
+                                        let alert = UIAlertController(title: "Touch ID Login Available", message: "Would you like to use Touch ID to Login?", preferredStyle: .Alert)
+                                        let yes = UIAlertAction(title: "Yes", style: .Default, handler: { alertAction in
+                                            settings.setBool(true, forKey: "useTouchID")
+                                            self.performSegueWithIdentifier("home", sender: nil)
+                                        })
+                                        let no = UIAlertAction(title: "No", style: .Cancel, handler: { alertAction in
+                                            settings.setBool(false, forKey: "useTouchID")
+                                            self.performSegueWithIdentifier("home", sender: nil)
+                                        })
+                                        alert.addAction(yes)
+                                        alert.addAction(no)
+                                        
+                                        self.presentViewController(alert, animated: true, completion: nil)
+                                    } else {
+                                        self.performSegueWithIdentifier("home", sender: nil)
+                                    }
+
 								}
 							})
 							buttons.append(button)
@@ -155,30 +231,47 @@ class DSLoginView: UITableViewController {
 
 						self.presentViewController(chooseStudentAlert, animated: true, completion: nil)
 					} else {
-						self.performSegueWithIdentifier("home", sender: nil)
+                        let settings = NSUserDefaults.standardUserDefaults()
+                        if (LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil) && !self.hasUser) {
+                            let alert = UIAlertController(title: "Touch ID Login Available", message: "Would you like to use Touch ID to Login?", preferredStyle: .Alert)
+                            let yes = UIAlertAction(title: "Yes", style: .Default, handler: { alertAction in
+                                settings.setBool(true, forKey: "useTouchID")
+                                self.performSegueWithIdentifier("home", sender: nil)
+                            })
+                            let no = UIAlertAction(title: "No", style: .Cancel, handler: { alertAction in
+                                settings.setBool(false, forKey: "useTouchID")
+                                self.performSegueWithIdentifier("home", sender: nil)
+                            })
+                            alert.addAction(yes)
+                            alert.addAction(no)
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        } else {
+                            self.performSegueWithIdentifier("home", sender: nil)
+                        }
 					}
 				})
 			} else {
 				// If we failed
 				dispatch_async(dispatch_get_main_queue(), {
 					self.stopLoading()
-                    self.shakeLoginButton( {
-                        let moc = self.appDelegate.managedObjectContext
-                        moc.deleteObject(moc.objectWithID(user.objectID))
-                        
-                        var err = error
-                        if (error!.code == NSURLErrorTimedOut) {
-                            err = badConnectionError
-                        }
-                        let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: {
-                            let moc = self.appDelegate.managedObjectContext
-                            self.appDelegate.deleteAllUsers(moc)
-                            moc.saveContext()
-                        })
-                    })
-					
+					self.shakeLoginButton({
+						let moc = self.appDelegate.managedObjectContext
+						moc.deleteObject(moc.objectWithID(user.objectID))
+
+						var err = error
+						if (error!.code == NSURLErrorTimedOut) {
+							err = badConnectionError
+						}
+						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+						self.presentViewController(alert, animated: true, completion: {
+							// delete the invalid user
+							let moc = self.appDelegate.managedObjectContext
+							self.appDelegate.deleteAllUsers(moc)
+							moc.saveContext()
+						})
+					})
 				})
 			}
 		})
@@ -191,16 +284,18 @@ class DSLoginView: UITableViewController {
 	}
 
 	func stopLoading() {
+
 		self.activityIndicator.stopAnimating()
 		self.activityIndicator.hidden = true
 		self.loginButton.titleLabel!.layer.opacity = 1
 	}
 
 	func shakeLoginButton(completion: () -> Void) {
-        loginButton.animation = "shake"
-        loginButton.duration = 1
-        //loginButton.curve = "spring"
-        loginButton.animateNext(completion)
+
+		loginButton.animation = "shake"
+		loginButton.duration = 1
+		// loginButton.curve = "spring"
+		loginButton.animateNext(completion)
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -211,11 +306,11 @@ class DSLoginView: UITableViewController {
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "home" {
-			let tBC = segue.destinationViewController as! UITabBarController
-            tBC.selectedIndex = 0
-            let nVC = tBC.viewControllers![0] as! UINavigationController
-            let gVC = nVC.viewControllers[0] as! GradesVC
-            gVC.student = validatedUser.students!.allObjects[selectedStudentIndex] as! Student
+            let tBC = segue.destinationViewController as! UITabBarController
+			tBC.selectedIndex = 0
+			let nVC = tBC.viewControllers![0] as! UINavigationController
+			let gVC = nVC.viewControllers[0] as! GradesVC
+			gVC.student = validatedUser.students!.allObjects[selectedStudentIndex] as! Student
 		}
 	}
 }
