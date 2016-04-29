@@ -24,7 +24,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		super.viewDidLoad()
 		tableview.delegate = self
 		tableview.dataSource = self
-		refreshControl = UIRefreshControl()
+        refreshControl = UIRefreshControl()
 		refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
 		tableview.addSubview(refreshControl)
 		loadStudent()
@@ -38,6 +38,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
     }
 
 	func loadStudent() {
+        self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades" // Get the first name and set it as the title
 		startLoading()
 		let _ = UpdateService(student: student, completionHandler: { successful, error in
 			if (successful) {

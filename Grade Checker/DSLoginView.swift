@@ -155,7 +155,7 @@ class DSLoginView: UITableViewController {
 	func loginWithTouchID(user: User) {
 		let context: LAContext = LAContext()
 		let localizedReasonString = "Use Touch ID to Login"
-
+        startLoading()
 		context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
 			if (success) {
 				self.loginUser(user)
@@ -165,6 +165,7 @@ class DSLoginView: UITableViewController {
 					let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match.", preferredStyle: .Alert)
 					let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
 					failed.addAction(Ok)
+                    self.appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
 					self.presentViewController(failed, animated: true, completion: nil)
 				}
 			}
@@ -177,12 +178,11 @@ class DSLoginView: UITableViewController {
 		user.username = usernameField.text!
 		user.password = passwordField.text!
 		user.pin = pinField.text!
+        startLoading()
         loginUser(user)
 	}
 
 	func loginUser(user: User) {
-		// Start the Loading Animation
-		startLoading()
 		// Try to Login
 		let _ = LoginService(userToBeLoggedIn: user, completionHandler: { successful, error, legitamateUser in
 
@@ -291,6 +291,7 @@ class DSLoginView: UITableViewController {
 
 	func startLoading() {
 		loginButton.titleLabel!.layer.opacity = 0
+        loginButton.userInteractionEnabled = false
 		activityIndicator.hidden = false
 		activityIndicator.startAnimating()
 	}
@@ -300,6 +301,7 @@ class DSLoginView: UITableViewController {
 		self.activityIndicator.stopAnimating()
 		self.activityIndicator.hidden = true
 		self.loginButton.titleLabel!.layer.opacity = 1
+        loginButton.userInteractionEnabled = true
 	}
 
 	func shakeLoginButton(completion: () -> Void) {
