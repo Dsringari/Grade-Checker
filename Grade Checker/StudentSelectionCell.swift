@@ -1,16 +1,16 @@
 //
-//  TouchIDSelectionCell.swift
+//  StudentSelectionCell.swift
 //  Grade Checker
 //
-//  Created by Dhruv Sringari on 4/27/16.
+//  Created by Dhruv Sringari on 4/28/16.
 //  Copyright © 2016 Dhruv Sringari. All rights reserved.
 //
 
 import UIKit
 
-class TouchIDSelectionCell: UITableViewCell {
-    @IBOutlet var touchIDSwitch: UISwitch!
-    
+class StudentSelectionCell: UITableViewCell {
+    @IBOutlet var nameLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

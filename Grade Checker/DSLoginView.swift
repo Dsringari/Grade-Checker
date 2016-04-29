@@ -54,7 +54,7 @@ class DSLoginView: UITableViewController {
 		// Cell Margin Change
 		self.tableView.cellLayoutMarginsFollowReadableWidth = false
 
-		// Change the placeholder text color
+		/* Change the placeholder text color
 		let lighterBlueColor = UIColor(colorLiteralRed: 86 / 255, green: 100 / 255, blue: 116 / 255, alpha: 1.0)
 		let attributedUsernamePlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: lighterBlueColor])
 		let attributedPasswordPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: lighterBlueColor])
@@ -62,6 +62,7 @@ class DSLoginView: UITableViewController {
 		usernameField.attributedPlaceholder = attributedUsernamePlaceholder
 		passwordField.attributedPlaceholder = attributedPasswordPlaceholder
 		pinField.attributedPlaceholder = attributedPinPlaceholder
+         */
 
 		// Center Text
 		usernameField.contentVerticalAlignment = .Center
@@ -93,7 +94,7 @@ class DSLoginView: UITableViewController {
                         title = "Touch ID Not Availabe"
                         message = "We couldn't access Touch ID"
                     }
-                    
+                    self.appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
                     let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
@@ -196,12 +197,12 @@ class DSLoginView: UITableViewController {
 
 						let students: [Student] = user.students!.allObjects as! [Student]
 						var buttons: [UIAlertAction] = []
+                        let settings = NSUserDefaults.standardUserDefaults()
 						for index in 0 ... (students.count - 1) {
 							let button = UIAlertAction(title: students[index].name!, style: .Default, handler: { button in
 								if let index = buttons.indexOf(button) {
 									self.selectedStudentIndex = index
                                     
-                                    let settings = NSUserDefaults.standardUserDefaults()
                                     if (LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil) && !self.hasUser) {
                                         let alert = UIAlertController(title: "Touch ID Login Available", message: "Would you like to use Touch ID to Login?", preferredStyle: .Alert)
                                         let yes = UIAlertAction(title: "Yes", style: .Default, handler: { alertAction in
@@ -219,6 +220,9 @@ class DSLoginView: UITableViewController {
                                     } else {
                                         self.performSegueWithIdentifier("home", sender: nil)
                                     }
+                                    
+                                    
+                                    settings.setObject(students[self.selectedStudentIndex].name!, forKey: "selectedStudent")
 
 								}
 							})
@@ -228,8 +232,14 @@ class DSLoginView: UITableViewController {
 						for b in buttons {
 							chooseStudentAlert.addAction(b)
 						}
-
-						self.presentViewController(chooseStudentAlert, animated: true, completion: nil)
+                        
+                        if (self.hasUser) {
+                            let student = (self.validatedUser.students!.allObjects as! [Student]).filter{$0.name! == settings.stringForKey("selectedStudent")}[0]
+                            self.selectedStudentIndex = (self.validatedUser.students!.allObjects as! [Student]).indexOf(student)!
+                            self.performSegueWithIdentifier("home", sender: nil)
+                        } else {
+                            self.presentViewController(chooseStudentAlert, animated: true, completion: nil)
+                        }
 					} else {
                         let settings = NSUserDefaults.standardUserDefaults()
                         if (LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil) && !self.hasUser) {
@@ -249,6 +259,8 @@ class DSLoginView: UITableViewController {
                         } else {
                             self.performSegueWithIdentifier("home", sender: nil)
                         }
+                        
+                        settings.setObject((self.validatedUser.students!.allObjects[self.selectedStudentIndex] as! Student).name!, forKey: "selectedStudent")
 					}
 				})
 			} else {

@@ -147,7 +147,7 @@
                     
                     backgroundMOC.saveContext()
                     
-                    let mpRequest = NSURLRequest(URL: markingPeriodUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10) // FIXME: RETURN TO NORMAL
+                    let mpRequest = NSURLRequest(URL: markingPeriodUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
                     
                     // Request the mp page
                     dispatch_group_enter(updateGroup); self.timer!.entries += 1 // 2

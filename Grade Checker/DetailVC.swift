@@ -19,7 +19,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var subject: Subject!
     var markingPeriods: [MarkingPeriod]!
-    var selectedMPIndex: Int = 0
+    var selectedMPIndex: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +42,12 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Setup Segmented Control
         // Get all the Valid Marking Periods
         let mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-        markingPeriods = mps.filter{!$0.empty!.boolValue}.sort{Int($0.number!) > Int($1.number!)} // Only want non empty marking periods
+        markingPeriods = mps.filter{!$0.empty!.boolValue}.sort{Int($0.number!) < Int($1.number!)} // Only want non empty marking periods
         segmentedControl.removeAllSegments()
         for index in 0...markingPeriods.count-1 {
             segmentedControl.insertSegmentWithTitle("MP " + markingPeriods[index].number!, atIndex: index, animated: false)
         }
+        selectedMPIndex = markingPeriods.count - 1
         segmentedControl.selectedSegmentIndex = selectedMPIndex
         segmentedControl.sizeToFit()
         

@@ -19,6 +19,7 @@
 		FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */; };
 		FC00EC021CBDBFE700A461AC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EC001CBDBFE700A461AC /* Student.swift */; };
 		FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC06632C1CBC3AA9005D1310 /* CoreData.framework */; };
+		FC15CF551CD2B19A001457AD /* StudentSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
 		FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */; };
@@ -53,6 +54,7 @@
 		FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC00EC001CBDBFE700A461AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		FC06632C1CBC3AA9005D1310 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentSelectionCell.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Grade Checker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grade Checker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +176,7 @@
 				FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */,
 				FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */,
 				FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */,
+				FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 			files = (
 				FC00EBF41CBDBDEF00A461AC /* Assignment.swift in Sources */,
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
+				FC15CF551CD2B19A001457AD /* StudentSelectionCell.swift in Sources */,
 				FC00EBF61CBDBDEF00A461AC /* Subject.swift in Sources */,
 				FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */,
 				FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */,
