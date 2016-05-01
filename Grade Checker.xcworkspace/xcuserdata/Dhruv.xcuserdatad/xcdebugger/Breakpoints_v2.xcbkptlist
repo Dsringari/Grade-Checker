@@ -58,12 +58,12 @@
                   moduleName = "Grade Checker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Dhruv/Documents/Programs/Grade%20Checker/Grade%20Checker/AppDelegate.swift"
-                  timestampString = "483644384.343455"
+                  timestampString = "483820049.442836"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "120"
                   endingLineNumber = "120"
-                  offsetFromSymbolStart = "2468">
+                  offsetFromSymbolStart = "3297">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -73,12 +73,12 @@
                   moduleName = "Grade Checker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Dhruv/Documents/Programs/Grade%20Checker/Grade%20Checker/AppDelegate.swift"
-                  timestampString = "483644384.343559"
+                  timestampString = "483820049.442949"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "121"
                   endingLineNumber = "121"
-                  offsetFromSymbolStart = "76">
+                  offsetFromSymbolStart = "112">
                </Location>
             </Locations>
          </BreakpointContent>
