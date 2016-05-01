@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/Dhruv/Documents/Programs/Grade Checker/Sapphire Access.xcodeproj">
+      location = "group:Sapphire Access.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
