@@ -7,7 +7,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Sapphire Login-->
+        <!--Sapphire Access-->
         <scene sceneID="bs5-v4-42e">
             <objects>
                 <tableViewController id="g77-QB-GiT" customClass="DSLoginView" customModule="Sapphire_Access" customModuleProvider="target" sceneMemberID="viewController">
@@ -283,7 +283,7 @@
                             <outlet property="delegate" destination="g77-QB-GiT" id="mUq-hV-dz9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Sapphire Login" id="E4N-vS-nYl"/>
+                    <navigationItem key="navigationItem" title="Sapphire Access" id="E4N-vS-nYl"/>
                     <connections>
                         <outlet property="passwordField" destination="KAo-ef-rxU" id="vtJ-Ku-TZP"/>
                         <outlet property="pinField" destination="l9o-6o-pUm" id="a7u-9r-FD7"/>
@@ -348,7 +348,8 @@
                                                             <exclude reference="d85-3i-eed"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="150" y="1" width="42" height="55"/>
                                                         <mask key="constraints">
                                                             <include reference="d85-3i-eed"/>
                                                         </mask>
@@ -359,6 +360,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="15" y="5" width="105" height="48"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
