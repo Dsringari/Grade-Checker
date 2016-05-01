@@ -69,7 +69,6 @@
             
             let nodes = doc.xpath(xpath)
             
-            // FIXME: If the parsing failed we have to return an error, make a proper error, and use it with self.result
             if (nodes.count == 0) {
                 self.result = (false, unknownResponseError)
                 return
@@ -80,7 +79,6 @@
             for node: XMLElement in nodes {
                 
                 // Check if we have this subject already
-                // TODO: Fix this for multiple subjects with the same name
                 let storedSubjects = backgroundMOC.getObjectsFromStore("Subject", predicateString: "name == %@ AND student.name == %@", args:[node.text!.substringToIndex(node.text!.endIndex.predecessor()), student.name!])
                 for subject in storedSubjects {
                     let s = subject as! Subject
@@ -208,11 +206,11 @@
         // Runs when the User has been completely updated
         dispatch_group_notify(updateGroup, dispatch_get_main_queue()) {
             self.timer!.stop()
-            print("------------------------------------------------------")
-            print("Completed in: " + String(self.timer!.duration!))
-            print("Entries: " + String(self.timer!.entries) + ", Exits: " + String(self.timer!.exits))
-            print("------------------------------------------------------")
-            print("")
+//            print("------------------------------------------------------")
+//            print("Completed in: " + String(self.timer!.duration!))
+//            print("Entries: " + String(self.timer!.entries) + ", Exits: " + String(self.timer!.exits))
+//            print("------------------------------------------------------")
+//            print("")
             
             guard (self.result.successful) else {
                 self.appDelegate.managedObjectContext.reset()

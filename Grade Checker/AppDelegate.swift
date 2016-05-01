@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 133 / 255, alpha: 1.9)], forState: .Selected)
 		// UITabBar.appearance().tintColor = UIColor.grayColor()
 		// Set default preferences
-		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false)]
+        let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications" : NSNumber(bool: true)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
 		return true
 	}
@@ -190,7 +190,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let users = moc.getObjectsFromStore("User", predicateString: nil, args: nil) as! [User]
 		for u in users {
 			moc.deleteObject(u)
-			print("Deleted: " + u.username!)
+			//print("Deleted: " + u.username!)
 		}
 		moc.saveContext()
 	}

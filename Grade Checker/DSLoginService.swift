@@ -61,7 +61,6 @@ class LoginService {
 				self.completion(successful: false, error: error, user: nil)
 				return
 			}
-            print("Logout Successful")
 			let session = NSURLSession.sharedSession()
 			let headers = [
 				"content-type": "application/x-www-form-urlencoded"

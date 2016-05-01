@@ -18,6 +18,47 @@
                         <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10105064655172413" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <color key="sectionIndexTrackingBackgroundColor" red="0.30588235289999999" green="0.36078431370000003" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="fR3-dv-bXg">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Note: Credentials have been provided for testing purposes only." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zLm-ld-9rm">
+                                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <color key="textColor" red="0.30588235289999999" green="0.36078431370000003" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.13725490200000001" green="0.19215686269999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="zLm-ld-9rm" firstAttribute="leading" secondItem="fR3-dv-bXg" secondAttribute="leading" id="5xR-vc-eKy"/>
+                                <constraint firstAttribute="trailing" secondItem="zLm-ld-9rm" secondAttribute="trailing" id="A0X-NM-9pl"/>
+                                <constraint firstItem="zLm-ld-9rm" firstAttribute="top" secondItem="fR3-dv-bXg" secondAttribute="top" id="JXL-MV-1K3"/>
+                                <constraint firstAttribute="bottom" secondItem="zLm-ld-9rm" secondAttribute="bottom" id="mBd-DM-qZd"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="subviews">
+                                    <exclude reference="zLm-ld-9rm"/>
+                                </mask>
+                                <mask key="constraints">
+                                    <exclude reference="5xR-vc-eKy"/>
+                                    <exclude reference="A0X-NM-9pl"/>
+                                    <exclude reference="JXL-MV-1K3"/>
+                                    <exclude reference="mBd-DM-qZd"/>
+                                </mask>
+                            </variation>
+                            <variation key="widthClass=compact">
+                                <mask key="subviews">
+                                    <include reference="zLm-ld-9rm"/>
+                                </mask>
+                                <mask key="constraints">
+                                    <include reference="5xR-vc-eKy"/>
+                                    <include reference="A0X-NM-9pl"/>
+                                    <include reference="JXL-MV-1K3"/>
+                                    <include reference="mBd-DM-qZd"/>
+                                </mask>
+                            </variation>
+                        </view>
                         <sections>
                             <tableViewSection id="zWk-E5-hQE">
                                 <cells>
@@ -28,25 +69,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-Xd-kOL">
-                                                    <rect key="frame" x="-25" y="-30" width="97" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="UPm-DI-PRC"/>
-                                                    </constraints>
-                                                    <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="light"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="UPm-DI-PRC"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <variation key="widthClass=compact">
-                                                        <mask key="constraints">
-                                                            <include reference="UPm-DI-PRC"/>
-                                                        </mask>
-                                                    </variation>
-                                                </textField>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="social" translatesAutoresizingMaskIntoConstraints="NO" id="y3Q-rX-PwS">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <constraints>
@@ -68,6 +90,25 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="SringariDhruv" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-Xd-kOL">
+                                                    <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="UPm-DI-PRC"/>
+                                                    </constraints>
+                                                    <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="light"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="UPm-DI-PRC"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="UPm-DI-PRC"/>
+                                                        </mask>
+                                                    </variation>
+                                                </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="bhc-Xd-kOL" firstAttribute="centerY" secondItem="eZ2-K2-LAt" secondAttribute="centerY" id="JRK-8U-Q3P"/>
@@ -80,8 +121,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="bhc-Xd-kOL"/>
                                                     <exclude reference="y3Q-rX-PwS"/>
+                                                    <exclude reference="bhc-Xd-kOL"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <exclude reference="JRK-8U-Q3P"/>
@@ -93,8 +134,8 @@
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
-                                                    <include reference="bhc-Xd-kOL"/>
                                                     <include reference="y3Q-rX-PwS"/>
+                                                    <include reference="bhc-Xd-kOL"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <include reference="JRK-8U-Q3P"/>
@@ -114,25 +155,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-ef-rxU">
-                                                    <rect key="frame" x="-25" y="-30" width="97" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="y30-oo-vh5"/>
-                                                    </constraints>
-                                                    <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardAppearance="light" secureTextEntry="YES"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="y30-oo-vh5"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <variation key="widthClass=compact">
-                                                        <mask key="constraints">
-                                                            <include reference="y30-oo-vh5"/>
-                                                        </mask>
-                                                    </variation>
-                                                </textField>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="PJw-HW-vAN">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <constraints>
@@ -152,6 +174,25 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="181012" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-ef-rxU">
+                                                    <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="y30-oo-vh5"/>
+                                                    </constraints>
+                                                    <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardAppearance="light" secureTextEntry="YES"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="y30-oo-vh5"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="y30-oo-vh5"/>
+                                                        </mask>
+                                                    </variation>
+                                                </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="KAo-ef-rxU" firstAttribute="trailing" secondItem="5gY-uH-fza" secondAttribute="trailingMargin" id="3xh-1e-snS"/>
@@ -162,8 +203,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="KAo-ef-rxU"/>
                                                     <exclude reference="PJw-HW-vAN"/>
+                                                    <exclude reference="KAo-ef-rxU"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <exclude reference="3xh-1e-snS"/>
@@ -175,8 +216,8 @@
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
-                                                    <include reference="KAo-ef-rxU"/>
                                                     <include reference="PJw-HW-vAN"/>
+                                                    <include reference="KAo-ef-rxU"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <include reference="3xh-1e-snS"/>
@@ -219,7 +260,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pin" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l9o-6o-pUm">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="98095" placeholder="Pin" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l9o-6o-pUm">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="sKO-iS-DSg"/>
@@ -321,7 +362,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pGr-CK-jvK" id="ocG-2G-OZS">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="57"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="207" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="in6-w3-hGM">
@@ -485,7 +526,14 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Grades" id="QEM-X6-liX"/>
+                    <navigationItem key="navigationItem" title="Grades" id="QEM-X6-liX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="eeJ-np-swd">
+                            <color key="tintColor" red="0.30588235289999999" green="0.36078431370000003" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="refresh:" destination="YCZ-vI-DKP" id="NLR-uo-gbx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="5ed-fj-RgQ" id="QSM-Ec-dR2"/>
                         <outlet property="activityView" destination="H8e-yI-E4D" id="b4U-d3-dak"/>
@@ -495,7 +543,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhf-Db-fyd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-454.5" y="1889"/>
+            <point key="canvasLocation" x="-414" y="1978"/>
         </scene>
         <!--Subject Name-->
         <scene sceneID="PCH-w8-cPX">
@@ -726,7 +774,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SgR-5y-7ek" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="337.5" y="1889"/>
+            <point key="canvasLocation" x="433.5" y="1978"/>
         </scene>
         <!--Settings-->
         <scene sceneID="kNz-BI-BXs">
@@ -873,16 +921,14 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Settings" id="WH4-ue-r6S">
-                        <barButtonItem key="backBarButtonItem" title="Students" id="1Ed-bN-BzW"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Settings" id="WH4-ue-r6S"/>
                     <connections>
                         <outlet property="tableview" destination="iJq-ul-XwJ" id="mCd-68-EzS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RK4-jc-4Qz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1030.5" y="1047"/>
+            <point key="canvasLocation" x="433.5" y="1110"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="51a-z7-R0n">
@@ -966,7 +1012,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0dN-Ir-xFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="112.5" y="1047"/>
+            <point key="canvasLocation" x="-414" y="1110"/>
         </scene>
     </scenes>
     <resources>

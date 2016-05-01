@@ -24,11 +24,12 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		super.viewDidLoad()
 		tableview.delegate = self
 		tableview.dataSource = self
-        refreshControl = UIRefreshControl()
+		refreshControl = UIRefreshControl()
 		refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
 		tableview.addSubview(refreshControl)
 		loadStudent()
 	}
+    
     
     func reloadData() {
         let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
@@ -38,7 +39,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
     }
 
 	func loadStudent() {
-        self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades" // Get the first name and set it as the title
+		self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades" // Get the first name and set it as the title
 		startLoading()
 		let _ = UpdateService(student: student, completionHandler: { successful, error in
 			if (successful) {
@@ -48,6 +49,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 					self.student = updatedStudent
 					self.stopLoading()
 					self.tableview.reloadData()
+
+					let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+					UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
 				})
 			} else {
 				dispatch_async(dispatch_get_main_queue(), {
@@ -63,37 +67,40 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		})
 	}
 
-	func refresh() {
-		let _ = UpdateService(student: student, completionHandler: { successful, error in
-			if (successful) {
-				dispatch_async(dispatch_get_main_queue(), {
-					// Refresh the ui's student object
-					let moc = self.appDelegate.managedObjectContext
-					let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
-					self.student = updatedStudent
-					// set the refresh control's title
-					let formatter: NSDateFormatter = NSDateFormatter()
-					formatter.dateFormat = "MMM d, h:mm a"
-					let title = "Last Update: " + formatter.stringFromDate(NSDate())
-					let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-					self.refreshControl.attributedTitle = attributedTitle
-
-					self.refreshControl.endRefreshing()
-					self.tableview.reloadData()
-				})
-			} else {
-				dispatch_async(dispatch_get_main_queue(), {
-					self.refreshControl.endRefreshing()
-					var err = error
-					if (error!.code == NSURLErrorTimedOut) {
-						err = badConnectionError
-					}
-					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-					alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-				})
-			}
-		})
-	}
+    @IBAction func refresh(sender: AnyObject) {
+        startLoading()
+        let _ = UpdateService(student: student, completionHandler: { successful, error in
+            if (successful) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    // Refresh the ui's student object
+                    let moc = self.appDelegate.managedObjectContext
+                    let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
+                    self.student = updatedStudent
+                    // set the refresh control's title
+                    let formatter: NSDateFormatter = NSDateFormatter()
+                    formatter.dateFormat = "MMM d, h:mm a"
+                    let title = "Last Update: " + formatter.stringFromDate(NSDate())
+                    let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+                    self.refreshControl.attributedTitle = attributedTitle
+                    
+                    self.refreshControl.endRefreshing()
+                    self.tableview.reloadData()
+                    self.stopLoading()
+                })
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.refreshControl.endRefreshing()
+                    var err = error
+                    if (error!.code == NSURLErrorTimedOut) {
+                        err = badConnectionError
+                    }
+                    let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                    self.stopLoading()
+                })
+            }
+        })
+    }
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -115,9 +122,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 			var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
 			mps = mps.filter { !$0.empty!.boolValue } // filter marking periods with no assignments
 
-			for mp in mps {
-				print(mp.subject!.name! + " " + mp.number!)
-			}
+//			for mp in mps {
+//				print(mp.subject!.name! + " " + mp.number!)
+//			}
 
 			if mps.count == 0 { // Don't show subject if all the marking periods are empty
 				subjects.removeObject(subject)

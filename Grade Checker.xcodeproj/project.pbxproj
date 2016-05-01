@@ -149,13 +149,13 @@
 			children = (
 				FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */,
 				FCC29A701CD198BE004002B5 /* Services */,
-				FCC29A711CD198E0004002B5 /* Table View Cells */,
 				FCC29A721CD19902004002B5 /* View Controllers */,
-				FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */,
-				FCC29A741CD19918004002B5 /* Swift Helpers */,
+				FCC29A711CD198E0004002B5 /* Table View Cells */,
 				FCC29A751CD19931004002B5 /* CoreData */,
-				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
+				FCC29A741CD19918004002B5 /* Swift Helpers */,
+				FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */,
 				FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */,
+				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
 				FC639FA61C8F8FFD006C71A7 /* Info.plist */,
 			);
 			path = "Grade Checker";
@@ -487,6 +487,7 @@
 			baseConfigurationReference = EE8D4962F0BB482B8EAF461D /* Pods-Grade Checker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -505,6 +506,7 @@
 			baseConfigurationReference = 21C45DA85B0B0E9AE16C5C63 /* Pods-Grade Checker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",

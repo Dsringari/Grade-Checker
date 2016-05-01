@@ -95,6 +95,7 @@ class DSLoginView: UITableViewController {
                         message = "We couldn't access Touch ID"
                     }
                     self.appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
+                    self.stopLoading()
                     let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
@@ -166,7 +167,11 @@ class DSLoginView: UITableViewController {
 					let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
 					failed.addAction(Ok)
                     self.appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
-					self.presentViewController(failed, animated: true, completion: nil)
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.presentViewController(failed, animated: true, completion: nil)
+                        self.stopLoading()
+                    })
 				}
 			}
 		})
