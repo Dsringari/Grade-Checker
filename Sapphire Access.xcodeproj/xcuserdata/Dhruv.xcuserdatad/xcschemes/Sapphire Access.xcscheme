@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FC639F961C8F8FFD006C71A7"
-               BuildableName = "Grade Checker.app"
-               BlueprintName = "Grade Checker"
-               ReferencedContainer = "container:Grade Checker.xcodeproj">
+               BuildableName = "Sapphire Access.app"
+               BlueprintName = "Sapphire Access"
+               ReferencedContainer = "container:Sapphire Access.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FC639F961C8F8FFD006C71A7"
-            BuildableName = "Grade Checker.app"
-            BlueprintName = "Grade Checker"
-            ReferencedContainer = "container:Grade Checker.xcodeproj">
+            BuildableName = "Sapphire Access.app"
+            BlueprintName = "Sapphire Access"
+            ReferencedContainer = "container:Sapphire Access.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FC639F961C8F8FFD006C71A7"
-            BuildableName = "Grade Checker.app"
-            BlueprintName = "Grade Checker"
-            ReferencedContainer = "container:Grade Checker.xcodeproj">
+            BuildableName = "Sapphire Access.app"
+            BlueprintName = "Sapphire Access"
+            ReferencedContainer = "container:Sapphire Access.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -81,9 +81,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FC639F961C8F8FFD006C71A7"
-            BuildableName = "Grade Checker.app"
-            BlueprintName = "Grade Checker"
-            ReferencedContainer = "container:Grade Checker.xcodeproj">
+            BuildableName = "Sapphire Access.app"
+            BlueprintName = "Sapphire Access"
+            ReferencedContainer = "container:Sapphire Access.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

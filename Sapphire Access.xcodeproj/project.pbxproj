@@ -57,7 +57,7 @@
 		FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentSelectionCell.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
-		FC639F971C8F8FFD006C71A7 /* Grade Checker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grade Checker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC639F971C8F8FFD006C71A7 /* Sapphire Access.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sapphire Access.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC639F9F1C8F8FFD006C71A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 		FC639F8E1C8F8FFD006C71A7 = {
 			isa = PBXGroup;
 			children = (
-				FC639F991C8F8FFD006C71A7 /* Grade Checker */,
+				FC639F991C8F8FFD006C71A7 /* Sapphire Access */,
 				FC639F981C8F8FFD006C71A7 /* Products */,
 				3A39DB40D025CD77D3B363B3 /* Frameworks */,
 				E2D025B05CC0189902108D46 /* Pods */,
@@ -139,12 +139,12 @@
 		FC639F981C8F8FFD006C71A7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FC639F971C8F8FFD006C71A7 /* Grade Checker.app */,
+				FC639F971C8F8FFD006C71A7 /* Sapphire Access.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FC639F991C8F8FFD006C71A7 /* Grade Checker */ = {
+		FC639F991C8F8FFD006C71A7 /* Sapphire Access */ = {
 			isa = PBXGroup;
 			children = (
 				FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */,
@@ -158,6 +158,7 @@
 				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
 				FC639FA61C8F8FFD006C71A7 /* Info.plist */,
 			);
+			name = "Sapphire Access";
 			path = "Grade Checker";
 			sourceTree = "<group>";
 		};
@@ -213,9 +214,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FC639F961C8F8FFD006C71A7 /* Grade Checker */ = {
+		FC639F961C8F8FFD006C71A7 /* Sapphire Access */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FC639FA91C8F8FFD006C71A7 /* Build configuration list for PBXNativeTarget "Grade Checker" */;
+			buildConfigurationList = FC639FA91C8F8FFD006C71A7 /* Build configuration list for PBXNativeTarget "Sapphire Access" */;
 			buildPhases = (
 				3A04484A54A869DEA878AE70 /* Check Pods Manifest.lock */,
 				FCC71DA71C950DD6000913D1 /* Check for Warning Tags */,
@@ -229,9 +230,9 @@
 			);
 			dependencies = (
 			);
-			name = "Grade Checker";
+			name = "Sapphire Access";
 			productName = "Grade Checker";
-			productReference = FC639F971C8F8FFD006C71A7 /* Grade Checker.app */;
+			productReference = FC639F971C8F8FFD006C71A7 /* Sapphire Access.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -254,7 +255,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FC639F921C8F8FFD006C71A7 /* Build configuration list for PBXProject "Grade Checker" */;
+			buildConfigurationList = FC639F921C8F8FFD006C71A7 /* Build configuration list for PBXProject "Sapphire Access" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -267,7 +268,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FC639F961C8F8FFD006C71A7 /* Grade Checker */,
+				FC639F961C8F8FFD006C71A7 /* Sapphire Access */,
 			);
 		};
 /* End PBXProject section */
@@ -495,8 +496,8 @@
 				INFOPLIST_FILE = "Grade Checker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.SringariDhruv.Grade-Checker";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SringariDhruv.Sapphire-Access";
+				PRODUCT_NAME = "Sapphire Access";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -514,8 +515,8 @@
 				INFOPLIST_FILE = "Grade Checker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.SringariDhruv.Grade-Checker";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SringariDhruv.Sapphire-Access";
+				PRODUCT_NAME = "Sapphire Access";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -523,7 +524,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FC639F921C8F8FFD006C71A7 /* Build configuration list for PBXProject "Grade Checker" */ = {
+		FC639F921C8F8FFD006C71A7 /* Build configuration list for PBXProject "Sapphire Access" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FC639FA71C8F8FFD006C71A7 /* Debug */,
@@ -532,7 +533,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FC639FA91C8F8FFD006C71A7 /* Build configuration list for PBXNativeTarget "Grade Checker" */ = {
+		FC639FA91C8F8FFD006C71A7 /* Build configuration list for PBXNativeTarget "Sapphire Access" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FC639FAA1C8F8FFD006C71A7 /* Debug */,
