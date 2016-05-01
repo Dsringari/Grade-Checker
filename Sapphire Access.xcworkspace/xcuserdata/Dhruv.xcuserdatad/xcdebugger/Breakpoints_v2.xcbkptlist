@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Grade Checker/AppDelegate.swift"
+            timestampString = "483643630.519454"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "application(_:performFetchWithCompletionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Grade Checker/AppDelegate.swift"
+            timestampString = "483643525.021233"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "application(_:performFetchWithCompletionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Grade Checker/AppDelegate.swift"
+            timestampString = "483643624.704093"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "application(_:performFetchWithCompletionHandler:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Grade_Checker.AppDelegate.application (__ObjC.UIApplication, performFetchWithCompletionHandler : (__C.UIBackgroundFetchResult) -&gt; ()) -&gt; ()"
+                  moduleName = "Grade Checker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dhruv/Documents/Programs/Grade%20Checker/Grade%20Checker/AppDelegate.swift"
+<<<<<<< HEAD:Grade Checker.xcworkspace/xcuserdata/Dhruv.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+                  timestampString = "483820049.442836"
+=======
+                  timestampString = "483819608.007702"
+>>>>>>> Scholarship:Sapphire Access.xcworkspace/xcuserdata/Dhruv.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "3297">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[6] = Value Promoted from Box&gt; of Grade_Checker.AppDelegate.(application (__ObjC.UIApplication, performFetchWithCompletionHandler : (__C.UIBackgroundFetchResult) -&gt; ()) -&gt; ()).(closure #2)"
+                  moduleName = "Grade Checker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dhruv/Documents/Programs/Grade%20Checker/Grade%20Checker/AppDelegate.swift"
+<<<<<<< HEAD:Grade Checker.xcworkspace/xcuserdata/Dhruv.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+                  timestampString = "483820049.442949"
+=======
+                  timestampString = "483819608.007794"
+>>>>>>> Scholarship:Sapphire Access.xcworkspace/xcuserdata/Dhruv.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "121"
+                  endingLineNumber = "121"
+                  offsetFromSymbolStart = "112">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Grade Checker/AppDelegate.swift"
+            timestampString = "483643638.655362"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "application(_:performFetchWithCompletionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
