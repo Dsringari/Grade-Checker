@@ -23,15 +23,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 133 / 255, alpha: 1.9)], forState: .Selected)
 		// UITabBar.appearance().tintColor = UIColor.grayColor()
 		// Set default preferences
-        let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications" : NSNumber(bool: true)]
+		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications": NSNumber(bool: true)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
 		return true
 	}
-    
-    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(900)) // 15 minutes in seconds
-        return true
-    }
+
+	func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		let settings = NSUserDefaults.standardUserDefaults()
+		if (settings.stringForKey("selectedStudent") != nil) {
+			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+		} else {
+			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+		}
+		return true
+	}
 
 	func applicationWillResignActive(application: UIApplication) {
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -41,6 +46,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationDidEnterBackground(application: UIApplication) {
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
+		let settings = NSUserDefaults.standardUserDefaults()
+		if (settings.stringForKey("selectedStudent") != nil) {
+			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+		} else {
+			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+		}
 	}
 
 	func applicationWillEnterForeground(application: UIApplication) {
@@ -98,6 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
 		let coordinator = self.persistentStoreCoordinator
 		var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.shouldDeleteInaccessibleFaults = false
 		managedObjectContext.persistentStoreCoordinator = coordinator
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(mocDidSaveNotification), name: "NSManagedObjectContextDidSaveNotification", object: nil)
 		return managedObjectContext
@@ -105,53 +118,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
 		let settings = NSUserDefaults.standardUserDefaults()
-		if let selectedStudent = settings.stringForKey("selectedStudent") {
-            var oldStudentAssignmentCount: Int = 0
-			let student = self.managedObjectContext.getObjectFromStore("Student", predicateString: "name == %@", args: [selectedStudent]) as! Student
-			for subject in student.subjects!.allObjects as! [Subject] {
-				var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-				mps = mps.filter { !$0.empty!.boolValue }
-                
-                for mp in mps {
-                    oldStudentAssignmentCount += mp.assignments!.count
-                }
-			}
-            
-            let _ = UpdateService(student: student, completionHandler: {successful, error in
-                if (!successful) {
-                    self.managedObjectContext.deleteObject(student)
-                    completionHandler(UIBackgroundFetchResult.Failed)
-                } else {
-                    var newStudentAssignmentCount: Int = 0
-                    let student = self.managedObjectContext.getObjectFromStore("Student", predicateString: "name == %@", args: [selectedStudent]) as! Student
-                     for subject in student.subjects!.allObjects as! [Subject] {
-                        var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-                        mps = mps.filter { !$0.empty!.boolValue }
-                        
-                        for mp in mps {
-                            newStudentAssignmentCount += mp.assignments!.count
-                        }
+		let selectedStudentName = settings.stringForKey("selectedStudent")!
+		var oldStudentAssignmentCount: Int = 0
+        let moc = self.managedObjectContext
+        let student: Student = moc.getObjectFromStore("Student", predicateString: "name == %@", args: [selectedStudentName]) as! Student
+		for subject in student.subjects!.allObjects as! [Subject] {
+			var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
+			mps = mps.filter { !$0.empty!.boolValue }
 
-                    }
-                    
-                    if (newStudentAssignmentCount != oldStudentAssignmentCount) {
-                        UIApplication.sharedApplication().cancelAllLocalNotifications()
-                        let newNotification = UILocalNotification()
-                        let now = NSDate()
-                        newNotification.fireDate = now
-                        newNotification.alertBody = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades Have Been Updated"
-                        newNotification.soundName = UILocalNotificationDefaultSoundName
-                        UIApplication.sharedApplication().scheduleLocalNotification(newNotification)
-                        completionHandler(UIBackgroundFetchResult.NewData)
-                    } else {
-                        completionHandler(UIBackgroundFetchResult.NoData)
-                    }
-                }
-            })
-        } else {
-            completionHandler(UIBackgroundFetchResult.NoData)
-        }
-        
+			for mp in mps {
+				oldStudentAssignmentCount += mp.assignments!.count
+			}
+		}
+
+		let _ = UpdateService(student: student, completionHandler: { successful, error in
+			if (!successful) {
+				self.managedObjectContext.deleteObject(student)
+				completionHandler(UIBackgroundFetchResult.Failed)
+			} else {
+				var newStudentAssignmentCount: Int = 0
+				let updatedStudent = moc.objectWithID(student.objectID) as! Student
+				for subject in updatedStudent.subjects!.allObjects as! [Subject] {
+					var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
+					mps = mps.filter { !$0.empty!.boolValue }
+
+					for mp in mps {
+						newStudentAssignmentCount += mp.assignments!.count
+					}
+
+				}
+
+				if (newStudentAssignmentCount == oldStudentAssignmentCount) {
+					UIApplication.sharedApplication().cancelAllLocalNotifications()
+					let newNotification = UILocalNotification()
+					let now = NSDate()
+					newNotification.fireDate = now
+					newNotification.alertBody = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades Have Been Updated"
+					newNotification.soundName = UILocalNotificationDefaultSoundName
+					UIApplication.sharedApplication().scheduleLocalNotification(newNotification)
+					completionHandler(UIBackgroundFetchResult.NewData)
+				} else {
+					completionHandler(UIBackgroundFetchResult.NoData)
+				}
+			}
+		})
+
 	}
 
 	// MARK: - Core Data Saving support
@@ -190,8 +201,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let users = moc.getObjectsFromStore("User", predicateString: nil, args: nil) as! [User]
 		for u in users {
 			moc.deleteObject(u)
-			//print("Deleted: " + u.username!)
+			// print("Deleted: " + u.username!)
 		}
+
+		let settings = NSUserDefaults.standardUserDefaults()
+		settings.setObject(nil, forKey: "selectedStudent")
+
 		moc.saveContext()
 	}
 }

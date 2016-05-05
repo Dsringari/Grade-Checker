@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7ef-1b-Ggd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7ef-1b-Ggd">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
@@ -298,7 +298,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-2367" y="1110"/>
+            <point key="canvasLocation" x="-3021" y="634"/>
         </scene>
         <!--Grades-->
         <scene sceneID="5zr-op-dPx">
@@ -348,8 +348,7 @@
                                                             <exclude reference="d85-3i-eed"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="150" y="1" width="42" height="55"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="d85-3i-eed"/>
                                                         </mask>
@@ -360,9 +359,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="15" y="5" width="105" height="48"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -443,13 +439,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="H8e-yI-E4D" firstAttribute="leading" secondItem="URe-cr-g5i" secondAttribute="leadingMargin" constant="-20" id="2dv-TZ-rFs"/>
                             <constraint firstItem="9xq-vJ-4aP" firstAttribute="top" secondItem="cSn-ed-jQb" secondAttribute="bottom" id="4Ey-gj-DUj"/>
+                            <constraint firstItem="H8e-yI-E4D" firstAttribute="top" secondItem="cSn-ed-jQb" secondAttribute="top" id="812-kK-Vhp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cSn-ed-jQb" secondAttribute="trailing" constant="-20" id="AAv-wT-fDZ"/>
+                            <constraint firstItem="H8e-yI-E4D" firstAttribute="leading" secondItem="cSn-ed-jQb" secondAttribute="leading" id="Bs8-I2-8Gf"/>
                             <constraint firstItem="cSn-ed-jQb" firstAttribute="leading" secondItem="URe-cr-g5i" secondAttribute="leadingMargin" constant="-20" id="Whf-wp-vXe"/>
-                            <constraint firstItem="H8e-yI-E4D" firstAttribute="top" secondItem="jsw-jh-Xne" secondAttribute="bottom" id="gj4-3O-Z3Q"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="H8e-yI-E4D" secondAttribute="trailing" constant="-20" id="od6-EP-q5K"/>
-                            <constraint firstItem="9xq-vJ-4aP" firstAttribute="top" secondItem="H8e-yI-E4D" secondAttribute="bottom" id="v63-f7-lI8"/>
+                            <constraint firstItem="H8e-yI-E4D" firstAttribute="trailing" secondItem="cSn-ed-jQb" secondAttribute="trailing" id="ed0-jy-C7B"/>
+                            <constraint firstItem="H8e-yI-E4D" firstAttribute="bottom" secondItem="9xq-vJ-4aP" secondAttribute="top" id="ndN-LO-1N4"/>
                             <constraint firstItem="cSn-ed-jQb" firstAttribute="top" secondItem="URe-cr-g5i" secondAttribute="topMargin" id="z0D-mi-UXy"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -462,14 +458,14 @@
                                 <exclude reference="H8e-yI-E4D"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="4Ey-gj-DUj"/>
-                                <exclude reference="v63-f7-lI8"/>
-                                <exclude reference="2dv-TZ-rFs"/>
-                                <exclude reference="gj4-3O-Z3Q"/>
-                                <exclude reference="od6-EP-q5K"/>
+                                <exclude reference="812-kK-Vhp"/>
+                                <exclude reference="Bs8-I2-8Gf"/>
+                                <exclude reference="ed0-jy-C7B"/>
+                                <exclude reference="ndN-LO-1N4"/>
                                 <exclude reference="AAv-wT-fDZ"/>
                                 <exclude reference="Whf-wp-vXe"/>
                                 <exclude reference="z0D-mi-UXy"/>
+                                <exclude reference="4Ey-gj-DUj"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -478,14 +474,14 @@
                                 <include reference="H8e-yI-E4D"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="4Ey-gj-DUj"/>
-                                <include reference="v63-f7-lI8"/>
-                                <include reference="2dv-TZ-rFs"/>
-                                <include reference="gj4-3O-Z3Q"/>
-                                <include reference="od6-EP-q5K"/>
+                                <include reference="812-kK-Vhp"/>
+                                <include reference="Bs8-I2-8Gf"/>
+                                <include reference="ed0-jy-C7B"/>
+                                <include reference="ndN-LO-1N4"/>
                                 <include reference="AAv-wT-fDZ"/>
                                 <include reference="Whf-wp-vXe"/>
                                 <include reference="z0D-mi-UXy"/>
+                                <include reference="4Ey-gj-DUj"/>
                             </mask>
                         </variation>
                     </view>
@@ -500,13 +496,14 @@
                     <connections>
                         <outlet property="activityIndicator" destination="5ed-fj-RgQ" id="QSM-Ec-dR2"/>
                         <outlet property="activityView" destination="H8e-yI-E4D" id="b4U-d3-dak"/>
+                        <outlet property="refreshButton" destination="eeJ-np-swd" id="CSl-Sq-8pi"/>
                         <outlet property="tableview" destination="cSn-ed-jQb" id="JiW-yK-pLS"/>
                         <segue destination="YHe-rm-82A" kind="show" identifier="subjectView" id="QFF-Gb-jx3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhf-Db-fyd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-414" y="1978"/>
+            <point key="canvasLocation" x="-1068" y="1502"/>
         </scene>
         <!--Subject Name-->
         <scene sceneID="PCH-w8-cPX">
@@ -737,7 +734,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SgR-5y-7ek" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="433.5" y="1978"/>
+            <point key="canvasLocation" x="-220.5" y="1502"/>
         </scene>
         <!--Settings-->
         <scene sceneID="kNz-BI-BXs">
@@ -891,7 +888,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RK4-jc-4Qz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="433.5" y="1110"/>
+            <point key="canvasLocation" x="-220.5" y="634"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="51a-z7-R0n">
@@ -911,7 +908,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TGI-5A-4Fh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1159.5" y="1110"/>
+            <point key="canvasLocation" x="-1813.5" y="634"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sB2-Um-2lz">
@@ -935,7 +932,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wtl-xl-GWf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3285" y="1110"/>
+            <point key="canvasLocation" x="-3939" y="634"/>
         </scene>
         <!--Grades-->
         <scene sceneID="O0i-T0-xdf">
@@ -955,7 +952,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O2c-af-Yxj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1159.5" y="1978"/>
+            <point key="canvasLocation" x="-1813.5" y="1502"/>
         </scene>
         <!--Settings-->
         <scene sceneID="srf-ia-llG">
@@ -975,7 +972,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0dN-Ir-xFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-414" y="1110"/>
+            <point key="canvasLocation" x="-1068" y="634"/>
         </scene>
     </scenes>
     <resources>

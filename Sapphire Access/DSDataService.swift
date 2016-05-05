@@ -79,7 +79,8 @@
             for node: XMLElement in nodes {
                 
                 // Check if we have this subject already
-                let storedSubjects = backgroundMOC.getObjectsFromStore("Subject", predicateString: "name == %@ AND student.name == %@", args:[node.text!.substringToIndex(node.text!.endIndex.predecessor()), student.name!])
+                print(node.text!.substringToIndex(node.text!.endIndex.predecessor()))
+                let storedSubjects = backgroundMOC.getObjectsFromStore("Subject", predicateString: "name == %@ AND student.name == %@", args:[node.text!.substringToIndex(node.text!.endIndex.predecessor()), updatingStudent.name!])
                 for subject in storedSubjects {
                     let s = subject as! Subject
                     backgroundMOC.deleteObject(s)

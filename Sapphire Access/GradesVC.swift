@@ -12,11 +12,17 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var activityView: UIView!
 	@IBOutlet var tableview: UITableView!
+	@IBOutlet var refreshButton: UIBarButtonItem!
 
 	var student: Student!
 	var subjects: [Subject]! = []
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-	var refreshControl: UIRefreshControl!
+	var isRefreshing = false
+	lazy var refreshControl: UIRefreshControl = {
+		let refreshControl = UIRefreshControl()
+		refreshControl.addTarget(self, action: #selector(pullToRefresh), forControlEvents: .ValueChanged)
+		return refreshControl
+	}()
 
 	var selectedSubject: Subject!
 
@@ -24,34 +30,33 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		super.viewDidLoad()
 		tableview.delegate = self
 		tableview.dataSource = self
-		refreshControl = UIRefreshControl()
-		refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
 		tableview.addSubview(refreshControl)
 		loadStudent()
 	}
-    
-    
-    func reloadData() {
-        let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
-        let student = self.appDelegate.managedObjectContext.getObjectFromStore("Student", predicateString: "name == %@", args: [selectedStudentName]) as! Student
-        self.student = student
-        loadStudent()
-    }
+
+	func reloadData() {
+		let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
+		let student = self.appDelegate.managedObjectContext.getObjectFromStore("Student", predicateString: "name == %@", args: [selectedStudentName]) as! Student
+		self.student = student
+		loadStudent()
+	}
 
 	func loadStudent() {
 		self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades" // Get the first name and set it as the title
 		startLoading()
+        isRefreshing = true
 		let _ = UpdateService(student: student, completionHandler: { successful, error in
 			if (successful) {
 				dispatch_async(dispatch_get_main_queue(), {
 					let moc = self.appDelegate.managedObjectContext
 					let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
 					self.student = updatedStudent
-					self.stopLoading()
 					self.tableview.reloadData()
-
+					self.updateRefreshControl()
+					self.stopLoading()
 					let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
 					UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+                    self.isRefreshing = false
 				})
 			} else {
 				dispatch_async(dispatch_get_main_queue(), {
@@ -62,45 +67,87 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 					}
 					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
 					alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.isRefreshing = false
 				})
 			}
 		})
 	}
 
-    @IBAction func refresh(sender: AnyObject) {
-        startLoading()
-        let _ = UpdateService(student: student, completionHandler: { successful, error in
-            if (successful) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    // Refresh the ui's student object
-                    let moc = self.appDelegate.managedObjectContext
-                    let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
-                    self.student = updatedStudent
-                    // set the refresh control's title
-                    let formatter: NSDateFormatter = NSDateFormatter()
-                    formatter.dateFormat = "MMM d, h:mm a"
-                    let title = "Last Update: " + formatter.stringFromDate(NSDate())
-                    let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-                    self.refreshControl.attributedTitle = attributedTitle
-                    
-                    self.refreshControl.endRefreshing()
-                    self.tableview.reloadData()
-                    self.stopLoading()
-                })
-            } else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.refreshControl.endRefreshing()
-                    var err = error
-                    if (error!.code == NSURLErrorTimedOut) {
-                        err = badConnectionError
-                    }
-                    let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-                    self.stopLoading()
-                })
-            }
-        })
-    }
+	@IBAction func refresh(sender: AnyObject) {
+		if !isRefreshing {
+			refreshButton.enabled = false
+            isRefreshing = true
+            refreshControl.beginRefreshing()
+            tableview.setContentOffset(CGPointMake(0, -refreshControl.frame.size.height), animated: true)
+            let _ = UpdateService(student: student, completionHandler: { successful, error in
+				if (successful) {
+					dispatch_async(dispatch_get_main_queue(), {
+						// Refresh the ui's student object
+						let moc = self.appDelegate.managedObjectContext
+						let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
+						self.student = updatedStudent
+
+						self.tableview.reloadData()
+						self.updateRefreshControl()
+                        
+                        self.refreshControl.endRefreshing()
+						self.refreshButton.enabled = true
+                        self.isRefreshing = false
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), {
+                        self.refreshControl.endRefreshing()
+                        self.refreshButton.enabled = true
+                        self.isRefreshing = false
+						var err = error
+						if (error!.code == NSURLErrorTimedOut) {
+							err = badConnectionError
+						}
+						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+					})
+				}
+			})
+		}
+	}
+
+	func pullToRefresh() {
+		if !isRefreshing {
+            isRefreshing = true
+            refreshButton.enabled = false
+			let _ = UpdateService(student: student, completionHandler: { successful, error in
+				if (successful) {
+					dispatch_async(dispatch_get_main_queue(), {
+						// Refresh the ui's student object
+						let moc = self.appDelegate.managedObjectContext
+						let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
+						self.student = updatedStudent
+
+						self.tableview.reloadData()
+						self.updateRefreshControl()
+						self.refreshControl.endRefreshing()
+                        self.isRefreshing = false
+                        self.refreshButton.enabled = true
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), {
+						self.refreshControl.endRefreshing()
+                        self.isRefreshing = false
+                        self.refreshButton.enabled = true
+						var err = error
+						if (error!.code == NSURLErrorTimedOut) {
+							err = badConnectionError
+						}
+						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+					})
+				}
+			})
+		}
+	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -175,6 +222,10 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 
 		// sort marking periods by descending number and ignore empty marking periods
 		markingPeriods = markingPeriods.filter { !$0.empty!.boolValue }.sort { Int($0.number!) > Int($1.number!) }
+
+		if (markingPeriods.count == 0) {
+
+		}
 		let recentMP = markingPeriods[0]
 
 		// Remove %
@@ -198,6 +249,15 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 	}
 
+	func updateRefreshControl() {
+		// set the refresh control's title
+		let formatter: NSDateFormatter = NSDateFormatter()
+		formatter.dateFormat = "MMM d, h:mm a"
+		let title = "Last Update: " + formatter.stringFromDate(NSDate())
+		let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+		self.refreshControl.attributedTitle = attributedTitle
+	}
+
 	func percentToLetterGrade(percentGrade: Int) -> String {
 		switch percentGrade {
 		case 0 ... 59:
@@ -218,11 +278,13 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 	func startLoading() {
 		activityIndicator.startAnimating()
 		activityView.hidden = false
+		refreshButton.enabled = false
 	}
 
 	func stopLoading() {
 		activityIndicator.stopAnimating()
 		activityView.hidden = true
+		refreshButton.enabled = true
 	}
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
