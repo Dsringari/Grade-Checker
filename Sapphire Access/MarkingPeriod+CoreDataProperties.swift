@@ -15,7 +15,6 @@ import CoreData
 extension MarkingPeriod {
 
     @NSManaged var empty: NSNumber?
-    @NSManaged var htmlPage: String?
     @NSManaged var number: String?
     @NSManaged var percentGrade: String?
     @NSManaged var possiblePoints: String?

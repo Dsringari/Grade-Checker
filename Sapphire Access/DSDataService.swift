@@ -10,208 +10,200 @@ import UIKit
 import Kanna
 import CoreData
 
-class UpdateService {
-	let completion: (successful: Bool, error: NSError?) -> Void
-	let session = NSURLSession.sharedSession()
-	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-	// Storing the error so we can call the completion from one spot in the class
-	var result: (successful: Bool, error: NSError?) = (true, nil)
+struct SubjectInfo {
+	var htmlPage: String
+	var name: String
+	var room: String
+	var teacher: String
+	var sectionGUID: String
+	var markingPeriods: [MarkingPeriodInfo]?
+}
 
+extension SubjectInfo: Equatable {}
+func ==(lhs: SubjectInfo, rhs: SubjectInfo) -> Bool {
+    return lhs.htmlPage == rhs.htmlPage && lhs.name == rhs.name && lhs.room == rhs.room && lhs.teacher == rhs.teacher && lhs.sectionGUID == rhs.sectionGUID
+}
+
+
+struct MarkingPeriodInfo {
+	var empty: Bool
+	var number: String
+	var percentGrade: String
+	var possiblePoints: String
+	var totalPoints: String
+	var assignments: [AssignmentInfo]?
+}
+
+struct AssignmentInfo {
+	var name: String
+	var possiblePoints: String
+	var totalPoints: String
+	var dateCreated: NSDate
+}
+
+class UpdateService {
+	var user: UserInfo
+	var student: StudentInfo
+	let session = NSURLSession.sharedSession()
 	let timer: ParkBenchTimer?
 
 	// The class should only be used with a valid user
-	init(studentID: NSManagedObjectID, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
-		self.completion = completion
+	init(withUserInfo user: UserInfo, andStudent student: StudentInfo) {
+		self.student = student
+		self.user = user
 		self.timer = ParkBenchTimer()
-        
-        let student = self.appDelegate.managedObjectContext.objectWithID(studentID) as! Student
+	}
 
-		// Make Sure we have the correct log in cookies although this is redundant on the first login.
-		let _ = LoginService(refreshUserWithID: student.user!.objectID, completion: { successful, error in // User is always nil
+    func update(completionHandler: (successful: Bool, error: NSError?, student: StudentInfo?) -> Void) {
+		// Make Sure we have the correct log in cookies
+		let loginService = LoginService(withUserInfo: self.user)
+		loginService.refresh { successful, error in
 			if (successful) {
-				let outDatedStudent = self.appDelegate.managedObjectContext.objectWithID(student.objectID) as! Student
-
 				// Courses & Grades Page Request
-				let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + outDatedStudent.id!)!
+				let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + self.student.id)!
 				let coursesPageRequest = NSMutableURLRequest(URL: backpackUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 				coursesPageRequest.HTTPMethod = "GET"
 
 				let getCoursePage = self.session.dataTaskWithRequest(coursesPageRequest) { data, response, error in
 
 					if (error != nil) {
-						self.result = (false, error)
+						completionHandler(successful: false, error: error, student: nil)
 						return
 					} else {
 
 						if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
-							self.createSubjects(coursesAndGradePageHtml: html as String, student: outDatedStudent)
+							self.downloadSubjects(coursesAndGradePageHtml: html as String, completionHandler: completionHandler)
 						} else {
-							self.result = (false, unknownResponseError)
+							completionHandler(successful: false, error: unknownResponseError, student: nil)
 						}
 					}
 				}
 				getCoursePage.resume()
+			} else {
+				completionHandler(successful: false, error: error, student: nil)
 			}
-		})
+
+		}
 	}
 
 	// Adds the subjects to the user when the correct page is given
 	// MAY BE CALLED FROM NON_MAIN THREAD
-	private func createSubjects(coursesAndGradePageHtml html: String, student: Student) {
+	private func downloadSubjects(coursesAndGradePageHtml html: String, completionHandler: (successful: Bool, error: NSError?, student: StudentInfo?) -> Void) {
 		let updateGroup = dispatch_group_create()
-        let moc = self.appDelegate.managedObjectContext
 
-		if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
+		let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding)!
 
-			let xpath = "//*[@id=\"contentPipe\"]/table//tr[@class!=\"classNotGraded\"]//td/a" // finds all the links on the visable table NOTE: DO NOT INCLUDE /tbody FOR SIMPLE TABLES WITHOUT A HEADER AND FOOTER
+		let xpath = "//*[@id=\"contentPipe\"]/table//tr[@class!=\"classNotGraded\"]//td/a" // finds all the links on the visable table NOTE: DO NOT INCLUDE /tbody FOR SIMPLE TABLES WITHOUT A HEADER AND FOOTER
 
-			let nodes = doc.xpath(xpath)
+		let nodes = doc.xpath(xpath)
 
-			if (nodes.count == 0) {
-				self.result = (false, unknownResponseError)
-				return
-			}
+		if (nodes.count == 0) {
+			completionHandler(successful: false, error: unknownResponseError, student: nil)
+			return
+		}
 
-			// Store the subject's url into a subject object and get the name
-			var subjects: [Subject] = []
-			for node: XMLElement in nodes {
-				let subjectAddress = node["href"]!
-				// Used to unique the subject
-				let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1]
-                
-                // Check if we have this subject already
-				let newSubject: Subject
-				if let storedSubject = moc.getObjectFromStore("Subject", predicateString: "sectionGUID == %@", args: [sectionGuidText]) {
-					newSubject = storedSubject as! Subject
-				} else {
-					newSubject = NSEntityDescription.insertNewObjectForEntityForName("Subject", inManagedObjectContext: moc) as! Subject
+		// Store the subject's url into a subject object and get the name
+		var subjectAddresses: [String] = []
+		var sectionGUIDs: [String] = []
+		var htmlPages: [String] = []
+		var names: [String] = []
+		for node: XMLElement in nodes {
+			let subjectAddress = node["href"]!
+			// Used to unique the subject
+			let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1]
+			let htmlPage = "https://pamet-sapphire.k12system.com" + subjectAddress // The node link includes a / before the page link so we leave the normal / off
+			let name = node.text!.substringToIndex(node.text!.endIndex.predecessor()) // Remove the space after the name
 
-					// Because the marking period html pages' urls repeat themselves we can use a shortcut to skip the select marking period page
-					// There are only 4 marking periods
-					// Even invalid marking periods have a html page
-					for index in 1 ... 4 {
-						// Create 4 marking periods
-						let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: moc) as! MarkingPeriod
-						// Add the marking periods to the subject
-						newMP.subject = newSubject
-						newMP.number = String(index)
-						newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + student.id! + "&" + sectionGuidText + "&MP_CODE=" + newMP.number!
-						newMP.empty = NSNumber(bool: false)
+			subjectAddresses.append(subjectAddress)
+			sectionGUIDs.append(sectionGuidText)
+			htmlPages.append(htmlPage)
+			names.append(name)
+		}
+
+		// Get the teachers
+		// Ignores the "not-graded" html classes and we have to include the predicate on the tr element because we can't skip them by looking for links
+		let teacherXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[2]"
+		var teachers: [String] = []
+		for teacherElement in doc.xpath(teacherXPath) {
+			teachers.append(teacherElement.text!)
+		}
+
+		// Get the room number
+		let roomXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[4]"
+		var rooms: [String] = []
+		for roomElement in doc.xpath(roomXPath) {
+			rooms.append(roomElement.text!)
+		}
+
+		var subjects: [SubjectInfo] = []
+		for index in 0 ... (subjectAddresses.count - 1) {
+			let newSubject = SubjectInfo(htmlPage: htmlPages[index], name: names[index], room: rooms[index], teacher: teachers[index], sectionGUID: sectionGUIDs[index], markingPeriods: nil)
+			subjects.append(newSubject)
+		}
+
+		// Get the marking period information for the subjects
+		var results: [(successful: Bool, error: NSError?)] = []
+		for subject in subjects {
+			for index in 1 ... 4 {
+
+				let markingPeriodAddress = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + self.student.id + "&COUR" + subject.sectionGUID + "&MP_CODE=" + String(index)
+
+				let mpRequest = NSURLRequest(URL: NSURL(string: markingPeriodAddress)!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+
+				// Request the mp page
+				dispatch_group_enter(updateGroup); self.timer!.entries += 1 // 2
+
+				let getMarkingPeriodPage = self.session.dataTaskWithRequest(mpRequest) { data, response, error in
+					if (error != nil) {
+						results.append((false, error!))
+						dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
+					} else {
+
+						// Test if we recieved valid information, if not return aka fail
+						guard let mpPageHtml = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
+							results.append((false, unknownResponseError))
+							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
+							return
+						}
+                        // Get the correct subject and mp number from the response url
+                        let sectionGUID = response!.URL!.absoluteString.componentsSeparatedByString("&COURSE_SECTION_GUID=")[1].componentsSeparatedByString("&")[0]
+                        let mpNumber = response!.URL!.absoluteString.componentsSeparatedByString("&MP_CODE=")[1]
+                        
+                        var subject = subjects.filter{$0.sectionGUID == sectionGUID}[0]
+                        subjects.removeObject(subject)
+                        
+                        if (subject.markingPeriods == nil) {
+                            subject.markingPeriods = []
+                        }
+
+						// Parse the page
+						let markingPeriod: MarkingPeriodInfo
+						if let result = self.parseMarkingPeriodPage(html: mpPageHtml) {
+                            var assignments: [AssignmentInfo] = []
+							for assignment in result.assignments {
+                                // String to Date
+                                let dateFormatter = NSDateFormatter()
+                                // http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
+                                dateFormatter.dateFormat = "MM/dd/yy"
+                                let date = dateFormatter.dateFromString(assignment.date)!
+                                let newA = AssignmentInfo(name: assignment.name, possiblePoints: assignment.possiblePoints, totalPoints: assignment.totalPoints, dateCreated: date)
+                                assignments.append(newA)
+							}
+                            
+                            markingPeriod = MarkingPeriodInfo(empty: false, number: mpNumber, percentGrade: result.percentGrade, possiblePoints: result.possiblePoints, totalPoints: result.totalPoints, assignments: assignments)
+
+						} else {
+							markingPeriod = MarkingPeriodInfo(empty: true, number: mpNumber, percentGrade: "", possiblePoints: "", totalPoints: "", assignments: nil)
+						}
+
+						subject.markingPeriods!.append(markingPeriod)
+                        subjects.append(subject)
+						dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 					}
 				}
-
-				newSubject.student = student
-				newSubject.htmlPage = "https://pamet-sapphire.k12system.com" + subjectAddress // The node link includes a / before the page link so we leave the normal / off
-				newSubject.name = node.text!.substringToIndex(node.text!.endIndex.predecessor()) // Remove the space after the name
-				newSubject.sectionGUID = sectionGuidText
-
-				subjects.append(newSubject)
-			}
-			// This updates the to-many relationships, this is also the reason why we don't include the below marking period for loop in the previous node for loop
-
-			// Get the teachers
-			// Ignores the "not-graded" html classes and we have to include the predicate on the tr element because we can't skip them by looking for links
-			let teacherXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[2]"
-			var t: [String] = []
-			for teacherElement in doc.xpath(teacherXPath) {
-				t.append(teacherElement.text!)
-			}
-
-			// Get the room number
-			let roomXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[4]"
-			var r: [String] = []
-			for roomElement in doc.xpath(roomXPath) {
-				r.append(roomElement.text!)
-			}
-
-			for index in 0 ... (subjects.count - 1) {
-				subjects[index].teacher = t[index]
-				subjects[index].room = r[index]
-			}
-			// Get the marking period information for the subjects
-			for subject in subjects {
-				// For each marking period for the subject, get the respective information
-				for mp in subject.markingPeriods! {
-
-					let markingPeriod = mp as! MarkingPeriod
-					let markingPeriodUrl = NSURL(string: markingPeriod.htmlPage!)!
-
-					moc.saveContext()
-
-					let mpRequest = NSURLRequest(URL: markingPeriodUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
-
-					// Request the mp page
-					dispatch_group_enter(updateGroup); self.timer!.entries += 1 // 2
-
-					let getMarkingPeriodPage = self.session.dataTaskWithRequest(mpRequest) { data, response, error in
-						if (error != nil) {
-							self.result = (false, error!)
-							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
-						} else {
-
-							// Get the correct marking period object
-							let mP: MarkingPeriod = moc.getObjectsFromStore("MarkingPeriod", predicateString: "htmlPage == %@", args: [response!.URL!.absoluteString])[0] as! MarkingPeriod
-
-							// Test if we recieved valid information, if not return aka fail
-							guard let mpPageHtml = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
-								self.result = (false, unknownResponseError)
-								dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
-								return
-							}
-
-							// After recieving the marking period's page store the data
-							if let result = self.parseMarkingPeriodPage(html: mpPageHtml) {
-
-								mP.possiblePoints = result.possiblePoints
-								mP.totalPoints = result.totalPoints
-								mP.percentGrade = result.percentGrade
-
-								for assignment in result.assignments {
-									let newA: Assignment
-
-									var isActuallyNew = true
-									if let a = moc.getObjectFromStore("Assignment", predicateString: "name == %@ AND markingPeriod.number == %@ AND markingPeriod.subject.name == %@", args: [assignment.name, mP.number!, mP.subject!.name!]) {
-										newA = a as! Assignment
-										isActuallyNew = false
-									} else {
-										newA = NSEntityDescription.insertNewObjectForEntityForName("Assignment", inManagedObjectContext: moc) as! Assignment
-										// String to Date
-										let dateFormatter = NSDateFormatter()
-										// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
-										dateFormatter.dateFormat = "MM/dd/yy"
-										let date = dateFormatter.dateFromString(assignment.date)
-										newA.dateUpdated = date!
-                                        newA.hadChanges = NSNumber(bool: false)
-									}
-
-									newA.name = assignment.name
-									newA.totalPoints = assignment.totalPoints
-									newA.possiblePoints = assignment.possiblePoints
-									newA.markingPeriod = mP
-
-									// If we are updating an existing object and the values changed
-									if (!newA.changedValues().isEmpty && !isActuallyNew) {
-                                        print(newA.changedValues())
-										newA.hadChanges = NSNumber(bool: true)
-										newA.dateUpdated = NSDate()
-									}
-
-								}
-
-								moc.saveContext()
-							} else {
-								mP.empty = NSNumber(bool: true)
-							}
-
-							moc.saveContext()
-
-							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
-						}
-					}
-					getMarkingPeriodPage.resume()
-				} // Marking Period Loop
-			} // Subject Loop
-		} // Html Check
+				getMarkingPeriodPage.resume()
+			} // Marking Period Loop
+		} // Subject Loop
 
 		// Runs when the User has been completely updated
 		dispatch_group_notify(updateGroup, dispatch_get_main_queue()) {
@@ -221,15 +213,13 @@ class UpdateService {
 //            print("Entries: " + String(self.timer!.entries) + ", Exits: " + String(self.timer!.exits))
 //            print("------------------------------------------------------")
 //            print("")
-
-			guard (self.result.successful) else {
-				self.appDelegate.managedObjectContext.reset()
-				self.completion(successful: false, error: self.result.error)
-				return
-			}
-
-			self.appDelegate.managedObjectContext.saveContext()
-			self.completion(successful: true, error: nil)
+            // Successful
+            self.student.subjects = subjects
+            if (!results.isEmpty) {
+                completionHandler(successful: true, error: nil, student: self.student)
+            } else {
+                completionHandler(successful: false, error: results[0].error, student: nil) // Not Really Reliable but whatever
+            }
 		}
 	}
 

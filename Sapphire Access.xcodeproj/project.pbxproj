@@ -35,6 +35,7 @@
 		FCC29A6F1CD198A1004002B5 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */; };
 		FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */; };
 		FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */; };
+		FCE231021CDD53EE00D1B08B /* DSCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE231011CDD53EE00D1B08B /* DSCoreData.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 /* End PBXBuildFile section */
@@ -72,6 +73,7 @@
 		FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDSelectionCell.swift; sourceTree = "<group>"; };
 		FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		FCE231011CDD53EE00D1B08B /* DSCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSCoreData.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,6 +168,7 @@
 			children = (
 				FC19E3271C923340002401D8 /* DSLoginService.swift */,
 				FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */,
+				FCE231011CDD53EE00D1B08B /* DSCoreData.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,
 				FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */,
+				FCE231021CDD53EE00D1B08B /* DSCoreData.swift in Sources */,
 				FC9C614F1CDBFA1600442285 /* Assignment.swift in Sources */,
 				FCC29A6F1CD198A1004002B5 /* SettingsVC.swift in Sources */,
 				FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */,

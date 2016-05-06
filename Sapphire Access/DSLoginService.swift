@@ -10,28 +10,37 @@ import Foundation
 import Kanna
 import CoreData
 
-class LoginService {
-	var user: User
-	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-	let completion: (successful: Bool, error: NSError?) -> Void
+struct StudentInfo {
+    var name: String
+    var school: String
+    var id: String
+    var grade: String
+    var subjects: [SubjectInfo]?
+}
 
-	init(loginUserWithID userID: NSManagedObjectID, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
-		user = self.appDelegate.managedObjectContext.objectWithID(userID) as! User
-		self.completion = completion
-		login()
+struct UserInfo {
+    var username: String
+    var password: String
+    var pin: String
+    var students: [StudentInfo]?
+}
+
+class LoginService {
+    var user: UserInfo
+
+    init(withUserInfo userInfo: UserInfo) {
+		user = userInfo
 	}
     
     // refreshes a logged in user
-    init(refreshUserWithID userID: NSManagedObjectID, completion: (successful: Bool, error: NSError?) -> Void) {
-        self.user = self.appDelegate.managedObjectContext.objectWithID(userID) as! User
-        self.completion = completion
+    func refresh(completionHandler: (successful: Bool, error: NSError?) -> Void) {
         
         let session = NSURLSession.sharedSession()
         let headers = [
             "content-type": "application/x-www-form-urlencoded"
         ]
         
-        let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
+        let postString = "javascript=true&j_username=" + self.user.username + "&j_password=" + self.user.password + "&j_pin=" + self.user.pin
         let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
         let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
@@ -44,21 +53,21 @@ class LoginService {
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 print(error)
-                self.completion(successful: false, error: error)
+                completionHandler(successful: false, error: error)
                 return
             } else {
-                self.completion(successful: true, error: nil)
+                completionHandler(successful: true, error: nil)
             }
         })
         
         dataTask.resume()
     }
 
-	func login() {
+    func login(completionHandler: (successful : Bool, error: NSError?, user: UserInfo?) -> Void) {
 		// Logout First to avoid problems with logging in with the parent account and then a student account
-		logout { failed, error in
+		LoginService.logout { failed, error in
 			if (failed) {
-				self.completion(successful: false, error: error)
+                completionHandler(successful: false, error: error, user: nil)
 				return
 			}
 			let session = NSURLSession.sharedSession()
@@ -66,7 +75,7 @@ class LoginService {
 				"content-type": "application/x-www-form-urlencoded"
 			]
 
-			let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
+			let postString = "javascript=true&j_username=" + self.user.username + "&j_password=" + self.user.password + "&j_pin=" + self.user.pin
 			let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
 
 			let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
@@ -79,10 +88,10 @@ class LoginService {
 			let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 				if (error != nil) {
 					print(error)
-					self.completion(successful: false, error: error)
+                    completionHandler(successful: false, error: error, user: nil)
 					return
 				} else {
-					self.getMainPageHtml()
+					self.getMainPageHtml(completionHandler)
 				}
 			})
 
@@ -90,7 +99,7 @@ class LoginService {
 		}
 	}
 
-	func logout(completionHandler: (failed: Bool, error: NSError?) -> Void) {
+	class func logout(completionHandler: (failed: Bool, error: NSError?) -> Void) {
 		let session = NSURLSession.sharedSession()
 		let request = NSURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 
@@ -106,7 +115,7 @@ class LoginService {
 
 	// Because of sapphire's strange cookie detection, we have to make a seperate request for the main page. Depending on the title of the page, we can determine whether the user has inputed the correct credentials.
 
-	private func getMainPageHtml() {
+    private func getMainPageHtml(completionHandler: (successful: Bool, error: NSError?, user: UserInfo?) -> Void) {
 
 		let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
 			cachePolicy: .UseProtocolCachePolicy,
@@ -114,12 +123,11 @@ class LoginService {
 		request.HTTPMethod = "GET"
 
 		let session = NSURLSession.sharedSession()
-        let moc = self.appDelegate.managedObjectContext
 		let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
 				print(error)
 				print(error!.userInfo[NSLocalizedRecoverySuggestionErrorKey])
-				self.completion(successful: false, error: error)
+				completionHandler(successful: false, error: error, user: nil)
 			} else {
 				if let html: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
 
@@ -128,36 +136,26 @@ class LoginService {
 						switch (doc.title!) {
 							// This user is a student account so it has one student.
 						case " Student Backpack - Sapphire Community Web Portal ":
-							let user = moc.objectWithID(self.user.objectID) as! User
-                            // Clear Old Students
-                            for student in user.students!.allObjects as! [Student] {
-                                moc.deleteObject(student)
-                            }
 
 							// Retrieve student information from backpack screen
-							let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: moc) as! Student
 							let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
 							let id = i.componentsSeparatedByString("=")[1]
 							let name: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/a")[0]["title"]!
 							let g: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[1]")[0]["title"]!
 							let grade = g.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890").invertedSet).joinWithSeparator("")
 							let school: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[2]")[0]["title"]!
-
-							student.id = id
-							student.name = name
-							student.grade = grade
-							student.school = school
-							student.user = user
-							moc.saveContext()
-                            self.completion(successful: true, error: nil)
+                            
+                            let student: StudentInfo = StudentInfo(name: name, school: school, id: id, grade: grade, subjects: nil)
+                            
+                            if (self.user.students == nil) {
+                                self.user.students = [student]
+                            } else {
+                                self.user.students!.append(student)
+                            }
+                            
+                            completionHandler(successful: true, error: nil, user: self.user)
 							// This user is a parent
 						case " Welcome - Sapphire Community Web Portal ":
-							let user = moc.objectWithID(self.user.objectID) as! User
-                            
-                            // Clear Old Students
-                            for student in user.students!.allObjects as! [Student] {
-                                moc.deleteObject(student)
-                            }
 
 							var ids: [String] = []
 							var names: [String] = []
@@ -181,26 +179,23 @@ class LoginService {
 								let school = e["title"]!
 								schools.append(school)
 							}
-
+                            
+                            var students: [StudentInfo] = []
 							for index in 0 ... (ids.count - 1) {
-								let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: moc) as! Student
-								student.id = ids[index]
-								student.name = names[index]
-								student.grade = grades[index]
-								student.school = schools[index]
-								student.user = user
+								let newStudent = StudentInfo(name: names[index], school: schools[index], id: ids[index], grade: grades[index], subjects: nil)
+                                students.append(newStudent)
 							}
-							moc.saveContext()
-							self.completion(successful: true, error: nil)
+                            self.user.students = students
+							completionHandler(successful: true, error: nil, user: self.user)
                         // Failed to Login
 						default:
-							self.completion(successful: false, error: badLoginError)
+                            completionHandler(successful: false, error: badLoginError, user: nil)
 						}
 					} else {
-						self.completion(successful: false, error: unknownResponseError)
+                        completionHandler(successful: false, error: unknownResponseError, user: nil)
 					}
 				} else {
-					self.completion(successful: false, error: unknownResponseError)
+					completionHandler(successful: false, error: unknownResponseError, user: nil)
 				}
 			}
 		})

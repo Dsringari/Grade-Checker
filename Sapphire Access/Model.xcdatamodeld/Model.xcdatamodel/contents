@@ -10,7 +10,6 @@
     </entity>
     <entity name="MarkingPeriod" representedClassName=".MarkingPeriod" syncable="YES">
         <attribute name="empty" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="htmlPage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="percentGrade" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="possiblePoints" optional="YES" attributeType="String" syncable="YES"/>
@@ -43,7 +42,7 @@
     </entity>
     <elements>
         <element name="Assignment" positionX="-369" positionY="369" width="128" height="135"/>
-        <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="165"/>
+        <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="150"/>
         <element name="Student" positionX="-378" positionY="0" width="128" height="135"/>
         <element name="Subject" positionX="-387" positionY="9" width="128" height="150"/>
         <element name="User" positionX="-369" positionY="-154" width="128" height="105"/>

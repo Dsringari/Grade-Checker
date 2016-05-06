@@ -185,16 +185,14 @@ class DSLoginView: UITableViewController {
 
 	// Ask if the user wants to use touch id every time they log in with a new account
 	func login(sender: AnyObject) {
-		let user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.appDelegate.managedObjectContext) as! User
-		user.username = usernameField.text!
-		user.password = passwordField.text!
-		user.pin = pinField.text!
+		let user: UserInfo = UserInfo(username: usernameField.text!, password: passwordField.text!, pin: pinField.text!, students: nil)
         startLoading()
         loginUser(user)
 	}
 
-	func loginUser(user: User) {
+	func loginUser(user: UserInfo) {
 		// Try to Login
+        
 		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
 
 			if (successful) {
