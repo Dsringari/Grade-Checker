@@ -63,6 +63,9 @@ class DSLoginView: UITableViewController {
 		passwordField.attributedPlaceholder = attributedPasswordPlaceholder
 		pinField.attributedPlaceholder = attributedPinPlaceholder
          */
+        
+        // Change Title Color
+        //self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(colorLiteralRed: 44/255, green: 62/255, blue: 80/255, alpha: 1)]
 
 		// Center Text
 		usernameField.contentVerticalAlignment = .Center
@@ -72,6 +75,7 @@ class DSLoginView: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         // Check If we have a user already
+        
         if let user = self.appDelegate.managedObjectContext.getObjectFromStore("User", predicateString: nil, args: []) {
             hasUser = true
             let settings = NSUserDefaults.standardUserDefaults()
@@ -103,6 +107,8 @@ class DSLoginView: UITableViewController {
             } else {
                 loginUser(user as! User)
             }
+        } else {
+            hasUser = false
         }
 
     }
@@ -189,12 +195,12 @@ class DSLoginView: UITableViewController {
 
 	func loginUser(user: User) {
 		// Try to Login
-		let _ = LoginService(userToBeLoggedIn: user, completionHandler: { successful, error, legitamateUser in
+		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
 
 			if (successful) {
 				// Go to Respective Pages
 				let moc = self.appDelegate.managedObjectContext
-				self.validatedUser = moc.objectWithID(legitamateUser!.objectID) as! User
+				self.validatedUser = moc.objectWithID(user.objectID) as! User
 				dispatch_async(dispatch_get_main_queue(), {
 					self.stopLoading()
 					if (self.validatedUser.students!.allObjects.count > 1) {

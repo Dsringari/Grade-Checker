@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		let settings = NSUserDefaults.standardUserDefaults()
 		if (settings.stringForKey("selectedStudent") != nil) {
-			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
 		} else {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
 		}
@@ -122,6 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		var oldStudentAssignmentCount: Int = 0
         let moc = self.managedObjectContext
         let student: Student = moc.getObjectFromStore("Student", predicateString: "name == %@", args: [selectedStudentName]) as! Student
+        print(student.name!)
 		for subject in student.subjects!.allObjects as! [Subject] {
 			var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
 			mps = mps.filter { !$0.empty!.boolValue }
@@ -131,9 +132,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		}
 
-		let _ = UpdateService(student: student, completionHandler: { successful, error in
+		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 			if (!successful) {
-				self.managedObjectContext.deleteObject(student)
+				moc.deleteObject(student)
 				completionHandler(UIBackgroundFetchResult.Failed)
 			} else {
 				var newStudentAssignmentCount: Int = 0
@@ -147,8 +148,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					}
 
 				}
+                
+                let updatedAssignments: [Assignment] = moc.getObjectsFromStore("Assignment", predicateString: "hadChanges == %@", args: [true]) as! [Assignment]
 
-				if (newStudentAssignmentCount == oldStudentAssignmentCount) {
+				if (newStudentAssignmentCount != oldStudentAssignmentCount || !updatedAssignments.isEmpty) {
 					UIApplication.sharedApplication().cancelAllLocalNotifications()
 					let newNotification = UILocalNotification()
 					let now = NSDate()

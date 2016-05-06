@@ -45,7 +45,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades" // Get the first name and set it as the title
 		startLoading()
         isRefreshing = true
-		let _ = UpdateService(student: student, completionHandler: { successful, error in
+		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 			if (successful) {
 				dispatch_async(dispatch_get_main_queue(), {
 					let moc = self.appDelegate.managedObjectContext
@@ -80,7 +80,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
             isRefreshing = true
             refreshControl.beginRefreshing()
             tableview.setContentOffset(CGPointMake(0, -refreshControl.frame.size.height), animated: true)
-            let _ = UpdateService(student: student, completionHandler: { successful, error in
+            let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 				if (successful) {
 					dispatch_async(dispatch_get_main_queue(), {
 						// Refresh the ui's student object
@@ -117,7 +117,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		if !isRefreshing {
             isRefreshing = true
             refreshButton.enabled = false
-			let _ = UpdateService(student: student, completionHandler: { successful, error in
+			let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 				if (successful) {
 					dispatch_async(dispatch_get_main_queue(), {
 						// Refresh the ui's student object
@@ -188,26 +188,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		}
 
 		// Sort by Most Recently Updated
-		subjects = subjects.sort {
-			let subject1 = $0
-			let subject2 = $1
-
-			let s1MarkingPeriods = subject1.markingPeriods!.allObjects as! [MarkingPeriod]
-			var s1Assignments = s1MarkingPeriods.filter { !$0.empty!.boolValue }.sort { Int($0.number!) > Int($1.number!) }[0].assignments!.allObjects as! [Assignment]
-			s1Assignments.sortInPlace { $0.date!.compare($1.date!) == NSComparisonResult.OrderedDescending }
-			let s1MostRecentDate = s1Assignments[0].date!
-
-			let s2MarkingPeriods = subject2.markingPeriods!.allObjects as! [MarkingPeriod]
-			var s2Assignments = s2MarkingPeriods.filter { !$0.empty!.boolValue }.sort { Int($0.number!) > Int($1.number!) }[0].assignments!.allObjects as! [Assignment]
-			s2Assignments.sortInPlace { $0.date!.compare($1.date!) == NSComparisonResult.OrderedDescending }
-			let s2MostRecentDate = s2Assignments[0].date!
-			// If the dates are the same sort by name
-			if (s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedSame) {
-				return subject1.name! > subject2.name!
-			}
-
-			return s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedDescending
-		}
+		subjects = subjects.sort{$0.mostRecentDate!.compare($1.mostRecentDate!) == NSComparisonResult.OrderedDescending}
 		return subjects.count
 	}
 
@@ -238,6 +219,11 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 
 		cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
 		cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
+        cell.lastUpdatedLabel.text = "Last Updated: " + relativeDateStringForDate(subject.mostRecentDate!)
+        
+        if (subject.hasUpdates) {
+            cell.lastUpdatedLabel.textColor = UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 132 / 255, alpha: 1)
+        }
 
 		// cell.backgroundColor = lightB
 		return cell

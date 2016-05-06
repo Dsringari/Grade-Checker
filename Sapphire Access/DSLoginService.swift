@@ -13,17 +13,17 @@ import CoreData
 class LoginService {
 	var user: User
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-	let completion: (successful: Bool, error: NSError?, user: User?) -> Void
+	let completion: (successful: Bool, error: NSError?) -> Void
 
-	init(userToBeLoggedIn: User, completionHandler completion: (successful: Bool, error: NSError?, user: User?) -> Void) {
-		user = userToBeLoggedIn
+	init(loginUserWithID userID: NSManagedObjectID, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
+		user = self.appDelegate.managedObjectContext.objectWithID(userID) as! User
 		self.completion = completion
 		login()
 	}
     
     // refreshes a logged in user
-    init(refreshUser: User, completion: (successful: Bool, error: NSError?, user: User?) -> Void) {
-        self.user = refreshUser
+    init(refreshUserWithID userID: NSManagedObjectID, completion: (successful: Bool, error: NSError?) -> Void) {
+        self.user = self.appDelegate.managedObjectContext.objectWithID(userID) as! User
         self.completion = completion
         
         let session = NSURLSession.sharedSession()
@@ -44,10 +44,10 @@ class LoginService {
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 print(error)
-                self.completion(successful: false, error: error, user: nil)
+                self.completion(successful: false, error: error)
                 return
             } else {
-                self.completion(successful: true, error: nil, user: nil)
+                self.completion(successful: true, error: nil)
             }
         })
         
@@ -58,7 +58,7 @@ class LoginService {
 		// Logout First to avoid problems with logging in with the parent account and then a student account
 		logout { failed, error in
 			if (failed) {
-				self.completion(successful: false, error: error, user: nil)
+				self.completion(successful: false, error: error)
 				return
 			}
 			let session = NSURLSession.sharedSession()
@@ -79,7 +79,7 @@ class LoginService {
 			let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 				if (error != nil) {
 					print(error)
-					self.completion(successful: false, error: error, user: nil)
+					self.completion(successful: false, error: error)
 					return
 				} else {
 					self.getMainPageHtml()
@@ -114,13 +114,12 @@ class LoginService {
 		request.HTTPMethod = "GET"
 
 		let session = NSURLSession.sharedSession()
-		let temporaryContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-		temporaryContext.parentContext = appDelegate.managedObjectContext
+        let moc = self.appDelegate.managedObjectContext
 		let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
 				print(error)
 				print(error!.userInfo[NSLocalizedRecoverySuggestionErrorKey])
-				self.completion(successful: false, error: error, user: nil)
+				self.completion(successful: false, error: error)
 			} else {
 				if let html: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
 
@@ -129,14 +128,14 @@ class LoginService {
 						switch (doc.title!) {
 							// This user is a student account so it has one student.
 						case " Student Backpack - Sapphire Community Web Portal ":
-							let user = temporaryContext.objectWithID(self.user.objectID) as! User
+							let user = moc.objectWithID(self.user.objectID) as! User
                             // Clear Old Students
                             for student in user.students!.allObjects as! [Student] {
-                                temporaryContext.deleteObject(student)
+                                moc.deleteObject(student)
                             }
 
 							// Retrieve student information from backpack screen
-							let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: temporaryContext) as! Student
+							let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: moc) as! Student
 							let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
 							let id = i.componentsSeparatedByString("=")[1]
 							let name: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/a")[0]["title"]!
@@ -149,15 +148,15 @@ class LoginService {
 							student.grade = grade
 							student.school = school
 							student.user = user
-							temporaryContext.saveContext()
-							self.completion(successful: true, error: nil, user: user)
+							moc.saveContext()
+                            self.completion(successful: true, error: nil)
 							// This user is a parent
 						case " Welcome - Sapphire Community Web Portal ":
-							let user = temporaryContext.objectWithID(self.user.objectID) as! User
+							let user = moc.objectWithID(self.user.objectID) as! User
                             
                             // Clear Old Students
                             for student in user.students!.allObjects as! [Student] {
-                                temporaryContext.deleteObject(student)
+                                moc.deleteObject(student)
                             }
 
 							var ids: [String] = []
@@ -184,24 +183,24 @@ class LoginService {
 							}
 
 							for index in 0 ... (ids.count - 1) {
-								let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: temporaryContext) as! Student
+								let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: moc) as! Student
 								student.id = ids[index]
 								student.name = names[index]
 								student.grade = grades[index]
 								student.school = schools[index]
 								student.user = user
 							}
-							temporaryContext.saveContext()
-							self.completion(successful: true, error: nil, user: user)
+							moc.saveContext()
+							self.completion(successful: true, error: nil)
                         // Failed to Login
 						default:
-							self.completion(successful: false, error: badLoginError, user: nil)
+							self.completion(successful: false, error: badLoginError)
 						}
 					} else {
-						self.completion(successful: false, error: unknownResponseError, user: nil)
+						self.completion(successful: false, error: unknownResponseError)
 					}
 				} else {
-					self.completion(successful: false, error: unknownResponseError, user: nil)
+					self.completion(successful: false, error: unknownResponseError)
 				}
 			}
 		})

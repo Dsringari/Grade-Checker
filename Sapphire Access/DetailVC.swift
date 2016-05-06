@@ -16,6 +16,8 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var toolbar: UIView!
     var navHairLine: UIImageView!
     
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     
     var subject: Subject!
     var markingPeriods: [MarkingPeriod]!
@@ -94,9 +96,14 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let mp = markingPeriods[selectedMPIndex]
         var assignments: [Assignment] = mp.assignments!.allObjects as! [Assignment]
         // sort by date
-        assignments.sortInPlace{ $0.date!.compare($1.date!) == NSComparisonResult.OrderedDescending }
+        assignments.sortInPlace{ $0.dateUpdated!.compare($1.dateUpdated!) == NSComparisonResult.OrderedDescending }
         cell.assignmentNameLabel.text = assignments[indexPath.row].name
         cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
+        // We have seen the updated assignment
+        if (assignments[indexPath.row].hadChanges!.boolValue) {
+            assignments[indexPath.row].hadChanges = NSNumber(bool: false)
+            appDelegate.managedObjectContext.saveContext()
+        }
         return cell
     }
     

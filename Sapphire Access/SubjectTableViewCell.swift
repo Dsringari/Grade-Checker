@@ -12,6 +12,7 @@ class SubjectTableViewCell: UITableViewCell {
     @IBOutlet var subjectNameLabel: UILabel!
     @IBOutlet var letterGradeLabel: UILabel!
     @IBOutlet var percentGradeLabel: UILabel!
+    @IBOutlet var lastUpdatedLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
