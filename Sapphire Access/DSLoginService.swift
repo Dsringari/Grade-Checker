@@ -44,7 +44,6 @@ class LoginService {
         
         let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
-                print(error)
                 self.completion(successful: false, error: error)
                 return
             } else {
@@ -79,7 +78,6 @@ class LoginService {
 
 			let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 				if (error != nil) {
-					print(error)
 					self.completion(successful: false, error: error)
 					return
 				} else {
@@ -117,8 +115,6 @@ class LoginService {
 		let session = NSURLSession.sharedSession()
 		let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
-				print(error)
-				print(error!.userInfo[NSLocalizedRecoverySuggestionErrorKey])
 				self.completion(successful: false, error: error)
 			} else {
 				if let html: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {

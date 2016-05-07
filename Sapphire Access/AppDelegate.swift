@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		let settings = NSUserDefaults.standardUserDefaults()
 		if (settings.stringForKey("selectedStudent") != nil) {
-			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
 		} else {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
 		}
@@ -106,7 +106,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		})
 
 	}
-
-	// TODO: Be able to delete all users
 }
 

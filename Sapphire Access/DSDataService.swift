@@ -14,8 +14,9 @@ class UpdateService {
 	let completion: (successful: Bool, error: NSError?) -> Void
 	let session = NSURLSession.sharedSession()
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-	// Storing the error so we can call the completion from one spot in the class
-	var result: (successful: Bool, error: NSError?) = (true, nil)
+    var fails: [NSError] = []
+    // Storing the error so we can call the completion from one spot in the class
+	//var result: (successful: Bool, error: NSError?) = (true, nil)
 
 	let timer: ParkBenchTimer?
 
@@ -27,7 +28,7 @@ class UpdateService {
         let student = NSManagedObjectContext.MR_defaultContext().objectWithID(studentID) as! Student
 
 		// Make Sure we have the correct log in cookies although this is redundant on the first login.
-		let _ = LoginService(refreshUserWithID: student.user!.objectID, completion: { successful, error in // User is always nil
+		let _ = LoginService(refreshUserWithID: student.user!.objectID, completion: { successful, error in
 			if (successful) {
 				NSManagedObjectContext.MR_defaultContext().refreshObject(student, mergeChanges: false)
 
@@ -39,19 +40,21 @@ class UpdateService {
 				let getCoursePage = self.session.dataTaskWithRequest(coursesPageRequest) { data, response, error in
 
 					if (error != nil) {
-						self.result = (false, error)
+						completion(successful: false, error: error!)
 						return
 					} else {
 
 						if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
 							self.createSubjects(coursesAndGradePageHtml: html as String, student: student)
 						} else {
-							self.result = (false, unknownResponseError)
+							completion(successful: false, error: unknownResponseError)
 						}
 					}
 				}
 				getCoursePage.resume()
-			}
+            } else {
+                completion(successful: false, error: error!)
+            }
 		})
 	}
 
@@ -69,7 +72,7 @@ class UpdateService {
 			let nodes = doc.xpath(xpath)
 
 			if (nodes.count == 0) {
-				self.result = (false, unknownResponseError)
+				completion(successful: false, error: unknownResponseError)
 				return
 			}
 
@@ -130,7 +133,7 @@ class UpdateService {
 				subjects[index].room = r[index]
 			}
             
-            subjectContext.MR_saveToPersistentStoreAndWait()
+            subjectContext.MR_saveOnlySelfAndWait()
 			// Get the marking period information for the subjects
 			for subject in subjects {
 				// For each marking period for the subject, get the respective information
@@ -146,7 +149,7 @@ class UpdateService {
 
 					let getMarkingPeriodPage = self.session.dataTaskWithRequest(mpRequest) { data, response, error in
 						if (error != nil) {
-							self.result = (false, error!)
+							self.fails.append(error!)
 							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 						} else {
                             
@@ -156,7 +159,7 @@ class UpdateService {
 
 							// Test if we recieved valid information, if not return aka fail
 							guard let mpPageHtml = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
-								self.result = (false, unknownResponseError)
+								self.fails.append(unknownResponseError)
 								dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 								return
 							}
@@ -172,7 +175,7 @@ class UpdateService {
 									let newA: Assignment
 
 									var isActuallyNew = true
-                                    if let a = Assignment.MR_findFirstWithPredicate(NSPredicate(format: "name == %@ AND markingPeriod.number == %@", argumentArray: [assignment.name, mP.number!]), inContext: mpRequestMOC) {
+                                    if let a = Assignment.MR_findFirstWithPredicate(NSPredicate(format: "name == %@ AND markingPeriod == %@", argumentArray: [assignment.name, mP]), inContext: mpRequestMOC) {
 										newA = a
 										isActuallyNew = false
 									} else {
@@ -205,7 +208,7 @@ class UpdateService {
 								mP.empty = NSNumber(bool: true)
 							}
 
-                            mpRequestMOC.MR_saveToPersistentStoreAndWait()
+                            mpRequestMOC.MR_saveOnlySelfAndWait()
 							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 						}
 					}
@@ -223,9 +226,9 @@ class UpdateService {
 //            print("------------------------------------------------------")
 //            print("")
 
-			guard (self.result.successful) else {
+			guard (self.fails.isEmpty) else {
 				NSManagedObjectContext.MR_defaultContext().reset()
-				self.completion(successful: false, error: self.result.error)
+				self.completion(successful: false, error: self.fails.first!)
 				return
 			}
 
@@ -235,7 +238,7 @@ class UpdateService {
 		}
 	}
 
-	private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
+    private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String, category: String)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
@@ -306,11 +309,19 @@ class UpdateService {
 			let text = aE.text!
 			aDates.append(text)
 		}
+        
+        // Get all the categories
+        var aCategories: [String] = []
+        for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[5]") {
+            let text = aE.text!
+            aCategories.append(text)
+        }
+        
 
 		// Build the assignment tuples
-		var assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String)] = []
+        var assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String, category: String)] = []
 		for index in 0 ... (aNames.count - 1) {
-			let newA = (aNames[index], aTotalPoints[index], aPossiblePoints[index], aDates[index])
+			let newA = (aNames[index], aTotalPoints[index], aPossiblePoints[index], aDates[index], aCategories[index])
 			assignments.append(newA)
 			// print(newA)
 		}
