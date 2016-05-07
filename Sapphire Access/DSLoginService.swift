@@ -128,14 +128,14 @@ class LoginService {
 						switch (doc.title!) {
 							// This user is a student account so it has one student.
 						case " Student Backpack - Sapphire Community Web Portal ":
-							NSManagedObjectContext.MR_defaultContext().refreshObject(self.user, mergeChanges: false)
+							
                             // Clear Old Students
                             for student in self.user.students!.allObjects as! [Student] {
                                 student.MR_deleteEntity()
                             }
 
 							// Retrieve student information from backpack screen
-							let student = Student.MR_createEntity()!
+							let student = Student.MR_createEntityInContext(NSManagedObjectContext.MR_defaultContext())!
 							let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
 							let id = i.componentsSeparatedByString("=")[1]
 							let name: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/a")[0]["title"]!
@@ -152,7 +152,6 @@ class LoginService {
                             self.completion(successful: true, error: nil)
 							// This user is a parent
 						case " Welcome - Sapphire Community Web Portal ":
-							NSManagedObjectContext.MR_defaultContext().refreshObject(self.user, mergeChanges: false)
                             
                             // Clear Old Students
                             // Todo: Stop Deleting Entities
@@ -184,7 +183,7 @@ class LoginService {
 							}
 
 							for index in 0 ... (ids.count - 1) {
-								let student = Student.MR_createEntity()!
+								let student = Student.MR_createEntityInContext(NSManagedObjectContext.MR_defaultContext())!
 								student.id = ids[index]
 								student.name = names[index]
 								student.grade = grades[index]

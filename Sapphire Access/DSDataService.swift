@@ -59,7 +59,8 @@ class UpdateService {
 	// MAY BE CALLED FROM NON_MAIN THREAD
 	private func createSubjects(coursesAndGradePageHtml html: String, student: Student) {
 		let updateGroup = dispatch_group_create()
-        let moc = NSManagedObjectContext.MR_defaultContext()
+        let subjectContext = NSManagedObjectContext.MR_context()
+        let updatingStudent = subjectContext.objectWithID(student.objectID) as! Student
 
 		if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
 
@@ -81,17 +82,17 @@ class UpdateService {
                 
                 // Check if we have this subject already
 				let newSubject: Subject
-				if let storedSubject = moc.getObjectFromStore("Subject", predicateString: "sectionGUID == %@", args: [sectionGuidText]) {
-					newSubject = storedSubject as! Subject
+				if let storedSubject = Subject.MR_findFirstByAttribute("sectionGUID", withValue: sectionGuidText, inContext: subjectContext) {
+					newSubject = storedSubject
 				} else {
-					newSubject = NSEntityDescription.insertNewObjectForEntityForName("Subject", inManagedObjectContext: moc) as! Subject
+					newSubject = Subject.MR_createEntityInContext(subjectContext)!
 
 					// Because the marking period html pages' urls repeat themselves we can use a shortcut to skip the select marking period page
 					// There are only 4 marking periods
 					// Even invalid marking periods have a html page
 					for index in 1 ... 4 {
 						// Create 4 marking periods
-						let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: moc) as! MarkingPeriod
+						let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: subjectContext) as! MarkingPeriod
 						// Add the marking periods to the subject
 						newMP.subject = newSubject
 						newMP.number = String(index)
@@ -100,7 +101,7 @@ class UpdateService {
 					}
 				}
 
-				newSubject.student = student
+				newSubject.student = updatingStudent
 				newSubject.htmlPage = "https://pamet-sapphire.k12system.com" + subjectAddress // The node link includes a / before the page link so we leave the normal / off
 				newSubject.name = node.text!.substringToIndex(node.text!.endIndex.predecessor()) // Remove the space after the name
 				newSubject.sectionGUID = sectionGuidText
@@ -128,6 +129,8 @@ class UpdateService {
 				subjects[index].teacher = t[index]
 				subjects[index].room = r[index]
 			}
+            
+            subjectContext.MR_saveToPersistentStoreAndWait()
 			// Get the marking period information for the subjects
 			for subject in subjects {
 				// For each marking period for the subject, get the respective information
@@ -135,8 +138,6 @@ class UpdateService {
 
 					let markingPeriod = mp as! MarkingPeriod
 					let markingPeriodUrl = NSURL(string: markingPeriod.htmlPage!)!
-
-					moc.saveContext()
 
 					let mpRequest = NSURLRequest(URL: markingPeriodUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 
@@ -148,9 +149,10 @@ class UpdateService {
 							self.result = (false, error!)
 							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 						} else {
-
+                            
+                            let mpRequestMOC = NSManagedObjectContext.MR_context()
 							// Get the correct marking period object
-							let mP: MarkingPeriod = moc.getObjectsFromStore("MarkingPeriod", predicateString: "htmlPage == %@", args: [response!.URL!.absoluteString])[0] as! MarkingPeriod
+							let mP: MarkingPeriod = MarkingPeriod.MR_findFirstByAttribute("htmlPage", withValue: response!.URL!.absoluteString, inContext: mpRequestMOC)!
 
 							// Test if we recieved valid information, if not return aka fail
 							guard let mpPageHtml = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
@@ -170,11 +172,11 @@ class UpdateService {
 									let newA: Assignment
 
 									var isActuallyNew = true
-									if let a = moc.getObjectFromStore("Assignment", predicateString: "name == %@ AND markingPeriod.number == %@ AND markingPeriod.subject.name == %@", args: [assignment.name, mP.number!, mP.subject!.name!]) {
-										newA = a as! Assignment
+                                    if let a = Assignment.MR_findFirstWithPredicate(NSPredicate(format: "name == %@ AND markingPeriod.number == %@", argumentArray: [assignment.name, mP.number!]), inContext: mpRequestMOC) {
+										newA = a
 										isActuallyNew = false
 									} else {
-										newA = NSEntityDescription.insertNewObjectForEntityForName("Assignment", inManagedObjectContext: moc) as! Assignment
+										newA = Assignment.MR_createEntityInContext(mpRequestMOC)!
 										// String to Date
 										let dateFormatter = NSDateFormatter()
 										// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
@@ -197,14 +199,13 @@ class UpdateService {
 									}
 
 								}
-
-								moc.saveContext()
+                                
+								
 							} else {
 								mP.empty = NSNumber(bool: true)
 							}
 
-							moc.saveContext()
-
+                            mpRequestMOC.MR_saveToPersistentStoreAndWait()
 							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 						}
 					}
@@ -228,9 +229,9 @@ class UpdateService {
 				return
 			}
 
-			
-			self.completion(successful: true, error: nil)
-            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+			NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            self.completion(successful: true, error: nil)
+            
 		}
 	}
 

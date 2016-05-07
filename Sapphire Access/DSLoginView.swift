@@ -199,7 +199,7 @@ class DSLoginView: UITableViewController {
 
 			if (successful) {
 				// Go to Respective Pages
-				NSManagedObjectContext.MR_defaultContext().refreshObject(self.validatedUser, mergeChanges: false)
+				self.validatedUser = NSManagedObjectContext.MR_defaultContext().objectWithID(user.objectID) as! User
 				dispatch_async(dispatch_get_main_queue(), {
 					self.stopLoading()
 					if (self.validatedUser.students!.allObjects.count > 1) {

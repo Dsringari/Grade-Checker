@@ -354,7 +354,7 @@
                                                         </mask>
                                                     </variation>
                                                 </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject Name" lineBreakMode="middleTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIY-vq-sUO">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIY-vq-sUO">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -633,9 +633,6 @@
                                             <segment title="MP 4"/>
                                         </segments>
                                         <color key="tintColor" red="0.30588235294117649" green="0.36078431372549019" blue="0.41960784313725491" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="0.0" y="8" width="384" height="29"/>
-                                        </variation>
                                         <connections>
                                             <action selector="segmentedControlChanged:" destination="YHe-rm-82A" eventType="valueChanged" id="TpR-eA-5SF"/>
                                         </connections>

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MagicalRecord
+import CoreData
 
 protocol SettingsVCDelegate {
 	func reloadData() -> Void
@@ -119,8 +121,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func logout() {
-        
-
+        User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
 		self.tabBarController!.dismissViewControllerAnimated(true, completion: nil)
 	}
 
