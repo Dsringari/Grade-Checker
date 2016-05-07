@@ -31,7 +31,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		let nv = self.tabBarController!.viewControllers![0] as! UINavigationController
 		delegate = nv.viewControllers.first! as! GradesVC
 
-		students = self.appDelegate.managedObjectContext.getObjectsFromStore("Student", predicateString: nil, args: nil) as! [Student]
+		students = Student.MR_findAll() as! [Student]
 
 		students.sortInPlace { $0.grade! > $1.grade! } // Sort By Grade
 
@@ -119,8 +119,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func logout() {
-		let moc = self.appDelegate.managedObjectContext
-		self.appDelegate.deleteAllUsers(moc)
+        
 
 		self.tabBarController!.dismissViewControllerAnimated(true, completion: nil)
 	}

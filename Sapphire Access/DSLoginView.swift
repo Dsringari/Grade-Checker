@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import MagicalRecord
 import Spring
 import LocalAuthentication
 
@@ -76,14 +77,14 @@ class DSLoginView: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         // Check If we have a user already
         
-        if let user = self.appDelegate.managedObjectContext.getObjectFromStore("User", predicateString: nil, args: []) {
+        if let user = User.MR_findFirst() {
             hasUser = true
             let settings = NSUserDefaults.standardUserDefaults()
             let useTouchID = settings.boolForKey("useTouchID")
             if (useTouchID) {
                 var error: NSError?
                 if LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
-                    loginWithTouchID(user as! User)
+                    loginWithTouchID(user)
                 } else {
                     var title: String!
                     var message: String!
@@ -98,14 +99,15 @@ class DSLoginView: UITableViewController {
                         title = "Touch ID Not Availabe"
                         message = "We couldn't access Touch ID"
                     }
-                    self.appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
+                    User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+                    MagicalRecord.saveWithBlockAndWait{_ in}
                     self.stopLoading()
                     let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             } else {
-                loginUser(user as! User)
+                loginUser(user)
             }
         } else {
             hasUser = false
@@ -167,13 +169,11 @@ class DSLoginView: UITableViewController {
 			if (success) {
 				self.loginUser(user)
 			} else {
-                self.appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
+                User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
 				if (error!.code == LAError.AuthenticationFailed.rawValue) {
 					let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match.", preferredStyle: .Alert)
 					let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
 					failed.addAction(Ok)
-                    self.appDelegate.deleteAllUsers(self.appDelegate.managedObjectContext)
-                    
                     dispatch_async(dispatch_get_main_queue(), {
                         self.presentViewController(failed, animated: true, completion: nil)
                         self.stopLoading()
@@ -185,7 +185,7 @@ class DSLoginView: UITableViewController {
 
 	// Ask if the user wants to use touch id every time they log in with a new account
 	func login(sender: AnyObject) {
-		let user: User = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.appDelegate.managedObjectContext) as! User
+		let user: User = User.MR_createEntity()!
 		user.username = usernameField.text!
 		user.password = passwordField.text!
 		user.pin = pinField.text!
@@ -199,8 +199,7 @@ class DSLoginView: UITableViewController {
 
 			if (successful) {
 				// Go to Respective Pages
-				let moc = self.appDelegate.managedObjectContext
-				self.validatedUser = moc.objectWithID(user.objectID) as! User
+				NSManagedObjectContext.MR_defaultContext().refreshObject(self.validatedUser, mergeChanges: false)
 				dispatch_async(dispatch_get_main_queue(), {
 					self.stopLoading()
 					if (self.validatedUser.students!.allObjects.count > 1) {
@@ -279,9 +278,7 @@ class DSLoginView: UITableViewController {
 				dispatch_async(dispatch_get_main_queue(), {
 					self.stopLoading()
 					self.shakeLoginButton({
-						let moc = self.appDelegate.managedObjectContext
-						moc.deleteObject(moc.objectWithID(user.objectID))
-
+						user.MR_deleteEntity()
 						var err = error
 						if (error!.code == NSURLErrorTimedOut) {
 							err = badConnectionError
@@ -290,9 +287,8 @@ class DSLoginView: UITableViewController {
 						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
 						self.presentViewController(alert, animated: true, completion: {
 							// delete the invalid user
-							let moc = self.appDelegate.managedObjectContext
-							self.appDelegate.deleteAllUsers(moc)
-							moc.saveContext()
+							User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+                            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
 						})
 					})
 				})
@@ -331,6 +327,7 @@ class DSLoginView: UITableViewController {
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "home" {
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
             let tBC = segue.destinationViewController as! UITabBarController
 			tBC.selectedIndex = 0
 			let nVC = tBC.viewControllers![0] as! UINavigationController

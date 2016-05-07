@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MagicalRecord
 
 class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
@@ -15,8 +16,6 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var segmentedControl: UISegmentedControl!
     @IBOutlet var toolbar: UIView!
     var navHairLine: UIImageView!
-    
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
     var subject: Subject!
@@ -101,8 +100,10 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
         // We have seen the updated assignment
         if (assignments[indexPath.row].hadChanges!.boolValue) {
-            assignments[indexPath.row].hadChanges = NSNumber(bool: false)
-            appDelegate.managedObjectContext.saveContext()
+            MagicalRecord.saveWithBlockAndWait { moc in
+                let localAssignment = assignments[indexPath.row].MR_inContext(moc)!
+                localAssignment.hadChanges = NSNumber(bool: false)
+            }
         }
         return cell
     }

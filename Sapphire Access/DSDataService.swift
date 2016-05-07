@@ -9,7 +9,7 @@
 import UIKit
 import Kanna
 import CoreData
-
+import MagicalRecord
 class UpdateService {
 	let completion: (successful: Bool, error: NSError?) -> Void
 	let session = NSURLSession.sharedSession()
@@ -24,15 +24,15 @@ class UpdateService {
 		self.completion = completion
 		self.timer = ParkBenchTimer()
         
-        let student = self.appDelegate.managedObjectContext.objectWithID(studentID) as! Student
+        let student = NSManagedObjectContext.MR_defaultContext().objectWithID(studentID) as! Student
 
 		// Make Sure we have the correct log in cookies although this is redundant on the first login.
 		let _ = LoginService(refreshUserWithID: student.user!.objectID, completion: { successful, error in // User is always nil
 			if (successful) {
-				let outDatedStudent = self.appDelegate.managedObjectContext.objectWithID(student.objectID) as! Student
+				NSManagedObjectContext.MR_defaultContext().refreshObject(student, mergeChanges: false)
 
 				// Courses & Grades Page Request
-				let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + outDatedStudent.id!)!
+				let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + student.id!)!
 				let coursesPageRequest = NSMutableURLRequest(URL: backpackUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 				coursesPageRequest.HTTPMethod = "GET"
 
@@ -44,7 +44,7 @@ class UpdateService {
 					} else {
 
 						if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
-							self.createSubjects(coursesAndGradePageHtml: html as String, student: outDatedStudent)
+							self.createSubjects(coursesAndGradePageHtml: html as String, student: student)
 						} else {
 							self.result = (false, unknownResponseError)
 						}
@@ -59,7 +59,7 @@ class UpdateService {
 	// MAY BE CALLED FROM NON_MAIN THREAD
 	private func createSubjects(coursesAndGradePageHtml html: String, student: Student) {
 		let updateGroup = dispatch_group_create()
-        let moc = self.appDelegate.managedObjectContext
+        let moc = NSManagedObjectContext.MR_defaultContext()
 
 		if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
 
@@ -223,13 +223,14 @@ class UpdateService {
 //            print("")
 
 			guard (self.result.successful) else {
-				self.appDelegate.managedObjectContext.reset()
+				NSManagedObjectContext.MR_defaultContext().reset()
 				self.completion(successful: false, error: self.result.error)
 				return
 			}
 
-			self.appDelegate.managedObjectContext.saveContext()
+			
 			self.completion(successful: true, error: nil)
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
 		}
 	}
 

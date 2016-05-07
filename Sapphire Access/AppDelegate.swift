@@ -76,37 +76,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
 		let settings = NSUserDefaults.standardUserDefaults()
 		let selectedStudentName = settings.stringForKey("selectedStudent")!
-		var oldStudentAssignmentCount: Int = 0
-        let moc = NSManagedObjectContext.MR_defaultContext()
-        let student: Student = Student.MR_ge
+		let oldStudentAssignmentCount: Int = Assignment.MR_numberOfEntities().integerValue
+        let student: Student = Student.MR_findFirstByAttribute("name", withValue: selectedStudentName)!
         print(student.name!)
-		for subject in student.subjects!.allObjects as! [Subject] {
-			var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-			mps = mps.filter { !$0.empty!.boolValue }
-
-			for mp in mps {
-				oldStudentAssignmentCount += mp.assignments!.count
-			}
-		}
 
 		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 			if (!successful) {
-				moc.deleteObject(student)
+				student.MR_deleteEntity()
 				completionHandler(UIBackgroundFetchResult.Failed)
 			} else {
-				var newStudentAssignmentCount: Int = 0
-				let updatedStudent = moc.objectWithID(student.objectID) as! Student
-				for subject in updatedStudent.subjects!.allObjects as! [Subject] {
-					var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-					mps = mps.filter { !$0.empty!.boolValue }
-
-					for mp in mps {
-						newStudentAssignmentCount += mp.assignments!.count
-					}
-
-				}
+				let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntities().integerValue
                 
-                let updatedAssignments: [Assignment] = moc.getObjectsFromStore("Assignment", predicateString: "hadChanges == %@", args: [true]) as! [Assignment]
+                let updatedAssignments = Assignment.MR_findAllWithPredicate(NSPredicate(format: "hadChanges == %@", argumentArray: [true])) as! [Assignment]
+
 
 				if (newStudentAssignmentCount != oldStudentAssignmentCount || !updatedAssignments.isEmpty) {
 					UIApplication.sharedApplication().cancelAllLocalNotifications()

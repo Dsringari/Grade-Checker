@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MagicalRecord
+import CoreData
 
 class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsVCDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -36,7 +38,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 
 	func reloadData() {
 		let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
-		let student = self.appDelegate.managedObjectContext.getObjectFromStore("Student", predicateString: "name == %@", args: [selectedStudentName]) as! Student
+		let student = Student.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", argumentArray: [selectedStudentName]))
 		self.student = student
 		loadStudent()
 	}
@@ -48,9 +50,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 			if (successful) {
 				dispatch_async(dispatch_get_main_queue(), {
-					let moc = self.appDelegate.managedObjectContext
-					let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
-					self.student = updatedStudent
+					NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
 					self.tableview.reloadData()
 					self.updateRefreshControl()
 					self.stopLoading()
@@ -84,9 +84,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 				if (successful) {
 					dispatch_async(dispatch_get_main_queue(), {
 						// Refresh the ui's student object
-						let moc = self.appDelegate.managedObjectContext
-						let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
-						self.student = updatedStudent
+						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
 
 						self.tableview.reloadData()
 						self.updateRefreshControl()
@@ -121,10 +119,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 				if (successful) {
 					dispatch_async(dispatch_get_main_queue(), {
 						// Refresh the ui's student object
-						let moc = self.appDelegate.managedObjectContext
-						let updatedStudent = moc.objectWithID(self.student.objectID) as! Student
-						self.student = updatedStudent
-
+						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
 						self.tableview.reloadData()
 						self.updateRefreshControl()
 						self.refreshControl.endRefreshing()

@@ -17,14 +17,14 @@ class LoginService {
 	let completion: (successful: Bool, error: NSError?) -> Void
 
 	init(loginUserWithID userID: NSManagedObjectID, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
-		user = User.MR_findWith
+		user = NSManagedObjectContext.MR_defaultContext().objectWithID(userID) as! User
 		self.completion = completion
 		login()
 	}
     
     // refreshes a logged in user
     init(refreshUserWithID userID: NSManagedObjectID, completion: (successful: Bool, error: NSError?) -> Void) {
-        self.user = self.appDelegate.managedObjectContext.objectWithID(userID) as! User
+        user = NSManagedObjectContext.MR_defaultContext().objectWithID(userID) as! User
         self.completion = completion
         
         let session = NSURLSession.sharedSession()
@@ -115,7 +115,6 @@ class LoginService {
 		request.HTTPMethod = "GET"
 
 		let session = NSURLSession.sharedSession()
-        let moc = self.appDelegate.managedObjectContext
 		let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
 				print(error)
@@ -129,14 +128,14 @@ class LoginService {
 						switch (doc.title!) {
 							// This user is a student account so it has one student.
 						case " Student Backpack - Sapphire Community Web Portal ":
-							let user = moc.objectWithID(self.user.objectID) as! User
+							NSManagedObjectContext.MR_defaultContext().refreshObject(self.user, mergeChanges: false)
                             // Clear Old Students
-                            for student in user.students!.allObjects as! [Student] {
-                                moc.deleteObject(student)
+                            for student in self.user.students!.allObjects as! [Student] {
+                                student.MR_deleteEntity()
                             }
 
 							// Retrieve student information from backpack screen
-							let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: moc) as! Student
+							let student = Student.MR_createEntity()!
 							let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
 							let id = i.componentsSeparatedByString("=")[1]
 							let name: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/a")[0]["title"]!
@@ -148,16 +147,17 @@ class LoginService {
 							student.name = name
 							student.grade = grade
 							student.school = school
-							student.user = user
-							moc.saveContext()
+							student.user = self.user
+							NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
                             self.completion(successful: true, error: nil)
 							// This user is a parent
 						case " Welcome - Sapphire Community Web Portal ":
-							let user = moc.objectWithID(self.user.objectID) as! User
+							NSManagedObjectContext.MR_defaultContext().refreshObject(self.user, mergeChanges: false)
                             
                             // Clear Old Students
-                            for student in user.students!.allObjects as! [Student] {
-                                moc.deleteObject(student)
+                            // Todo: Stop Deleting Entities
+                            for student in self.user.students!.allObjects as! [Student] {
+                                student.MR_deleteEntity()
                             }
 
 							var ids: [String] = []
@@ -184,14 +184,14 @@ class LoginService {
 							}
 
 							for index in 0 ... (ids.count - 1) {
-								let student = NSEntityDescription.insertNewObjectForEntityForName("Student", inManagedObjectContext: moc) as! Student
+								let student = Student.MR_createEntity()!
 								student.id = ids[index]
 								student.name = names[index]
 								student.grade = grades[index]
 								student.school = schools[index]
-								student.user = user
+								student.user = self.user
 							}
-							moc.saveContext()
+							NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
 							self.completion(successful: true, error: nil)
                         // Failed to Login
 						default:
