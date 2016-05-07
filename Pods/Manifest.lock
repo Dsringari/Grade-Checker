@@ -1,9 +1,13 @@
 PODS:
   - Kanna (1.0.5)
+  - MagicalRecord (2.3.2):
+    - MagicalRecord/Core (= 2.3.2)
+  - MagicalRecord/Core (2.3.2)
   - Spring (1.0.3)
 
 DEPENDENCIES:
   - Kanna (~> 1.0.0)
+  - MagicalRecord
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
 
 EXTERNAL SOURCES:
@@ -18,6 +22,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Kanna: 1df5cd995dc1f3a282e3dcf7521cfef2f069ac4d
+  MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
 
 COCOAPODS: 0.39.0

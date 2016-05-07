@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C193E7F30B9FF30536B32143 /* Pods_Grade_Checker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */; };
+		724C837149ED7EB4B79A6D94 /* Pods_Sapphire_Access.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F532C3480F147BEB23B417F /* Pods_Sapphire_Access.framework */; };
 		FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBED1CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift */; };
 		FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */; };
 		FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */; };
@@ -35,14 +35,18 @@
 		FCC29A6F1CD198A1004002B5 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */; };
 		FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */; };
 		FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */; };
+		FCE231051CDD657900D1B08B /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231041CDD657900D1B08B /* MagicalRecord.framework */; };
+		FCE231071CDD657D00D1B08B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231061CDD657D00D1B08B /* Kanna.framework */; };
+		FCE231091CDD658100D1B08B /* Spring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231081CDD658100D1B08B /* Spring.framework */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		21C45DA85B0B0E9AE16C5C63 /* Pods-Grade Checker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.release.xcconfig"; sourceTree = "<group>"; };
+		0F532C3480F147BEB23B417F /* Pods_Sapphire_Access.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sapphire_Access.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		22C4B49432F5C302C9BC13A8 /* Pods-Sapphire Access.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sapphire Access.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access.release.xcconfig"; sourceTree = "<group>"; };
+		4B28DC3C8A95947E5CCE1DD7 /* Pods-Sapphire Access.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sapphire Access.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access.debug.xcconfig"; sourceTree = "<group>"; };
 		542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grade_Checker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EE8D4962F0BB482B8EAF461D /* Pods-Grade Checker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grade Checker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker.debug.xcconfig"; sourceTree = "<group>"; };
 		FC00EBED1CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MarkingPeriod+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkingPeriod.swift; sourceTree = "<group>"; };
 		FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -72,6 +76,9 @@
 		FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDSelectionCell.swift; sourceTree = "<group>"; };
 		FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		FCE231041CDD657900D1B08B /* MagicalRecord.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MagicalRecord.framework; path = "Pods/../build/Debug-iphoneos/MagicalRecord.framework"; sourceTree = "<group>"; };
+		FCE231061CDD657D00D1B08B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sapphire_Access-hiywhoigwkgnqxaahsdsylwzwzgj/Build/Products/Debug-iphonesimulator/Kanna.framework"; sourceTree = "<group>"; };
+		FCE231081CDD658100D1B08B /* Spring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spring.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sapphire_Access-hiywhoigwkgnqxaahsdsylwzwzgj/Build/Products/Debug-iphonesimulator/Spring.framework"; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,32 +88,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCE231091CDD658100D1B08B /* Spring.framework in Frameworks */,
+				FCE231071CDD657D00D1B08B /* Kanna.framework in Frameworks */,
+				FCE231051CDD657900D1B08B /* MagicalRecord.framework in Frameworks */,
 				FCC29A6D1CD177FD004002B5 /* LocalAuthentication.framework in Frameworks */,
 				FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */,
-				C193E7F30B9FF30536B32143 /* Pods_Grade_Checker.framework in Frameworks */,
+				724C837149ED7EB4B79A6D94 /* Pods_Sapphire_Access.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		179BCF40F63A2CCA170CCAA5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4B28DC3C8A95947E5CCE1DD7 /* Pods-Sapphire Access.debug.xcconfig */,
+				22C4B49432F5C302C9BC13A8 /* Pods-Sapphire Access.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		3A39DB40D025CD77D3B363B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FCE231081CDD658100D1B08B /* Spring.framework */,
+				FCE231061CDD657D00D1B08B /* Kanna.framework */,
+				FCE231041CDD657900D1B08B /* MagicalRecord.framework */,
 				FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */,
 				FC06632C1CBC3AA9005D1310 /* CoreData.framework */,
 				542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */,
+				0F532C3480F147BEB23B417F /* Pods_Sapphire_Access.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E2D025B05CC0189902108D46 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				EE8D4962F0BB482B8EAF461D /* Pods-Grade Checker.debug.xcconfig */,
-				21C45DA85B0B0E9AE16C5C63 /* Pods-Grade Checker.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		FC0519C61CB8479100D502EA /* ManagedObjects */ = {
@@ -132,7 +146,7 @@
 				FC639F991C8F8FFD006C71A7 /* Sapphire Access */,
 				FC639F981C8F8FFD006C71A7 /* Products */,
 				3A39DB40D025CD77D3B363B3 /* Frameworks */,
-				E2D025B05CC0189902108D46 /* Pods */,
+				179BCF40F63A2CCA170CCAA5 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -217,13 +231,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC639FA91C8F8FFD006C71A7 /* Build configuration list for PBXNativeTarget "Sapphire Access" */;
 			buildPhases = (
-				3A04484A54A869DEA878AE70 /* Check Pods Manifest.lock */,
+				5EDB95526956A78CAF4B1EB8 /* Check Pods Manifest.lock */,
 				FCC71DA71C950DD6000913D1 /* Check for Warning Tags */,
 				FC639F931C8F8FFD006C71A7 /* Sources */,
 				FC639F941C8F8FFD006C71A7 /* Frameworks */,
 				FC639F951C8F8FFD006C71A7 /* Resources */,
-				B58CCB62E5A93420770811E9 /* Embed Pods Frameworks */,
-				2BE80CE663D2C0BAA3DE87CD /* Copy Pods Resources */,
+				E7C16904363DCFC337368AB2 /* Embed Pods Frameworks */,
+				963E8759A260AF2DFFD1BF2E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -287,22 +301,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2BE80CE663D2C0BAA3DE87CD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3A04484A54A869DEA878AE70 /* Check Pods Manifest.lock */ = {
+		5EDB95526956A78CAF4B1EB8 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -317,7 +316,22 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B58CCB62E5A93420770811E9 /* Embed Pods Frameworks */ = {
+		963E8759A260AF2DFFD1BF2E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7C16904363DCFC337368AB2 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -329,7 +343,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Grade Checker/Pods-Grade Checker-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FCC71DA71C950DD6000913D1 /* Check for Warning Tags */ = {
@@ -487,7 +501,7 @@
 		};
 		FC639FAA1C8F8FFD006C71A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE8D4962F0BB482B8EAF461D /* Pods-Grade Checker.debug.xcconfig */;
+			baseConfigurationReference = 4B28DC3C8A95947E5CCE1DD7 /* Pods-Sapphire Access.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -506,7 +520,7 @@
 		};
 		FC639FAB1C8F8FFD006C71A7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21C45DA85B0B0E9AE16C5C63 /* Pods-Grade Checker.release.xcconfig */;
+			baseConfigurationReference = 22C4B49432F5C302C9BC13A8 /* Pods-Sapphire Access.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

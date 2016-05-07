@@ -9,6 +9,7 @@
 import Foundation
 import Kanna
 import CoreData
+import MagicalRecord
 
 class LoginService {
 	var user: User
@@ -16,7 +17,7 @@ class LoginService {
 	let completion: (successful: Bool, error: NSError?) -> Void
 
 	init(loginUserWithID userID: NSManagedObjectID, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
-		user = self.appDelegate.managedObjectContext.objectWithID(userID) as! User
+		user = User.MR_findWith
 		self.completion = completion
 		login()
 	}
