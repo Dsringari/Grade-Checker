@@ -982,11 +982,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="accountTab" width="25" height="25"/>
-        <image name="accountTabGreen" width="25" height="25"/>
+        <image name="accountTab" width="32" height="32"/>
+        <image name="accountTabGreen" width="32" height="32"/>
         <image name="lock" width="27" height="35"/>
-        <image name="paper" width="25" height="25"/>
-        <image name="paperGreen" width="25" height="25"/>
+        <image name="paper" width="32" height="32"/>
+        <image name="paperGreen" width="32" height="32"/>
         <image name="social" width="36" height="35"/>
         <image name="tool" width="20" height="36"/>
     </resources>

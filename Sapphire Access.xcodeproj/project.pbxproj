@@ -231,6 +231,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC639FA91C8F8FFD006C71A7 /* Build configuration list for PBXNativeTarget "Sapphire Access" */;
 			buildPhases = (
+				FC1E26231CE1374E00D14D70 /* Set the build number to the count of Git commits */,
 				5EDB95526956A78CAF4B1EB8 /* Check Pods Manifest.lock */,
 				FCC71DA71C950DD6000913D1 /* Check for Warning Tags */,
 				FC639F931C8F8FFD006C71A7 /* Sources */,
@@ -238,6 +239,7 @@
 				FC639F951C8F8FFD006C71A7 /* Resources */,
 				E7C16904363DCFC337368AB2 /* Embed Pods Frameworks */,
 				963E8759A260AF2DFFD1BF2E /* Copy Pods Resources */,
+				FC1E26251CE1378D00D14D70 /* Set Build number to "Development" */,
 			);
 			buildRules = (
 			);
@@ -345,6 +347,34 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FC1E26231CE1374E00D14D70 /* Set the build number to the count of Git commits */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set the build number to the count of Git commits";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		FC1E26251CE1378D00D14D70 /* Set Build number to "Development" */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set Build number to \"Development\"";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
 		FCC71DA71C950DD6000913D1 /* Check for Warning Tags */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -505,6 +535,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -515,6 +546,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SringariDhruv.Sapphire-Access";
 				PRODUCT_NAME = "Sapphire Access";
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -524,6 +556,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -534,6 +567,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SringariDhruv.Sapphire-Access";
 				PRODUCT_NAME = "Sapphire Access";
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};

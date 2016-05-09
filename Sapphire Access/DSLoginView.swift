@@ -79,6 +79,7 @@ class DSLoginView: UITableViewController {
         
         if let user = User.MR_findFirst() {
             hasUser = true
+            self.startLoading()
             let settings = NSUserDefaults.standardUserDefaults()
             let useTouchID = settings.boolForKey("useTouchID")
             if (useTouchID) {
@@ -164,7 +165,6 @@ class DSLoginView: UITableViewController {
 	func loginWithTouchID(user: User) {
 		let context: LAContext = LAContext()
 		let localizedReasonString = "Use Touch ID to Login"
-        startLoading()
 		context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
 			if (success) {
 				self.loginUser(user)
