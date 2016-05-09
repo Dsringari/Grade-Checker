@@ -2,8 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
     <entity name="Assignment" representedClassName=".Assignment" syncable="YES">
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dateUpdated" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="hadChanges" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="possiblePoints" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalPoints" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,6 +28,7 @@
     </entity>
     <entity name="Subject" representedClassName=".Subject" syncable="YES">
         <attribute name="htmlPage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="room" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sectionGUID" attributeType="String" syncable="YES"/>
@@ -43,10 +43,10 @@
         <relationship name="students" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="user" inverseEntity="Student" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Assignment" positionX="-369" positionY="369" width="128" height="150"/>
+        <element name="Assignment" positionX="-369" positionY="369" width="128" height="135"/>
         <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="165"/>
         <element name="Student" positionX="-378" positionY="0" width="128" height="135"/>
-        <element name="Subject" positionX="-387" positionY="9" width="128" height="150"/>
+        <element name="Subject" positionX="-387" positionY="9" width="128" height="165"/>
         <element name="User" positionX="-369" positionY="-154" width="128" height="105"/>
     </elements>
 </model>

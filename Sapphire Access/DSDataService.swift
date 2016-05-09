@@ -14,9 +14,9 @@ class UpdateService {
 	let completion: (successful: Bool, error: NSError?) -> Void
 	let session = NSURLSession.sharedSession()
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var fails: [NSError] = []
-    // Storing the error so we can call the completion from one spot in the class
-	//var result: (successful: Bool, error: NSError?) = (true, nil)
+	var fails: [NSError] = []
+	// Storing the error so we can call the completion from one spot in the class
+	// var result: (successful: Bool, error: NSError?) = (true, nil)
 
 	let timer: ParkBenchTimer?
 
@@ -24,8 +24,8 @@ class UpdateService {
 	init(studentID: NSManagedObjectID, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
 		self.completion = completion
 		self.timer = ParkBenchTimer()
-        
-        let student = NSManagedObjectContext.MR_defaultContext().objectWithID(studentID) as! Student
+
+		let student = NSManagedObjectContext.MR_defaultContext().objectWithID(studentID) as! Student
 
 		// Make Sure we have the correct log in cookies although this is redundant on the first login.
 		let _ = LoginService(refreshUserWithID: student.user!.objectID, completion: { successful, error in
@@ -45,16 +45,21 @@ class UpdateService {
 					} else {
 
 						if let html = NSString(data: data!, encoding: NSASCIIStringEncoding) {
+							// Delete the subjects
+							Subject.MR_deleteAllMatchingPredicate(NSPredicate(value: true), inContext: NSManagedObjectContext.MR_defaultContext())
+							NSManagedObjectContext.MR_defaultContext().MR_saveOnlySelfAndWait()
+
 							self.createSubjects(coursesAndGradePageHtml: html as String, student: student)
+
 						} else {
 							completion(successful: false, error: unknownResponseError)
 						}
 					}
 				}
 				getCoursePage.resume()
-            } else {
-                completion(successful: false, error: error!)
-            }
+			} else {
+				completion(successful: false, error: error!)
+			}
 		})
 	}
 
@@ -62,8 +67,8 @@ class UpdateService {
 	// MAY BE CALLED FROM NON_MAIN THREAD
 	private func createSubjects(coursesAndGradePageHtml html: String, student: Student) {
 		let updateGroup = dispatch_group_create()
-        let subjectContext = NSManagedObjectContext.MR_context()
-        let updatingStudent = subjectContext.objectWithID(student.objectID) as! Student
+		let subjectContext = NSManagedObjectContext.MR_context()
+		let updatingStudent = subjectContext.objectWithID(student.objectID) as! Student
 
 		if let doc = Kanna.HTML(html: html, encoding: NSASCIIStringEncoding) {
 
@@ -82,26 +87,20 @@ class UpdateService {
 				let subjectAddress = node["href"]!
 				// Used to unique the subject
 				let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1]
-                
-                // Check if we have this subject already
-				let newSubject: Subject
-				if let storedSubject = Subject.MR_findFirstByAttribute("sectionGUID", withValue: sectionGuidText, inContext: subjectContext) {
-					newSubject = storedSubject
-				} else {
-					newSubject = Subject.MR_createEntityInContext(subjectContext)!
 
-					// Because the marking period html pages' urls repeat themselves we can use a shortcut to skip the select marking period page
-					// There are only 4 marking periods
-					// Even invalid marking periods have a html page
-					for index in 1 ... 4 {
-						// Create 4 marking periods
-						let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: subjectContext) as! MarkingPeriod
-						// Add the marking periods to the subject
-						newMP.subject = newSubject
-						newMP.number = String(index)
-						newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + student.id! + "&" + sectionGuidText + "&MP_CODE=" + newMP.number!
-						newMP.empty = NSNumber(bool: false)
-					}
+				let newSubject: Subject = Subject.MR_createEntityInContext(subjectContext)!
+
+				// Because the marking period html pages' urls repeat themselves we can use a shortcut to skip the select marking period page
+				// There are only 4 marking periods
+				// Even invalid marking periods have a html page
+				for index in 1 ... 4 {
+					// Create 4 marking periods
+					let newMP: MarkingPeriod = NSEntityDescription.insertNewObjectForEntityForName("MarkingPeriod", inManagedObjectContext: subjectContext) as! MarkingPeriod
+					// Add the marking periods to the subject
+					newMP.subject = newSubject
+					newMP.number = String(index)
+					newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + student.id! + "&" + sectionGuidText + "&MP_CODE=" + newMP.number!
+					newMP.empty = NSNumber(bool: false)
 				}
 
 				newSubject.student = updatingStudent
@@ -132,8 +131,8 @@ class UpdateService {
 				subjects[index].teacher = t[index]
 				subjects[index].room = r[index]
 			}
-            
-            subjectContext.MR_saveOnlySelfAndWait()
+
+			subjectContext.MR_saveOnlySelfAndWait()
 			// Get the marking period information for the subjects
 			for subject in subjects {
 				// For each marking period for the subject, get the respective information
@@ -152,8 +151,8 @@ class UpdateService {
 							self.fails.append(error!)
 							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 						} else {
-                            
-                            let mpRequestMOC = NSManagedObjectContext.MR_context()
+
+							let mpRequestMOC = NSManagedObjectContext.MR_context()
 							// Get the correct marking period object
 							let mP: MarkingPeriod = MarkingPeriod.MR_findFirstByAttribute("htmlPage", withValue: response!.URL!.absoluteString, inContext: mpRequestMOC)!
 
@@ -172,43 +171,26 @@ class UpdateService {
 								mP.percentGrade = result.percentGrade
 
 								for assignment in result.assignments {
-									let newA: Assignment
-
-									var isActuallyNew = true
-                                    if let a = Assignment.MR_findFirstWithPredicate(NSPredicate(format: "name == %@ AND markingPeriod == %@", argumentArray: [assignment.name, mP]), inContext: mpRequestMOC) {
-										newA = a
-										isActuallyNew = false
-									} else {
-										newA = Assignment.MR_createEntityInContext(mpRequestMOC)!
-										// String to Date
-										let dateFormatter = NSDateFormatter()
-										// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
-										dateFormatter.dateFormat = "MM/dd/yy"
-										let date = dateFormatter.dateFromString(assignment.date)
-										newA.dateUpdated = date!
-                                        newA.hadChanges = NSNumber(bool: false)
-									}
+									let newA: Assignment = Assignment.MR_createEntityInContext(mpRequestMOC)!
+                                    
+									// String to Date
+									let dateFormatter = NSDateFormatter()
+									// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
+									dateFormatter.dateFormat = "MM/dd/yy"
+									let date = dateFormatter.dateFromString(assignment.date)
+									newA.dateCreated = date!
 
 									newA.name = assignment.name
 									newA.totalPoints = assignment.totalPoints
 									newA.possiblePoints = assignment.possiblePoints
 									newA.markingPeriod = mP
-
-									// If we are updating an existing object and the values changed
-									if (!newA.changedValues().isEmpty && !isActuallyNew) {
-                                        print(newA.changedValues())
-										newA.hadChanges = NSNumber(bool: true)
-										newA.dateUpdated = NSDate()
-									}
-
 								}
-                                
-								
+
 							} else {
 								mP.empty = NSNumber(bool: true)
 							}
 
-                            mpRequestMOC.MR_saveOnlySelfAndWait()
+							mpRequestMOC.MR_saveOnlySelfAndWait()
 							dispatch_group_leave(updateGroup); self.timer!.exits += 1 // 2
 						}
 					}
@@ -231,14 +213,17 @@ class UpdateService {
 				self.completion(successful: false, error: self.fails.first!)
 				return
 			}
-
-			NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-            self.completion(successful: true, error: nil)
             
+            // This is kind of optional, only gives more accurate dates
+            let updater = RefreshLastUpdatedDates(forStudent: student)
+            updater.update { _,_ in
+                    NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+                    self.completion(successful: true, error: nil)
+            }
 		}
 	}
 
-    private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String, category: String)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
+	private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String, category: String)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
@@ -309,17 +294,16 @@ class UpdateService {
 			let text = aE.text!
 			aDates.append(text)
 		}
-        
-        // Get all the categories
-        var aCategories: [String] = []
-        for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[5]") {
-            let text = aE.text!
-            aCategories.append(text)
-        }
-        
+
+		// Get all the categories
+		var aCategories: [String] = []
+		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[5]") {
+			let text = aE.text!
+			aCategories.append(text)
+		}
 
 		// Build the assignment tuples
-        var assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String, category: String)] = []
+		var assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String, category: String)] = []
 		for index in 0 ... (aNames.count - 1) {
 			let newA = (aNames[index], aTotalPoints[index], aPossiblePoints[index], aDates[index], aCategories[index])
 			assignments.append(newA)
@@ -329,6 +313,63 @@ class UpdateService {
 		return (assignments, totalPoints, possiblePoints, percentGrade)
 	}
 
+}
+
+class RefreshLastUpdatedDates {
+	let student: Student
+	let session = NSURLSession.sharedSession()
+
+	init(forStudent student: Student) {
+		self.student = student
+	}
+
+	// Changes the last updated on the subjects
+	func update(completionHandler: (successful: Bool, error: NSError?) -> Void) {
+		// Get the landing page
+		let url = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
+		let request = NSURLRequest(URL: url!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+		session.dataTaskWithRequest(request, completionHandler: { data, response, error in
+            
+            let localMOC = NSManagedObjectContext.MR_context()
+
+			if (error != nil) {
+				completionHandler(successful: false, error: error)
+				return
+			}
+
+			if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
+				// Get all the Class Names
+				var names: [String] = []
+				for element in doc.xpath("//*[@id=\"contentPipe\"]/div[3]/table//tr/td[2]") {
+					let text = element.text!
+					names.append(text)
+				}
+
+				var dates: [String] = []
+				for element in doc.xpath("//*[@id=\"contentPipe\"]/div[3]/table//tr/td[3]") {
+					let text = element.text!
+					dates.append(text)
+				}
+                
+                for index in 0...names.count-1 {
+                    if let subject = Subject.MR_findFirstByAttribute("name", withValue: names[index], inContext: localMOC) {
+                        let dateString = dates[index]
+                        let dateFormatter = NSDateFormatter()
+                        // http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
+                        dateFormatter.dateFormat = "MM/dd/yy"
+                        let date = dateFormatter.dateFromString(dateString)
+                        subject.lastUpdated = date
+                    }
+                }
+                
+                localMOC.MR_saveOnlySelfAndWait()
+                completionHandler(successful: true, error: nil)
+
+			} else {
+				completionHandler(successful: false, error: unknownResponseError)
+			}
+		}).resume()
+	}
 }
 
 class ParkBenchTimer {

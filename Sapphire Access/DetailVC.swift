@@ -95,16 +95,9 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let mp = markingPeriods[selectedMPIndex]
         var assignments: [Assignment] = mp.assignments!.allObjects as! [Assignment]
         // sort by date
-        assignments.sortInPlace{ $0.dateUpdated!.compare($1.dateUpdated!) == NSComparisonResult.OrderedDescending }
+        assignments.sortInPlace{ $0.dateCreated!.compare($1.dateCreated!) == NSComparisonResult.OrderedDescending }
         cell.assignmentNameLabel.text = assignments[indexPath.row].name
         cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
-        // We have seen the updated assignment
-        if (assignments[indexPath.row].hadChanges!.boolValue) {
-            MagicalRecord.saveWithBlockAndWait { moc in
-                let localAssignment = assignments[indexPath.row].MR_inContext(moc)!
-                localAssignment.hadChanges = NSNumber(bool: false)
-            }
-        }
         return cell
     }
     

@@ -74,14 +74,12 @@ extension UIViewController {
 }
 
 func relativeDateStringForDate(date: NSDate) -> String {
-    let components = NSCalendar.currentCalendar().components([.Day, .WeekOfYear, .Month, .Year], fromDate: date, toDate: NSDate(), options: [])
+    let components = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date, toDate: NSDate(), options: [])
     
     if (components.year > 0) {
         return String(format: "%ld years ago", arguments: [components.year])
     } else if (components.month > 0) {
         return String(format: "%ld months ago", arguments: [components.month])
-    } else if (components.weekOfYear > 0) {
-        return String(format: "%ld weeks ago", arguments: [components.weekOfYear])
     } else if (components.day > 0) {
         if (components.day > 1) {
             return String(format: "%ld days ago", arguments: [components.day])

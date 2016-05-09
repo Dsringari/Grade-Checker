@@ -183,7 +183,29 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		}
 
 		// Sort by Most Recently Updated
-		subjects = subjects.sort{$0.mostRecentDate!.compare($1.mostRecentDate!) == NSComparisonResult.OrderedDescending}
+        subjects.sortInPlace({ (s1: Subject, s2: Subject) -> Bool in
+            let s1MostRecentDate: NSDate
+            let s2MostRecentDate: NSDate
+            
+            if let date = s1.lastUpdated {
+                s1MostRecentDate = date
+            } else {
+                s1MostRecentDate = s1.mostRecentAssignment!.dateCreated!
+            }
+            
+            if let date = s2.lastUpdated {
+                s2MostRecentDate = date
+            } else {
+                s2MostRecentDate = s2.mostRecentAssignment!.dateCreated!
+            }
+            
+            if (s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedSame) {
+                return s1.name < s2.name
+            }
+            
+            return s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedDescending
+            
+        })
 		return subjects.count
 	}
 
@@ -214,11 +236,14 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 
 		cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
 		cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
-        cell.lastUpdatedLabel.text = "Last Updated: " + relativeDateStringForDate(subject.mostRecentDate!)
         
-        if (subject.hasUpdates) {
-            cell.lastUpdatedLabel.textColor = UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 132 / 255, alpha: 1)
+        if let date = subject.lastUpdated {
+            cell.lastUpdatedLabel.text = "Last Updated: " + relativeDateStringForDate(date)
+        } else {
+            cell.lastUpdatedLabel.text = "Last Updated: " + relativeDateStringForDate(subject.mostRecentAssignment!.dateCreated!)
         }
+        
+
 
 		// cell.backgroundColor = lightB
 		return cell
