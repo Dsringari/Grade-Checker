@@ -42,9 +42,11 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 			selectedStudentIndex = students.indexOf(student)
 		}
 
-		if (students.count == 1) {
-			tableview.allowsSelection = false
-		}
+		/*
+		 if (students.count == 1) {
+            tableview.allowsSelection = false
+		 }
+		 */
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -55,17 +57,19 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if section == 0 {
 			return "Selected Student"
+		} else if section == 1 {
+			return "Account"
 		}
 
-		return "Touch ID"
+		return "About"
 	}
-    
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if (section == 1) {
-            return 50
-        }
-        return 0
-    }
+
+	func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		if (section == 1) {
+			return 50
+		}
+		return 0
+	}
 
 	func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 
@@ -90,7 +94,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 2
+		return 3
 	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,26 +116,32 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 				studentCell.accessoryType = .None
 			}
 			return studentCell
+		} else if indexPath.section == 1 {
+			touchIDCell = tableView.dequeueReusableCellWithIdentifier("touchIDCell", forIndexPath: indexPath) as! TouchIDSelectionCell
+			touchIDCell.touchIDSwitch.on = settings.boolForKey("useTouchID")
+			touchIDCell.selectionStyle = .None
+			touchIDCell.touchIDSwitch.addTarget(self, action: #selector(changeTouchIDValue), forControlEvents: .ValueChanged)
+			return touchIDCell
 		}
-		touchIDCell = tableView.dequeueReusableCellWithIdentifier("touchIDCell", forIndexPath: indexPath) as! TouchIDSelectionCell
-		touchIDCell.touchIDSwitch.on = settings.boolForKey("useTouchID")
-		touchIDCell.selectionStyle = .None
-		touchIDCell.touchIDSwitch.addTarget(self, action: #selector(changeTouchIDValue), forControlEvents: .ValueChanged)
-		return touchIDCell
+
+		let aboutCell = tableView.dequeueReusableCellWithIdentifier("aboutCell", forIndexPath: indexPath)
+		return aboutCell
 	}
 
 	func logout() {
-        User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
 		self.tabBarController!.dismissViewControllerAnimated(true, completion: nil)
 	}
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if (indexPath.section == 0) {
-			selectedStudentIndex = indexPath.row
-			settings.setObject(students[selectedStudentIndex].name!, forKey: "selectedStudent")
-			self.tableview.reloadData()
-			delegate.reloadData()
+            if (selectedStudentIndex != indexPath.row) {
+                selectedStudentIndex = indexPath.row
+                settings.setObject(students[selectedStudentIndex].name!, forKey: "selectedStudent")
+                self.tableview.reloadData()
+                delegate.reloadData()
+            }
 		}
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 	}

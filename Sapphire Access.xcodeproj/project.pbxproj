@@ -18,6 +18,7 @@
 		FC15CF551CD2B19A001457AD /* StudentSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */; };
+		FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26281CE1630900D14D70 /* AboutVC.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
 		FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */; };
 		FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */; };
@@ -57,6 +58,7 @@
 		FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentSelectionCell.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC1E26281CE1630900D14D70 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */,
 				FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */,
 				FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */,
+				FC1E26281CE1630900D14D70 /* AboutVC.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
+				FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */,
 				FC15CF551CD2B19A001457AD /* StudentSelectionCell.swift in Sources */,
 				FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */,
 				FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */,
