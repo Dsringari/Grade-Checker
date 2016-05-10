@@ -164,14 +164,14 @@ class DSLoginView: UITableViewController {
 
 	func loginWithTouchID(user: User) {
 		let context: LAContext = LAContext()
-		let localizedReasonString = "Use Touch ID to Login"
+		let localizedReasonString = "Login with Touch ID"
 		context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
 			if (success) {
 				self.loginUser(user)
 			} else {
                 User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
 				if (error!.code == LAError.AuthenticationFailed.rawValue) {
-					let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match.", preferredStyle: .Alert)
+					let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .Alert)
 					let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
 					failed.addAction(Ok)
                     dispatch_async(dispatch_get_main_queue(), {
