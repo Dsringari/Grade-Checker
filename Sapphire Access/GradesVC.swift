@@ -241,7 +241,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		let percentGradeDouble = numberFormatter.numberFromString(percentgradeString)!.doubleValue
 		let roundedPercentGrade: Int = Int(round(percentGradeDouble))
 
-		cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
+		//cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
 		cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
         
         if let date = subject.lastUpdated {

@@ -147,7 +147,7 @@ class DSLoginView: UITableViewController {
 		loginButton.addTarget(self, action: #selector(login), forControlEvents: .TouchUpInside)
 		loginButton.setTitleColor(titleColor, forState: .Normal)
 		loginButton.setTitleColor(UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.45), forState: .Highlighted) // Make slighlty Darker
-		loginButton.backgroundColor = UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 132 / 255, alpha: 1)
+		loginButton.backgroundColor = UIColor(colorLiteralRed: 122 / 255, green: 110 / 255, blue: 120 / 255, alpha: 1)
 		loginButton.frame = footerView.frame
 		// Add Hidden Activity Indicator
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
@@ -170,6 +170,7 @@ class DSLoginView: UITableViewController {
 				self.loginUser(user)
 			} else {
                 User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+                
 				if (error!.code == LAError.AuthenticationFailed.rawValue) {
 					let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .Alert)
 					let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
@@ -178,7 +179,13 @@ class DSLoginView: UITableViewController {
                         self.presentViewController(failed, animated: true, completion: nil)
                         self.stopLoading()
                     })
+                    
+                    return
 				}
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.stopLoading()
+                })
 			}
 		})
 	}
