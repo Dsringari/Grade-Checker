@@ -73,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        
 		let settings = NSUserDefaults.standardUserDefaults()
 		let selectedStudentName = settings.stringForKey("selectedStudent")!
 		let oldStudentAssignmentCount: Int = Assignment.MR_numberOfEntities().integerValue
