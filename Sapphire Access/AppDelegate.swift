@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 
 		let settings = NSUserDefaults.standardUserDefaults()
+        
 		if (settings.stringForKey("selectedStudent") != nil) {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
 		} else {
