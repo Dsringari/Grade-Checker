@@ -79,6 +79,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 			refreshButton.enabled = false
             isRefreshing = true
             refreshControl.beginRefreshing()
+            tableview.userInteractionEnabled = false
             tableview.setContentOffset(CGPointMake(0, -refreshControl.frame.size.height), animated: true)
             let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 				if (successful) {
@@ -92,6 +93,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
                         self.refreshControl.endRefreshing()
 						self.refreshButton.enabled = true
                         self.isRefreshing = false
+                        self.tableview.userInteractionEnabled = true
 					})
 				} else {
 					dispatch_async(dispatch_get_main_queue(), {
@@ -105,6 +107,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
 						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
                         self.presentViewController(alert, animated: true, completion: nil)
+                        self.tableview.userInteractionEnabled = false
 					})
 				}
 			})
@@ -115,6 +118,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		if !isRefreshing {
             isRefreshing = true
             refreshButton.enabled = false
+            tableview.userInteractionEnabled = false
 			let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 				if (successful) {
 					dispatch_async(dispatch_get_main_queue(), {
@@ -125,6 +129,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 						self.refreshControl.endRefreshing()
                         self.isRefreshing = false
                         self.refreshButton.enabled = true
+                        self.tableview.userInteractionEnabled = true
 					})
 				} else {
 					dispatch_async(dispatch_get_main_queue(), {
@@ -138,6 +143,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
 						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
                         self.presentViewController(alert, animated: true, completion: nil)
+                        self.tableview.userInteractionEnabled = true
 					})
 				}
 			})
