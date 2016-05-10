@@ -23,6 +23,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 	lazy var refreshControl: UIRefreshControl = {
 		let refreshControl = UIRefreshControl()
 		refreshControl.addTarget(self, action: #selector(pullToRefresh), forControlEvents: .ValueChanged)
+        refreshControl.tintColor = UIColor.whiteColor()
 		return refreshControl
 	}()
 
