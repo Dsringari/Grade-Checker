@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Set default preferences
 		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications": NSNumber(bool: true)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
-        
-        MagicalRecord.setupAutoMigratingCoreDataStack()
+
+		MagicalRecord.setupAutoMigratingCoreDataStack()
 		return true
 	}
 
@@ -68,29 +68,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func applicationWillTerminate(application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        MagicalRecord.cleanUp()
+		MagicalRecord.cleanUp()
 	}
-
-	
 
 	func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
 		let settings = NSUserDefaults.standardUserDefaults()
 		let selectedStudentName = settings.stringForKey("selectedStudent")!
 		let oldStudentAssignmentCount: Int = Assignment.MR_numberOfEntities().integerValue
-        let student: Student = Student.MR_findFirstByAttribute("name", withValue: selectedStudentName)!
-        print(student.name!)
+		let student: Student = Student.MR_findFirstByAttribute("name", withValue: selectedStudentName)!
+        var oldSubjects: [Subject] = Subject.MR_findAll()! as! [Subject]
+
+		oldSubjects = oldSubjects.filter({ $0.lastUpdated != nil })
+		var sectionGUIDs: [String] = []
+		var dates: [NSDate] = []
+		for s in oldSubjects {
+			sectionGUIDs.append(s.sectionGUID!)
+			dates.append(s.lastUpdated!)
+		}
 
 		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
 			if (!successful) {
-				student.MR_deleteEntity()
 				completionHandler(UIBackgroundFetchResult.Failed)
 			} else {
-				let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntities().integerValue
+				let localMOC = NSManagedObjectContext.MR_context()
+				let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntitiesWithContext(localMOC).integerValue
+
+				let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "lastUpdated != nil")) as! [Subject]
+
+				var shouldNotify = false
+				for subject in updatedSubjects {
+					if let sectionGUID = sectionGUIDs.filter({ (s: String) in return s == subject.sectionGUID }).first {
+                        let index: Int = sectionGUIDs.indexOf(sectionGUID)!
+						if (dates[index].compare(subject.lastUpdated!) != NSComparisonResult.OrderedSame) {
+                            shouldNotify = true
+                            break
+						}
+					}
+				}
                 
-                let updatedAssignments = Assignment.MR_findAllWithPredicate(NSPredicate(format: "hadChanges == %@", argumentArray: [true])) as! [Assignment]
-
-
-				if (newStudentAssignmentCount != oldStudentAssignmentCount || !updatedAssignments.isEmpty) {
+                /*  Values that Trigger the Notification
+                    * The old subjects with a lastUpdated value should be less than the new subjects
+                    * The lastUpdated value becomes newer
+                    * The count of assignments is increased
+                 */
+                
+				if (newStudentAssignmentCount != oldStudentAssignmentCount || sectionGUIDs.count < updatedSubjects.count || shouldNotify) {
 					UIApplication.sharedApplication().cancelAllLocalNotifications()
 					let newNotification = UILocalNotification()
 					let now = NSDate()

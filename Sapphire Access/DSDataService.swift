@@ -86,7 +86,7 @@ class UpdateService {
 			for node: XMLElement in nodes {
 				let subjectAddress = node["href"]!
 				// Used to unique the subject
-				let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1]
+				let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1].componentsSeparatedByString("=")[1]
 
 				let newSubject: Subject = Subject.MR_createEntityInContext(subjectContext)!
 
@@ -99,7 +99,7 @@ class UpdateService {
 					// Add the marking periods to the subject
 					newMP.subject = newSubject
 					newMP.number = String(index)
-					newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + student.id! + "&" + sectionGuidText + "&MP_CODE=" + newMP.number!
+					newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + student.id! + "&" + "COURSE_SECTION_GUID=" + sectionGuidText + "&MP_CODE=" + newMP.number!
 					newMP.empty = NSNumber(bool: false)
 				}
 
