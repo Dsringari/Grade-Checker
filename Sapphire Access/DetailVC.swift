@@ -76,9 +76,9 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = UIColor(colorLiteralRed: 86/255, green: 100/255, blue: 115/255, alpha: 1.0)
-        let header = view as! UITableViewHeaderFooterView
-        header.textLabel!.textColor = UIColor.whiteColor()
+//        view.tintColor = UIColor(colorLiteralRed: 86/255, green: 100/255, blue: 115/255, alpha: 1.0)
+//        let header = view as! UITableViewHeaderFooterView
+//        header.textLabel!.textColor = UIColor.whiteColor()
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
