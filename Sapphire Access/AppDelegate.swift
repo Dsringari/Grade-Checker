@@ -17,11 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
-		// Set the UINavigationBar Back button tint color to the green color
-		UINavigationBar.appearance().tintColor = UIColor(colorLiteralRed: 86 / 255, green: 100 / 255, blue: 115 / 255, alpha: 1.0)
-		// Change Tab Bar Text Colors
-		UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
-		UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 133 / 255, alpha: 1.9)], forState: .Selected)
+//		// Set the UINavigationBar Back button tint color to the green color
+//		UINavigationBar.appearance().tintColor = UIColor(colorLiteralRed: 86 / 255, green: 100 / 255, blue: 115 / 255, alpha: 1.0)
+//		// Change Tab Bar Text Colors
+//		UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
+//		UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 133 / 255, alpha: 1.9)], forState: .Selected)
 		// UITabBar.appearance().tintColor = UIColor.grayColor()
 		// Set default preferences
 		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications": NSNumber(bool: true)]

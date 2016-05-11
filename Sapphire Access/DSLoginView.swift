@@ -12,13 +12,21 @@ import MagicalRecord
 import Spring
 import LocalAuthentication
 
-class DSLoginView: UITableViewController {
+class DSLoginView: UIViewController {
 
 	@IBOutlet var usernameField: UITextField!
 	@IBOutlet var passwordField: UITextField!
 	@IBOutlet var pinField: UITextField!
+    @IBOutlet var loginButton: SpringButton!
+    @IBOutlet var forgotPasswordButton: UIButton!
+    @IBOutlet var scrollView: UIScrollView!
+    
+    @IBOutlet var forgotPasswordTopConstraint: NSLayoutConstraint!
+    @IBOutlet var forgotPasswordBottomConstraint: NSLayoutConstraint!
+    
 	var hasUser: Bool = false
-	var loginButton: SpringButton!
+	
+    
 
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 	var validatedUser: User!
@@ -31,29 +39,10 @@ class DSLoginView: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Setup the old user loading indicator
-		let indicator = UIActivityIndicatorView()
-		indicator.translatesAutoresizingMaskIntoConstraints = false
-		indicator.color = UIColor.blackColor()
-		activityAlert.view.addSubview(indicator)
-
-		let views = ["pending": activityAlert.view, "indicator": indicator]
-		var constraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[indicator]-(10)-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
-		constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[indicator]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
-		activityAlert.view.addConstraints(constraints)
-
-		indicator.userInteractionEnabled = false
-		indicator.startAnimating()
-
-		// If the user taps outside the textfields close the keyboard
-		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-		view.addGestureRecognizer(tap)
-
-		// Set Delegate for Cell Margins
-		self.tableView.delegate = self
-		// Cell Margin Change
-		self.tableView.cellLayoutMarginsFollowReadableWidth = false
+        
+        // If the user taps outside the textfields close the keyboard
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
 
 		/* Change the placeholder text color
 		let lighterBlueColor = UIColor(colorLiteralRed: 86 / 255, green: 100 / 255, blue: 116 / 255, alpha: 1.0)
@@ -75,6 +64,24 @@ class DSLoginView: UITableViewController {
 	}
     
     override func viewDidAppear(animated: Bool) {
+        // Setup Button Activity Indicator
+        let indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = UIColor.blackColor()
+        activityAlert.view.addSubview(indicator)
+        
+        let views = ["pending": activityAlert.view, "indicator": indicator]
+        var constraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[indicator]-(10)-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[indicator]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: views)
+        activityAlert.view.addConstraints(constraints)
+        
+        indicator.userInteractionEnabled = false
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
+        activityIndicator.center = CGPointMake(loginButton.frame.size.width / 2, loginButton.frame.size.height / 2)
+        activityIndicator.hidden = true
+        loginButton.addSubview(activityIndicator)
+        indicator.startAnimating()
+            
         // Check If we have a user already
         
         if let user = User.MR_findFirst() {
@@ -115,50 +122,75 @@ class DSLoginView: UITableViewController {
         }
 
     }
-
-	// - MARK: SETUP
-
-	// Change Cell Margins
-	override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-		// Remove seperator inset
-		cell.separatorInset = UIEdgeInsetsZero
-
-		// Prevent Cell from inheriting the table view's margin settings
-		cell.preservesSuperviewLayoutMargins = false
-
-		// Set Cell layout margins explicitly
-		cell.layoutMargins = UIEdgeInsetsZero
-	}
-
-	override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 50
-	}
-
-	// Add the login button to the footer view
-	override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-
-		// Setup View
-		let footerView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, 50))
-		let titleColor = UIColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.45) // Slightly Opaque
-		// Setup Button
-		loginButton = SpringButton(type: .Custom)
-		loginButton.setTitle("LOG IN", forState: .Normal)
-		loginButton.titleLabel!.font = UIFont.systemFontOfSize(21)
-		loginButton.addTarget(self, action: #selector(login), forControlEvents: .TouchUpInside)
-		loginButton.setTitleColor(titleColor, forState: .Normal)
-		loginButton.setTitleColor(UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.45), forState: .Highlighted) // Make slighlty Darker
-		loginButton.backgroundColor = UIColor(colorLiteralRed: 122 / 255, green: 110 / 255, blue: 120 / 255, alpha: 1)
-		loginButton.frame = footerView.frame
-		// Add Hidden Activity Indicator
-		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
-		activityIndicator.color = titleColor
-		activityIndicator.center = CGPointMake(loginButton.frame.size.width / 2, loginButton.frame.size.height / 2)
-		activityIndicator.hidden = true
-		loginButton.addSubview(activityIndicator)
-
-		footerView.addSubview(loginButton)
-		return footerView
-	}
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        registerForKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        deregisterFromKeyboardNotifications()
+    }
+    
+    func registerForKeyboardNotifications()
+    {
+        //Adding notifies on keyboard appearing
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWasShown), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillBeHidden), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func deregisterFromKeyboardNotifications()
+    {
+        //Removing notifies on keyboard appearing
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWasShown(notification: NSNotification){
+        self.forgotPasswordTopConstraint.constant = 30
+        UIView.animateWithDuration(0.25, animations: {
+            self.scrollView.layoutIfNeeded()
+        })
+        
+        self.scrollView.scrollEnabled = true
+        let info : NSDictionary = notification.userInfo!
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+        
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        
+        
+        var aRect: CGRect = self.view.frame
+        aRect.size.height -= keyboardSize!.height
+        
+        //you may not need to scroll, see if the active field is already visible
+        var bottomLeft = loginButton.frame.origin
+        bottomLeft.x -= loginButton.frame.height
+        if (!CGRectContainsPoint(aRect, bottomLeft) ) {
+            self.scrollView.scrollRectToVisible(forgotPasswordButton.frame, animated: true)
+        }
+        
+    }
+    
+    func keyboardWillBeHidden(notification: NSNotification)
+    {
+        //Once keyboard disappears, restore original positions
+        self.forgotPasswordTopConstraint.constant = 132
+        UIView.animateWithDuration(0.25, animations: {
+            self.scrollView.layoutIfNeeded()
+        })
+        
+        
+        let info : NSDictionary = notification.userInfo!
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, -keyboardSize!.height, 0.0)
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        self.view.endEditing(true)
+        self.scrollView.scrollEnabled = false
+        
+    }
 
 	// - MARK: Functions
 
@@ -191,7 +223,11 @@ class DSLoginView: UITableViewController {
 	}
 
 	// Ask if the user wants to use touch id every time they log in with a new account
-	func login(sender: AnyObject) {
+	@IBAction func login(sender: AnyObject) {
+        
+        // Reset Activity Indicator Pos incase button moved
+        activityIndicator.center = CGPointMake(loginButton.frame.size.width / 2, loginButton.frame.size.height / 2)
+        
 		let user: User = User.MR_createEntity()!
 		user.username = usernameField.text!
 		user.password = passwordField.text!
