@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 
 		let settings = NSUserDefaults.standardUserDefaults()
+        
 		if (settings.stringForKey("selectedStudent") != nil) {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
 		} else {
@@ -72,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        
 		let settings = NSUserDefaults.standardUserDefaults()
 		let selectedStudentName = settings.stringForKey("selectedStudent")!
 		let oldStudentAssignmentCount: Int = Assignment.MR_numberOfEntities().integerValue
@@ -90,6 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			if (!successful) {
 				completionHandler(UIBackgroundFetchResult.Failed)
 			} else {
+                settings.setBool(true, forKey: "updatedInBackground")
 				let localMOC = NSManagedObjectContext.MR_context()
 				let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntitiesWithContext(localMOC).integerValue
 

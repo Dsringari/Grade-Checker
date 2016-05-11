@@ -36,6 +36,26 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		tableview.addSubview(refreshControl)
 		loadStudent()
 	}
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func refreshTableView() {
+        let settings = NSUserDefaults.standardUserDefaults()
+        if settings.boolForKey("updatedInBackground") {
+            settings.setBool(false, forKey: "updatedInBackground")
+            NSManagedObjectContext.MR_defaultContext().refreshObject(student, mergeChanges: false)
+            self.tableview.reloadData()
+        }
+    }
 
 	func reloadData() {
 		let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
@@ -241,7 +261,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		let percentGradeDouble = numberFormatter.numberFromString(percentgradeString)!.doubleValue
 		let roundedPercentGrade: Int = Int(round(percentGradeDouble))
 
-		cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
+		//cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
 		cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
         
         if let date = subject.lastUpdated {
