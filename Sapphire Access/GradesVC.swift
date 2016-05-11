@@ -36,6 +36,26 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		tableview.addSubview(refreshControl)
 		loadStudent()
 	}
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func refreshTableView() {
+        let settings = NSUserDefaults.standardUserDefaults()
+        if settings.boolForKey("updatedInBackground") {
+            settings.setBool(false, forKey: "updatedInBackground")
+            NSManagedObjectContext.MR_defaultContext().refreshObject(student, mergeChanges: false)
+            self.tableview.reloadData()
+        }
+    }
 
 	func reloadData() {
 		let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!

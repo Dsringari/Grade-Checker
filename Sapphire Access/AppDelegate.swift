@@ -92,6 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			if (!successful) {
 				completionHandler(UIBackgroundFetchResult.Failed)
 			} else {
+                settings.setBool(true, forKey: "updatedInBackground")
 				let localMOC = NSManagedObjectContext.MR_context()
 				let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntitiesWithContext(localMOC).integerValue
 
