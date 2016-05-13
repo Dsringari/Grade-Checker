@@ -39,6 +39,7 @@
 		FCE231051CDD657900D1B08B /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231041CDD657900D1B08B /* MagicalRecord.framework */; };
 		FCE231071CDD657D00D1B08B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231061CDD657D00D1B08B /* Kanna.framework */; };
 		FCE231091CDD658100D1B08B /* Spring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231081CDD658100D1B08B /* Spring.framework */; };
+		FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEB706D1CE52AC10065240A /* SelectStudentVC.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,7 @@
 		FCE231041CDD657900D1B08B /* MagicalRecord.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MagicalRecord.framework; path = "Pods/../build/Debug-iphoneos/MagicalRecord.framework"; sourceTree = "<group>"; };
 		FCE231061CDD657D00D1B08B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sapphire_Access-hiywhoigwkgnqxaahsdsylwzwzgj/Build/Products/Debug-iphonesimulator/Kanna.framework"; sourceTree = "<group>"; };
 		FCE231081CDD658100D1B08B /* Spring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spring.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sapphire_Access-hiywhoigwkgnqxaahsdsylwzwzgj/Build/Products/Debug-iphonesimulator/Spring.framework"; sourceTree = "<group>"; };
+		FCEB706D1CE52AC10065240A /* SelectStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectStudentVC.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */,
+				FCEB706D1CE52AC10065240A /* SelectStudentVC.swift */,
 				FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */,
 				FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */,
 				FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */,
@@ -408,6 +411,7 @@
 				FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */,
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
+				FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */,
 				FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,

@@ -221,79 +221,9 @@ class DSLoginView: UIViewController {
 		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
 
 			if (successful) {
-				// Go to Respective Pages
-				self.validatedUser = NSManagedObjectContext.MR_defaultContext().objectWithID(user.objectID) as! User
 				dispatch_async(dispatch_get_main_queue(), {
 					self.stopLoading()
-					if (self.validatedUser.students!.allObjects.count > 1) {
-						let chooseStudentAlert = UIAlertController(title: "Students", message: "Pick a Student", preferredStyle: .ActionSheet)
-
-						let students: [Student] = user.students!.allObjects as! [Student]
-						var buttons: [UIAlertAction] = []
-						let settings = NSUserDefaults.standardUserDefaults()
-						for index in 0 ... (students.count - 1) {
-							let button = UIAlertAction(title: students[index].name!, style: .Default, handler: { button in
-								if let index = buttons.indexOf(button) {
-									self.selectedStudentIndex = index
-
-									if (LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil) && !self.hasUser) {
-										let alert = UIAlertController(title: "Touch ID Login Available", message: "Would you like to use Touch ID to Login?", preferredStyle: .Alert)
-										let yes = UIAlertAction(title: "Yes", style: .Default, handler: { alertAction in
-											settings.setBool(true, forKey: "useTouchID")
-											self.performSegueWithIdentifier("home", sender: nil)
-										})
-										let no = UIAlertAction(title: "No", style: .Cancel, handler: { alertAction in
-											settings.setBool(false, forKey: "useTouchID")
-											self.performSegueWithIdentifier("home", sender: nil)
-										})
-										alert.addAction(yes)
-										alert.addAction(no)
-
-										self.presentViewController(alert, animated: true, completion: nil)
-									} else {
-										self.performSegueWithIdentifier("home", sender: nil)
-									}
-
-									settings.setObject(students[self.selectedStudentIndex].name!, forKey: "selectedStudent")
-
-								}
-							})
-							buttons.append(button)
-						}
-
-						for b in buttons {
-							chooseStudentAlert.addAction(b)
-						}
-
-						if (self.hasUser) {
-							let student = (self.validatedUser.students!.allObjects as! [Student]).filter { $0.name! == settings.stringForKey("selectedStudent") }[0]
-							self.selectedStudentIndex = (self.validatedUser.students!.allObjects as! [Student]).indexOf(student)!
-							self.performSegueWithIdentifier("home", sender: nil)
-						} else {
-							self.presentViewController(chooseStudentAlert, animated: true, completion: nil)
-						}
-					} else {
-						let settings = NSUserDefaults.standardUserDefaults()
-						if (LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil) && !self.hasUser) {
-							let alert = UIAlertController(title: "Touch ID Login Available", message: "Would you like to use Touch ID to Login?", preferredStyle: .Alert)
-							let yes = UIAlertAction(title: "Yes", style: .Default, handler: { alertAction in
-								settings.setBool(true, forKey: "useTouchID")
-								self.performSegueWithIdentifier("home", sender: nil)
-							})
-							let no = UIAlertAction(title: "No", style: .Cancel, handler: { alertAction in
-								settings.setBool(false, forKey: "useTouchID")
-								self.performSegueWithIdentifier("home", sender: nil)
-							})
-							alert.addAction(yes)
-							alert.addAction(no)
-
-							self.presentViewController(alert, animated: true, completion: nil)
-						} else {
-							self.performSegueWithIdentifier("home", sender: nil)
-						}
-
-						settings.setObject((self.validatedUser.students!.allObjects[self.selectedStudentIndex] as! Student).name!, forKey: "selectedStudent")
-					}
+                    self.performSegueWithIdentifier("selectStudent", sender: self)
 				})
 			} else {
 				// If we failed
@@ -348,13 +278,6 @@ class DSLoginView: UIViewController {
 
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == "home" {
-			NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-			let tBC = segue.destinationViewController as! UITabBarController
-			tBC.selectedIndex = 0
-			let nVC = tBC.viewControllers![0] as! UINavigationController
-			let gVC = nVC.viewControllers[0] as! GradesVC
-			gVC.student = validatedUser.students!.allObjects[selectedStudentIndex] as! Student
-		}
+		
 	}
 }

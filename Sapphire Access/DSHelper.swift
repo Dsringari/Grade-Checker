@@ -73,6 +73,23 @@ extension UIViewController {
     }
 }
 
+extension UITableViewCell {
+    func removeMargins() {
+        
+        if self.respondsToSelector(Selector("setSeparatorInset:")) {
+            self.separatorInset = UIEdgeInsetsZero
+        }
+        
+        if self.respondsToSelector(Selector("setPreservesSuperviewLayoutMargins:")) {
+            self.preservesSuperviewLayoutMargins = false
+        }
+        
+        if self.respondsToSelector(Selector("setLayoutMargins:")) {
+            self.layoutMargins = UIEdgeInsetsZero
+        }
+    }
+}
+
 func relativeDateStringForDate(date: NSDate) -> String {
     let components = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date, toDate: NSDate(), options: [])
     
