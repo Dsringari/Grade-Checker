@@ -34,6 +34,11 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		tableview.delegate = self
 		tableview.dataSource = self
 		tableview.addSubview(refreshControl)
+        
+        if let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
+            self.student = student
+        }
+        
 		loadStudent()
 	}
     

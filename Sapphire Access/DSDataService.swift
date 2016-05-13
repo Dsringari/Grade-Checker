@@ -227,20 +227,52 @@ class UpdateService {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
-
-		// Parse all the assignments while ignoring the assignment descriptions
-		let assignmentsXpath = "//*[@id=\"assignments\"]/tr[count(td)=6]"
+        
+        var assigntmentIndex: String
+        var totalScoreIndex: String
+        var possibleScoreIndex: String
+        var dueDateIndex: String
+        var categoryIndex: String
+        
+        // Find under which td are the headers we want under
+        var headers: [String] = []
+        for header: XMLElement in doc.xpath("//*[@id=\"assignments\"]/tr[1]//th") {
+            
+            let text = header.text!
+            
+            if (text == "Score") {
+                headers.append("totalScore")
+                headers.append("possibleScore")
+            } else {
+                headers.append(text)
+            }
+        }
+        
+        // Check if we have an empty marking period
+        if (headers.count == 0) {
+            return nil
+        }
+        
+        assigntmentIndex = String(headers.indexOf("Assignment")! + 1)
+        totalScoreIndex = String(headers.indexOf("totalScore")! + 1)
+        possibleScoreIndex = String(headers.indexOf("possibleScore")! + 1)
+        dueDateIndex = String(headers.indexOf("DateDue")! + 1)
+        categoryIndex = String(headers.indexOf("Category")! + 1)
+        
+		// Parse all the assignments while ignoring the assignment descriptions and teacher comments
+		let assignmentsXpath = "//*[@id=\"assignments\"]//tr/td[not(contains(@class, 'assignDesc')) and not(contains(@class, 'assignComments'))]/.."
 
 		// Get all the assignment names
 		var aNames: [String] = []
-		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[1]") {
-			aNames.append(aE.text!)
+		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + assigntmentIndex + "]") {
+            let text = aE.text!
+            aNames.append(text)
 		}
-
-		// Check if we have an empty marking period
-		if (aNames.count == 0) {
-			return nil
-		}
+        
+        // Check if we have an empty marking period
+        if (aNames.count == 0) {
+            return nil
+        }
 
 		// Parse percent grade
 		let percentageTextXpath = "//*[@id=\"assignmentFinalGrade\"]/b[1]/following-sibling::text()"
@@ -274,7 +306,7 @@ class UpdateService {
 
 		// Get all total points
 		var aTotalPoints: [String] = []
-		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[2]") {
+		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + totalScoreIndex + "]") {
 			var text = aE.text!
 			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.+*ex").invertedSet).joinWithSeparator("")
 			aTotalPoints.append(text)
@@ -282,7 +314,7 @@ class UpdateService {
 
 		// Get All possible points
 		var aPossiblePoints: [String] = []
-		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[3]") {
+		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + possibleScoreIndex + "]") {
 			var text = aE.text!
 			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("")
 			aPossiblePoints.append(text)
@@ -290,14 +322,14 @@ class UpdateService {
 
 		// Get All the dates
 		var aDates: [String] = []
-		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[4]") {
+		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + dueDateIndex + "]") {
 			let text = aE.text!
 			aDates.append(text)
 		}
 
 		// Get all the categories
 		var aCategories: [String] = []
-		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[5]") {
+		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + categoryIndex + "]") {
 			let text = aE.text!
 			aCategories.append(text)
 		}
@@ -337,19 +369,46 @@ class RefreshLastUpdatedDates {
 				return
 			}
 
-			if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
+			if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) { // BTW A PARENT ACCOUNT CAN HAVE ONLY ONE STUDENT
 				// Get all the Class Names
+                var namePath: String
+                var datePath: String
+              
+                // Student Account
+                namePath = "//*[@id=\"contentPipe\"]/div[3]/table//tr/td[2]"
+                datePath = "//*[@id=\"contentPipe\"]/div[3]/table//tr/td[3]"
+              
+                
 				var names: [String] = []
-				for element in doc.xpath("//*[@id=\"contentPipe\"]/div[3]/table//tr/td[2]") {
-					let text = element.text!
+				for element in doc.xpath(namePath) {
+                    let text = element.text!
 					names.append(text)
 				}
 
 				var dates: [String] = []
-				for element in doc.xpath("//*[@id=\"contentPipe\"]/div[3]/table//tr/td[3]") {
+				for element in doc.xpath(datePath) {
 					let text = element.text!
 					dates.append(text)
 				}
+                
+                // //*[@id="contentPipe"]/div[2]/table/tbody/tr[2]/td[1]
+                // //*[@id="contentPipe"]/div[2]/table/tbody/tr[2]/td[1]
+                
+                if (names.count == 0 && dates.count == 0) {
+                    // Parent Account
+                    namePath = "//*[@id=\"contentPipe\"]/div[2]/table//tr/td[2]"
+                    datePath = "//*[@id=\"contentPipe\"]/div[2]/table//tr/td[3]"
+                    
+                    for element in doc.xpath(namePath) {
+                        let text = element.text!
+                        names.append(text)
+                    }
+                    
+                    for element in doc.xpath(datePath) {
+                        let text = element.text!
+                        dates.append(text)
+                    }
+                }
                 
                 for index in 0...names.count-1 {
                     if let subject = Subject.MR_findFirstByAttribute("name", withValue: names[index], inContext: localMOC) {

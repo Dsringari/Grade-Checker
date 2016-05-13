@@ -131,8 +131,10 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	func logout() {
 		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
 		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-		self.tabBarController!.dismissViewControllerAnimated(true, completion: nil)
-	}
+		
+        let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("loginVC")
+        UIApplication.sharedApplication().keyWindow?.rootViewController = loginViewController
+    }
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if (indexPath.section == 0) {

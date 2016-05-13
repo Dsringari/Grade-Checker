@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MagicalRecord
 
 class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -48,7 +49,24 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 		tableView.cellLayoutMarginsFollowReadableWidth = false
         willDisableContinueButton()
 	}
-
+    
+    
+    @IBAction func saveSettingsAndContinue(sender: AnyObject) {
+        let settings = NSUserDefaults.standardUserDefaults()
+        
+        if let index = selectedIndex {
+            let student = students[index]
+            settings.setObject(student.name, forKey: "selectedStudent")
+        } else {
+            User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        }
+        
+        settings.setBool(touchIDSwitch.on, forKey: "touchID")
+        
+        self.performSegueWithIdentifier("firstTimeHome", sender: nil)
+    }
+    
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -183,28 +201,5 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 	 // Pass the selected object to the new view controller.
 	 }
 	 */
-
-}
-
-public class SegueFromLeft: UIStoryboardSegue {
-
-	override public func perform() {
-		let src = self.sourceViewController
-		let dst = self.destinationViewController
-
-		src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
-		dst.view.transform = CGAffineTransformMakeTranslation(-src.view.frame.size.width, 0)
-
-		UIView.animateWithDuration(0.25,
-			delay: 0.0,
-			options: UIViewAnimationOptions.CurveEaseInOut,
-			animations: {
-				dst.view.transform = CGAffineTransformMakeTranslation(0, 0)
-			},
-			completion: { finished in
-				src.presentViewController(dst, animated: false, completion: nil)
-			}
-		)
-	}
 
 }
