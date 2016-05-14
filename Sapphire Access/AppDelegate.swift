@@ -24,32 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		MagicalRecord.setupAutoMigratingCoreDataStack()
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        if User.MR_findFirst() != nil {
-            
-            let resumeVC = storyboard.instantiateViewControllerWithIdentifier("resumeVC")
-            
-            if let window = self.window {
-                window.rootViewController = resumeVC
-            } else {
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
-                window?.rootViewController = resumeVC
-                window?.makeKeyAndVisible()
-            }
-        } else {
-            
-            let loginVC = storyboard.instantiateViewControllerWithIdentifier("loginVC")
-            
-            if let window = self.window {
-                window.rootViewController = loginVC
-            } else {
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
-                window?.rootViewController = loginVC
-                window?.makeKeyAndVisible()
-            }
-        }
-        
 		return true
 	}
 
@@ -76,18 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 		if (settings.stringForKey("selectedStudent") != nil) {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
-            self.window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let resumeVC = storyboard.instantiateViewControllerWithIdentifier("resumeVC")
-            
-            if let window = self.window {
-                window.rootViewController = resumeVC
-            } else {
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
-                window?.rootViewController = resumeVC
-                window?.makeKeyAndVisible()
-            }
 		} else {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
 		}

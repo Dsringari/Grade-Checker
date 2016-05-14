@@ -24,14 +24,14 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	var selectedStudentIndex: Int!
 	let settings = NSUserDefaults.standardUserDefaults()
 
-	var delegate: SettingsVCDelegate!
+	var refreshDelegate: SettingsVCDelegate!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.tableview.delegate = self
 		self.tableview.dataSource = self
 		let nv = self.tabBarController!.viewControllers![0] as! UINavigationController
-		delegate = nv.viewControllers.first! as! GradesVC
+		refreshDelegate = nv.viewControllers.first! as! GradesVC
 
 		students = Student.MR_findAll() as! [Student]
 
@@ -58,7 +58,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		if section == 0 {
 			return "Selected Student"
 		} else if section == 1 {
-			return "Account"
+			return "Sign In"
 		}
 
 		return nil
@@ -73,14 +73,12 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 3
+		return 4
 	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if (section == 0) {
 			return students.count
-        } else if section == 1 {
-            return 2
         }
 
 		return 1
@@ -104,25 +102,27 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 touchIDCell.selectionStyle = .None
                 touchIDCell.touchIDSwitch.addTarget(self, action: #selector(changeTouchIDValue), forControlEvents: .ValueChanged)
                 return touchIDCell
-            } else {
-                let logoutCell = tableView.dequeueReusableCellWithIdentifier("logOutCell", forIndexPath: indexPath) as! LogOutCell
-                logoutButton = logoutCell.logoutButton
-                logoutButton.addTarget(self, action: #selector(logout), forControlEvents: .TouchUpInside)
-                return logoutCell
             }
+        } else if indexPath.section == 2 {
+            let aboutCell = tableView.dequeueReusableCellWithIdentifier("aboutCell", forIndexPath: indexPath)
+            return aboutCell
         }
-
-		let aboutCell = tableView.dequeueReusableCellWithIdentifier("aboutCell", forIndexPath: indexPath)
-		return aboutCell
+        
+        let logoutCell = tableView.dequeueReusableCellWithIdentifier("logOutCell", forIndexPath: indexPath) as! LogOutCell
+        logoutButton = logoutCell.logoutButton
+        logoutButton.addTarget(self, action: #selector(logout), forControlEvents: .TouchUpInside)
+        return logoutCell
+		
 	}
 
 	func logout() {
 		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
 		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-		
-        self.view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
-        let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("loginVC")
-        UIApplication.sharedApplication().keyWindow?.rootViewController = loginViewController
+        
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "selectedStudent")
+		self.tabBarController!.navigationController!.popToRootViewControllerAnimated(true)
+        NSNotificationCenter.defaultCenter().postNotificationName("tabBarDismissed", object: nil)
+        
     }
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -131,7 +131,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 selectedStudentIndex = indexPath.row
                 settings.setObject(students[selectedStudentIndex].name!, forKey: "selectedStudent")
                 self.tableview.reloadData()
-                delegate.reloadData()
+                refreshDelegate.reloadData()
             }
 		}
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)

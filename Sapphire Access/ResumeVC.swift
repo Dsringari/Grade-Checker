@@ -15,10 +15,13 @@ class ResumeVC: UIViewController {
 	var user: User!
 	@IBOutlet var continueButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
+    var containerVC: ContainerVC!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+        
+        containerVC = navigationController!.parentViewController as! ContainerVC
 
 		let settings = NSUserDefaults.standardUserDefaults()
 
@@ -26,61 +29,24 @@ class ResumeVC: UIViewController {
 			if let student = Student.MR_findFirstByAttribute("name", withValue: name) {
 				user = student.user
 				continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
-
-				if settings.boolForKey("useTouchID") {
-					continueButton.enabled = false
-					var error: NSError?
-					if LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
-						let context: LAContext = LAContext()
-						let localizedReasonString = "Login with Touch ID"
-						context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
-							if (success) {
-								self.login()
-							} else {
-								if (error!.code == LAError.AuthenticationFailed.rawValue) {
-									let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .Alert)
-									let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
-										self.backToLogin()
-									})
-									failed.addAction(Ok)
-									dispatch_async(dispatch_get_main_queue(), {
-										self.presentViewController(failed, animated: true, completion: nil)
-									})
-
-									return
-								}
-
-								self.backToLogin()
-							}
-						})
-					} else {
-						var title: String!
-						var message: String!
-						switch error!.code {
-						case LAError.TouchIDNotEnrolled.rawValue:
-							title = "Touch ID Not Enabled"
-							message = "Setup Touch ID in your settings"
-						case LAError.PasscodeNotSet.rawValue:
-							title = "Passcode Not Set"
-							message = "Setup a Passcode to use Touch ID"
-						default:
-							title = "Touch ID Not Availabe"
-							message = "We couldn't access Touch ID"
-						}
-						let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
-							self.backToLogin()
-							}))
-						self.presentViewController(alert, animated: true, completion: nil)
-					}
-				}
 			} else {
 				backToLogin()
 			}
 		} else {
 			backToLogin()
 		}
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didDismissTabBar), name: "tabBarDismissed", object: nil)
 	}
+    
+    func didDismissTabBar() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        let settings = NSUserDefaults.standardUserDefaults()
+        if (settings.stringForKey("selectedStudent") == nil) {
+            backToLogin()
+        }
+        
+    }
 
 	func login() {
 		// Try to Login
@@ -109,15 +75,69 @@ class ResumeVC: UIViewController {
 	}
 
 	@IBAction func continuePressed(sender: AnyObject) {
-		login()
+        
+        let settings = NSUserDefaults.standardUserDefaults()
+        
+        if settings.boolForKey("useTouchID") {
+            continueButton.enabled = false
+            var error: NSError?
+            if LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
+                let context: LAContext = LAContext()
+                let localizedReasonString = "Login with Touch ID"
+                context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
+                    if (success) {
+                        self.login()
+                        self.continueButton.enabled = true
+                    } else {
+                        if (error!.code == LAError.AuthenticationFailed.rawValue) {
+                            let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .Alert)
+                            let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+                                self.backToLogin()
+                                self.continueButton.enabled = true
+                            })
+                            failed.addAction(Ok)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.presentViewController(failed, animated: true, completion: nil)
+                            })
+                            
+                            return
+                        }
+                        
+                        self.backToLogin()
+                    }
+                })
+            } else {
+                var title: String!
+                var message: String!
+                switch error!.code {
+                case LAError.TouchIDNotEnrolled.rawValue:
+                    title = "Touch ID Not Enabled"
+                    message = "Setup Touch ID in your settings"
+                case LAError.PasscodeNotSet.rawValue:
+                    title = "Passcode Not Set"
+                    message = "Setup a Passcode to use Touch ID"
+                default:
+                    title = "Touch ID Not Availabe"
+                    message = "We couldn't access Touch ID"
+                }
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+                    self.backToLogin()
+                    self.continueButton.enabled = true
+                }))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        } else {
+            login()
+        }
+		
 	}
 
 	func backToLogin() {
-		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
-		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        self.view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
-            let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("loginVC")
-            UIApplication.sharedApplication().keyWindow?.rootViewController = loginViewController
+        dispatch_async(dispatch_get_main_queue(), {
+            User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            self.containerVC.toLogin()
         })
 	}
 
