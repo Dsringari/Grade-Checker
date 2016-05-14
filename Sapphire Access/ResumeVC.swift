@@ -115,7 +115,10 @@ class ResumeVC: UIViewController {
 	func backToLogin() {
 		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
 		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-		self.performSegueWithIdentifier("failedToResume", sender: nil)
+        self.view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: {
+            let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("loginVC")
+            UIApplication.sharedApplication().keyWindow?.rootViewController = loginViewController
+        })
 	}
 
 	override func didReceiveMemoryWarning() {

@@ -120,6 +120,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
 		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
 		
+        self.view.window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
         let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("loginVC")
         UIApplication.sharedApplication().keyWindow?.rootViewController = loginViewController
     }

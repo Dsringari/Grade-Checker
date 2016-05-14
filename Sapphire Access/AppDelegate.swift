@@ -76,9 +76,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 		if (settings.stringForKey("selectedStudent") != nil) {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
+            self.window?.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let resumeVC = storyboard.instantiateViewControllerWithIdentifier("resumeVC")
+            
+            if let window = self.window {
+                window.rootViewController = resumeVC
+            } else {
+                window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                window?.rootViewController = resumeVC
+                window?.makeKeyAndVisible()
+            }
 		} else {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
 		}
+
 	}
 
 	func applicationWillEnterForeground(application: UIApplication) {
