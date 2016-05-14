@@ -21,8 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Set default preferences
 		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications": NSNumber(bool: true)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
-
+        // Start the Magic!
+        MagicalRecord.setLoggingLevel(.Warn)
 		MagicalRecord.setupAutoMigratingCoreDataStack()
+        
         
 		return true
 	}
