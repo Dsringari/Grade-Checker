@@ -23,12 +23,20 @@ class ResumeVC: UIViewController {
 
 		containerVC = navigationController!.parentViewController as! ContainerVC
 
-		
-        refresh()
-		
+		let settings = NSUserDefaults.standardUserDefaults()
+
+		if let name = settings.stringForKey("selectedStudent") {
+			if let student = Student.MR_findFirstByAttribute("name", withValue: name) {
+				user = student.user
+				continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
+			} else {
+				backToLogin()
+			}
+		} else {
+			backToLogin()
+		}
 
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didDismissTabBar), name: "tabBarDismissed", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refresh), name: "popToResume", object: nil)
 	}
 
 	func didDismissTabBar() {
@@ -39,20 +47,6 @@ class ResumeVC: UIViewController {
 		}
 
 	}
-    
-    func refresh() {
-        let settings = NSUserDefaults.standardUserDefaults()
-        if let name = settings.stringForKey("selectedStudent") {
-            if let student = Student.MR_findFirstByAttribute("name", withValue: name) {
-                user = student.user
-                continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
-            } else {
-                backToLogin()
-            }
-        } else {
-            backToLogin()
-        }
-    }
 
 	func login() {
 		// Try to Login
