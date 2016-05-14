@@ -29,6 +29,8 @@ class ContainerVC: UIViewController {
 		} else {
 			currentViewController = storyboard?.instantiateViewControllerWithIdentifier("resume")
 		}
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(popToResume), name: "popToResume", object: nil)
 
 		self.currentViewController!.view.translatesAutoresizingMaskIntoConstraints = false
 		addChildViewController(currentViewController!)
@@ -49,6 +51,15 @@ class ContainerVC: UIViewController {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
+    
+    func popToResume() {
+        if let vc = currentViewController as? UINavigationController {
+            vc.popToRootViewControllerAnimated(true)
+            if (vc.childViewControllers[safe: 0] as? DSLoginView) != nil {
+                toResume()
+            }
+        }
+    }
 
 	func cycleFromViewController(oldViewController: UIViewController, toViewController newViewController: UIViewController) {
 		oldViewController.willMoveToParentViewController(nil)
@@ -69,5 +80,12 @@ class ContainerVC: UIViewController {
 		cycleFromViewController(currentViewController!, toViewController: newViewController!)
 		currentViewController = newViewController
 	}
+    
+    func toResume() {
+        let newViewController = self.storyboard?.instantiateViewControllerWithIdentifier("resume")
+        newViewController!.view.translatesAutoresizingMaskIntoConstraints = false
+        cycleFromViewController(currentViewController!, toViewController: newViewController!)
+        currentViewController = newViewController
+    }
 
 }
