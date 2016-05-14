@@ -9,13 +9,16 @@
 import UIKit
 import MagicalRecord
 import CoreData
+import GoogleMobileAds
 
-class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsVCDelegate {
+class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsVCDelegate, GADBannerViewDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var activityView: UIView!
 	@IBOutlet var tableview: UITableView!
 	@IBOutlet var refreshButton: UIBarButtonItem!
-
+    @IBOutlet var adView: GADBannerView!
+    @IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
+    
 	var student: Student!
 	var subjects: [Subject]! = []
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -35,12 +38,34 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		tableview.dataSource = self
 		tableview.addSubview(refreshControl)
         
+        adView.adSize = kGADAdSizeSmartBannerPortrait
+        adView.adUnitID = "ca-app-pub-9355707484240783/4024228355"
+        adView.rootViewController = self
+        adView.delegate = self
+        let request = GADRequest()
+        request.testDevices = ["9c687019dd43e1fdf830b4e54a8e6aaf"]
+        adView.loadRequest(request)
+        
         if let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
             self.student = student
         }
         
 		loadStudent()
 	}
+    
+    func adViewDidReceiveAd(bannerView: GADBannerView!) {
+        tableViewBottomConstraint.constant = 50
+        UIView.animateWithDuration(0.5, animations: {
+            self.view.addSubview(self.adView)
+            self.adView.bottomAnchor.constraintEqualToAnchor(self.bottomLayoutGuide.topAnchor)
+            NSLayoutConstraint.constraintsWithVisualFormat("|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+        print(error)
+    }
     
     
     override func viewWillAppear(animated: Bool) {
