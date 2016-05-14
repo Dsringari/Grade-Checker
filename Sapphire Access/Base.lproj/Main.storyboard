@@ -35,12 +35,12 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0CZ-KF-Shv">
                                                     <rect key="frame" x="-7" y="-12" width="191" height="81"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Subject Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIY-vq-sUO">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Subject Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uIY-vq-sUO">
                                                             <rect key="frame" x="0.0" y="0.0" width="108" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Last Updated: Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNa-gq-z1h">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Last Updated: Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNa-gq-z1h">
                                                             <rect key="frame" x="108" y="0.0" width="142" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -487,6 +487,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="erz-5W-Jf9" id="9Lh-MW-fSr">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aj3-tg-M2M">
@@ -656,7 +657,7 @@
                         <viewControllerLayoutGuide type="bottom" id="PkG-yW-l7H"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dag-LU-xAU">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sapphire Access" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DV5-qS-aNE">
@@ -883,28 +884,28 @@
                                 <exclude reference="Zoy-fA-5Mq"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="AKm-is-tlz"/>
-                                <exclude reference="Qyf-yi-Rja"/>
-                                <exclude reference="i3i-Qp-GZX"/>
-                                <exclude reference="lTW-ix-Xxf"/>
                                 <exclude reference="OMg-eF-q2w"/>
                                 <exclude reference="hCU-fm-bQR"/>
+                                <exclude reference="Qdf-l3-mIL"/>
+                                <exclude reference="Zcz-4u-a7q"/>
+                                <exclude reference="eKX-pk-fTv"/>
                                 <exclude reference="Hua-ra-tVJ"/>
                                 <exclude reference="jZz-52-drE"/>
                                 <exclude reference="xun-0u-B3y"/>
+                                <exclude reference="GBD-pU-K1W"/>
+                                <exclude reference="UAx-2a-K2X"/>
+                                <exclude reference="55J-jz-bcS"/>
+                                <exclude reference="SEc-03-7df"/>
                                 <exclude reference="6bD-Os-PeH"/>
                                 <exclude reference="NRw-8s-vVL"/>
                                 <exclude reference="8gS-2a-sei"/>
                                 <exclude reference="Icr-2L-Fjc"/>
-                                <exclude reference="Qdf-l3-mIL"/>
-                                <exclude reference="Zcz-4u-a7q"/>
-                                <exclude reference="55J-jz-bcS"/>
-                                <exclude reference="SEc-03-7df"/>
-                                <exclude reference="eKX-pk-fTv"/>
-                                <exclude reference="GBD-pU-K1W"/>
-                                <exclude reference="UAx-2a-K2X"/>
                                 <exclude reference="GmK-Sc-RfQ"/>
                                 <exclude reference="Yoe-sl-35a"/>
+                                <exclude reference="AKm-is-tlz"/>
+                                <exclude reference="Qyf-yi-Rja"/>
+                                <exclude reference="i3i-Qp-GZX"/>
+                                <exclude reference="lTW-ix-Xxf"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -921,28 +922,28 @@
                                 <include reference="Zoy-fA-5Mq"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="AKm-is-tlz"/>
-                                <include reference="Qyf-yi-Rja"/>
-                                <include reference="i3i-Qp-GZX"/>
-                                <include reference="lTW-ix-Xxf"/>
                                 <include reference="OMg-eF-q2w"/>
                                 <include reference="hCU-fm-bQR"/>
+                                <include reference="Qdf-l3-mIL"/>
+                                <include reference="Zcz-4u-a7q"/>
+                                <include reference="eKX-pk-fTv"/>
                                 <include reference="Hua-ra-tVJ"/>
                                 <include reference="jZz-52-drE"/>
                                 <include reference="xun-0u-B3y"/>
+                                <include reference="GBD-pU-K1W"/>
+                                <include reference="UAx-2a-K2X"/>
+                                <include reference="55J-jz-bcS"/>
+                                <include reference="SEc-03-7df"/>
                                 <include reference="6bD-Os-PeH"/>
                                 <include reference="NRw-8s-vVL"/>
                                 <include reference="8gS-2a-sei"/>
                                 <include reference="Icr-2L-Fjc"/>
-                                <include reference="Qdf-l3-mIL"/>
-                                <include reference="Zcz-4u-a7q"/>
-                                <include reference="55J-jz-bcS"/>
-                                <include reference="SEc-03-7df"/>
-                                <include reference="eKX-pk-fTv"/>
-                                <include reference="GBD-pU-K1W"/>
-                                <include reference="UAx-2a-K2X"/>
                                 <include reference="GmK-Sc-RfQ"/>
                                 <include reference="Yoe-sl-35a"/>
+                                <include reference="AKm-is-tlz"/>
+                                <include reference="Qyf-yi-Rja"/>
+                                <include reference="i3i-Qp-GZX"/>
+                                <include reference="lTW-ix-Xxf"/>
                             </mask>
                         </variation>
                     </view>
