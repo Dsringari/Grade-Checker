@@ -12,10 +12,11 @@ import MagicalRecord
 
 class ResumeVC: UIViewController {
 
-	var user: User!
 	@IBOutlet var continueButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	var containerVC: ContainerVC!
+    
+    var user: User!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -23,12 +24,8 @@ class ResumeVC: UIViewController {
 
 		containerVC = navigationController!.parentViewController as! ContainerVC
 
-		
-        refresh()
-		
-
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didDismissTabBar), name: "tabBarDismissed", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refresh), name: "popToResume", object: nil)
+        refresh()
 	}
 
 	func didDismissTabBar() {
@@ -49,6 +46,7 @@ class ResumeVC: UIViewController {
             } else {
                 backToLogin()
             }
+            
         } else {
             backToLogin()
         }

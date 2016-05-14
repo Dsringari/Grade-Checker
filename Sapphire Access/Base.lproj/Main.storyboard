@@ -17,7 +17,7 @@
                         <viewControllerLayoutGuide type="bottom" id="9xq-vJ-4aP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="URe-cr-g5i">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="400" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jZn-lp-KrL" customClass="GADBannerView">
@@ -62,15 +62,23 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
+                                                            <variation key="widthClass=compact" misplaced="YES">
+                                                                <rect key="frame" x="0.0" y="21" width="142" height="18"/>
+                                                            </variation>
                                                         </label>
                                                     </subviews>
-                                                    <variation key="widthClass=compact" alignment="top" axis="vertical"/>
+                                                    <variation key="widthClass=compact" alignment="top" axis="vertical" misplaced="YES">
+                                                        <rect key="frame" x="15" y="28" width="142" height="39"/>
+                                                    </variation>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm2-qC-Ttj">
                                                     <rect key="frame" x="0.0" y="34" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                     <color key="textColor" red="0.062745098040000002" green="0.58039215690000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="145" y="32" width="62" height="30"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -239,7 +247,7 @@
                         <viewControllerLayoutGuide type="bottom" id="DwX-aq-GaR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="U2Q-tz-6Dg">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="400" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Fc6-OJ-Yp4">
@@ -265,6 +273,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.062745098040000002" green="0.58039215690000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="170" y="11" width="62" height="21"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -457,7 +468,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Jlz-B2-efD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="oBw-TS-KKG">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="400" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="iJq-ul-XwJ">
@@ -480,6 +491,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfe-kp-JZC">
                                                     <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.027450980390000001" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="183" y="6" width="51" height="31"/>
+                                                    </variation>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -692,7 +706,7 @@
                         <viewControllerLayoutGuide type="bottom" id="PkG-yW-l7H"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dag-LU-xAU">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="400" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sapphire Access" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DV5-qS-aNE">
@@ -1020,7 +1034,7 @@
                         <viewControllerLayoutGuide type="bottom" id="FUu-wh-cFk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="gwM-1w-gy5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49l-7L-PFd" customClass="SpringButton" customModule="Spring">
@@ -1326,7 +1340,7 @@
                         <viewControllerLayoutGuide type="bottom" id="7zs-hV-o8d"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iai-my-uux">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AUf-7L-Za9">
@@ -1605,6 +1619,7 @@
                         <viewControllerLayoutGuide type="bottom" id="3DI-9s-AwW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ki9-t1-kur">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-AD-6NM">
@@ -1677,7 +1692,7 @@
                         <viewControllerLayoutGuide type="bottom" id="rbp-0x-IHK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bXF-YQ-sL0">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sapphire Access" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAo-UI-arC">
@@ -1824,14 +1839,14 @@
                                 <exclude reference="fnB-pZ-WVE"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="PQO-vq-DBP"/>
-                                <exclude reference="euK-Om-IZR"/>
-                                <exclude reference="2l1-c5-6RD"/>
-                                <exclude reference="J2d-JG-msH"/>
-                                <exclude reference="L5V-zH-dS9"/>
-                                <exclude reference="VlB-Le-29S"/>
-                                <exclude reference="Wrz-qM-Zfg"/>
-                                <exclude reference="uCL-A4-9JR"/>
+                                <exclude reference="KzT-e0-xZs"/>
+                                <exclude reference="bO5-Jn-bag"/>
+                                <exclude reference="CPx-VB-16k"/>
+                                <exclude reference="yYv-b2-iDP"/>
+                                <exclude reference="9ot-9p-kbt"/>
+                                <exclude reference="aq9-5W-L3W"/>
+                                <exclude reference="fwa-Uk-qph"/>
+                                <exclude reference="mUY-kS-xZt"/>
                                 <exclude reference="2Bk-f4-dhY"/>
                                 <exclude reference="M9K-yc-KiD"/>
                                 <exclude reference="Pil-HV-gUG"/>
@@ -1841,14 +1856,14 @@
                                 <exclude reference="bjG-jk-a3W"/>
                                 <exclude reference="v5q-Kd-kqd"/>
                                 <exclude reference="wJz-c7-9S1"/>
-                                <exclude reference="CPx-VB-16k"/>
-                                <exclude reference="yYv-b2-iDP"/>
-                                <exclude reference="9ot-9p-kbt"/>
-                                <exclude reference="aq9-5W-L3W"/>
-                                <exclude reference="fwa-Uk-qph"/>
-                                <exclude reference="mUY-kS-xZt"/>
-                                <exclude reference="KzT-e0-xZs"/>
-                                <exclude reference="bO5-Jn-bag"/>
+                                <exclude reference="PQO-vq-DBP"/>
+                                <exclude reference="euK-Om-IZR"/>
+                                <exclude reference="2l1-c5-6RD"/>
+                                <exclude reference="J2d-JG-msH"/>
+                                <exclude reference="L5V-zH-dS9"/>
+                                <exclude reference="VlB-Le-29S"/>
+                                <exclude reference="Wrz-qM-Zfg"/>
+                                <exclude reference="uCL-A4-9JR"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1861,14 +1876,14 @@
                                 <include reference="fnB-pZ-WVE"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="PQO-vq-DBP"/>
-                                <include reference="euK-Om-IZR"/>
-                                <include reference="2l1-c5-6RD"/>
-                                <include reference="J2d-JG-msH"/>
-                                <include reference="L5V-zH-dS9"/>
-                                <include reference="VlB-Le-29S"/>
-                                <include reference="Wrz-qM-Zfg"/>
-                                <include reference="uCL-A4-9JR"/>
+                                <include reference="KzT-e0-xZs"/>
+                                <include reference="bO5-Jn-bag"/>
+                                <include reference="CPx-VB-16k"/>
+                                <include reference="yYv-b2-iDP"/>
+                                <include reference="9ot-9p-kbt"/>
+                                <include reference="aq9-5W-L3W"/>
+                                <include reference="fwa-Uk-qph"/>
+                                <include reference="mUY-kS-xZt"/>
                                 <include reference="2Bk-f4-dhY"/>
                                 <include reference="M9K-yc-KiD"/>
                                 <include reference="Pil-HV-gUG"/>
@@ -1878,14 +1893,14 @@
                                 <include reference="bjG-jk-a3W"/>
                                 <include reference="v5q-Kd-kqd"/>
                                 <include reference="wJz-c7-9S1"/>
-                                <include reference="CPx-VB-16k"/>
-                                <include reference="yYv-b2-iDP"/>
-                                <include reference="9ot-9p-kbt"/>
-                                <include reference="aq9-5W-L3W"/>
-                                <include reference="fwa-Uk-qph"/>
-                                <include reference="mUY-kS-xZt"/>
-                                <include reference="KzT-e0-xZs"/>
-                                <include reference="bO5-Jn-bag"/>
+                                <include reference="PQO-vq-DBP"/>
+                                <include reference="euK-Om-IZR"/>
+                                <include reference="2l1-c5-6RD"/>
+                                <include reference="J2d-JG-msH"/>
+                                <include reference="L5V-zH-dS9"/>
+                                <include reference="VlB-Le-29S"/>
+                                <include reference="Wrz-qM-Zfg"/>
+                                <include reference="uCL-A4-9JR"/>
                             </mask>
                         </variation>
                     </view>
