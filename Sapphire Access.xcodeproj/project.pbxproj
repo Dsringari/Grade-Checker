@@ -43,6 +43,7 @@
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 		FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */; };
+		FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeVC.swift; sourceTree = "<group>"; };
+		FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +199,7 @@
 				FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */,
 				FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */,
 				FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */,
+				FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
+				FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */,
 				FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */,
 				FC15CF551CD2B19A001457AD /* StudentSelectionCell.swift in Sources */,
 				FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */,

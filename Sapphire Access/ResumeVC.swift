@@ -24,7 +24,7 @@ class ResumeVC: UIViewController {
 
 		if let name = settings.stringForKey("selectedStudent") {
 			if let student = Student.MR_findFirstByAttribute("name", withValue: name) {
-                user = student.user
+				user = student.user
 				continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
 
 				if settings.boolForKey("useTouchID") {
@@ -49,6 +49,8 @@ class ResumeVC: UIViewController {
 
 									return
 								}
+
+								self.backToLogin()
 							}
 						})
 					} else {
@@ -81,29 +83,29 @@ class ResumeVC: UIViewController {
 	}
 
 	func login() {
-        // Try to Login
-        activityIndicator.startAnimating()
-        let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
-            self.activityIndicator.stopAnimating()
-            if (successful) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.performSegueWithIdentifier("returnHome", sender: self)
-                })
-            } else {
-                // If we failed
-                dispatch_async(dispatch_get_main_queue(), {
-                        var err = error
-                        if (error!.code == NSURLErrorTimedOut) {
-                            err = badConnectionError
-                        }
-                        let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: {
-                            self.backToLogin()
-                        })
-                    })
-            }
-        })
+		// Try to Login
+		activityIndicator.startAnimating()
+		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
+			self.activityIndicator.stopAnimating()
+			if (successful) {
+				dispatch_async(dispatch_get_main_queue(), {
+					self.performSegueWithIdentifier("returnHome", sender: self)
+				})
+			} else {
+				// If we failed
+				dispatch_async(dispatch_get_main_queue(), {
+					var err = error
+					if (error!.code == NSURLErrorTimedOut) {
+						err = badConnectionError
+					}
+					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+					alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+						self.backToLogin()
+						}))
+					self.presentViewController(alert, animated: true, completion: nil)
+				})
+			}
+		})
 	}
 
 	@IBAction func continuePressed(sender: AnyObject) {

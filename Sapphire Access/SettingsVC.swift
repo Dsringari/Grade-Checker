@@ -61,37 +61,16 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 			return "Account"
 		}
 
-		return "About"
-	}
-
-	func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		if (section == 1) {
-			return 50
-		}
-		return 0
-	}
-
-	func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-
-		if (section == 1) {
-			// Setup View
-			let footerView = UIView(frame: CGRectMake(0, 0, tableView.frame.width, 50))
-			let titleColor = UIColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.45) // Slightly Opaque
-			// Setup Button
-			logoutButton = UIButton(type: .Custom)
-			logoutButton.setTitle("SIGN OUT", forState: .Normal)
-			logoutButton.titleLabel!.font = UIFont.systemFontOfSize(21)
-			logoutButton.addTarget(self, action: #selector(logout), forControlEvents: .TouchUpInside)
-			logoutButton.setTitleColor(titleColor, forState: .Normal)
-			logoutButton.setTitleColor(UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.45), forState: .Highlighted) // Make slighlty Darker
-			logoutButton.backgroundColor = UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 132 / 255, alpha: 1)
-			logoutButton.frame = footerView.frame
-
-			footerView.addSubview(logoutButton)
-			return footerView
-		}
 		return nil
 	}
+    
+    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if (section == 1) {
+            return "Touch ID can be used for a more secure login."
+        }
+        
+        return nil
+    }
 
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 3
@@ -100,7 +79,9 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if (section == 0) {
 			return students.count
-		}
+        } else if section == 1 {
+            return 2
+        }
 
 		return 1
 	}
@@ -117,12 +98,19 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 			}
 			return studentCell
 		} else if indexPath.section == 1 {
-			touchIDCell = tableView.dequeueReusableCellWithIdentifier("touchIDCell", forIndexPath: indexPath) as! TouchIDSelectionCell
-			touchIDCell.touchIDSwitch.on = settings.boolForKey("useTouchID")
-			touchIDCell.selectionStyle = .None
-			touchIDCell.touchIDSwitch.addTarget(self, action: #selector(changeTouchIDValue), forControlEvents: .ValueChanged)
-			return touchIDCell
-		}
+            if (indexPath.row == 0) {
+                touchIDCell = tableView.dequeueReusableCellWithIdentifier("touchIDCell", forIndexPath: indexPath) as! TouchIDSelectionCell
+                touchIDCell.touchIDSwitch.on = settings.boolForKey("useTouchID")
+                touchIDCell.selectionStyle = .None
+                touchIDCell.touchIDSwitch.addTarget(self, action: #selector(changeTouchIDValue), forControlEvents: .ValueChanged)
+                return touchIDCell
+            } else {
+                let logoutCell = tableView.dequeueReusableCellWithIdentifier("logOutCell", forIndexPath: indexPath) as! LogOutCell
+                logoutButton = logoutCell.logoutButton
+                logoutButton.addTarget(self, action: #selector(logout), forControlEvents: .TouchUpInside)
+                return logoutCell
+            }
+        }
 
 		let aboutCell = tableView.dequeueReusableCellWithIdentifier("aboutCell", forIndexPath: indexPath)
 		return aboutCell
