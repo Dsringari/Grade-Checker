@@ -62,7 +62,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
         }
         
-        settings.setBool(touchIDSwitch.on, forKey: "touchID")
+        settings.setBool(touchIDSwitch.on, forKey: "useTouchID")
         
         self.performSegueWithIdentifier("firstTimeHome", sender: nil)
     }

@@ -177,9 +177,10 @@ class UpdateService {
 									let dateFormatter = NSDateFormatter()
 									// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
 									dateFormatter.dateFormat = "MM/dd/yy"
-									let date = dateFormatter.dateFromString(assignment.date)
-									newA.dateCreated = date!
-
+                                    
+                                    if let date = assignment.date {
+                                        newA.dateCreated = dateFormatter.dateFromString(date)
+                                    }
 									newA.name = assignment.name
 									newA.totalPoints = assignment.totalPoints
 									newA.possiblePoints = assignment.possiblePoints
@@ -223,7 +224,7 @@ class UpdateService {
 		}
 	}
 
-	private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String, category: String)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
+	private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
@@ -335,9 +336,9 @@ class UpdateService {
 		}
 
 		// Build the assignment tuples
-		var assignments: [(name: String, totalPoints: String, possiblePoints: String, date: String, category: String)] = []
+		var assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)] = []
 		for index in 0 ... (aNames.count - 1) {
-			let newA = (aNames[index], aTotalPoints[index], aPossiblePoints[index], aDates[index], aCategories[index])
+            let newA = (aNames[safe: index], aTotalPoints[safe: index], aPossiblePoints[safe: index], aDates[safe: index], aCategories[safe: index])
 			assignments.append(newA)
 			// print(newA)
 		}

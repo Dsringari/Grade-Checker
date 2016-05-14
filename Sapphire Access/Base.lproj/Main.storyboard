@@ -102,20 +102,29 @@
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="5ed-fj-RgQ">
                                         <rect key="frame" x="-10" y="-10" width="20" height="20"/>
                                         <color key="color" red="0.062745098040000002" green="0.58039215690000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="182" y="225" width="37" height="37"/>
-                                        </variation>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="5ed-fj-RgQ" firstAttribute="centerY" secondItem="H8e-yI-E4D" secondAttribute="centerY" id="1Km-PY-r6H"/>
+                                    <constraint firstItem="5ed-fj-RgQ" firstAttribute="centerX" secondItem="H8e-yI-E4D" secondAttribute="centerX" id="zt7-UL-VUh"/>
+                                </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="5ed-fj-RgQ"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="1Km-PY-r6H"/>
+                                        <exclude reference="zt7-UL-VUh"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="5ed-fj-RgQ"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="1Km-PY-r6H"/>
+                                        <include reference="zt7-UL-VUh"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -616,7 +625,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0.0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuN-gK-Moz">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.027450980390000001" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -668,7 +677,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qjI-Sc-aIw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-472.5" y="694"/>
+            <point key="canvasLocation" x="-473" y="694"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="51a-z7-R0n">
@@ -1481,6 +1490,7 @@
                                 <exclude reference="yYv-b2-iDP"/>
                                 <exclude reference="9ot-9p-kbt"/>
                                 <exclude reference="fwa-Uk-qph"/>
+                                <exclude reference="KzT-e0-xZs"/>
                                 <exclude reference="bO5-Jn-bag"/>
                             </mask>
                         </variation>
@@ -1515,6 +1525,7 @@
                                 <include reference="yYv-b2-iDP"/>
                                 <include reference="9ot-9p-kbt"/>
                                 <include reference="fwa-Uk-qph"/>
+                                <include reference="KzT-e0-xZs"/>
                                 <include reference="bO5-Jn-bag"/>
                             </mask>
                         </variation>

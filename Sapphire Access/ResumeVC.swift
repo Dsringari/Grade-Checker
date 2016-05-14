@@ -27,7 +27,7 @@ class ResumeVC: UIViewController {
                 user = student.user
 				continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
 
-				if settings.boolForKey("touchID") {
+				if settings.boolForKey("useTouchID") {
 					continueButton.enabled = false
 					var error: NSError?
 					if LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
