@@ -21,34 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Set default preferences
 		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications": NSNumber(bool: true)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
-
+        // Start the Magic!
+        MagicalRecord.setLoggingLevel(.Warn)
 		MagicalRecord.setupAutoMigratingCoreDataStack()
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        if User.MR_findFirst() != nil {
-            
-            let resumeVC = storyboard.instantiateViewControllerWithIdentifier("resumeVC")
-            
-            if let window = self.window {
-                window.rootViewController = resumeVC
-            } else {
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
-                window?.rootViewController = resumeVC
-                window?.makeKeyAndVisible()
-            }
-        } else {
-            
-            let loginVC = storyboard.instantiateViewControllerWithIdentifier("loginVC")
-            
-            if let window = self.window {
-                window.rootViewController = loginVC
-            } else {
-                window = UIWindow(frame: UIScreen.mainScreen().bounds)
-                window?.rootViewController = loginVC
-                window?.makeKeyAndVisible()
-            }
-        }
         
 		return true
 	}
@@ -79,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		} else {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
 		}
+
 	}
 
 	func applicationWillEnterForeground(application: UIApplication) {
