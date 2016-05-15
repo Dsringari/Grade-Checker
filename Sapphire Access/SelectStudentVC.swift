@@ -8,6 +8,7 @@
 
 import UIKit
 import MagicalRecord
+import LocalAuthentication
 
 class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -15,10 +16,14 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 	var touchIDSwitch: UISwitch!
 	var students: [Student]!
 	var selectedIndex: Int?
+    lazy var hasTouchID: Bool = {
+        return LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil)
+    }()
 
     @IBOutlet var continueButton: UIButton!
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
 		students = Student.MR_findAll() as! [Student]
 
 		if (students.count == 1) {
@@ -62,9 +67,33 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
         }
         
-        settings.setBool(touchIDSwitch.on, forKey: "useTouchID")
+        if touchIDSwitch.on && hasTouchID {
+            let context = LAContext()
+            self.continueButton.enabled = false
+            context.evaluatePolicy(.DeviceOwnerAuthentication, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: NSError?) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.continueButton.enabled = true
+                    if (success) {
+                        settings.setBool(true, forKey: "useTouchID")
+                        self.performSegueWithIdentifier("firstTimeHome", sender: nil)
+                    } else {
+                        settings.setBool(false, forKey: "useTouchID")
+                        self.touchIDSwitch.setOn(false, animated: true)
+                        if (error!.code == LAError.AuthenticationFailed.rawValue) {
+                            let failed = UIAlertController(title: "Failed to Verify", message: "Your fingerprint did not match.", preferredStyle: .Alert)
+                            let Ok = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            failed.addAction(Ok)
+                            self.presentViewController(failed, animated: true, completion: nil)
+                        }
+                    }
+                })
+            })
+        } else {
+            settings.setBool(false, forKey: "useTouchID")
+            self.performSegueWithIdentifier("firstTimeHome", sender: nil)
+        }
         
-        self.performSegueWithIdentifier("firstTimeHome", sender: nil)
+
     }
     
 	override func didReceiveMemoryWarning() {
@@ -145,7 +174,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if section == 0 {
 			return students.count
-		}
+        }
 
 		return 1
 	}
@@ -165,6 +194,10 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 		}
 
 		let cell = tableView.dequeueReusableCellWithIdentifier("touchIDCell", forIndexPath: indexPath) as! TouchIDSelectionCell
+        cell.userInteractionEnabled = hasTouchID
+        cell.textLabel?.enabled = hasTouchID
+        cell.touchIDSwitch.enabled = hasTouchID
+        cell.touchIDSwitch.on = hasTouchID
 		cell.selectionStyle = .None
 		touchIDSwitch = cell.touchIDSwitch
 		return cell

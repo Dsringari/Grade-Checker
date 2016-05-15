@@ -100,7 +100,7 @@ class DSLoginView: UIViewController {
 				kbHeight = keyboardFrame.height
 
 				setConstant = keyboardConstraint.constant
-				keyboardConstraint.constant = kbHeight! + 8
+				keyboardConstraint.constant = kbHeight! + 30
 
 				UIView.animateWithDuration(keyboardAnimationDuration, animations: {
 					self.view.layoutIfNeeded()

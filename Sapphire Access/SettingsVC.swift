@@ -9,6 +9,7 @@
 import UIKit
 import MagicalRecord
 import CoreData
+import LocalAuthentication
 
 protocol SettingsVCDelegate {
 	func reloadData() -> Void
@@ -23,6 +24,9 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	var students: [Student]!
 	var selectedStudentIndex: Int!
 	let settings = NSUserDefaults.standardUserDefaults()
+    lazy var hasTouchID: Bool = {
+        return LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil)
+    }()
 
 	var refreshDelegate: SettingsVCDelegate!
 
@@ -44,7 +48,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 		/*
 		 if (students.count == 1) {
-            tableview.allowsSelection = false
+		 tableview.allowsSelection = false
 		 }
 		 */
 	}
@@ -63,14 +67,14 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 		return nil
 	}
-    
-    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if (section == 1) {
-            return "Touch ID can be used for a more secure login."
-        }
-        
-        return nil
-    }
+
+	func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		if (section == 1) {
+			return "Touch ID can be used for a more secure login."
+		}
+
+		return nil
+	}
 
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 4
@@ -96,48 +100,80 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 			}
 			return studentCell
 		} else if indexPath.section == 1 {
-            if (indexPath.row == 0) {
-                touchIDCell = tableView.dequeueReusableCellWithIdentifier("touchIDCell", forIndexPath: indexPath) as! TouchIDSelectionCell
-                touchIDCell.touchIDSwitch.on = settings.boolForKey("useTouchID")
-                touchIDCell.selectionStyle = .None
-                touchIDCell.touchIDSwitch.addTarget(self, action: #selector(changeTouchIDValue), forControlEvents: .ValueChanged)
-                return touchIDCell
-            }
-        } else if indexPath.section == 2 {
-            let aboutCell = tableView.dequeueReusableCellWithIdentifier("aboutCell", forIndexPath: indexPath)
-            return aboutCell
-        }
-        
-        let logoutCell = tableView.dequeueReusableCellWithIdentifier("logOutCell", forIndexPath: indexPath) as! LogOutCell
-        logoutButton = logoutCell.logoutButton
-        logoutButton.addTarget(self, action: #selector(logout), forControlEvents: .TouchUpInside)
-        return logoutCell
-		
+			if (indexPath.row == 0) {
+				touchIDCell = tableView.dequeueReusableCellWithIdentifier("touchIDCell", forIndexPath: indexPath) as! TouchIDSelectionCell
+				touchIDCell.touchIDSwitch.on = settings.boolForKey("useTouchID")
+                touchIDCell.touchIDSwitch.enabled = hasTouchID
+                touchIDCell.textLabel?.enabled = hasTouchID
+				touchIDCell.selectionStyle = .None
+				touchIDCell.touchIDSwitch.addTarget(self, action: #selector(changeTouchIDValue), forControlEvents: .ValueChanged)
+				return touchIDCell
+			}
+		} else if indexPath.section == 2 {
+			let aboutCell = tableView.dequeueReusableCellWithIdentifier("aboutCell", forIndexPath: indexPath)
+			return aboutCell
+		}
+
+		let logoutCell = tableView.dequeueReusableCellWithIdentifier("logOutCell", forIndexPath: indexPath) as! LogOutCell
+		logoutButton = logoutCell.logoutButton
+		logoutButton.addTarget(self, action: #selector(logout), forControlEvents: .TouchUpInside)
+		return logoutCell
+
 	}
 
 	func logout() {
 		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
 		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        
-        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "selectedStudent")
+
+		NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "selectedStudent")
 		self.tabBarController!.navigationController!.popToRootViewControllerAnimated(true)
-        NSNotificationCenter.defaultCenter().postNotificationName("tabBarDismissed", object: nil)
-        
-    }
+		NSNotificationCenter.defaultCenter().postNotificationName("tabBarDismissed", object: nil)
+
+	}
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if (indexPath.section == 0) {
-            if (selectedStudentIndex != indexPath.row) {
-                selectedStudentIndex = indexPath.row
-                settings.setObject(students[selectedStudentIndex].name!, forKey: "selectedStudent")
-                self.tableview.reloadData()
-                refreshDelegate.reloadData()
-            }
+			if (selectedStudentIndex != indexPath.row) {
+				selectedStudentIndex = indexPath.row
+				settings.setObject(students[selectedStudentIndex].name!, forKey: "selectedStudent")
+				self.tableview.reloadData()
+				refreshDelegate.reloadData()
+			}
 		}
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 	}
 
 	func changeTouchIDValue() {
-		settings.setBool(touchIDCell.touchIDSwitch.on, forKey: "useTouchID")
+		if (touchIDCell.touchIDSwitch.on) {
+            let context = LAContext()
+            
+            
+			context.evaluatePolicy(.DeviceOwnerAuthentication, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: NSError?) in
+				dispatch_async(dispatch_get_main_queue(), {
+
+					if (success) {
+
+						self.settings.setBool(true, forKey: "useTouchID")
+
+					} else {
+
+						self.settings.setBool(false, forKey: "useTouchID")
+                        self.touchIDCell.touchIDSwitch.setOn(false, animated: true)
+						if (error!.code == LAError.AuthenticationFailed.rawValue) {
+
+							let failed = UIAlertController(title: "Failed to Verify", message: "Your fingerprint did not match. Touch ID is disabled.", preferredStyle: .Alert)
+							let Ok = UIAlertAction(title: "OK", style: .Default, handler: nil)
+							failed.addAction(Ok)
+							self.presentViewController(failed, animated: true, completion: nil)
+
+							return
+						}
+					}
+				})
+			})
+
+        } else {
+            self.settings.setBool(false, forKey: "useTouchID")
+        }
 	}
 }
