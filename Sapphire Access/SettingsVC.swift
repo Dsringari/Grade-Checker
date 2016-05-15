@@ -12,7 +12,7 @@ import CoreData
 import LocalAuthentication
 
 protocol SettingsVCDelegate {
-	func reloadData() -> Void
+	func reloadData(completionHandler: () -> Void) -> Void
 }
 
 class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -24,9 +24,11 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	var students: [Student]!
 	var selectedStudentIndex: Int!
 	let settings = NSUserDefaults.standardUserDefaults()
-    lazy var hasTouchID: Bool = {
-        return LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil)
-    }()
+	lazy var hasTouchID: Bool = {
+		return LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil)
+	}()
+
+	var shouldRefresh: Bool = true
 
 	var refreshDelegate: SettingsVCDelegate!
 
@@ -83,7 +85,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if (section == 0) {
 			return students.count
-        }
+		}
 
 		return 1
 	}
@@ -103,8 +105,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 			if (indexPath.row == 0) {
 				touchIDCell = tableView.dequeueReusableCellWithIdentifier("touchIDCell", forIndexPath: indexPath) as! TouchIDSelectionCell
 				touchIDCell.touchIDSwitch.on = settings.boolForKey("useTouchID")
-                touchIDCell.touchIDSwitch.enabled = hasTouchID
-                touchIDCell.textLabel?.enabled = hasTouchID
+				touchIDCell.touchIDSwitch.enabled = hasTouchID
+				touchIDCell.textLabel?.enabled = hasTouchID
 				touchIDCell.selectionStyle = .None
 				touchIDCell.touchIDSwitch.addTarget(self, action: #selector(changeTouchIDValue), forControlEvents: .ValueChanged)
 				return touchIDCell
@@ -132,22 +134,26 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if (indexPath.section == 0) {
-			if (selectedStudentIndex != indexPath.row) {
-				selectedStudentIndex = indexPath.row
-				settings.setObject(students[selectedStudentIndex].name!, forKey: "selectedStudent")
-				self.tableview.reloadData()
-				refreshDelegate.reloadData()
+		if (shouldRefresh) {
+			if (indexPath.section == 0) {
+				if (selectedStudentIndex != indexPath.row) {
+					selectedStudentIndex = indexPath.row
+					settings.setObject(students[selectedStudentIndex].name!, forKey: "selectedStudent")
+					self.tableview.reloadData()
+                    shouldRefresh = false
+                    refreshDelegate.reloadData({
+                        self.shouldRefresh = true
+                    })
+				}
 			}
 		}
-		tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
 	}
 
 	func changeTouchIDValue() {
 		if (touchIDCell.touchIDSwitch.on) {
-            let context = LAContext()
-            
-            
+			let context = LAContext()
+
 			context.evaluatePolicy(.DeviceOwnerAuthentication, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: NSError?) in
 				dispatch_async(dispatch_get_main_queue(), {
 
@@ -158,7 +164,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 					} else {
 
 						self.settings.setBool(false, forKey: "useTouchID")
-                        self.touchIDCell.touchIDSwitch.setOn(false, animated: true)
+						self.touchIDCell.touchIDSwitch.setOn(false, animated: true)
 						if (error!.code == LAError.AuthenticationFailed.rawValue) {
 
 							let failed = UIAlertController(title: "Failed to Verify", message: "Your fingerprint did not match. Touch ID is disabled.", preferredStyle: .Alert)
@@ -172,8 +178,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 				})
 			})
 
-        } else {
-            self.settings.setBool(false, forKey: "useTouchID")
-        }
+		} else {
+			self.settings.setBool(false, forKey: "useTouchID")
+		}
 	}
 }
