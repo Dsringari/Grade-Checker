@@ -8,6 +8,7 @@
 
 import UIKit
 import MagicalRecord
+import GoogleMobileAds
 
 class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
@@ -17,7 +18,6 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var toolbar: UIView!
     var navHairLine: UIImageView!
     
-    
     var subject: Subject!
     var markingPeriods: [MarkingPeriod]!
     var selectedMPIndex: Int!
@@ -26,7 +26,6 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
         self.title = subject.name
         
         // Find the hairline so we can hide it

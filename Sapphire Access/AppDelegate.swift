@@ -17,17 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
-		// Set the UINavigationBar Back button tint color to the green color
-		UINavigationBar.appearance().tintColor = UIColor(colorLiteralRed: 86 / 255, green: 100 / 255, blue: 115 / 255, alpha: 1.0)
-		// Change Tab Bar Text Colors
-		UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Normal)
-		UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(colorLiteralRed: 22 / 255, green: 160 / 255, blue: 133 / 255, alpha: 1.9)], forState: .Selected)
-		// UITabBar.appearance().tintColor = UIColor.grayColor()
+        
 		// Set default preferences
 		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications": NSNumber(bool: true)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
-
+        // Start the Magic!
+        MagicalRecord.setLoggingLevel(.Warn)
 		MagicalRecord.setupAutoMigratingCoreDataStack()
+        
+        
 		return true
 	}
 
@@ -57,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		} else {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
 		}
+
 	}
 
 	func applicationWillEnterForeground(application: UIApplication) {
@@ -110,8 +109,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				}
                 
                 /*  Values that Trigger the Notification
-                    * The old subjects with a lastUpdated value should be less than the new subjects
-                    * The lastUpdated value becomes newer
+                    * The count of the old subjects with a lastUpdated value should be less than the count new subjects
+                    * Any lastUpdated value becomes newer
                     * The count of assignments is increased
                  */
                 

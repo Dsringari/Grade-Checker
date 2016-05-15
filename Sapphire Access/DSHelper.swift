@@ -62,6 +62,13 @@ extension NSArray {
 
 }
 
+extension CollectionType {
+    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Generator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -70,6 +77,56 @@ extension UIViewController {
     
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+}
+
+extension UIView {
+    func snapshot() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.mainScreen().scale)
+        drawViewHierarchyInRect(bounds, afterScreenUpdates: true)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
+    }
+}
+
+extension UIWindow {
+    func replaceRootViewControllerWith(replacementController: UIViewController, animated: Bool, completion: (() -> Void)?) {
+        let snapshotImageView = UIImageView(image: self.snapshot())
+        self.addSubview(snapshotImageView)
+        self.rootViewController!.dismissViewControllerAnimated(false, completion: { () -> Void in // dismiss all modal view controllers
+            self.rootViewController = replacementController
+            self.bringSubviewToFront(snapshotImageView)
+            if animated {
+                UIView.animateWithDuration(0.4, animations: { () -> Void in
+                    snapshotImageView.alpha = 0
+                    }, completion: { (success) -> Void in
+                        snapshotImageView.removeFromSuperview()
+                        completion?()
+                })
+            }
+            else {
+                snapshotImageView.removeFromSuperview()
+                completion?()
+            }
+        })
+    }
+}
+
+extension UITableViewCell {
+    func removeMargins() {
+        
+        if self.respondsToSelector(Selector("setSeparatorInset:")) {
+            self.separatorInset = UIEdgeInsetsZero
+        }
+        
+        if self.respondsToSelector(Selector("setPreservesSuperviewLayoutMargins:")) {
+            self.preservesSuperviewLayoutMargins = false
+        }
+        
+        if self.respondsToSelector(Selector("setLayoutMargins:")) {
+            self.layoutMargins = UIEdgeInsetsZero
+        }
     }
 }
 
@@ -88,5 +145,11 @@ func relativeDateStringForDate(date: NSDate) -> String {
         }
     } else {
         return "Today"
+    }
+}
+
+class EmptySegue: UIStoryboardSegue {
+    override func perform() {
+        
     }
 }
