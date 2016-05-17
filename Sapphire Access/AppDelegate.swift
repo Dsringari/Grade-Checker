@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				for subject in updatedSubjects {
 					if let sectionGUID = sectionGUIDs.filter({ (s: String) in return s == subject.sectionGUID }).first {
                         let index: Int = sectionGUIDs.indexOf(sectionGUID)!
-						if (dates[index].compare(subject.lastUpdated!) != NSComparisonResult.OrderedSame) {
+						if (dates[index].compare(subject.lastUpdated!) == NSComparisonResult.OrderedAscending) {
                             shouldNotify = true
                             break
 						}

@@ -134,8 +134,14 @@ func relativeDateStringForDate(date: NSDate) -> String {
     let components = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date, toDate: NSDate(), options: [])
     
     if (components.year > 0) {
+        if (components.year == 1) {
+            return String(format: "%ld year ago", arguments: [components.month])
+        }
         return String(format: "%ld years ago", arguments: [components.year])
     } else if (components.month > 0) {
+        if (components.month == 1) {
+            return String(format: "%ld month ago", arguments: [components.month])
+        }
         return String(format: "%ld months ago", arguments: [components.month])
     } else if (components.day > 0) {
         if (components.day > 1) {
