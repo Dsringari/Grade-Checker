@@ -172,15 +172,15 @@ class UpdateService {
 
 								for assignment in result.assignments {
 									let newA: Assignment = Assignment.MR_createEntityInContext(mpRequestMOC)!
-                                    
+
 									// String to Date
 									let dateFormatter = NSDateFormatter()
 									// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
 									dateFormatter.dateFormat = "MM/dd/yy"
-                                    
-                                    if let date = assignment.date {
-                                        newA.dateCreated = dateFormatter.dateFromString(date)
-                                    }
+
+									if let date = assignment.date {
+										newA.dateCreated = dateFormatter.dateFromString(date)
+									}
 									newA.name = assignment.name
 									newA.totalPoints = assignment.totalPoints
 									newA.possiblePoints = assignment.possiblePoints
@@ -203,24 +203,26 @@ class UpdateService {
 		// Runs when the User has been completely updated
 		dispatch_group_notify(updateGroup, dispatch_get_main_queue()) {
 			self.timer!.stop()
-//            print("------------------------------------------------------")
-//            print("Completed in: " + String(self.timer!.duration!))
-//            print("Entries: " + String(self.timer!.entries) + ", Exits: " + String(self.timer!.exits))
-//            print("------------------------------------------------------")
-//            print("")
+			/*
+			 print("------------------------------------------------------")
+			 print("Completed in: " + String(self.timer!.duration!))
+			 print("Entries: " + String(self.timer!.entries) + ", Exits: " + String(self.timer!.exits))
+			 print("------------------------------------------------------")
+			 print("")
+			 */
 
 			guard (self.fails.isEmpty) else {
 				NSManagedObjectContext.MR_defaultContext().reset()
 				self.completion(successful: false, error: self.fails.first!)
 				return
 			}
-            
-            // This is kind of optional, only gives more accurate dates
-            let updater = RefreshLastUpdatedDates(forStudent: student)
-            updater.update { _,_ in
-                    NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-                    self.completion(successful: true, error: nil)
-            }
+
+			// This is kind of optional, only gives more accurate dates
+			let updater = RefreshLastUpdatedDates(forStudent: student)
+			updater.update { _, _ in
+				NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+				self.completion(successful: true, error: nil)
+			}
 		}
 	}
 
@@ -228,52 +230,52 @@ class UpdateService {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
-        
-        var assigntmentIndex: String
-        var totalScoreIndex: String
-        var possibleScoreIndex: String
-        var dueDateIndex: String
-        var categoryIndex: String
-        
-        // Find under which td are the headers we want under
-        var headers: [String] = []
-        for header: XMLElement in doc.xpath("//*[@id=\"assignments\"]/tr[1]//th") {
-            
-            let text = header.text!
-            
-            if (text == "Score") {
-                headers.append("totalScore")
-                headers.append("possibleScore")
-            } else {
-                headers.append(text)
-            }
-        }
-        
-        // Check if we have an empty marking period
-        if (headers.count == 0) {
-            return nil
-        }
-        
-        assigntmentIndex = String(headers.indexOf("Assignment")! + 1)
-        totalScoreIndex = String(headers.indexOf("totalScore")! + 1)
-        possibleScoreIndex = String(headers.indexOf("possibleScore")! + 1)
-        dueDateIndex = String(headers.indexOf("DateDue")! + 1)
-        categoryIndex = String(headers.indexOf("Category")! + 1)
-        
+
+		var assigntmentIndex: String
+		var totalScoreIndex: String
+		var possibleScoreIndex: String
+		var dueDateIndex: String
+		var categoryIndex: String
+
+		// Find under which td are the headers we want under
+		var headers: [String] = []
+		for header: XMLElement in doc.xpath("//*[@id=\"assignments\"]/tr[1]//th") {
+
+			let text = header.text!
+
+			if (text == "Score") {
+				headers.append("totalScore")
+				headers.append("possibleScore")
+			} else {
+				headers.append(text)
+			}
+		}
+
+		// Check if we have an empty marking period
+		if (headers.count == 0) {
+			return nil
+		}
+
+		assigntmentIndex = String(headers.indexOf("Assignment")! + 1)
+		totalScoreIndex = String(headers.indexOf("totalScore")! + 1)
+		possibleScoreIndex = String(headers.indexOf("possibleScore")! + 1)
+		dueDateIndex = String(headers.indexOf("DateDue")! + 1)
+		categoryIndex = String(headers.indexOf("Category")! + 1)
+
 		// Parse all the assignments while ignoring the assignment descriptions and teacher comments
 		let assignmentsXpath = "//*[@id=\"assignments\"]//tr/td[not(contains(@class, 'assignDesc')) and not(contains(@class, 'assignComments'))]/.."
 
 		// Get all the assignment names
 		var aNames: [String] = []
 		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + assigntmentIndex + "]") {
-            let text = aE.text!
-            aNames.append(text)
+			let text = aE.text!
+			aNames.append(text)
 		}
-        
-        // Check if we have an empty marking period
-        if (aNames.count == 0) {
-            return nil
-        }
+
+		// Check if we have an empty marking period
+		if (aNames.count == 0) {
+			return nil
+		}
 
 		// Parse percent grade
 		let percentageTextXpath = "//*[@id=\"assignmentFinalGrade\"]/b[1]/following-sibling::text()"
@@ -338,7 +340,7 @@ class UpdateService {
 		// Build the assignment tuples
 		var assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)] = []
 		for index in 0 ... (aNames.count - 1) {
-            let newA = (aNames[safe: index], aTotalPoints[safe: index], aPossiblePoints[safe: index], aDates[safe: index], aCategories[safe: index])
+			let newA = (aNames[safe: index], aTotalPoints[safe: index], aPossiblePoints[safe: index], aDates[safe: index], aCategories[safe: index])
 			assignments.append(newA)
 			// print(newA)
 		}
@@ -362,8 +364,8 @@ class RefreshLastUpdatedDates {
 		let url = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
 		let request = NSURLRequest(URL: url!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 		session.dataTaskWithRequest(request, completionHandler: { data, response, error in
-            
-            let localMOC = NSManagedObjectContext.MR_context()
+
+			let localMOC = NSManagedObjectContext.MR_context()
 
 			if (error != nil) {
 				completionHandler(successful: false, error: error)
@@ -372,17 +374,16 @@ class RefreshLastUpdatedDates {
 
 			if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) { // BTW A PARENT ACCOUNT CAN HAVE ONLY ONE STUDENT
 				// Get all the Class Names
-                var namePath: String
-                var datePath: String
-              
-                // Student Account
-                namePath = "//*[@id=\"contentPipe\"]/div[3]/table//tr/td[2]"
-                datePath = "//*[@id=\"contentPipe\"]/div[3]/table//tr/td[3]"
-              
-                
+				var namePath: String
+				var datePath: String
+
+				// Student Account
+				namePath = "//*[@id=\"contentPipe\"]/div[3]/table//tr/td[2]"
+				datePath = "//*[@id=\"contentPipe\"]/div[3]/table//tr/td[3]"
+
 				var names: [String] = []
 				for element in doc.xpath(namePath) {
-                    let text = element.text!
+					let text = element.text!
 					names.append(text)
 				}
 
@@ -391,39 +392,39 @@ class RefreshLastUpdatedDates {
 					let text = element.text!
 					dates.append(text)
 				}
-                
-                // //*[@id="contentPipe"]/div[2]/table/tbody/tr[2]/td[1]
-                // //*[@id="contentPipe"]/div[2]/table/tbody/tr[2]/td[1]
-                
-                if (names.count == 0 && dates.count == 0) {
-                    // Parent Account
-                    namePath = "//*[@id=\"contentPipe\"]/div[2]/table//tr/td[2]"
-                    datePath = "//*[@id=\"contentPipe\"]/div[2]/table//tr/td[3]"
-                    
-                    for element in doc.xpath(namePath) {
-                        let text = element.text!
-                        names.append(text)
-                    }
-                    
-                    for element in doc.xpath(datePath) {
-                        let text = element.text!
-                        dates.append(text)
-                    }
-                }
-                
-                for index in 0...names.count-1 {
-                    if let subject = Subject.MR_findFirstByAttribute("name", withValue: names[index], inContext: localMOC) {
-                        let dateString = dates[index]
-                        let dateFormatter = NSDateFormatter()
-                        // http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
-                        dateFormatter.dateFormat = "MM/dd/yy"
-                        let date = dateFormatter.dateFromString(dateString)
-                        subject.lastUpdated = date
-                    }
-                }
-                
-                localMOC.MR_saveOnlySelfAndWait()
-                completionHandler(successful: true, error: nil)
+
+				// //*[@id="contentPipe"]/div[2]/table/tbody/tr[2]/td[1]
+				// //*[@id="contentPipe"]/div[2]/table/tbody/tr[2]/td[1]
+
+				if (names.count == 0 && dates.count == 0) {
+					// Parent Account
+					namePath = "//*[@id=\"contentPipe\"]/div[2]/table//tr/td[2]"
+					datePath = "//*[@id=\"contentPipe\"]/div[2]/table//tr/td[3]"
+
+					for element in doc.xpath(namePath) {
+						let text = element.text!
+						names.append(text)
+					}
+
+					for element in doc.xpath(datePath) {
+						let text = element.text!
+						dates.append(text)
+					}
+				}
+
+				for index in 0 ... names.count - 1 {
+					if let subject = Subject.MR_findFirstByAttribute("name", withValue: names[index], inContext: localMOC) {
+						let dateString = dates[index]
+						let dateFormatter = NSDateFormatter()
+						// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
+						dateFormatter.dateFormat = "MM/dd/yy"
+						let date = dateFormatter.dateFromString(dateString)
+						subject.lastUpdated = date
+					}
+				}
+
+				localMOC.MR_saveOnlySelfAndWait()
+				completionHandler(successful: true, error: nil)
 
 			} else {
 				completionHandler(successful: false, error: unknownResponseError)

@@ -8,6 +8,5 @@ pod 'Kanna', '~> 1.0.0'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
 pod "MagicalRecord"
 pod 'Google-Mobile-Ads-SDK'
-pod 'EZLoadingActivity'
 end
 

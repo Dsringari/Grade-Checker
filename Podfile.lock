@@ -1,14 +1,12 @@
 PODS:
-  - EZLoadingActivity (0.8)
-  - Google-Mobile-Ads-SDK (7.7.0)
-  - Kanna (1.0.5)
+  - Google-Mobile-Ads-SDK (7.8.1)
+  - Kanna (1.0.6)
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
   - Spring (1.0.3)
 
 DEPENDENCIES:
-  - EZLoadingActivity
   - Google-Mobile-Ads-SDK
   - Kanna (~> 1.0.0)
   - MagicalRecord
@@ -25,10 +23,11 @@ CHECKOUT OPTIONS:
     :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
-  EZLoadingActivity: 6fd75a05765a4085f4b6fef6f62edf9f144b3139
-  Google-Mobile-Ads-SDK: d290e523a6e2f223256abcbf8e0c778b55b1f04e
-  Kanna: 1df5cd995dc1f3a282e3dcf7521cfef2f069ac4d
+  Google-Mobile-Ads-SDK: 3c2a6656117989469bfe7645640aa1de024a4c6c
+  Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 7afdef33e4b4b840229bef587d8b729f91f363be
+
+COCOAPODS: 1.0.0
