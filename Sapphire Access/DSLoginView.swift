@@ -11,7 +11,6 @@ import CoreData
 import MagicalRecord
 import Spring
 import LocalAuthentication
-import EZLoadingActivity
 
 class DSLoginView: UIViewController {
 
