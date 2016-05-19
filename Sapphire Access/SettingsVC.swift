@@ -34,9 +34,12 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.tableview.delegate = self
-		self.tableview.dataSource = self
-		let nv = self.tabBarController!.viewControllers![0] as! UINavigationController
+        
+		tableview.delegate = self
+		tableview.dataSource = self
+        tableview.rowHeight = 44
+        
+		let nv = tabBarController!.viewControllers![0] as! UINavigationController
 		refreshDelegate = nv.viewControllers.first! as! GradesVC
 
 		students = Student.MR_findAll() as! [Student]
@@ -47,12 +50,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 			let student = students.filter { $0.name! == selectedStudent }[0]
 			selectedStudentIndex = students.indexOf(student)
 		}
-
-		/*
-		 if (students.count == 1) {
-		 tableview.allowsSelection = false
-		 }
-		 */
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -89,6 +86,10 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 		return 1
 	}
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 44
+    }
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
@@ -154,7 +155,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		if (touchIDCell.touchIDSwitch.on) {
 			let context = LAContext()
 
-			context.evaluatePolicy(.DeviceOwnerAuthentication, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: NSError?) in
+			context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: NSError?) in
 				dispatch_async(dispatch_get_main_queue(), {
 
 					if (success) {

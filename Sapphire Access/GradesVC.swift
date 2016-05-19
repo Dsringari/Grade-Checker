@@ -59,7 +59,14 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		tableViewBottomConstraint.constant = 50
 		UIView.animateWithDuration(0.5, animations: {
 			self.view.addSubview(self.adView)
-			self.adView.bottomAnchor.constraintEqualToAnchor(self.bottomLayoutGuide.topAnchor)
+            
+            if #available(iOS 9.0, *) {
+                self.adView.bottomAnchor.constraintEqualToAnchor(self.bottomLayoutGuide.topAnchor)
+            } else {
+                // Fallback on earlier versions
+                NSLayoutConstraint.constraintsWithVisualFormat("V:|[adView]|", options: [], metrics: nil, views: ["adView": self.adView])
+            }
+            
 			NSLayoutConstraint.constraintsWithVisualFormat("|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
 			self.view.layoutIfNeeded()
 		})
