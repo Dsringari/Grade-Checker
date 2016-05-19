@@ -88,21 +88,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 
 		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
+            settings.setBool(true, forKey: "updatedInBackground")
 			if (!successful) {
 				completionHandler(UIBackgroundFetchResult.Failed)
 			} else {
-                settings.setBool(true, forKey: "updatedInBackground")
 				let localMOC = NSManagedObjectContext.MR_context()
 				let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntitiesWithContext(localMOC).integerValue
 
 				let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "lastUpdated != nil")) as! [Subject]
 
-				var shouldNotify = false
+				var aGradeWasUpdated = false
 				for subject in updatedSubjects {
 					if let sectionGUID = sectionGUIDs.filter({ (s: String) in return s == subject.sectionGUID }).first {
                         let index: Int = sectionGUIDs.indexOf(sectionGUID)!
 						if (dates[index].compare(subject.lastUpdated!) == NSComparisonResult.OrderedAscending) {
-                            shouldNotify = true
+                            aGradeWasUpdated = true
                             break
 						}
 					}
@@ -114,7 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     * The count of assignments is increased
                  */
                 
-				if (newStudentAssignmentCount != oldStudentAssignmentCount || sectionGUIDs.count < updatedSubjects.count || shouldNotify) {
+				if (newStudentAssignmentCount != oldStudentAssignmentCount || sectionGUIDs.count < updatedSubjects.count || aGradeWasUpdated) {
 					UIApplication.sharedApplication().cancelAllLocalNotifications()
 					let newNotification = UILocalNotification()
 					let now = NSDate()

@@ -45,14 +45,14 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		adView.rootViewController = self
 		adView.delegate = self
 		let request = GADRequest()
-		request.testDevices = ["9c687019dd43e1fdf830b4e54a8e6aaf"]
+		request.testDevices = ["d9afb8dbbc1fad53cfd16135e2255b44"]
 		adView.loadRequest(request)
 
 		if let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
 			self.student = student
+            loadStudent()
 		}
-
-		loadStudent()
+        
 	}
 
 	func adViewDidReceiveAd(bannerView: GADBannerView!) {
@@ -250,26 +250,24 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 
 		// Sort by Most Recently Updated
 		subjects.sortInPlace({ (s1: Subject, s2: Subject) -> Bool in
-			let s1MostRecentDate: NSDate
-			let s2MostRecentDate: NSDate
 
-			if let date = s1.lastUpdated {
-				s1MostRecentDate = date
-			} else {
-				s1MostRecentDate = s1.mostRecentAssignment!.dateCreated!
-			}
+            guard s1.mostRecentDate != nil || s2.mostRecentDate != nil else {
+                if s1.mostRecentDate == nil && s2.mostRecentDate == nil {
+                    return s1.name < s2.name
+                }
+                
+                if s1.mostRecentDate == nil {
+                    return true
+                }
+                
+                return false
+            }
 
-			if let date = s2.lastUpdated {
-				s2MostRecentDate = date
-			} else {
-				s2MostRecentDate = s2.mostRecentAssignment!.dateCreated!
-			}
-
-			if (s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedSame) {
+			if (s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedSame) {
 				return s1.name < s2.name
 			}
 
-			return s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedDescending
+			return s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedDescending
 
 		})
 		return subjects.count
@@ -304,11 +302,17 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 			// cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
 			cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
 
-			if let date = subject.lastUpdated {
-				cell.lastUpdatedLabel.text = "Last Updated: " + relativeDateStringForDate(date)
-			} else {
-				cell.lastUpdatedLabel.text = "Last Updated: " + relativeDateStringForDate(subject.mostRecentAssignment!.dateCreated!)
-			}
+            let dateString: String
+			if let date = subject.mostRecentDate {
+                dateString = relativeDateStringForDate(date)
+            } else {
+                dateString = "N/A"
+            }
+            
+            cell.lastUpdatedLabel.text = "Last Updated: " + dateString
+            
+            
+            
 
 			// cell.backgroundColor = lightB
 			return cell
