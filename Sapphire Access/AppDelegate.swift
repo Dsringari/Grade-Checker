@@ -17,15 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		// Override point for customization after application launch.
-        
+
 		// Set default preferences
 		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications": NSNumber(bool: true)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
-        // Start the Magic!
-        MagicalRecord.setLoggingLevel(.Warn)
+		// Start the Magic!
+		MagicalRecord.setLoggingLevel(.Warn)
 		MagicalRecord.setupAutoMigratingCoreDataStack()
-        
-        
+
 		return true
 	}
 
@@ -49,13 +48,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 
 		let settings = NSUserDefaults.standardUserDefaults()
-        
+
 		if (settings.stringForKey("selectedStudent") != nil) {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
+            
 		} else {
 			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
 		}
 
+		var tabBarController: UITabBarController?
+		if let containerVC = UIApplication.sharedApplication().keyWindow?.rootViewController as? ContainerVC {
+			if let navigationController = containerVC.currentViewController as? UINavigationController {
+                tabBarController = navigationController.visibleViewController as? UITabBarController
+            }
+		}
+
+		if let mainTabBarController = tabBarController {
+            mainTabBarController.selectedIndex = 0
+            if let nVC = mainTabBarController.viewControllers?.first as? UINavigationController {
+                if let gradesVC = nVC.visibleViewController as? GradesVC {
+                    gradesVC.performSegueWithIdentifier("lock", sender: nil)
+                }
+            }
+		}
 	}
 
 	func applicationWillEnterForeground(application: UIApplication) {
@@ -72,12 +87,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        
+
 		let settings = NSUserDefaults.standardUserDefaults()
 		let selectedStudentName = settings.stringForKey("selectedStudent")!
 		let oldStudentAssignmentCount: Int = Assignment.MR_numberOfEntities().integerValue
 		let student: Student = Student.MR_findFirstByAttribute("name", withValue: selectedStudentName)!
-        var oldSubjects: [Subject] = Subject.MR_findAll()! as! [Subject]
+		var oldSubjects: [Subject] = Subject.MR_findAll()! as! [Subject]
 
 		oldSubjects = oldSubjects.filter({ $0.lastUpdated != nil })
 		var sectionGUIDs: [String] = []
@@ -88,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 
 		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
-            settings.setBool(true, forKey: "updatedInBackground")
+			settings.setBool(true, forKey: "updatedInBackground")
 			if (!successful) {
 				completionHandler(UIBackgroundFetchResult.Failed)
 			} else {
@@ -100,20 +115,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				var aGradeWasUpdated = false
 				for subject in updatedSubjects {
 					if let sectionGUID = sectionGUIDs.filter({ (s: String) in return s == subject.sectionGUID }).first {
-                        let index: Int = sectionGUIDs.indexOf(sectionGUID)!
+						let index: Int = sectionGUIDs.indexOf(sectionGUID)!
 						if (dates[index].compare(subject.lastUpdated!) == NSComparisonResult.OrderedAscending) {
-                            aGradeWasUpdated = true
-                            break
+							aGradeWasUpdated = true
+							break
 						}
 					}
 				}
-                
-                /*  Values that Trigger the Notification
-                    * The count of the old subjects with a lastUpdated value should be less than the count new subjects
-                    * Any lastUpdated value becomes newer
-                    * The count of assignments is increased
-                 */
-                
+
+				/*  Values that Trigger the Notification
+				 * The count of the old subjects with a lastUpdated value should be less than the count new subjects
+				 * Any lastUpdated value becomes newer
+				 * The count of assignments is increased
+				 */
+
 				if (newStudentAssignmentCount != oldStudentAssignmentCount || sectionGUIDs.count < updatedSubjects.count || aGradeWasUpdated) {
 					UIApplication.sharedApplication().cancelAllLocalNotifications()
 					let newNotification = UILocalNotification()

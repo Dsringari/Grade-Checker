@@ -11,10 +11,6 @@ import MagicalRecord
 import CoreData
 import LocalAuthentication
 
-protocol SettingsVCDelegate {
-	func reloadData(completionHandler: () -> Void) -> Void
-}
-
 class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	@IBOutlet var tableview: UITableView!
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -30,7 +26,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 	var shouldRefresh: Bool = true
 
-	var refreshDelegate: SettingsVCDelegate!
+	var delegate: GradesVCDelegate!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -40,7 +36,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableview.rowHeight = 44
         
 		let nv = tabBarController!.viewControllers![0] as! UINavigationController
-		refreshDelegate = nv.viewControllers.first! as! GradesVC
+		delegate = nv.viewControllers.first! as! GradesVC
 
 		students = Student.MR_findAll() as! [Student]
 
@@ -142,7 +138,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 					settings.setObject(students[selectedStudentIndex].name!, forKey: "selectedStudent")
 					self.tableview.reloadData()
                     shouldRefresh = false
-                    refreshDelegate.reloadData({
+                    delegate.reloadData({
                         self.shouldRefresh = true
                     })
 				}

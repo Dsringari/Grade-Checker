@@ -69,9 +69,13 @@ class ResumeVC: UIViewController {
 						err = badConnectionError
 					}
 					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-					alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
-						self.backToLogin()
-						}))
+                    if err == badLoginError {
+                        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+                            self.backToLogin()
+                        }))
+                    } else {
+                        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                    }
 					self.presentViewController(alert, animated: true, completion: nil)
 				})
 			}

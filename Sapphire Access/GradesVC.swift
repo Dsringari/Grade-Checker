@@ -11,7 +11,12 @@ import MagicalRecord
 import CoreData
 import GoogleMobileAds
 
-class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsVCDelegate, GADBannerViewDelegate {
+protocol GradesVCDelegate {
+    func logout() -> Void
+    func reloadData(completionHandler: () -> Void)
+}
+
+class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, GradesVCDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var activityView: UIView!
 	@IBOutlet var tableview: UITableView!
@@ -54,6 +59,15 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		}
 
 	}
+    
+    func logout() {
+        User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "selectedStudent")
+        self.tabBarController!.navigationController!.popToRootViewControllerAnimated(false)
+        NSNotificationCenter.defaultCenter().postNotificationName("tabBarDismissed", object: nil)
+    }
 
 	func adViewDidReceiveAd(bannerView: GADBannerView!) {
 		tableViewBottomConstraint.constant = 50
@@ -143,7 +157,8 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 	}
 
 	@IBAction func refresh(sender: AnyObject) {
-		if !isRefreshing {
+        
+         if !isRefreshing {
             subjects = nil
 			refreshButton.enabled = false
 			isRefreshing = true
@@ -181,6 +196,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 				}
 			})
 		}
+ 
 	}
 
 	func pullToRefresh() {
@@ -381,6 +397,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 			let sV = segue.destinationViewController as! DetailVC
 			sV.subject = selectedSubject
 			self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-		}
+        } else if segue.identifier == "lock" {
+            let lockVC = segue.destinationViewController as! LockVC
+            lockVC.delegate = self
+        }
 	}
 }

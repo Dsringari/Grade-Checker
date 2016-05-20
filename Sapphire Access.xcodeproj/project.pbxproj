@@ -43,6 +43,7 @@
 		FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEB706D1CE52AC10065240A /* SelectStudentVC.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
+		FCF045F61CEFA90900E2DAEA /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF045F51CEFA90900E2DAEA /* LockVC.swift */; };
 		FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */; };
 		FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */; };
 /* End PBXBuildFile section */
@@ -88,6 +89,7 @@
 		FCEB706D1CE52AC10065240A /* SelectStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectStudentVC.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
+		FCF045F51CEFA90900E2DAEA /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
 		FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeVC.swift; sourceTree = "<group>"; };
 		FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +217,7 @@
 				FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */,
 				FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */,
 				FC1E26281CE1630900D14D70 /* AboutVC.swift */,
+				FCF045F51CEFA90900E2DAEA /* LockVC.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,
 				FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */,
+				FCF045F61CEFA90900E2DAEA /* LockVC.swift in Sources */,
 				FCC29A6F1CD198A1004002B5 /* SettingsVC.swift in Sources */,
 				FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */,
 				FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */,
