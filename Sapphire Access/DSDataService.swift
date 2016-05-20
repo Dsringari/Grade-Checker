@@ -212,7 +212,8 @@ class UpdateService {
 			 */
 
 			guard (self.fails.isEmpty) else {
-				NSManagedObjectContext.MR_defaultContext().reset()
+				Subject.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+                NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
 				self.completion(successful: false, error: self.fails.first!)
 				return
 			}
