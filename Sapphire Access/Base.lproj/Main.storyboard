@@ -152,17 +152,44 @@
                                         <rect key="frame" x="-10" y="-10" width="20" height="20"/>
                                         <color key="color" red="0.062745098040000002" green="0.58039215690000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </activityIndicatorView>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Failed to Load" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rgs-hK-zXy">
+                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="7XT-6y-CAe"/>
+                                            <constraint firstAttribute="height" constant="21" id="ifu-OE-dyQ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="7XT-6y-CAe"/>
+                                                <exclude reference="ifu-OE-dyQ"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="7XT-6y-CAe"/>
+                                                <include reference="ifu-OE-dyQ"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="5ed-fj-RgQ" firstAttribute="centerY" secondItem="H8e-yI-E4D" secondAttribute="centerY" id="aer-Yu-diy"/>
                                     <constraint firstItem="5ed-fj-RgQ" firstAttribute="centerX" secondItem="H8e-yI-E4D" secondAttribute="centerX" id="gQr-sL-LjK"/>
+                                    <constraint firstItem="Rgs-hK-zXy" firstAttribute="top" secondItem="H8e-yI-E4D" secondAttribute="topMargin" id="tb6-xL-4mf"/>
+                                    <constraint firstItem="Rgs-hK-zXy" firstAttribute="centerX" secondItem="5ed-fj-RgQ" secondAttribute="centerX" id="zmx-RE-8Uq"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="5ed-fj-RgQ"/>
+                                        <exclude reference="Rgs-hK-zXy"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <exclude reference="tb6-xL-4mf"/>
+                                        <exclude reference="zmx-RE-8Uq"/>
                                         <exclude reference="aer-Yu-diy"/>
                                         <exclude reference="gQr-sL-LjK"/>
                                     </mask>
@@ -170,8 +197,11 @@
                                 <variation key="widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="5ed-fj-RgQ"/>
+                                        <include reference="Rgs-hK-zXy"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <include reference="tb6-xL-4mf"/>
+                                        <include reference="zmx-RE-8Uq"/>
                                         <include reference="aer-Yu-diy"/>
                                         <include reference="gQr-sL-LjK"/>
                                     </mask>
@@ -247,6 +277,7 @@
                         <outlet property="activityIndicator" destination="5ed-fj-RgQ" id="QSM-Ec-dR2"/>
                         <outlet property="activityView" destination="H8e-yI-E4D" id="b4U-d3-dak"/>
                         <outlet property="adView" destination="jZn-lp-KrL" id="AD0-3p-hSn"/>
+                        <outlet property="failedToLoadLabel" destination="Rgs-hK-zXy" id="z1q-bx-JJI"/>
                         <outlet property="refreshButton" destination="eeJ-np-swd" id="CSl-Sq-8pi"/>
                         <outlet property="tableViewBottomConstraint" destination="Nsu-N4-Xah" id="sPe-TZ-8MX"/>
                         <outlet property="tableview" destination="cSn-ed-jQb" id="JiW-yK-pLS"/>
