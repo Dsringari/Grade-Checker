@@ -49,9 +49,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		adView.adUnitID = "ca-app-pub-9355707484240783/4024228355"
 		adView.rootViewController = self
 		adView.delegate = self
-		let request = GADRequest()
-		request.testDevices = ["d9afb8dbbc1fad53cfd16135e2255b44"]
-		adView.loadRequest(request)
+		adView.loadRequest(GADRequest())
 
 		if let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
 			self.student = student
