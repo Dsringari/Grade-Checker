@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 		MagicalRecord.cleanUp()
 	}
-
+    
 	func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
 
 		let settings = NSUserDefaults.standardUserDefaults()
@@ -116,18 +116,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				for subject in updatedSubjects {
 					if let sectionGUID = sectionGUIDs.filter({ (s: String) in return s == subject.sectionGUID }).first {
 						let index: Int = sectionGUIDs.indexOf(sectionGUID)!
-						if (dates[index].compare(subject.lastUpdated!) == NSComparisonResult.OrderedAscending) {
+						if (dates[index].compare(subject.lastUpdated!) == NSComparisonResult.OrderedDescending) {
 							aGradeWasUpdated = true
 							break
 						}
 					}
 				}
 
-				/*  Values that Trigger the Notification
-				 * The count of the old subjects with a lastUpdated value should be less than the count new subjects
-				 * Any lastUpdated value becomes newer
-				 * The count of assignments is increased
-				 */
+				/*  
+                    Values that Trigger the Notification
+                    * The count of the old subjects with a lastUpdated value should be less than the count new subjects
+				    * Any lastUpdated value becomes newer
+				    * The count of assignments is increased
+                */
 
 				if (newStudentAssignmentCount != oldStudentAssignmentCount || sectionGUIDs.count < updatedSubjects.count || aGradeWasUpdated) {
 					UIApplication.sharedApplication().cancelAllLocalNotifications()
