@@ -256,6 +256,7 @@
 				FC1E26251CE1378D00D14D70 /* Set Build number to "Development" */,
 				2976EB38A329D2F5C15F19B9 /* 📦 Embed Pods Frameworks */,
 				4642756918B28A00B4274C28 /* 📦 Copy Pods Resources */,
+				FCC4EB4B1CF523D0002A23EA /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -272,7 +273,7 @@
 		FC639F8F1C8F8FFD006C71A7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Dhruv Sringari";
 				TargetAttributes = {
@@ -391,6 +392,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		FCC4EB4B1CF523D0002A23EA /* Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabric;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 6cf60c3ad663887898f29dc3d69ddcf966c3bbdd 9af3dc2646b3e9b57e09a3f47bf78beb71f19cdf0da589842b255078bce49dcd";
 		};
 		FCC71DA71C950DD6000913D1 /* Check for Warning Tags */ = {
 			isa = PBXShellScriptBuildPhase;

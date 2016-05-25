@@ -1,4 +1,7 @@
 PODS:
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.7)
   - Google-Mobile-Ads-SDK (7.8.1)
   - Kanna (1.0.6)
   - MagicalRecord (2.3.2):
@@ -7,6 +10,8 @@ PODS:
   - Spring (1.0.3)
 
 DEPENDENCIES:
+  - Crashlytics
+  - Fabric
   - Google-Mobile-Ads-SDK
   - Kanna (~> 1.0.0)
   - MagicalRecord
@@ -23,11 +28,13 @@ CHECKOUT OPTIONS:
     :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   Google-Mobile-Ads-SDK: 3c2a6656117989469bfe7645640aa1de024a4c6c
   Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
 
-PODFILE CHECKSUM: 7afdef33e4b4b840229bef587d8b729f91f363be
+PODFILE CHECKSUM: cd1fddcb8553a5303103370991cd87e0809d2bf2
 
 COCOAPODS: 1.0.0
