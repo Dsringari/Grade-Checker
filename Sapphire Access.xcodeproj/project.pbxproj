@@ -46,6 +46,7 @@
 		FCF0E0021CF64F1A003B20D7 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0E0011CF64F1A003B20D7 /* SettingsVC.swift */; };
 		FCF0E0041CF65994003B20D7 /* ChangeStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0E0031CF65994003B20D7 /* ChangeStudentVC.swift */; };
 		FCF0E0061CF6621B003B20D7 /* StudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0E0051CF6621B003B20D7 /* StudentCell.swift */; };
+		FCF30B231CF7D4EC00055F7C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */; };
 		FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */; };
 		FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */; };
 /* End PBXBuildFile section */
@@ -94,6 +95,7 @@
 		FCF0E0011CF64F1A003B20D7 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		FCF0E0031CF65994003B20D7 /* ChangeStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeStudentVC.swift; sourceTree = "<group>"; };
 		FCF0E0051CF6621B003B20D7 /* StudentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCell.swift; sourceTree = "<group>"; };
+		FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeVC.swift; sourceTree = "<group>"; };
 		FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,6 +189,7 @@
 				FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */,
 				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
 				FC639FA61C8F8FFD006C71A7 /* Info.plist */,
+				FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */,
 			);
 			path = "Sapphire Access";
 			sourceTree = "<group>";
@@ -263,7 +266,7 @@
 				FC1E26251CE1378D00D14D70 /* Set Build number to "Development" */,
 				2976EB38A329D2F5C15F19B9 /* 📦 Embed Pods Frameworks */,
 				4642756918B28A00B4274C28 /* 📦 Copy Pods Resources */,
-				FCC4EB4B1CF523D0002A23EA /* Fabric */,
+				FCF30B211CF7D18900055F7C /* Firebase */,
 			);
 			buildRules = (
 			);
@@ -319,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC639FA51C8F8FFD006C71A7 /* LaunchScreen.storyboard in Resources */,
+				FCF30B231CF7D4EC00055F7C /* GoogleService-Info.plist in Resources */,
 				FC639FA21C8F8FFD006C71A7 /* Assets.xcassets in Resources */,
 				FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */,
 			);
@@ -400,20 +404,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
-		FCC4EB4B1CF523D0002A23EA /* Fabric */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Fabric;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 6cf60c3ad663887898f29dc3d69ddcf966c3bbdd 9af3dc2646b3e9b57e09a3f47bf78beb71f19cdf0da589842b255078bce49dcd";
-		};
 		FCC71DA71C950DD6000913D1 /* Check for Warning Tags */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -427,6 +417,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+		FCF30B211CF7D18900055F7C /* Firebase */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Firebase;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Replace this path with the path to the key you just downloaded\nJSON_FILE=./Firebase/service\\ account.json\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:793866081990:ios:3c2cdd0c65dcb559\n\ndefaults write com.google.SymbolUpload version -integer 1   # creates file if it does not exist\nJSON=$(cat \"${JSON_FILE}\")\n/usr/bin/plutil -replace \"app_${GOOGLE_APP_ID//:/_}\" -json \"${JSON}\" \"$HOME/Library/Preferences/com.google.SymbolUpload.plist\"\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -9,9 +9,7 @@
 import UIKit
 import CoreData
 import MagicalRecord
-
-import Fabric
-import Crashlytics
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Start the Magic!
 		MagicalRecord.setLoggingLevel(.Warn)
 		MagicalRecord.setupAutoMigratingCoreDataStack()
-		// Setup Fabric Crashylitcs
-		Fabric.with([Crashlytics.self])
+        
+        FIRApp.configure()
         
     
 

@@ -10,7 +10,6 @@ import Foundation
 import Kanna
 import CoreData
 import MagicalRecord
-import Crashlytics
 
 class LoginService {
 	var user: User
