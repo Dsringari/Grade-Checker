@@ -10,5 +10,6 @@ pod "MagicalRecord"
 pod 'Google-Mobile-Ads-SDK'
 pod 'Fabric'
 pod 'Crashlytics'
+pod 'StaticDataTableViewController'
 end
 

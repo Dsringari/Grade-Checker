@@ -11,6 +11,9 @@ import Kanna
 import CoreData
 import MagicalRecord
 class UpdateService {
+    
+    let kCharacterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.*+-"
+    
 	let completion: (successful: Bool, error: NSError?) -> Void
 	let session = NSURLSession.sharedSession()
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -312,7 +315,7 @@ class UpdateService {
 		var aTotalPoints: [String] = []
 		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + totalScoreIndex + "]") {
 			var text = aE.text!
-			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.+*ex").invertedSet).joinWithSeparator("")
+			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: kCharacterSet).invertedSet).joinWithSeparator("")
 			aTotalPoints.append(text)
 		}
 

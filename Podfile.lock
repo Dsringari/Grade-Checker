@@ -8,6 +8,7 @@ PODS:
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
   - Spring (1.0.3)
+  - StaticDataTableViewController (2.0.5)
 
 DEPENDENCIES:
   - Crashlytics
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - Kanna (~> 1.0.0)
   - MagicalRecord
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
+  - StaticDataTableViewController
 
 EXTERNAL SOURCES:
   Spring:
@@ -34,7 +36,8 @@ SPEC CHECKSUMS:
   Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
+  StaticDataTableViewController: 7ea8d7bc8c7f0a4e9255a320224462c7346c1d4a
 
-PODFILE CHECKSUM: cd1fddcb8553a5303103370991cd87e0809d2bf2
+PODFILE CHECKSUM: 6f8f40e73e312990f575fb03d3efe336114db151
 
 COCOAPODS: 1.0.0

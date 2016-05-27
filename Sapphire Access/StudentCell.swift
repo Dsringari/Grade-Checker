@@ -1,14 +1,15 @@
 //
-//  StudentSelectionCell.swift
-//  Grade Checker
+//  StudentCell.swift
+//  Sapphire Access
 //
-//  Created by Dhruv Sringari on 4/28/16.
+//  Created by Dhruv Sringari on 5/25/16.
 //  Copyright © 2016 Dhruv Sringari. All rights reserved.
 //
 
 import UIKit
 
-class StudentSelectionCell: UITableViewCell {
+class StudentCell: UITableViewCell {
+    
     @IBOutlet var nameLabel: UILabel!
 
     override func awakeFromNib() {
