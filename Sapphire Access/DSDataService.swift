@@ -36,7 +36,7 @@ class UpdateService {
 				NSManagedObjectContext.MR_defaultContext().refreshObject(student, mergeChanges: false)
 
 				// Courses & Grades Page Request
-				let backpackUrl = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + student.id!)!
+				let backpackUrl = NSURL(string: "http://127.0.0.1/CommunityWebPortal/Backpack/StudentClasses.cfm-STUDENT_RID=" + student.id! + ".html")! // TODO: REMOVE .HTML and change - to ?
 				let coursesPageRequest = NSMutableURLRequest(URL: backpackUrl, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 				coursesPageRequest.HTTPMethod = "GET"
 
@@ -89,7 +89,7 @@ class UpdateService {
 			for node: XMLElement in nodes {
 				let subjectAddress = node["href"]!
 				// Used to unique the subject
-				let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1].componentsSeparatedByString("=")[1]
+				let sectionGuidText = subjectAddress.componentsSeparatedByString("&")[1].componentsSeparatedByString("=")[1].stringByReplacingOccurrencesOfString(".html", withString: "") // TODO: FIX THIS TOO
 
 				let newSubject: Subject = Subject.MR_createEntityInContext(subjectContext)!
 
@@ -102,12 +102,12 @@ class UpdateService {
 					// Add the marking periods to the subject
 					newMP.subject = newSubject
 					newMP.number = String(index)
-					newMP.htmlPage = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClassGrades.cfm?STUDENT_RID=" + student.id! + "&" + "COURSE_SECTION_GUID=" + sectionGuidText + "&MP_CODE=" + newMP.number!
+					newMP.htmlPage = "http://127.0.0.1/CommunityWebPortal/Backpack/StudentClassGrades.cfm-STUDENT_RID=" + student.id! + "&" + "COURSE_SECTION_GUID=" + sectionGuidText + "&MP_CODE=" + newMP.number! + ".html" // FIXME: this also change - to ?
 					newMP.empty = NSNumber(bool: false)
 				}
 
 				newSubject.student = updatingStudent
-				newSubject.htmlPage = "https://pamet-sapphire.k12system.com" + subjectAddress // The node link includes a / before the page link so we leave the normal / off
+				newSubject.htmlPage = "http://127.0.0.1/CommunityWebPortal/Backpack/" + subjectAddress// FIXME: change to pamet-sapphire.k12system.com without ending /
 				newSubject.name = node.text!.substringToIndex(node.text!.endIndex.predecessor()) // Remove the space after the name
 				newSubject.sectionGUID = sectionGuidText
 
@@ -365,7 +365,7 @@ class RefreshLastUpdatedDates {
 	// Changes the last updated on the subjects
 	func update(completionHandler: (successful: Bool, error: NSError?) -> Void) {
 		// Get the landing page
-		let url = NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
+		let url = NSURL(string: "http://127.0.0.1/CommunityWebPortal/Backpack/StudentHome.cfm-STUDENT_RID=" + student.id! + ".html") // TODO: u know what to do :/
 		let request = NSURLRequest(URL: url!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 		session.dataTaskWithRequest(request, completionHandler: { data, response, error in
 
