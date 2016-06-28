@@ -20,6 +20,8 @@ extension Subject {
     @NSManaged var sectionGUID: String?
     @NSManaged var teacher: String?
     @NSManaged var lastUpdated: NSDate?
+    /// This is a dictionary parsed into JSON
+    @NSManaged var otherGrades: String?
     @NSManaged var markingPeriods: NSSet?
     @NSManaged var student: Student?
 

@@ -124,26 +124,24 @@ class LoginService {
 						switch (doc.title!) {
 							// This user is a student account so it has one student.
 						case " Student Backpack - Sapphire Community Web Portal ":
-							
-                            // Clear Old Students
-                            for student in self.user.students!.allObjects as! [Student] {
-                                student.MR_deleteEntity()
-                            }
-
 							// Retrieve student information from backpack screen
-							let student = Student.MR_createEntityInContext(NSManagedObjectContext.MR_defaultContext())!
+							
 							let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["title"]!.stringByReplacingOccurrencesOfString(".html", withString: "") // TODO: REMOVE ME
 							let id = i.componentsSeparatedByString("=")[1]
+                            var student = Student.MR_findFirstByAttribute("id", withValue: id, inContext: NSManagedObjectContext.MR_defaultContext())
+                            if student == nil {
+                                student = Student.MR_createEntityInContext(NSManagedObjectContext.MR_defaultContext())
+                            }
 							let name: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/a")[0]["title"]!
 							let g: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[1]")[0]["title"]!
 							let grade = g.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890").invertedSet).joinWithSeparator("")
 							let school: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[2]")[0]["title"]!
 
-							student.id = id
-							student.name = name
-							student.grade = grade
-							student.school = school
-							student.user = self.user
+							student?.id = id
+							student?.name = name
+							student?.grade = grade
+							student?.school = school
+							student?.user = self.user
 							NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
                             self.completion(successful: true, error: nil)
 							// This user is a parent
@@ -151,16 +149,21 @@ class LoginService {
                             
                             // Clear Old Students
                             // Todo: Stop Deleting Entities
-                            for student in self.user.students!.allObjects as! [Student] {
-                                student.MR_deleteEntity()
-                            }
 
 							var ids: [String] = []
 							var names: [String] = []
+                            var students: [Student] = []
 							for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/a") {
 								var id = e["href"]!
 								id = id.componentsSeparatedByString("=")[1]
                                 id = id.stringByReplacingOccurrencesOfString(".html", withString: "") // TODO: REMOVE ME WHEN RELASEING
+                                if let oldStudent = Student.MR_findFirstByAttribute("id", withValue: id, inContext: NSManagedObjectContext.MR_defaultContext()) {
+                                    students.append(oldStudent)
+                                } else {
+                                    if let newStudent = Student.MR_createEntityInContext(NSManagedObjectContext.MR_defaultContext()) {
+                                        students.append(newStudent)
+                                    }
+                                }
 								let name = e["title"]!
 								ids.append(id)
 								names.append(name)
@@ -180,12 +183,11 @@ class LoginService {
 							}
 
 							for index in 0 ... (ids.count - 1) {
-								let student = Student.MR_createEntityInContext(NSManagedObjectContext.MR_defaultContext())!
-								student.id = ids[index]
-								student.name = names[index]
-								student.grade = grades[index]
-								student.school = schools[index]
-								student.user = self.user
+								students[index].id = ids[index]
+								students[index].name = names[index]
+								students[index].grade = grades[index]
+								students[index].school = schools[index]
+								students[index].user = self.user
 							}
 							NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
 							self.completion(successful: true, error: nil)

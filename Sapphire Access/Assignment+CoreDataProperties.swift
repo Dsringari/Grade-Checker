@@ -19,6 +19,7 @@ extension Assignment {
     @NSManaged var possiblePoints: String?
     @NSManaged var totalPoints: String?
     @NSManaged var category: String?
+    @NSManaged var newUpdate: NSNumber?
     @NSManaged var markingPeriod: MarkingPeriod?
 
 }

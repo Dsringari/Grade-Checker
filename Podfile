@@ -10,6 +10,7 @@ pod "MagicalRecord"
 pod 'Google-Mobile-Ads-SDK'
 pod 'Firebase/Core'
 pod 'Firebase/Crash'
+pod 'Alamofire'
 pod 'StaticDataTableViewController'
 end
 

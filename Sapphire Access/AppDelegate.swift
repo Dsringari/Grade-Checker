@@ -25,10 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Start the Magic!
 		MagicalRecord.setLoggingLevel(.Warn)
 		MagicalRecord.setupAutoMigratingCoreDataStack()
-        
-        FIRApp.configure()
-        
-    
+
+		FIRApp.configure()
 
 		return true
 	}
@@ -107,49 +105,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				dates.append(s.lastUpdated!)
 			}
 
-			let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
-				settings.setBool(true, forKey: "updatedInBackground")
-				if (!successful) {
-					completionHandler(UIBackgroundFetchResult.Failed)
-				} else {
-					let localMOC = NSManagedObjectContext.MR_context()
-					let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntitiesWithContext(localMOC).integerValue
+			if let service = UpdateService(studentID: student.objectID) {
+				service.updateStudentInformation({ successful, error in
+					settings.setBool(true, forKey: "updatedInBackground")
+					if (!successful) {
+						completionHandler(UIBackgroundFetchResult.Failed)
+					} else {
+						let localMOC = NSManagedObjectContext.MR_context()
+						let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntitiesWithContext(localMOC).integerValue
 
-					let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "lastUpdated != nil")) as! [Subject]
+						let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "lastUpdated != nil")) as! [Subject]
 
-					var aGradeWasUpdated = false
-					for subject in updatedSubjects {
-						if let sectionGUID = sectionGUIDs.filter({ (s: String) in return s == subject.sectionGUID }).first {
-							let index: Int = sectionGUIDs.indexOf(sectionGUID)!
-							if (dates[index].compare(subject.lastUpdated!) == NSComparisonResult.OrderedDescending) {
-								aGradeWasUpdated = true
-								break
+						var aGradeWasUpdated = false
+						for subject in updatedSubjects {
+							if let sectionGUID = sectionGUIDs.filter({ (s: String) in return s == subject.sectionGUID }).first {
+								let index: Int = sectionGUIDs.indexOf(sectionGUID)!
+								if (dates[index].compare(subject.lastUpdated!) == NSComparisonResult.OrderedDescending) {
+									aGradeWasUpdated = true
+									break
+								}
 							}
+						}
+
+						/*
+						 Values that Trigger the Notification
+						 * The count of the old subjects with a lastUpdated value should be less than the count new subjects
+						 * Any lastUpdated value becomes newer
+						 * The count of assignments is increased
+						 */
+
+						if (newStudentAssignmentCount != oldStudentAssignmentCount || sectionGUIDs.count < updatedSubjects.count || aGradeWasUpdated) {
+							UIApplication.sharedApplication().cancelAllLocalNotifications()
+							let newNotification = UILocalNotification()
+							let now = NSDate()
+							newNotification.fireDate = now
+							newNotification.alertBody = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades Have Been Updated"
+							newNotification.soundName = UILocalNotificationDefaultSoundName
+							UIApplication.sharedApplication().scheduleLocalNotification(newNotification)
+							completionHandler(UIBackgroundFetchResult.NewData)
+						} else {
+							completionHandler(UIBackgroundFetchResult.NoData)
 						}
 					}
 
-					/*
-					 Values that Trigger the Notification
-					 * The count of the old subjects with a lastUpdated value should be less than the count new subjects
-					 * Any lastUpdated value becomes newer
-					 * The count of assignments is increased
-					 */
-
-					if (newStudentAssignmentCount != oldStudentAssignmentCount || sectionGUIDs.count < updatedSubjects.count || aGradeWasUpdated) {
-						UIApplication.sharedApplication().cancelAllLocalNotifications()
-						let newNotification = UILocalNotification()
-						let now = NSDate()
-						newNotification.fireDate = now
-						newNotification.alertBody = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades Have Been Updated"
-						newNotification.soundName = UILocalNotificationDefaultSoundName
-						UIApplication.sharedApplication().scheduleLocalNotification(newNotification)
-						completionHandler(UIBackgroundFetchResult.NewData)
-					} else {
-						completionHandler(UIBackgroundFetchResult.NoData)
-					}
-				}
-			})
-
+				})
+			}
 		} else {
 			completionHandler(UIBackgroundFetchResult.NoData)
 		}

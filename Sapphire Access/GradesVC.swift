@@ -12,8 +12,8 @@ import CoreData
 import GoogleMobileAds
 
 protocol GradesVCDelegate {
-    func logout() -> Void
-    func reloadData(completionHandler: () -> Void)
+	func logout() -> Void
+	func reloadData(completionHandler: () -> Void)
 }
 
 class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, GradesVCDelegate {
@@ -57,15 +57,15 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		}
 
 	}
-    
-    func logout() {
-        User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        
-        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "selectedStudent")
-        self.tabBarController!.navigationController!.popToRootViewControllerAnimated(false)
-        NSNotificationCenter.defaultCenter().postNotificationName("tabBarDismissed", object: nil)
-    }
+
+	func logout() {
+		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
+		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+
+		NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "selectedStudent")
+		self.tabBarController!.navigationController!.popToRootViewControllerAnimated(false)
+		NSNotificationCenter.defaultCenter().postNotificationName("tabBarDismissed", object: nil)
+	}
 
 	func adViewDidReceiveAd(bannerView: GADBannerView!) {
 		tableViewBottomConstraint.constant = 50
@@ -121,116 +121,124 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 	}
 
 	func loadStudent() {
-        subjects = nil
+		subjects = nil
 		self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades" // Get the first name and set it as the title
 		startLoading()
 		isRefreshing = true
-		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
-			if (successful) {
-				dispatch_async(dispatch_get_main_queue(), {
-					NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
-					self.tableview.reloadData()
-					self.updateRefreshControl()
-					self.stopLoading()
-					let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-					UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-					self.isRefreshing = false
-					NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
-				})
-			} else {
-				dispatch_async(dispatch_get_main_queue(), {
-					self.stopLoading()
-					var err = error
-					if (error!.code == NSURLErrorTimedOut) {
-						err = badConnectionError
-					}
-					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-					alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-					self.presentViewController(alert, animated: true, completion: nil)
-					self.isRefreshing = false
-					NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
-				})
-			}
-		})
+		if let service = UpdateService(studentID: student.objectID) {
+			service.updateStudentInformation({ successful, error in
+				if (successful) {
+					dispatch_async(dispatch_get_main_queue(), {
+						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
+						self.tableview.reloadData()
+						self.updateRefreshControl()
+						self.stopLoading()
+						let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+						UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+						self.isRefreshing = false
+						NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), {
+						self.stopLoading()
+						var err = error
+						if (error!.code == NSURLErrorTimedOut) {
+							err = badConnectionError
+						}
+						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+						self.presentViewController(alert, animated: true, completion: nil)
+						self.isRefreshing = false
+						NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
+					})
+				}
+			})
+		}
 	}
 
 	@IBAction func refresh(sender: AnyObject) {
-        
-         if !isRefreshing {
-            subjects = nil
+
+		if !isRefreshing {
+			subjects = nil
 			refreshButton.enabled = false
 			isRefreshing = true
 			refreshControl.beginRefreshing()
 			tableview.userInteractionEnabled = false
 			tableview.setContentOffset(CGPointMake(0, -refreshControl.frame.size.height), animated: true)
-			let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
-				if (successful) {
-					dispatch_async(dispatch_get_main_queue(), {
-						// Refresh the ui's student object
-						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
+			if let service = UpdateService(studentID: student.objectID) {
+				service.updateStudentInformation({ successful, error in
+					if (successful) {
+						dispatch_async(dispatch_get_main_queue(), {
+							// Refresh the ui's student object
+							NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
 
-						self.tableview.reloadData()
-						self.updateRefreshControl()
+							self.tableview.reloadData()
+							self.updateRefreshControl()
 
-						self.refreshControl.endRefreshing()
-						self.refreshButton.enabled = true
-						self.isRefreshing = false
-						self.tableview.userInteractionEnabled = true
-					})
-				} else {
-					dispatch_async(dispatch_get_main_queue(), {
-						self.refreshControl.endRefreshing()
-						self.refreshButton.enabled = true
-						self.isRefreshing = false
-						var err = error
-						if (error!.code == NSURLErrorTimedOut) {
-							err = badConnectionError
-						}
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: nil)
-						self.tableview.userInteractionEnabled = false
-					})
-				}
-			})
+							self.refreshControl.endRefreshing()
+							self.refreshButton.enabled = true
+							self.isRefreshing = false
+							self.tableview.userInteractionEnabled = true
+						})
+					} else {
+						dispatch_async(dispatch_get_main_queue(), {
+							self.refreshControl.endRefreshing()
+							self.refreshButton.enabled = true
+							self.isRefreshing = false
+							var err = error
+							if (error!.code == NSURLErrorTimedOut) {
+								err = badConnectionError
+							}
+							let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+							alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+							self.presentViewController(alert, animated: true, completion: nil)
+							self.tableview.userInteractionEnabled = false
+						})
+					}
+
+				})
+
+			}
 		}
- 
+
 	}
 
 	func pullToRefresh() {
 		if !isRefreshing {
-            subjects = nil
+			subjects = nil
 			isRefreshing = true
 			refreshButton.enabled = false
 			tableview.userInteractionEnabled = false
-			let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
-				if (successful) {
-					dispatch_async(dispatch_get_main_queue(), {
-						// Refresh the ui's student object
-						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
-						self.tableview.reloadData()
-						self.updateRefreshControl()
-						self.refreshControl.endRefreshing()
-						self.isRefreshing = false
-						self.refreshButton.enabled = true
-						self.tableview.userInteractionEnabled = true
-					})
-				} else {
-					dispatch_async(dispatch_get_main_queue(), {
-						self.refreshControl.endRefreshing()
-						self.isRefreshing = false
-						self.refreshButton.enabled = true
-						var err = error
-						if (error!.code == NSURLErrorTimedOut) {
-							err = badConnectionError
-						}
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: nil)
-						self.tableview.userInteractionEnabled = true
-					})
-				}
-			})
+			if let service = UpdateService(studentID: student.objectID) {
+				service.updateStudentInformation({ successful, error in
+					if (successful) {
+						dispatch_async(dispatch_get_main_queue(), {
+							// Refresh the ui's student object
+							NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
+							self.tableview.reloadData()
+							self.updateRefreshControl()
+							self.refreshControl.endRefreshing()
+							self.isRefreshing = false
+							self.refreshButton.enabled = true
+							self.tableview.userInteractionEnabled = true
+						})
+					} else {
+						dispatch_async(dispatch_get_main_queue(), {
+							self.refreshControl.endRefreshing()
+							self.isRefreshing = false
+							self.refreshButton.enabled = true
+							var err = error
+							if (error!.code == NSURLErrorTimedOut) {
+								err = badConnectionError
+							}
+							let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+							alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+							self.presentViewController(alert, animated: true, completion: nil)
+							self.tableview.userInteractionEnabled = true
+						})
+					}
+				})
+			}
 		}
 	}
 
@@ -302,7 +310,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		if (!isRefreshing) {
 			let cell = tableView.dequeueReusableCellWithIdentifier("subjectCell", forIndexPath: indexPath) as! SubjectTableViewCell
 
-            if let subject = subjects?[indexPath.row] {
+			if let subject = subjects?[indexPath.row] {
 				cell.subjectNameLabel.text = subject.name
 
 				var markingPeriods: [MarkingPeriod] = subjects![indexPath.row].markingPeriods!.allObjects as! [MarkingPeriod]
@@ -339,8 +347,8 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 				return cell
 
 			}
-            
-            return UITableViewCell()
+
+			return UITableViewCell()
 
 		}
 		return UITableViewCell()
@@ -395,9 +403,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			let sV = segue.destinationViewController as! DetailVC
 			sV.subject = selectedSubject
 			self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        } else if segue.identifier == "lock" {
-            let lockVC = segue.destinationViewController as! LockVC
-            lockVC.delegate = self
-        }
+		} else if segue.identifier == "lock" {
+			let lockVC = segue.destinationViewController as! LockVC
+			lockVC.delegate = self
+		}
 	}
 }
