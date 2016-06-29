@@ -29,7 +29,7 @@ class ChangeStudentVC: UITableViewController {
 		let nv = tabBarController!.viewControllers![0] as! UINavigationController
 		delegate = nv.viewControllers.first! as! GradesVC
         
-        let nv2 = tabBarController!.viewControllers![1] as! UINavigationController
+        let nv2 = tabBarController!.viewControllers![2] as! UINavigationController
         settingsDelegate = nv2.viewControllers.first! as! SettingsVC
 
 		students = Student.MR_findAll() as? [Student]

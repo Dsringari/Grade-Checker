@@ -45,7 +45,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
         markingPeriods = mps.filter{!$0.empty!.boolValue}.sort{Int($0.number!) < Int($1.number!)} // Only want non empty marking periods
         segmentedControl.removeAllSegments()
-        for index in 0...markingPeriods.count-1 {
+        for index in 0..<markingPeriods.count {
             segmentedControl.insertSegmentWithTitle("MP " + markingPeriods[index].number!, atIndex: index, animated: false)
         }
         selectedMPIndex = markingPeriods.count - 1

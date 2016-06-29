@@ -35,7 +35,7 @@ class LoginService {
         let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
         let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://127.0.0.1/CommunityWebPortal/Welcome.cfm.html")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
                                           cachePolicy: .UseProtocolCachePolicy,
                                           timeoutInterval: 10)
         request.HTTPMethod = "POST"
@@ -69,7 +69,7 @@ class LoginService {
 			let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
 			let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
 
-			let request = NSMutableURLRequest(URL: NSURL(string: "http://127.0.0.1/CommunityWebPortal/Welcome.cfm.html")!,
+			let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
 				cachePolicy: .UseProtocolCachePolicy,
 				timeoutInterval: 10)
 			request.HTTPMethod = "POST"
@@ -91,7 +91,7 @@ class LoginService {
 
 	func logout(completionHandler: (failed: Bool, error: NSError?) -> Void) {
 		let session = NSURLSession.sharedSession()
-		let request = NSURLRequest(URL: NSURL(string: "http://127.0.0.1/CommunityWebPortal/Welcome.cfm.html?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+		let request = NSURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
 
 		let logoutTask = session.dataTaskWithRequest(request, completionHandler: { data, response, error in
 			if (error != nil) {
@@ -107,7 +107,7 @@ class LoginService {
 
 	private func getMainPageHtml() {
 
-		let request = NSMutableURLRequest(URL: NSURL(string: "http://127.0.0.1/CommunityWebPortal/Welcome.cfm.html")!,
+		let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
 			cachePolicy: .UseProtocolCachePolicy,
 			timeoutInterval: 10.0)
 		request.HTTPMethod = "GET"
@@ -182,7 +182,7 @@ class LoginService {
 								schools.append(school)
 							}
 
-							for index in 0 ... (ids.count - 1) {
+							for index in 0 ..< ids.count {
 								students[index].id = ids[index]
 								students[index].name = names[index]
 								students[index].grade = grades[index]

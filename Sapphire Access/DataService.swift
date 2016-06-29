@@ -38,7 +38,7 @@ class UpdateService {
 	func updateStudentInformation(completion: CompletionType) {
 
 		// Load the main courses page
-		let coursesURL: String = "http://127.0.0.1/CommunityWebPortal/Backpack/StudentClasses.cfm-STUDENT_RID=" + student.id! + ".html"
+		let coursesURL: String = "http://192.168.1.3/CommunityWebPortal/Backpack/StudentClasses.cfm-STUDENT_RID=" + student.id! + ".html"
 		Alamofire.request(.GET, coursesURL)
 			.validate()
 			.response { request, response, data, error in
@@ -68,8 +68,8 @@ class UpdateService {
 
 						var errors: [NSError] = []
 						let downloadGroup = dispatch_group_create()
-						for index in 0...subjectLinks.count - 1 {
-							let address = "http://127.0.0.1/CommunityWebPortal/Backpack/" + subjectLinks[index]["href"]! // FIXME: Return to normal pleb
+						for index in 0..<subjectLinks.count {
+							let address = "http://192.168.1.3/CommunityWebPortal/Backpack/" + subjectLinks[index]["href"]! // FIXME: Return to normal pleb
 							let sectionGUID = address.componentsSeparatedByString("&")[1].componentsSeparatedByString("=")[1].stringByReplacingOccurrencesOfString(".html", withString: "") // TODO: return to normal
 
 							dispatch_group_enter(downloadGroup)
@@ -105,8 +105,10 @@ class UpdateService {
 								self.context.reset()
 								completion(successful: false, error: error)
 							} else {
-								self.context.MR_saveToPersistentStoreAndWait()
-								completion(successful: true, error: nil)
+                                self.context.MR_saveToPersistentStoreAndWait()
+                                self.refreshLastUpdatedDates({ successful, error in
+                                    completion(successful: true, error: nil) // We don't care if this fails, it's an optional method
+                                })
 							}
 						})
 					}
@@ -128,12 +130,12 @@ class UpdateService {
 						var mpURLStrings: [String] = []
 						for node in doc.xpath(mpXPath) {
 							if let mpURLString = node["href"] {
-								mpURLStrings.append("http://127.0.0.1/CommunityWebPortal/Backpack/" + mpURLString) // TODO: Return me to normal
+								mpURLStrings.append("http://192.168.1.3/CommunityWebPortal/Backpack/" + mpURLString) // TODO: Return me to normal
 							}
 						}
 
 						var markingPeriods: [MarkingPeriod] = []
-						for index in 0...mpURLStrings.count - 1 {
+						for index in 0..<mpURLStrings.count {
 							if let mp = MarkingPeriod.MR_findFirstByAttribute("htmlPage", withValue: mpURLStrings[index], inContext: self.context) {
 								mp.empty = NSNumber(bool: false)
 								markingPeriods.append(mp)
@@ -237,8 +239,8 @@ class UpdateService {
 							if let error = errors.first {
 								completion(successful: false, error: error)
 							} else {
-								completion(successful: true, error: nil)
-							}
+                                completion(successful: true, error: nil)
+                            }
 						})
 					}
 				}
@@ -358,7 +360,7 @@ class UpdateService {
 
 		// Build the assignment tuples
 		var assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)] = []
-		for index in 0 ... (aNames.count - 1) {
+		for index in 0 ..< aNames.count {
 			let newA = (aNames[safe: index], aTotalPoints[safe: index], aPossiblePoints[safe: index], aDates[safe: index], aCategories[safe: index])
 			assignments.append(newA)
 			// print(newA)
@@ -367,4 +369,76 @@ class UpdateService {
 		return (assignments, totalPoints, possiblePoints, percentGrade)
 	}
 
+	func refreshLastUpdatedDates(completion: CompletionType) {
+		// Get the landing page
+
+		Alamofire.request(.GET, "http://127.0.0.1/CommunityWebPortal/Backpack/StudentHome.cfm-STUDENT_RID=" + student.id! + ".html")
+			.validate()
+			.response(completionHandler: { request, response, data, error in
+				if (error != nil) {
+					completion(successful: false, error: error)
+					return
+				}
+
+				if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) { // BTW A PARENT ACCOUNT CAN HAVE ONLY ONE STUDENT
+					// Get all the Class Names
+					var namePath: String
+					var datePath: String
+
+					// Student Account
+					namePath = "//*[@id=\"contentPipe\"]/div[3]/table//tr/td[2]"
+					datePath = "//*[@id=\"contentPipe\"]/div[3]/table//tr/td[3]"
+
+					var names: [String] = []
+					for element in doc.xpath(namePath) {
+						let text = element.text!
+						names.append(text)
+					}
+
+					var dates: [String] = []
+					for element in doc.xpath(datePath) {
+						let text = element.text!
+						dates.append(text)
+					}
+
+					// //*[@id="contentPipe"]/div[2]/table/tbody/tr[2]/td[1]
+					// //*[@id="contentPipe"]/div[2]/table/tbody/tr[2]/td[1]
+
+					if (names.count == 0 && dates.count == 0) {
+						// Parent Account
+						namePath = "//*[@id=\"contentPipe\"]/div[2]/table//tr/td[2]"
+						datePath = "//*[@id=\"contentPipe\"]/div[2]/table//tr/td[3]"
+
+						for element in doc.xpath(namePath) {
+							let text = element.text!
+							names.append(text)
+						}
+
+						for element in doc.xpath(datePath) {
+							let text = element.text!
+							dates.append(text)
+						}
+					}
+
+					for index in 0 ..< names.count {
+						if let subject = Subject.MR_findFirstByAttribute("name", withValue: names[index], inContext: self.context) {
+							let dateString = dates[index]
+							let dateFormatter = NSDateFormatter()
+							// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
+							dateFormatter.dateFormat = "MM/dd/yy"
+							let date = dateFormatter.dateFromString(dateString)
+							subject.lastUpdated = date
+						}
+					}
+
+					self.context.MR_saveToPersistentStoreAndWait()
+					completion(successful: true, error: nil)
+
+				} else {
+					completion(successful: false, error: unknownResponseError)
+				}
+
+		})
+
+	}
 }

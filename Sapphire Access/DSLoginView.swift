@@ -123,7 +123,7 @@ class DSLoginView: UIViewController {
 	}
 
 	@IBAction func forgotPassword(sender: AnyObject) {
-		UIApplication.sharedApplication().openURL(NSURL(string: "http://127.0.0.1/CommunityWebPortal/Public/ForgotPassword.cfm")!)
+		UIApplication.sharedApplication().openURL(NSURL(string: "http://192.168.1.3/CommunityWebPortal/Public/ForgotPassword.cfm")!)
 	}
 
 	// Ask if the user wants to use touch id every time they log in with a new account
