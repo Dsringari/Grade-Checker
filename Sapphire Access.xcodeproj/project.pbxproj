@@ -18,6 +18,8 @@
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */; };
 		FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26281CE1630900D14D70 /* AboutVC.swift */; };
+		FC217FE51D242D1500B0ED9B /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */; };
+		FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217FE61D24335000B0ED9B /* ScheduleCell.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
 		FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */; };
 		FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */; };
@@ -65,6 +67,8 @@
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC1E26281CE1630900D14D70 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
+		FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
+		FC217FE61D24335000B0ED9B /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 				FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */,
 				FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */,
 				FCF0E0051CF6621B003B20D7 /* StudentCell.swift */,
+				FC217FE61D24335000B0ED9B /* ScheduleCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -218,6 +223,7 @@
 		FCC29A721CD19902004002B5 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */,
 				FCE14E551CE78114001280BC /* ContainerVC.swift */,
 				FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */,
 				FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */,
@@ -456,6 +462,7 @@
 				FCF045F61CEFA90900E2DAEA /* LockVC.swift in Sources */,
 				FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */,
 				FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */,
+				FC217FE51D242D1500B0ED9B /* ScheduleVC.swift in Sources */,
 				FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
 				FCE14E561CE78114001280BC /* ContainerVC.swift in Sources */,
@@ -469,6 +476,7 @@
 				FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */,
 				FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */,
 				FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */,
+				FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */,
 				FCF0E0021CF64F1A003B20D7 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
