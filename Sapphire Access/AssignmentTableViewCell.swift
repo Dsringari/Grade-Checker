@@ -11,6 +11,7 @@ import UIKit
 class AssignmentTableViewCell: UITableViewCell {
     @IBOutlet var assignmentNameLabel: UILabel!
     @IBOutlet var pointsGradeLabel: UILabel!
+    @IBOutlet var badge: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

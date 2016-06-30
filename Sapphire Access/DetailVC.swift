@@ -102,6 +102,10 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         assignments.sortInPlace{ $0.dateCreated!.compare($1.dateCreated!) == NSComparisonResult.OrderedDescending }
         cell.assignmentNameLabel.text = assignments[indexPath.row].name
         cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
+        
+        if assignments[indexPath.row].newUpdate.boolValue {
+            cell.badge.image = UIImage(named: "Recently Updated")!
+        }
         return cell
     }
     

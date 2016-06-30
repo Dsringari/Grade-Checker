@@ -16,10 +16,15 @@ protocol GradesVCDelegate {
 	func reloadData(completionHandler: () -> Void)
 }
 
+enum Badge {
+	case Updated
+	case Mock
+	case Both
+}
+
 class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, GradesVCDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var activityView: UIView!
-	@IBOutlet var refreshButton: UIBarButtonItem!
 	@IBOutlet var adView: GADBannerView!
 	@IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
 
@@ -31,6 +36,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 
 	var student: Student!
 	var subjects: [Subject]?
+	var badges: [Int: Badge] = [:]
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 	lazy var refreshControl: UIRefreshControl = {
 		let refreshControl = UIRefreshControl()
@@ -43,16 +49,16 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        
-        // Setup Tableview
+
+		// Setup Tableview
 		tableview.delegate = self
 		tableview.dataSource = self
-        // Setup RefreshControl
+		// Setup RefreshControl
 		self.addChildViewController(self.tableViewController)
 		self.tableViewController.tableView = self.tableview
 		self.tableViewController.refreshControl = self.refreshControl
 		updateRefreshControl()
-        // Setup Admob
+		// Setup Admob
 		adView.adSize = kGADAdSizeSmartBannerPortrait
 		adView.adUnitID = "ca-app-pub-9355707484240783/4024228355"
 		adView.rootViewController = self
@@ -60,10 +66,10 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		let request = GADRequest()
 		request.testDevices = ["9a231882e8eb1d8e2aa640a79a41bb2b"];
 		adView.loadRequest(request)
-        // Show the activity view
+		// Show the activity view
 		activityView.hidden = false
 		activityView.alpha = 1
-        // Load the subjects
+		// Load the subjects
 		if let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
 			self.student = student
 			loadStudent()
@@ -135,7 +141,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 
 	func loadStudent() {
 		subjects = nil
-        // Get the first name and set it as the title. We do this here so that the name will update when the student changes in the settings
+		// Get the first name and set it as the title. We do this here so that the name will update when the student changes in the settings
 		self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades"
 		startLoading()
 		if let service = UpdateService(studentID: student.objectID) {
@@ -167,49 +173,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		}
 	}
 
-	@IBAction func refresh(sender: AnyObject) {
-		refreshButton.enabled = false
-        // Buggy refresh control fix for ios 9
-		refreshControl.beginRefreshing()
-		if fabs(self.tableview.contentOffset.y) < CGFloat(FLT_EPSILON) {
-			UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
-				self.tableview.contentOffset = CGPointMake(0, -self.refreshControl.frame.size.height);
-				}, completion: nil)
-		}
-
-		if let service = UpdateService(studentID: student.objectID) {
-			service.updateStudentInformation({ successful, error in
-				if (successful) {
-					dispatch_async(dispatch_get_main_queue(), {
-						// Refresh the ui's student object
-						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
-						self.tableview.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-						self.refreshControl.endRefreshing()
-						self.updateRefreshControl()
-						self.refreshButton.enabled = true
-					})
-				} else {
-					dispatch_async(dispatch_get_main_queue(), {
-						self.refreshControl.endRefreshing()
-						self.refreshButton.enabled = true
-						var err = error
-						if (error!.code == NSURLErrorTimedOut) {
-							err = badConnectionError
-						}
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: nil)
-					})
-				}
-
-			})
-
-		}
-
-	}
-
 	func pullToRefresh() {
-		refreshButton.enabled = false
 		if let service = UpdateService(studentID: student.objectID) {
 			service.updateStudentInformation({ successful, error in
 				if (successful) {
@@ -219,12 +183,10 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 						self.tableview.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
 						self.refreshControl.endRefreshing()
 						self.updateRefreshControl()
-						self.refreshButton.enabled = true
 					})
 				} else {
 					dispatch_async(dispatch_get_main_queue(), {
 						self.refreshControl.endRefreshing()
-						self.refreshButton.enabled = true
 						var err = error
 						if (error!.code == NSURLErrorTimedOut) {
 							err = badConnectionError
@@ -253,15 +215,12 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		}
 
 		subjects = sMOs
+		badges.removeAll()
 
 		// Remove invalid subjects
 		for subject in subjects! {
 			var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
 			mps = mps.filter { !$0.empty!.boolValue } // filter marking periods with no assignments
-
-//			for mp in mps {
-//				print(mp.subject!.name! + " " + mp.number!)
-//			}
 
 			if mps.count == 0 { // Don't show subject if all the marking periods are empty
 				subjects!.removeObject(subject)
@@ -269,12 +228,16 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			}
 
 			mps.sortInPlace { Int($0.number!) > Int($1.number!) } // sort marking periods by descending number
-			let recentMP = mps[0]
+            
+            /*
+             
+            let recentMP = mps[0]
 			let percentgradeString = recentMP.percentGrade!.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("")
 
 			if (percentgradeString == "") { // Don't show subject if the most recent marking period with assignments has zero percent grade or strange grading
 				subjects!.removeObject(subject)
-			}
+			} 
+             */
 		}
 
 		// Sort by Most Recently Updated
@@ -299,6 +262,26 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			return s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedDescending
 
 		})
+
+		// Set which subjects have badges
+		let updatedSubjects = subjects!.filter({ (s: Subject) in
+			if let markingPeriods = s.markingPeriods?.allObjects as? [MarkingPeriod] {
+				var allAssignments: [Assignment] = []
+				for mp in markingPeriods {
+					if let assignments = mp.assignments?.allObjects as? [Assignment] {
+						allAssignments.appendContentsOf(assignments)
+					}
+				}
+				return !allAssignments.filter({ return $0.newUpdate.boolValue }).isEmpty
+			}
+
+			return false
+		})
+
+		for subject in updatedSubjects {
+			badges[subjects!.indexOf(subject)!] = .Updated
+		}
+
 		return subjects!.count
 	}
 
@@ -339,7 +322,17 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 
 			cell.lastUpdatedLabel.text = "Last Updated: " + dateString
 
-			// cell.backgroundColor = lightB
+			if let badge = badges[indexPath.row] {
+				switch badge {
+				case .Updated:
+					cell.badge.image = UIImage(named: "Recently Updated")!
+				default:
+					cell.badge.hidden = true
+				}
+			} else {
+				cell.badge.hidden = true
+			}
+
 			return cell
 
 		}
@@ -385,7 +378,6 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		UIView.animateWithDuration(0.3, animations: {
 			self.activityView.alpha = 1
 		})
-		refreshButton.enabled = false
 	}
 
 	func stopLoading() {
@@ -394,7 +386,6 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		UIView.animateWithDuration(0.3, animations: {
 			self.activityView.alpha = 0
 		})
-		refreshButton.enabled = true
 	}
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
