@@ -9,11 +9,28 @@
 import UIKit
 
 class ScheduleVC: UIViewController {
+    @IBOutlet var date: UILabel!
+    @IBOutlet var letterDay: UILabel!
+    @IBOutlet var periods: UITableView!
+    @IBOutlet var loading: UIActivityIndicatorView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    
+    func startLoadingAnimation() {
+        date.hidden = true
+        letterDay.hidden = true
+        loading.startAnimating()
+    }
+    
+    func stopLoadingAnimation() {
+        date.hidden = false
+        letterDay.hidden = false
+        loading.stopAnimating()
     }
 
     override func didReceiveMemoryWarning() {

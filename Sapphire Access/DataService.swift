@@ -18,12 +18,18 @@ class UpdateService {
 	let student: Student
 	let kCharacterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.*+-"
 	let context = NSManagedObjectContext.MR_context()
+    let firstLoad: Bool
 
 	init?(studentID: NSManagedObjectID) {
 		do {
 			let object = try context.existingObjectWithID(studentID)
 			if let s = object as? Student {
 				student = s
+                if let subs = student.subjects {
+                    firstLoad = subs.allObjects.isEmpty
+                } else {
+                    firstLoad = true
+                }
 			} else {
 				print("Failed to find student with object ID \(studentID). Could not cast NSManagedObject to Student")
 				return nil
@@ -82,20 +88,22 @@ class UpdateService {
 									dispatch_group_leave(downloadGroup)
 								})
 							} else {
-								let subject = Subject.MR_createEntityInContext(self.context)
-								subject?.htmlPage = address
-								subject?.name = names[index]
-								subject?.teacher = teachers[index]
-								subject?.room = teachers[index]
-								subject?.sectionGUID = sectionGUID
-								subject?.student = self.student
+								if let subject = Subject.MR_createEntityInContext(self.context) {
+									subject.htmlPage = address
+									subject.name = names[index]
+									subject.teacher = teachers[index]
+									subject.room = teachers[index]
+									subject.sectionGUID = sectionGUID
+									subject.student = self.student
 
-								self.updateMarkingPeriodInformation(subject!, completion: { successful, error in
-									if (error != nil) {
-										errors.append(error!)
-									}
-									dispatch_group_leave(downloadGroup)
-								})
+									self.updateMarkingPeriodInformation(subject, completion: { successful, error in
+										if (error != nil) {
+											errors.append(error!)
+										}
+										dispatch_group_leave(downloadGroup)
+									})
+								}
+
 							}
 						}
 
@@ -105,10 +113,10 @@ class UpdateService {
 								self.context.reset()
 								completion(successful: false, error: error)
 							} else {
-                                self.context.MR_saveToPersistentStoreAndWait()
-                                self.refreshLastUpdatedDates({ successful, error in
-                                    completion(successful: true, error: nil) // We don't care if this fails, it's an optional method
-                                })
+								self.context.MR_saveToPersistentStoreAndWait()
+								self.refreshLastUpdatedDates({ successful, error in
+									completion(successful: true, error: nil) // We don't care if this fails, it's an optional method
+								})
 							}
 						})
 					}
@@ -221,6 +229,7 @@ class UpdateService {
 														newA.possiblePoints = assignment.possiblePoints
 														newA.category = assignment.category
 														newA.markingPeriod = currentMP
+                                                        newA.newUpdate = !self.firstLoad
 													}
 												}
 
@@ -239,8 +248,8 @@ class UpdateService {
 							if let error = errors.first {
 								completion(successful: false, error: error)
 							} else {
-                                completion(successful: true, error: nil)
-                            }
+								completion(successful: true, error: nil)
+							}
 						})
 					}
 				}
