@@ -130,13 +130,7 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm2-qC-Ttj">
-                                                    <rect key="frame" x="0.0" y="34" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                    <color key="textColor" red="0.062745098040000002" green="0.58039215690000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AOE-VR-Xdm">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Combo Badge" translatesAutoresizingMaskIntoConstraints="NO" id="AOE-VR-Xdm">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="Dq3-w9-g4z"/>
@@ -155,42 +149,48 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bm2-qC-Ttj">
+                                                    <rect key="frame" x="0.0" y="34" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                    <color key="textColor" red="0.062745098040000002" green="0.58039215690000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="Bm2-qC-Ttj" secondAttribute="trailing" id="Ccj-Am-7LT">
                                                     <variation key="widthClass=compact" constant="0.0"/>
                                                 </constraint>
-                                                <constraint firstItem="Bm2-qC-Ttj" firstAttribute="leading" secondItem="AOE-VR-Xdm" secondAttribute="trailing" constant="16" id="eEV-cM-Ufe"/>
                                                 <constraint firstItem="AOE-VR-Xdm" firstAttribute="centerY" secondItem="gSh-RE-9oU" secondAttribute="centerY" id="pCg-BW-h3M"/>
                                                 <constraint firstItem="Bm2-qC-Ttj" firstAttribute="centerY" secondItem="ocG-2G-OZS" secondAttribute="centerY" id="pZ1-Ys-f3f"/>
                                                 <constraint firstItem="gSh-RE-9oU" firstAttribute="centerY" secondItem="ocG-2G-OZS" secondAttribute="centerY" id="qxA-5x-RBa"/>
                                                 <constraint firstItem="gSh-RE-9oU" firstAttribute="leading" secondItem="ocG-2G-OZS" secondAttribute="leadingMargin" constant="7" id="u9U-ZU-1yS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="AOE-VR-Xdm" secondAttribute="trailing" constant="70" id="uvg-fZ-wfb"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="Bm2-qC-Ttj"/>
                                                     <exclude reference="AOE-VR-Xdm"/>
+                                                    <exclude reference="Bm2-qC-Ttj"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <exclude reference="qxA-5x-RBa"/>
                                                     <exclude reference="u9U-ZU-1yS"/>
                                                     <exclude reference="pCg-BW-h3M"/>
+                                                    <exclude reference="uvg-fZ-wfb"/>
                                                     <exclude reference="Ccj-Am-7LT"/>
-                                                    <exclude reference="eEV-cM-Ufe"/>
                                                     <exclude reference="pZ1-Ys-f3f"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
-                                                    <include reference="Bm2-qC-Ttj"/>
                                                     <include reference="AOE-VR-Xdm"/>
+                                                    <include reference="Bm2-qC-Ttj"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <include reference="qxA-5x-RBa"/>
                                                     <include reference="u9U-ZU-1yS"/>
                                                     <include reference="pCg-BW-h3M"/>
+                                                    <include reference="uvg-fZ-wfb"/>
                                                     <include reference="Ccj-Am-7LT"/>
-                                                    <include reference="eEV-cM-Ufe"/>
                                                     <include reference="pZ1-Ys-f3f"/>
                                                 </mask>
                                             </variation>
@@ -321,6 +321,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.062745098040000002" green="0.58039215690000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="170" y="11" width="62" height="21"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -2652,6 +2655,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Combo Badge" width="12" height="12"/>
         <image name="Grades Icon (Active)" width="25" height="25"/>
         <image name="Grades Icon (Inactive)" width="25" height="25"/>
         <image name="Line" width="345" height="1"/>
