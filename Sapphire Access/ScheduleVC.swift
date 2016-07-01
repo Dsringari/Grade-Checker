@@ -41,7 +41,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 	func loadSchedule() {
 		startLoadingAnimation()
-		Alamofire.request(.GET, "http://192.168.1.3/CommunityWebPortal/Backpack/StudentSchedule.cfm-STUDENT_RID=\(student.id!).html")
+		Alamofire.request(.GET, "http://192.168.1.3/CommunityWebPortal/Backpack/StudentSchedule.cfm-STUDENT_RID=\(student.id!).html") // FIXME: THIS TOO
 			.validate()
 			.response(completionHandler: { request, response, data, error in
 				if (error != nil) {
@@ -54,9 +54,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 				} else {
 					if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
 						var currentDayIndex: Int? = nil
-						let datesXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody/tr[1]/th" // *[@id="contentPipe"]/div[2]/table/tbody/tr[1]
-						print(doc.title!)
-
+                        var tbody = ""
+						var datesXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr[1]//th" // *[@id="contentPipe"]/div[2]/table/tbody/tr[1] //*[@id="contentPipe"]/div[2]/table/tbody/tr[1]/th[2]
 						let today = self.today()
 						for index in 0..<doc.xpath(datesXPath).count {
 							// the first header is a blank space
@@ -69,14 +68,33 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								currentDayIndex = index
 							}
 						}
+                        
+                        if (currentDayIndex == nil) {
+                            tbody = "tbody/"
+                            datesXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr[1]//th"
+                            
+                            for index in 0..<doc.xpath(datesXPath).count {
+                                // the first header is a blank space
+                                if (index == 0) {
+                                    continue
+                                }
+                                let node = doc.xpath(datesXPath)[index]
+                                
+                                if (node.text! == today) {
+                                    currentDayIndex = index
+                                }
+                            }
+                        }
+                        
+                        
 
 						if let index = currentDayIndex {
-							let periodNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody//tr/td[\(index)]/div/div[1]/a"
+							let periodNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr/td[\(index)]/div/div[1]/a" 
 							for node in doc.xpath(periodNameXPath) {
 								self.periodNames.append(node.text!)
 							}
 
-							let teacherNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody//tr/td[\(index)]/div/div[3]"
+							let teacherNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr/td[\(index)]/div/div[3]"
 
 							for node in doc.xpath(teacherNameXPath) {
 								var text = node.text!
@@ -86,7 +104,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								self.periodTeachers.append(name)
 							}
 
-							let roomXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody//tr/td[\(index)]/div/div[4]"
+							let roomXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr/td[\(index)]/div/div[4]"
 							for node in doc.xpath(roomXPath) {
 								var text = node.text!
 								text = text.componentsSeparatedByString("DUR:")[0]
@@ -95,30 +113,37 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								self.periodRooms.append(text)
 							}
 
-							let periodXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody//tr/th[count(parent::tr/th)=1]"
+							let periodXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr/th[count(parent::tr/th)=1]"
                             let nodes = doc.xpath(periodXPath)
                             for i in 0..<nodes.count {
                                 self.periods.append(nodes[i].text!)
                             }
                             
-                            let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody/tr[2]//th[\(index + 1)]"
+                            let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr[2]//th[\(index + 1)]"
                             let text = doc.xpath(letterDayXPath)[0].text!
                             self.letterDay.text = text.substringFromIndex(text.endIndex.advancedBy(-1))
                             
                             self.tableView.reloadData()
+                            self.tableView.hidden = false
                             self.stopLoadingAnimation()
                             
                         } else {
                             self.scheduleNotFound()
+                            self.stopLoadingAnimation()
                         }
 					}
 				}
 		})
 	}
+    @IBAction func reload(sender: AnyObject) {
+        self.student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!)!
+        loadSchedule()
+    }
 
 	func scheduleNotFound() {
 		date.text = "No Schedule for Today"
         letterDay.text = ""
+        tableView.hidden = true
 	}
 
 	func today() -> String {
@@ -145,10 +170,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cString = string as String
         return String(cString[cString.startIndex]) + newString
     }
-
-	func reload() {
-		loadSchedule()
-	}
 
 	func startLoadingAnimation() {
 		date.hidden = true
