@@ -24,6 +24,11 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	var periodTeachers: [String] = []
 	var periodRooms: [String] = []
 	var periods: [String] = []
+    
+    var colorShift = 0
+    
+    // red, orange, yellow, green, teal blue, blue, purple, pink
+    var colors: [UIColor] = [UIColor(red: 255, green: 59, blue: 48),UIColor(red: 255, green: 149, blue: 0), UIColor(red:255, green: 204, blue: 0), UIColor(red: 76, green: 217, blue: 100), UIColor(red: 90, green: 200, blue: 250), UIColor(red: 0, green: 122, blue: 255), UIColor(red: 88, green: 86, blue: 214), UIColor(red: 255, green: 45, blue: 85)]
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -48,7 +53,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 					})
 				} else {
 					if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
-						var currentDayIndex: Int?
+						var currentDayIndex: Int? = nil
 						let datesXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody/tr[1]/th" // *[@id="contentPipe"]/div[2]/table/tbody/tr[1]
 						print(doc.title!)
 
@@ -66,7 +71,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 						}
 
 						if let index = currentDayIndex {
-							let index = String(index)
 							let periodNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody//tr/td[\(index)]/div/div[1]/a"
 							for node in doc.xpath(periodNameXPath) {
 								self.periodNames.append(node.text!)
@@ -91,15 +95,30 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								self.periodRooms.append(text)
 							}
 
-							print(self.periodNames, self.periodRooms, self.periodTeachers, separator: "\n")
-						}
+							let periodXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody//tr/th[count(parent::tr/th)=1]"
+                            let nodes = doc.xpath(periodXPath)
+                            for i in 0..<nodes.count {
+                                self.periods.append(nodes[i].text!)
+                            }
+                            
+                            let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/tbody/tr[2]//th[\(index + 1)]"
+                            let text = doc.xpath(letterDayXPath)[0].text!
+                            self.letterDay.text = text.substringFromIndex(text.endIndex.advancedBy(-1))
+                            
+                            self.tableView.reloadData()
+                            self.stopLoadingAnimation()
+                            
+                        } else {
+                            self.scheduleNotFound()
+                        }
 					}
 				}
 		})
 	}
 
 	func scheduleNotFound() {
-		date.text = ""
+		date.text = "No Schedule for Today"
+        letterDay.text = ""
 	}
 
 	func today() -> String {
@@ -153,11 +172,18 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
+		return periods.count
 	}
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		return UITableViewCell()
+		let cell = tableView.dequeueReusableCellWithIdentifier("period") as! ScheduleCell
+        cell.name.text = periodNames[indexPath.row]
+        cell.period.text = periods[indexPath.row]
+        cell.teacher.text = periodTeachers[indexPath.row]
+        cell.room.text = "RM: \(periodRooms[indexPath.row])"
+        cell.colorTab.backgroundColor = colors[indexPath.row % colors.count]
+        //cell.layoutMargins = UIEdgeInsetsZero
+        return cell
 	}
 
 }
