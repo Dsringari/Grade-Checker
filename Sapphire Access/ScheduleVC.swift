@@ -26,8 +26,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	var periodRooms: [String] = []
 	var periods: [String] = []
 
-	var colorShift = 0
-
 	// red, orange, yellow, green, teal blue, blue, purple, pink
 	var colors: [UIColor] = [UIColor(red: 255, green: 59, blue: 48), UIColor(red: 255, green: 149, blue: 0), UIColor(red: 255, green: 204, blue: 0), UIColor(red: 76, green: 217, blue: 100), UIColor(red: 90, green: 200, blue: 250), UIColor(red: 0, green: 122, blue: 255), UIColor(red: 88, green: 86, blue: 214), UIColor(red: 255, green: 45, blue: 85)]
 
@@ -168,11 +166,11 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	// Takes JessicaMcGroary and returns Jessica McGroary
 	func splitNames(string: NSString) -> String {
 		var newString = ""
-        
-        guard string.length != 0 else {
-            return ""
-        }
-        
+
+		guard string.length != 0 else {
+			return ""
+		}
+
 		var stop = false
 		for i in 1..<string.length {
 			let ch = string.substringWithRange(NSMakeRange(i, 1)) as NSString
@@ -219,6 +217,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		cell.teacher.text = periodTeachers[indexPath.row]
 		cell.room.text = "RM: \(periodRooms[indexPath.row])"
 		cell.colorTab.backgroundColor = colors[indexPath.row % colors.count]
+
 		return cell
 	}
 
