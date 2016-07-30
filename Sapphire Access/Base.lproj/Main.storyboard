@@ -334,7 +334,8 @@
                                                             <exclude reference="BCE-b8-6Cj"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="144" y="16" width="12" height="12"/>
                                                         <mask key="constraints">
                                                             <include reference="5Cg-yZ-s0m"/>
                                                             <include reference="BCE-b8-6Cj"/>
@@ -346,6 +347,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.062745098040000002" green="0.58039215690000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="170" y="11" width="62" height="21"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -1944,7 +1948,7 @@
                         <viewControllerLayoutGuide type="bottom" id="DQx-sM-yTp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="h7g-4t-TMs">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="400" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday, May 23" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udq-Jl-lAp">
@@ -2211,13 +2215,13 @@
                                 <exclude reference="xKx-4p-6HX"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="ctE-m2-TfT"/>
                                 <exclude reference="bdK-Xw-PJz"/>
                                 <exclude reference="lOi-cL-Wj8"/>
                                 <exclude reference="1K2-9g-I3C"/>
                                 <exclude reference="aC1-F1-CYU"/>
                                 <exclude reference="xwh-DR-G63"/>
                                 <exclude reference="y9e-HW-bVG"/>
+                                <exclude reference="ctE-m2-TfT"/>
                                 <exclude reference="I0b-O6-hCp"/>
                                 <exclude reference="pJj-8h-ICE"/>
                                 <exclude reference="sR0-qh-V7z"/>
@@ -2236,13 +2240,13 @@
                                 <include reference="xKx-4p-6HX"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="ctE-m2-TfT"/>
                                 <include reference="bdK-Xw-PJz"/>
                                 <include reference="lOi-cL-Wj8"/>
                                 <include reference="1K2-9g-I3C"/>
                                 <include reference="aC1-F1-CYU"/>
                                 <include reference="xwh-DR-G63"/>
                                 <include reference="y9e-HW-bVG"/>
+                                <include reference="ctE-m2-TfT"/>
                                 <include reference="I0b-O6-hCp"/>
                                 <include reference="pJj-8h-ICE"/>
                                 <include reference="sR0-qh-V7z"/>
