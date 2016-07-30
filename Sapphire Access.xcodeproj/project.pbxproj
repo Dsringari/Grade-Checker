@@ -52,6 +52,7 @@
 		FCF30B231CF7D4EC00055F7C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */; };
 		FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */; };
 		FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */; };
+		FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +105,7 @@
 		FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeVC.swift; sourceTree = "<group>"; };
 		FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutCell.swift; sourceTree = "<group>"; };
+		FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +239,7 @@
 				FCF0E0011CF64F1A003B20D7 /* SettingsVC.swift */,
 				FCF0E0031CF65994003B20D7 /* ChangeStudentVC.swift */,
 				FC1E26281CE1630900D14D70 /* AboutVC.swift */,
+				FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
 				FCF0E0041CF65994003B20D7 /* ChangeStudentVC.swift in Sources */,
 				FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */,
+				FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */,
 				FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */,
 				FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */,
 				FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */,

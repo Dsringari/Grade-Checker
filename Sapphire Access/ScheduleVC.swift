@@ -119,7 +119,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 								let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr[2]//th[\(index + 1)]"
 								let text = doc.xpath(letterDayXPath)[0].text!
-								self.letterDay.text = text.substringFromIndex(text.endIndex.advancedBy(-1))
+								self.letterDay.text = "Letter Day: \"" + text.substringFromIndex(text.endIndex.advancedBy(-1)) + "\""
 
 								let formatter = NSDateFormatter()
 								formatter.dateFormat = "EEEE, LLLL d"
