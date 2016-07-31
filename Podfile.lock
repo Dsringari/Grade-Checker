@@ -32,6 +32,7 @@ PODS:
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
+  - ReachabilitySwift (2.3.3)
   - Spring (1.0.3)
   - StaticDataTableViewController (2.0.5)
 
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - Firebase/Crash
   - Kanna (~> 1.0.0)
   - MagicalRecord
+  - ReachabilitySwift
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
   - StaticDataTableViewController
 
@@ -67,9 +69,10 @@ SPEC CHECKSUMS:
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   Kanna: 9f30945bbd293a609f698ea164687ccc0990ff60
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   StaticDataTableViewController: 7ea8d7bc8c7f0a4e9255a320224462c7346c1d4a
 
-PODFILE CHECKSUM: b114085fb5242738b3395d9e44858c2a6103323c
+PODFILE CHECKSUM: 6454ca2babe7e5b60337d71c28d39f20e8606e76
 
 COCOAPODS: 1.0.1

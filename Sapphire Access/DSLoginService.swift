@@ -37,7 +37,7 @@ class LoginService {
         
         let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
                                           cachePolicy: .UseProtocolCachePolicy,
-                                          timeoutInterval: 10)
+                                          timeoutInterval: 4)
         request.HTTPMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.HTTPBody = postData
@@ -71,7 +71,7 @@ class LoginService {
 
 			let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
 				cachePolicy: .UseProtocolCachePolicy,
-				timeoutInterval: 10)
+				timeoutInterval: 4)
 			request.HTTPMethod = "POST"
 			request.allHTTPHeaderFields = headers
 			request.HTTPBody = postData
@@ -109,7 +109,7 @@ class LoginService {
 
 		let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
 			cachePolicy: .UseProtocolCachePolicy,
-			timeoutInterval: 10.0)
+			timeoutInterval: 4.0)
 		request.HTTPMethod = "GET"
 
 		let session = NSURLSession.sharedSession()

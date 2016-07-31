@@ -13,7 +13,7 @@ import GoogleMobileAds
 
 protocol GradesVCDelegate {
 	func logout() -> Void
-	func reloadData(completionHandler: () -> Void)
+	func studentChanged(completionHandler: () -> Void)
 }
 
 enum Badge {
@@ -22,12 +22,21 @@ enum Badge {
 	case Both
 }
 
+enum PopUpViewType {
+    case loading
+    case noInternet
+    case noGrades
+}
+
 class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, GradesVCDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
-	@IBOutlet var activityView: UIView!
+	@IBOutlet var popUpView: UIView!
+    @IBOutlet var popUpViewText: UILabel!
+    @IBOutlet var popUpViewButton: UIButton!
 	@IBOutlet var adView: GADBannerView!
 	@IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
 
+    
 	var settingsCompletionHandler: (() -> Void)!
 
 	// Create an instance of a UITableViewController. This will host the tableview in order to solve uirefreshcontrol bugs
@@ -66,14 +75,14 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		let request = GADRequest()
 		request.testDevices = ["9a231882e8eb1d8e2aa640a79a41bb2b"];
 		adView.loadRequest(request)
-		// Show the activity view
-		activityView.hidden = false
-		activityView.alpha = 1
+		
 		// Load the subjects
 		if let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
 			self.student = student
 			loadStudent()
 		}
+        
+        popUpViewButton.addTarget(self, action: #selector(loadStudent), forControlEvents: .TouchUpInside)
 
 	}
 
@@ -126,7 +135,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		}
 	}
 
-	func reloadData(completionHandler: () -> Void) {
+	func studentChanged(completionHandler: () -> Void) {
 		settingsCompletionHandler = completionHandler
 		let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
 		let student = Student.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", argumentArray: [selectedStudentName]))
@@ -146,29 +155,25 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		startLoading()
 		if let service = UpdateService(studentID: student.objectID) {
 			service.updateStudentInformation({ successful, error in
-				if (successful) {
-					dispatch_async(dispatch_get_main_queue(), {
-						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
-						self.tableview.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-						self.updateRefreshControl()
-						self.stopLoading()
-						let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-						UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-						NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
-					})
-				} else {
-					dispatch_async(dispatch_get_main_queue(), {
-						self.stopLoading()
-						var err = error
-						if (error!.code == NSURLErrorTimedOut) {
-							err = badConnectionError
-						}
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: nil)
-						NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
-					})
-				}
+                dispatch_async(dispatch_get_main_queue(), {
+                    if (successful) {
+                        NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
+                        self.tableview.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+                        self.updateRefreshControl()
+                        self.stopLoading()
+                        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+                        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+                        NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
+					
+                    } else {
+                        self.stopLoading()
+                        if error! == noGradesError {
+                            self.showPopUpView(.noGrades)
+                        } else {
+                            self.showPopUpView(.noInternet)
+                        }
+                    }
+                })
 			})
 		}
 	}
@@ -187,13 +192,12 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 				} else {
 					dispatch_async(dispatch_get_main_queue(), {
 						self.refreshControl.endRefreshing()
-						var err = error
-						if (error!.code == NSURLErrorTimedOut) {
-							err = badConnectionError
-						}
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: nil)
+                        self.stopLoading()
+                        if error! == noGradesError {
+                            self.showPopUpView(.noGrades)
+                        } else {
+                            self.showPopUpView(.noInternet)
+                        }
 					})
 				}
 			})
@@ -374,19 +378,53 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 
 	func startLoading() {
 		activityIndicator.startAnimating()
-		activityView.hidden = false
-		UIView.animateWithDuration(0.3, animations: {
-			self.activityView.alpha = 1
-		})
+		showPopUpView(.loading)
 	}
 
 	func stopLoading() {
 		activityIndicator.stopAnimating()
-		activityView.hidden = true
-		UIView.animateWithDuration(0.3, animations: {
-			self.activityView.alpha = 0
-		})
+		hidePopUpView()
 	}
+    
+    func showPopUpView(type: PopUpViewType) {
+        
+        switch type {
+        case .loading:
+            popUpViewButton.hidden = true
+            popUpViewText.hidden = true
+            break
+        case .noInternet:
+            popUpViewButton.hidden = false
+            popUpViewText.hidden = false
+            popUpViewButton.adjustsImageWhenHighlighted = true
+            popUpViewButton.setImage(UIImage(named: "Internet Icon"), forState: .Normal)
+            popUpViewText.text = "We could not connect to the internet. Tap to retry."
+            break
+        case .noGrades:
+            popUpViewButton.hidden = false
+            popUpViewText.hidden = false
+            popUpViewButton.adjustsImageWhenHighlighted = true
+            popUpViewButton.setImage(UIImage(named: "Triangle Logo"), forState: .Normal)
+            popUpViewText.text = "No courses were found in Sapphire. Tap to retry."
+            break
+        }
+        
+        popUpView.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.popUpView.alpha = 1
+        })
+    }
+    
+    func hidePopUpView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.popUpView.alpha = 0
+        })
+        popUpView.hidden = true
+        popUpViewButton.hidden = true
+        popUpViewText.hidden = true
+    }
+    
+    
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if (segue.identifier == "subjectView") {

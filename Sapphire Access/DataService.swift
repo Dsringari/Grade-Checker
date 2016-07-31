@@ -11,6 +11,7 @@ import Kanna
 import CoreData
 import MagicalRecord
 import Alamofire
+import ReachabilitySwift
 
 typealias CompletionType = (successful: Bool, error: NSError?) -> Void
 
@@ -19,6 +20,8 @@ class UpdateService {
 	let kCharacterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.*+-"
 	let context = NSManagedObjectContext.MR_context()
     let firstLoad: Bool
+    
+    var alamofireManager: Alamofire.Manager
 
 	init?(studentID: NSManagedObjectID) {
 		do {
@@ -34,6 +37,10 @@ class UpdateService {
 				print("Failed to find student with object ID \(studentID). Could not cast NSManagedObject to Student")
 				return nil
 			}
+            
+            let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+            config.timeoutIntervalForRequest = 4
+            alamofireManager = Alamofire.Manager(configuration: config)
 		} catch let error as NSError {
 			print("Failed to find student with object ID \(studentID). Error: \(error)")
 			return nil
@@ -42,14 +49,31 @@ class UpdateService {
 	}
 
 	func updateStudentInformation(completion: CompletionType) {
+        
+        let reachability: Reachability
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            completion(successful: false, error: badConnectionError)
+            return
+        }
+        
+        guard reachability.isReachable() else {
+            completion(successful: false, error: badConnectionError)
+            return
+        }
 
 		// Load the main courses page
 		let coursesURL: String = "http://192.168.1.3/CommunityWebPortal/Backpack/StudentClasses.cfm-STUDENT_RID=" + student.id! + ".html"
-		Alamofire.request(.GET, coursesURL)
+		alamofireManager.request(.GET, coursesURL)
 			.validate()
 			.response { request, response, data, error in
-				if (error != nil) {
-					completion(successful: false, error: error)
+				if let error = error {
+                    if error.code == NSURLErrorTimedOut {
+                        completion(successful: false, error: badConnectionError)
+                    } else {
+                        completion(successful: false, error: error)
+                    }
 				} else {
 					if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
 						let subjectLinksPath = "//*[@id=\"contentPipe\"]/table//tr[@class!=\"classNotGraded\"]//td/a" // finds all the links on the visable table NOTE: DO NOT INCLUDE /tbody FOR SIMPLE TABLES WITHOUT A HEADER AND FOOTER
@@ -59,6 +83,11 @@ class UpdateService {
 						for link in subjectLinks {
 							names.append(link.text!.substringToIndex(link.text!.endIndex.predecessor())) // Remove the space after the name
 						}
+                        
+                        guard names.count != 0 else {
+                            completion(successful: false, error: noGradesError)
+                            return
+                        }
 
 						let teacherXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[2]"
 						var teachers: [String] = []
@@ -111,7 +140,11 @@ class UpdateService {
 						dispatch_group_notify(downloadGroup, dispatch_get_main_queue(), {
 							if let error = errors.first {
 								self.context.reset()
-								completion(successful: false, error: error)
+                                if error.code == NSURLErrorTimedOut {
+                                    completion(successful: false, error: badConnectionError)
+                                } else {
+                                    completion(successful: false, error: error)
+                                }
 							} else {
 								self.context.MR_saveToPersistentStoreAndWait()
 								self.refreshLastUpdatedDates({ successful, error in
@@ -125,11 +158,15 @@ class UpdateService {
 	}
 
 	func updateMarkingPeriodInformation(subject: Subject, completion: CompletionType) {
-		Alamofire.request(.GET, subject.htmlPage!)
+		alamofireManager.request(.GET, subject.htmlPage!)
 			.validate()
 			.response { request, response, data, error in
-				if (error != nil) {
-					completion(successful: false, error: error)
+				if let error = error {
+                    if error.code == NSURLErrorTimedOut {
+                        completion(successful: false, error: badConnectionError)
+                    } else {
+                        completion(successful: false, error: error)
+                    }
 				} else {
 					if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
 						let mpXPath = "//*[@id=\"contentPipe\"]/div[3]/table/tr//td[a]/a"
@@ -186,7 +223,7 @@ class UpdateService {
 						var errors: [NSError] = []
 						for mp in markingPeriods {
 							dispatch_group_enter(mpDownloadGroup)
-							Alamofire.request(.GET, mp.htmlPage!)
+							self.alamofireManager.request(.GET, mp.htmlPage!)
 								.validate()
 								.response(completionHandler: { request, response, data, error in
 									guard error == nil else {
@@ -381,7 +418,7 @@ class UpdateService {
 	func refreshLastUpdatedDates(completion: CompletionType) {
 		// Get the landing page
 
-		Alamofire.request(.GET, "http://127.0.0.1/CommunityWebPortal/Backpack/StudentHome.cfm-STUDENT_RID=" + student.id! + ".html")
+		alamofireManager.request(.GET, "http://127.0.0.1/CommunityWebPortal/Backpack/StudentHome.cfm-STUDENT_RID=" + student.id! + ".html")
 			.validate()
 			.response(completionHandler: { request, response, data, error in
 				if (error != nil) {

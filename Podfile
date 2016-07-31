@@ -12,5 +12,6 @@ pod 'Firebase/Core'
 pod 'Firebase/Crash'
 pod 'Alamofire'
 pod 'StaticDataTableViewController'
+pod 'ReachabilitySwift'
 end
 

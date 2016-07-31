@@ -42,7 +42,7 @@ class LockVC: UIViewController {
                 
 				if (successful) {
                     self.dismissViewControllerAnimated(true, completion: nil)
-                    self.delegate.reloadData({})
+                    self.delegate.studentChanged({})
 				} else {
                     var err = error
                     if (error!.code == NSURLErrorTimedOut) {

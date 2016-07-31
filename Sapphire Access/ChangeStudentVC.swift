@@ -103,7 +103,7 @@ class ChangeStudentVC: UITableViewController {
 			UIView.animateWithDuration(0.5, animations: {
                 self.view.addSubview(dimView)
 			})
-			delegate.reloadData({
+			delegate.studentChanged({
 				self.view.userInteractionEnabled = true
 				UIView.animateWithDuration(0.5, animations: {
 					dimView.removeFromSuperview()
