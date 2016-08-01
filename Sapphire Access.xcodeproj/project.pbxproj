@@ -20,6 +20,7 @@
 		FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26281CE1630900D14D70 /* AboutVC.swift */; };
 		FC217FE51D242D1500B0ED9B /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */; };
 		FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217FE61D24335000B0ED9B /* ScheduleCell.swift */; };
+		FC2800AB1D4EC04400780C3E /* ProfileSubjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
 		FC2E9B691D25D2F10066D8C4 /* ScheduleTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */; };
 		FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */; };
@@ -71,6 +72,7 @@
 		FC1E26281CE1630900D14D70 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
 		FC217FE61D24335000B0ED9B /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
+		FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSubjectCell.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
 		FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTitleCell.swift; sourceTree = "<group>"; };
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				FCF0E0051CF6621B003B20D7 /* StudentCell.swift */,
 				FC217FE61D24335000B0ED9B /* ScheduleCell.swift */,
 				FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */,
+				FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				FCE14E561CE78114001280BC /* ContainerVC.swift in Sources */,
 				FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */,
 				FC9C61531CDBFEC200442285 /* Subject.swift in Sources */,
+				FC2800AB1D4EC04400780C3E /* ProfileSubjectCell.swift in Sources */,
 				FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */,
 				FC00EC021CBDBFE700A461AC /* Student.swift in Sources */,
 				FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */,

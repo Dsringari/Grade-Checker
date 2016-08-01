@@ -121,7 +121,7 @@ class UpdateService {
 									subject.htmlPage = address
 									subject.name = names[index]
 									subject.teacher = teachers[index]
-									subject.room = teachers[index]
+									subject.room = rooms[index]
 									subject.sectionGUID = sectionGUID
 									subject.student = self.student
 

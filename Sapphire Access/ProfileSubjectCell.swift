@@ -1,20 +1,17 @@
 //
-//  ScheduleCell.swift
+//  ProfileSubjectCell.swift
 //  Sapphire Access
 //
-//  Created by Dhruv Sringari on 6/29/16.
+//  Created by Dhruv Sringari on 7/31/16.
 //  Copyright © 2016 Dhruv Sringari. All rights reserved.
 //
 
 import UIKit
 
-class ScheduleCell: UITableViewCell {
-    @IBOutlet var colorTab: UIView!
-    @IBOutlet var period: UILabel!
+class ProfileSubjectCell: UITableViewCell {
     @IBOutlet var name: UILabel!
-    @IBOutlet var teacher: UILabel!
-    @IBOutlet var room: UILabel!
-    @IBOutlet var time: UILabel!
+    @IBOutlet var percentGrade: UILabel!
+
 
     override func awakeFromNib() {
         super.awakeFromNib()

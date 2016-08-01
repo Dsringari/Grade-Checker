@@ -22,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Set default preferences
 		let appDefaults = ["setupTouchID": NSNumber(bool: true), "useTouchID": NSNumber(bool: false), "setupNotifications": NSNumber(bool: true)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
+        
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.grayColor()], forState: .Normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red: 43, green: 130, blue: 201)], forState: .Selected)
+        
 		// Start the Magic!
 		MagicalRecord.setLoggingLevel(.Warn)
 		MagicalRecord.setupAutoMigratingCoreDataStack()

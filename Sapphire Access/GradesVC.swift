@@ -83,6 +83,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		}
         
         popUpViewButton.addTarget(self, action: #selector(loadStudent), forControlEvents: .TouchUpInside)
+        popUpViewButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
 
 	}
 
@@ -388,6 +389,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     
     func showPopUpView(type: PopUpViewType) {
         
+        tableview.userInteractionEnabled=false
         switch type {
         case .loading:
             popUpViewButton.hidden = true
@@ -416,6 +418,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     }
     
     func hidePopUpView() {
+        tableview.userInteractionEnabled = true
         UIView.animateWithDuration(0.3, animations: {
             self.popUpView.alpha = 0
         })

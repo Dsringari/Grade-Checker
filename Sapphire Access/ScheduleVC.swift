@@ -25,6 +25,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	var periodTeachers: [String] = []
 	var periodRooms: [String] = []
 	var periods: [String] = []
+    var times: [String] = []
 
 	// red, orange, yellow, green, teal blue, blue, purple, pink
 	var colors: [UIColor] = [UIColor(red: 255, green: 59, blue: 48), UIColor(red: 255, green: 149, blue: 0), UIColor(red: 255, green: 204, blue: 0), UIColor(red: 76, green: 217, blue: 100), UIColor(red: 90, green: 200, blue: 250), UIColor(red: 0, green: 122, blue: 255), UIColor(red: 88, green: 86, blue: 214), UIColor(red: 255, green: 45, blue: 85)]
@@ -116,11 +117,18 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								for i in 0..<nodes.count {
 									self.periods.append(nodes[i].text!)
 								}
+                                
+                                let timeXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr/td[1]/div/div[5]"
+                                for node in doc.xpath(timeXPath) {
+                                    let text = node.text!.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "12345567890:-").invertedSet).joinWithSeparator("")
+                                    self.times.append(text)
+                                }
 
 								let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr[2]//th[\(index + 1)]"
 								let text = doc.xpath(letterDayXPath)[0].text!
 								self.letterDay.text = "Letter Day: \"" + text.substringFromIndex(text.endIndex.advancedBy(-1)) + "\""
-
+                                
+                                
 								let formatter = NSDateFormatter()
 								formatter.dateFormat = "EEEE, LLLL d"
 								self.date.text = formatter.stringFromDate(NSDate())
@@ -217,6 +225,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		cell.teacher.text = periodTeachers[indexPath.row]
 		cell.room.text = "RM: \(periodRooms[indexPath.row])"
 		cell.colorTab.backgroundColor = colors[indexPath.row % colors.count]
+        cell.time.text = times[indexPath.row]
 
 		return cell
 	}
