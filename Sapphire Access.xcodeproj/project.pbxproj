@@ -12,8 +12,6 @@
 		FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */; };
 		FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */; };
 		FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBF01CBDBDEF00A461AC /* User.swift */; };
-		FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */; };
-		FC00EC021CBDBFE700A461AC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EC001CBDBFE700A461AC /* Student.swift */; };
 		FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC06632C1CBC3AA9005D1310 /* CoreData.framework */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */; };
@@ -26,6 +24,8 @@
 		FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */; };
 		FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */; };
 		FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A3EE81D1DD71500D9BC48 /* DataService.swift */; };
+		FC4AC80C1D4FA38400D004AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */; };
+		FC4AC80D1D4FA38400D004AC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80B1D4FA38400D004AC /* Student.swift */; };
 		FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */; };
 		FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */; };
 		FC639FA21C8F8FFD006C71A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */; };
@@ -64,8 +64,6 @@
 		FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkingPeriod.swift; sourceTree = "<group>"; };
 		FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC00EBF01CBDBDEF00A461AC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FC00EC001CBDBFE700A461AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		FC06632C1CBC3AA9005D1310 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -78,6 +76,8 @@
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		FC4A3EE81D1DD71500D9BC48 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC4AC80B1D4FA38400D004AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Sapphire Access.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sapphire Access.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC639F9F1C8F8FFD006C71A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -158,12 +158,12 @@
 				FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */,
 				FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */,
 				FC00EBF01CBDBDEF00A461AC /* User.swift */,
-				FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */,
-				FC00EC001CBDBFE700A461AC /* Student.swift */,
 				FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */,
 				FC9C61511CDBFEC200442285 /* Subject.swift */,
 				FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */,
 				FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */,
+				FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */,
+				FC4AC80B1D4FA38400D004AC /* Student.swift */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -463,7 +463,6 @@
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */,
-				FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
 				FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,
@@ -480,16 +479,17 @@
 				FC9C61531CDBFEC200442285 /* Subject.swift in Sources */,
 				FC2800AB1D4EC04400780C3E /* ProfileSubjectCell.swift in Sources */,
 				FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */,
-				FC00EC021CBDBFE700A461AC /* Student.swift in Sources */,
 				FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */,
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
 				FCF0E0041CF65994003B20D7 /* ChangeStudentVC.swift in Sources */,
 				FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */,
 				FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */,
 				FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */,
+				FC4AC80D1D4FA38400D004AC /* Student.swift in Sources */,
 				FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */,
 				FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */,
 				FCF0E0021CF64F1A003B20D7 /* SettingsVC.swift in Sources */,
+				FC4AC80C1D4FA38400D004AC /* Student+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

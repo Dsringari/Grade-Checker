@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import Alamofire
 
 class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var profilePictureView: UIImageView!
     var subjects: [Subject]?
     var student: Student?
+    var studentCount: Int {
+        let count = Int(Student.MR_countOfEntities())
+        return count
+    }
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
 
     @IBOutlet var tableview: UITableView!
     
@@ -28,7 +34,6 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         // Do any additional setup after loading the view.
         loadStudent()
-        
     }
     
     func loadStudent() {
@@ -40,7 +45,39 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             subjects = student.subjects?.allObjects as? [Subject]
             subjects?.sortInPlace({s1, s2 in return s1.name! < s2.name})
         }
-        
+        startLoadingAnimation()
+        getImage(student!.id!) { image in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.profilePictureView.image = image
+                self.stopLoadingAnimation()
+            }
+        }
+    }
+    
+    func getImage(studentID: String, completion: (UIImage) -> Void) {
+        Alamofire.request(.GET, "http://192.168.1.3/CommunityWebPortal/GetPic.cfm-id=" + self.student!.id! + ".jpeg").responseData(completionHandler: {response in // TODO: Change this back ty
+            if let data = response.data {
+                completion(UIImage(data: data, scale: 1)!)
+            }
+        })
+    }
+    
+    func startLoadingAnimation() {
+        activityIndicator.startAnimating()
+        tableview.hidden = true
+        profilePictureView.hidden = true
+        nameLabel.hidden = true
+        gradeLabel.hidden = true
+        schoolLabel.hidden = true
+    }
+    
+    func stopLoadingAnimation() {
+        activityIndicator.stopAnimating()
+        tableview.hidden = false
+        profilePictureView.hidden = false
+        nameLabel.hidden = false
+        gradeLabel.hidden = false
+        schoolLabel.hidden = false
         tableview.reloadData()
     }
 
@@ -57,9 +94,17 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return section == 0 ? "" : "Courses"
     }
     
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 && studentCount == 1 ? 0.01 : UITableViewAutomaticDimension
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return section == 0 && studentCount == 1 ? 0.01 : UITableViewAutomaticDimension
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return studentCount > 1 ? 1 : 0
         } else {
             guard let subjects = subjects else {
                 return 0

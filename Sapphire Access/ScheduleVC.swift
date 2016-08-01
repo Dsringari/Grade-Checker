@@ -42,7 +42,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 	func loadSchedule() {
 		startLoadingAnimation()
-		reset()
 		Alamofire.request(.GET, "http://192.168.1.3/CommunityWebPortal/Backpack/StudentSchedule.cfm-STUDENT_RID=\(student.id!).html") // FIXME: THIS TOO
 		.validate()
 			.response(completionHandler: { request, response, data, error in
@@ -53,6 +52,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 						self.stopLoadingAnimation()
 						self.tableView.reloadData()
 					} else {
+                        
 						if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
 							var currentDayIndex: Int? = nil
 							var tbody = ""
@@ -86,8 +86,9 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 									}
 								}
 							}
-
+                            
 							if let index = currentDayIndex {
+                                self.reset()
 								let periodNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr/td[\(index)]/div/div[1]/a"
 								for node in doc.xpath(periodNameXPath) {
 									self.periodNames.append(node.text!)
@@ -169,6 +170,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		periodNames = []
 		periodRooms = []
 		periodTeachers = []
+        times = []
 	}
 
 	// Takes JessicaMcGroary and returns Jessica McGroary
@@ -225,7 +227,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		cell.teacher.text = periodTeachers[indexPath.row]
 		cell.room.text = "RM: \(periodRooms[indexPath.row])"
 		cell.colorTab.backgroundColor = colors[indexPath.row % colors.count]
-        cell.time.text = times[indexPath.row]
+        cell.time.text = times[safe: indexPath.row]
 
 		return cell
 	}

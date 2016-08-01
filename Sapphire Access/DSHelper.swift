@@ -125,6 +125,17 @@ extension UIView {
 	}
 }
 
+
+extension UIImageView {
+    public func imageFromUrl(urlString: String) {
+        if let url = NSURL(string: urlString) {
+            NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: {data, response, error in
+                self.image = UIImage(data: data!, scale: 1)
+            })
+        }
+    }
+}
+
 extension UITableViewCell {
 	func removeMargins() {
 
@@ -163,12 +174,6 @@ func relativeDateStringForDate(date: NSDate) -> String {
 		}
 	} else {
 		return "Today"
-	}
-}
-
-class EmptySegue: UIStoryboardSegue {
-	override func perform() {
-
 	}
 }
 extension UIColor {

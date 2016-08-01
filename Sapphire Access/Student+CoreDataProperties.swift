@@ -1,8 +1,8 @@
 //
 //  Student+CoreDataProperties.swift
-//  Grade Checker
+//  Sapphire Access
 //
-//  Created by Dhruv Sringari on 4/12/16.
+//  Created by Dhruv Sringari on 8/1/16.
 //  Copyright © 2016 Dhruv Sringari. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
