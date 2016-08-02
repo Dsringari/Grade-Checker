@@ -26,6 +26,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	var periodRooms: [String] = []
 	var periods: [String] = []
     var times: [String] = []
+    var currentLetterDay: String?
 
 	// red, orange, yellow, green, teal blue, blue, purple, pink
 	var colors: [UIColor] = [UIColor(red: 255, green: 59, blue: 48), UIColor(red: 255, green: 149, blue: 0), UIColor(red: 255, green: 204, blue: 0), UIColor(red: 76, green: 217, blue: 100), UIColor(red: 90, green: 200, blue: 250), UIColor(red: 0, green: 122, blue: 255), UIColor(red: 88, green: 86, blue: 214), UIColor(red: 255, green: 45, blue: 85)]
@@ -127,7 +128,10 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 								let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr[2]//th[\(index + 1)]"
 								let text = doc.xpath(letterDayXPath)[0].text!
-								self.letterDay.text = "Letter Day: \"" + text.substringFromIndex(text.endIndex.advancedBy(-1)) + "\""
+                                self.currentLetterDay = text.substringFromIndex(text.endIndex.advancedBy(-1))
+								self.letterDay.text = "Letter Day: " + self.currentLetterDay!
+                                
+                                self.tabBarController?.tabBar.items![1].badgeValue = self.currentLetterDay
                                 
                                 
 								let formatter = NSDateFormatter()
