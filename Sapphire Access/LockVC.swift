@@ -48,7 +48,7 @@ class LockVC: UIViewController {
                     if (error!.code == NSURLErrorTimedOut) {
                         err = badConnectionError
                     }
-                    let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
+                    let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedRecoverySuggestion, preferredStyle: .Alert)
                     if err == badLoginError {
                         alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
                             self.logout()

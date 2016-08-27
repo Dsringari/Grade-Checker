@@ -37,7 +37,7 @@ class LoginService {
         
         let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
                                           cachePolicy: .UseProtocolCachePolicy,
-                                          timeoutInterval: 4)
+                                          timeoutInterval: 3)
         request.HTTPMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.HTTPBody = postData
@@ -71,7 +71,7 @@ class LoginService {
 
 			let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
 				cachePolicy: .UseProtocolCachePolicy,
-				timeoutInterval: 4)
+				timeoutInterval: 3)
 			request.HTTPMethod = "POST"
 			request.allHTTPHeaderFields = headers
 			request.HTTPBody = postData
@@ -91,7 +91,7 @@ class LoginService {
 
 	func logout(completionHandler: (failed: Bool, error: NSError?) -> Void) {
 		let session = NSURLSession.sharedSession()
-		let request = NSURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 10)
+		let request = NSURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 3)
 
 		let logoutTask = session.dataTaskWithRequest(request, completionHandler: { data, response, error in
 			if (error != nil) {
@@ -109,7 +109,7 @@ class LoginService {
 
 		let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
 			cachePolicy: .UseProtocolCachePolicy,
-			timeoutInterval: 4.0)
+			timeoutInterval: 3.0)
 		request.HTTPMethod = "GET"
 
 		let session = NSURLSession.sharedSession()

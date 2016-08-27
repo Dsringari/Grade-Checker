@@ -17,7 +17,7 @@ private let badLogin = [NSLocalizedDescriptionKey: NSLocalizedString("Check Your
 let badLoginError = NSError(domain: "Bad Login", code: 1, userInfo: badLogin)
 
 // This is the NSError for a bad connection
-private let badConnection = [NSLocalizedDescriptionKey: NSLocalizedString("Slow Internet Connection", comment: ""), NSLocalizedFailureReasonErrorKey: NSLocalizedString("The process took too long.", comment: ""), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Check your internet connection", comment: "")]
+private let badConnection = [NSLocalizedDescriptionKey: NSLocalizedString("Could not connect to the Parent Portal", comment: ""), NSLocalizedFailureReasonErrorKey: NSLocalizedString("The process took too long.", comment: ""), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Check your internet connection, although this error might not be your fault.", comment: "")]
 let badConnectionError = NSError(domain: "Bad Connection", code: 1, userInfo: badConnection)
 
 private let noGrades = [NSLocalizedDescriptionKey: NSLocalizedString("No Grades Found", comment: ""), NSLocalizedFailureReasonErrorKey: NSLocalizedString("There are no subjects in parent portal.", comment: ""), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Check again later", comment: "")]

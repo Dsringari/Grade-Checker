@@ -12,15 +12,21 @@ import GoogleMobileAds
 
 class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var percentGradeLabel: UILabel!
-    @IBOutlet var pointsLabel: UILabel!
     @IBOutlet var segmentedControl: UISegmentedControl!
     @IBOutlet var toolbar: UIView!
-    var navHairLine: UIImageView!
+    @IBOutlet var percentageButton: UIButton!
+    @IBOutlet var pointsButton: UIButton!
     
+    var navHairLine: UIImageView!
     var subject: Subject!
     var markingPeriods: [MarkingPeriod]!
     var selectedMPIndex: Int!
+    var gradeViewType: GradeViewType = .Point
+    
+    enum GradeViewType {
+        case Point
+        case Percentage
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +34,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.rowHeight = 44
         self.title = subject.name
+       
         
         // Find the hairline so we can hide it
         for view in self.navigationController!.navigationBar.subviews {
@@ -52,10 +59,26 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         segmentedControl.selectedSegmentIndex = selectedMPIndex
         segmentedControl.sizeToFit()
         
-        percentGradeLabel.text = markingPeriods[selectedMPIndex].percentGrade
-        pointsLabel.text = markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!
+        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
+        pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
         
     }
+    
+    @IBAction func showPoints() {
+        gradeViewType = .Point
+        pointsButton.setBackgroundImage(UIImage(named: "SelectedViewTypeBackground"), forState: .Normal)
+        percentageButton.setBackgroundImage(nil, forState: .Normal)
+        tableView.reloadData()
+    }
+    
+    @IBAction func showPercentage() {
+        gradeViewType = .Percentage
+        percentageButton.setBackgroundImage(UIImage(named: "SelectedViewTypeBackground"), forState: .Normal)
+        pointsButton.setBackgroundImage(nil, forState: .Normal)
+        tableView.reloadData()
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -65,8 +88,8 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func segmentedControlChanged(sender: AnyObject) {
         selectedMPIndex = segmentedControl.selectedSegmentIndex
-        percentGradeLabel.text = markingPeriods[selectedMPIndex].percentGrade
-        pointsLabel.text = markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!
+        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
+        pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
         self.tableView.reloadData()
     }
     
@@ -101,12 +124,34 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // sort by date
         assignments.sortInPlace{ $0.dateCreated!.compare($1.dateCreated!) == NSComparisonResult.OrderedDescending }
         cell.assignmentNameLabel.text = assignments[indexPath.row].name
-        cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
         
-        if assignments[indexPath.row].newUpdate.boolValue {
-            cell.badge.image = UIImage(named: "Recently Updated")!
+        if (gradeViewType == .Point) {
+            cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
+        } else {
+            cell.pointsGradeLabel.text = getPercentage(assignments[indexPath.row].totalPoints!, possiblePoints: assignments[indexPath.row].possiblePoints!)
         }
+        
         return cell
+    }
+    
+    func getPercentage(totalPoints: String, possiblePoints: String) -> String {
+        let totalPointsNumber = NSDecimalNumber(string: totalPoints)
+        let possiblePointsNumber = NSDecimalNumber(string: possiblePoints)
+        
+        let numberFormatter = NSNumberFormatter()
+        numberFormatter.minimumFractionDigits = 1
+        numberFormatter.maximumFractionDigits = 1
+        numberFormatter.minimumIntegerDigits = 1
+        numberFormatter.roundingMode = .RoundHalfUp
+        numberFormatter.numberStyle = .DecimalStyle
+        
+        guard possiblePointsNumber.compare(0) != .OrderedSame else {
+            return "N/A"
+        }
+        
+        let percentage = totalPointsNumber.decimalNumberByDividingBy(possiblePointsNumber).decimalNumberByMultiplyingBy(100)
+        return numberFormatter.stringFromNumber(percentage)! + "%"
+        
     }
     
 

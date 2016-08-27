@@ -40,6 +40,7 @@ class UpdateService {
             
             let config = NSURLSessionConfiguration.defaultSessionConfiguration()
             config.timeoutIntervalForRequest = 4
+            config.requestCachePolicy = .ReloadIgnoringLocalCacheData
             alamofireManager = Alamofire.Manager(configuration: config)
 		} catch let error as NSError {
 			print("Failed to find student with object ID \(studentID). Error: \(error)")
@@ -255,7 +256,6 @@ class UpdateService {
 													if let date = assignment.date {
 														oldAssignment.dateCreated = dateFormatter.dateFromString(date)
 													}
-													oldAssignment.newUpdate = !oldAssignment.changedValues().isEmpty
 												} else {
 													if let newA = Assignment.MR_createEntityInContext(self.context) {
 														if let date = assignment.date {

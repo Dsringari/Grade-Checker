@@ -122,13 +122,64 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableview.dequeueReusableCellWithIdentifier("profileSubjectCell") as! ProfileSubjectCell
         let subject = subjects![indexPath.row]
         cell.name.text = subject.name
-        if var markingPeriods = subject.markingPeriods?.allObjects as? [MarkingPeriod] {
-            markingPeriods.sortInPlace({mp1, mp2 in return mp1.number! > mp2.number!})
-            if let mp = markingPeriods.first {
-                cell.percentGrade.text = mp.percentGrade
-            }
+        
+        if let ytd = dictionaryFromOtherGradesJSON(subject.otherGrades)?["YTD"] {
+            cell.percentGrade.text = ytd + "%"
+        } else {
+            cell.percentGrade.text = calculateAverageGrade(subject)
         }
+        
+        
         return cell
+    }
+    
+    func calculateAverageGrade(subject: Subject) -> String? {
+        guard let markingPeriods = subject.markingPeriods?.allObjects as? [MarkingPeriod] else {
+            return nil
+        }
+        
+        var total: NSDecimalNumber = 0
+        var mpCount: NSDecimalNumber = 0
+        for mp in markingPeriods {
+
+            // Remove %
+            guard let percentgradeString = mp.percentGrade?.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("") else {
+                break
+            }
+            
+            total = total.decimalNumberByAdding(NSDecimalNumber(string: percentgradeString))
+            mpCount = mpCount.decimalNumberByAdding(1)
+        }
+        
+        if let mt = dictionaryFromOtherGradesJSON(subject.otherGrades)?["MT"] {
+            mpCount = mpCount.decimalNumberByAdding(0.5)
+            total = total.decimalNumberByAdding(NSDecimalNumber(string: mt))
+        }
+        
+        if let fe = dictionaryFromOtherGradesJSON(subject.otherGrades)?["FE"] {
+            mpCount = mpCount.decimalNumberByAdding(0.5)
+            total = total.decimalNumberByAdding(NSDecimalNumber(string: fe))
+        }
+        
+        if (mpCount.doubleValue == 0) {
+            return nil
+        }
+        
+        let average = total.decimalNumberByDividingBy(mpCount)
+        return String(Int(round(average.doubleValue))) + "%"
+    }
+    
+    
+    func dictionaryFromOtherGradesJSON(string: String?) -> [String: String]? {
+        guard let jsonData = string?.dataUsingEncoding(NSUTF8StringEncoding) else {
+            return nil
+        }
+        
+        do {
+            return try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [String: String]
+        } catch {
+            return nil
+        }
     }
     
 
