@@ -23,6 +23,7 @@
 		FC2E9B691D25D2F10066D8C4 /* ScheduleTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */; };
 		FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */; };
 		FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */; };
+		FC43AC421D74CF7E00D74974 /* ScheduleTodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */; };
 		FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A3EE81D1DD71500D9BC48 /* DataService.swift */; };
 		FC4AC80C1D4FA38400D004AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */; };
 		FC4AC80D1D4FA38400D004AC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80B1D4FA38400D004AC /* Student.swift */; };
@@ -75,6 +76,7 @@
 		FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTitleCell.swift; sourceTree = "<group>"; };
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTodayCell.swift; sourceTree = "<group>"; };
 		FC4A3EE81D1DD71500D9BC48 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC4AC80B1D4FA38400D004AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				FC217FE61D24335000B0ED9B /* ScheduleCell.swift */,
 				FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */,
 				FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */,
+				FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
+				FC43AC421D74CF7E00D74974 /* ScheduleTodayCell.swift in Sources */,
 				FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,
 				FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */,

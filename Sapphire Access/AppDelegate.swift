@@ -36,12 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-		let settings = NSUserDefaults.standardUserDefaults()
-		if (settings.stringForKey("selectedStudent") != nil) {
-			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
-		} else {
-			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
-		}
 		return true
 	}
 
@@ -54,14 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 
-		let settings = NSUserDefaults.standardUserDefaults()
-
-		if (settings.stringForKey("selectedStudent") != nil) {
-			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(300)) // 5 min
-
-		} else {
-			UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
-		}
 
 		var tabBarController: UITabBarController?
 		if let containerVC = UIApplication.sharedApplication().keyWindow?.rootViewController as? ContainerVC {
@@ -91,72 +77,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationWillTerminate(application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 		MagicalRecord.cleanUp()
-	}
-
-	func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-
-		let settings = NSUserDefaults.standardUserDefaults()
-		if let selectedStudentName = settings.stringForKey("selectedStudent") {
-			let oldStudentAssignmentCount: Int = Assignment.MR_numberOfEntities().integerValue
-			let student: Student = Student.MR_findFirstByAttribute("name", withValue: selectedStudentName)!
-			var oldSubjects: [Subject] = Subject.MR_findAll()! as! [Subject]
-
-			oldSubjects = oldSubjects.filter({ $0.lastUpdated != nil })
-			var sectionGUIDs: [String] = []
-			var dates: [NSDate] = []
-			for s in oldSubjects {
-				sectionGUIDs.append(s.sectionGUID!)
-				dates.append(s.lastUpdated!)
-			}
-
-			if let service = UpdateService(studentID: student.objectID) {
-				service.updateStudentInformation({ successful, error in
-					settings.setBool(true, forKey: "updatedInBackground")
-					if (!successful) {
-						completionHandler(UIBackgroundFetchResult.Failed)
-					} else {
-						let localMOC = NSManagedObjectContext.MR_context()
-						let newStudentAssignmentCount: Int = Assignment.MR_numberOfEntitiesWithContext(localMOC).integerValue
-
-						let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "lastUpdated != nil")) as! [Subject]
-
-						var aGradeWasUpdated = false
-						for subject in updatedSubjects {
-							if let sectionGUID = sectionGUIDs.filter({ (s: String) in return s == subject.sectionGUID }).first {
-								let index: Int = sectionGUIDs.indexOf(sectionGUID)!
-								if (dates[index].compare(subject.lastUpdated!) == NSComparisonResult.OrderedDescending) {
-									aGradeWasUpdated = true
-									break
-								}
-							}
-						}
-
-						/*
-						 Values that Trigger the Notification
-						 * The count of the old subjects with a lastUpdated value should be less than the count new subjects
-						 * Any lastUpdated value becomes newer
-						 * The count of assignments is increased
-						 */
-
-						if (newStudentAssignmentCount != oldStudentAssignmentCount || sectionGUIDs.count < updatedSubjects.count || aGradeWasUpdated) {
-							UIApplication.sharedApplication().cancelAllLocalNotifications()
-							let newNotification = UILocalNotification()
-							let now = NSDate()
-							newNotification.fireDate = now
-							newNotification.alertBody = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades Have Been Updated"
-							newNotification.soundName = UILocalNotificationDefaultSoundName
-							UIApplication.sharedApplication().scheduleLocalNotification(newNotification)
-							completionHandler(UIBackgroundFetchResult.NewData)
-						} else {
-							completionHandler(UIBackgroundFetchResult.NoData)
-						}
-					}
-
-				})
-			}
-		} else {
-			completionHandler(UIBackgroundFetchResult.NoData)
-		}
 	}
 }
 

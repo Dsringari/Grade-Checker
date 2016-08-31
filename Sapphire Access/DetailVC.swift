@@ -13,19 +13,28 @@ import GoogleMobileAds
 class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var segmentedControl: UISegmentedControl!
+    @IBOutlet var sortingSegmentedControl: UISegmentedControl!
     @IBOutlet var toolbar: UIView!
     @IBOutlet var percentageButton: UIButton!
     @IBOutlet var pointsButton: UIButton!
+    @IBOutlet var toolbarHeight: NSLayoutConstraint!
     
     var navHairLine: UIImageView!
     var subject: Subject!
     var markingPeriods: [MarkingPeriod]!
+    var categories: [String] = []
     var selectedMPIndex: Int!
     var gradeViewType: GradeViewType = .Point
+    var sortMethod: Sorting = .Recent
     
     enum GradeViewType {
         case Point
         case Percentage
+    }
+    
+    enum Sorting {
+        case Recent
+        case Category
     }
 
     override func viewDidLoad() {
@@ -58,7 +67,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         selectedMPIndex = markingPeriods.count - 1
         segmentedControl.selectedSegmentIndex = selectedMPIndex
         segmentedControl.sizeToFit()
-        
+        calculateCategories(markingPeriodIndex: selectedMPIndex)
         percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
         pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
         
@@ -88,39 +97,113 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func segmentedControlChanged(sender: AnyObject) {
         selectedMPIndex = segmentedControl.selectedSegmentIndex
+        calculateCategories(markingPeriodIndex: selectedMPIndex)
         percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
         pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
         self.tableView.reloadData()
     }
     
     
+    @IBAction func showHideFilterOptions(sender: AnyObject) {
+        showOrHideOptions()
+    }
+    
+    func showOrHideOptions(delay: Double = 0) {
+        if toolbarHeight.constant == 44 {
+            self.toolbarHeight.constant = 80
+        } else {
+            self.toolbarHeight.constant = 44
+        }
+        
+        UIView.animateWithDuration(0.5, delay: delay, usingSpringWithDamping: 0.66, initialSpringVelocity: 1, options: [], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    @IBAction func sortingMethodChanged(sender: AnyObject) {
+        if sortingSegmentedControl.selectedSegmentIndex == 0 {
+            sortMethod = .Recent
+        } else {
+            sortMethod = .Category
+        }
+        showOrHideOptions(0.33)
+        self.tableView.reloadData()
+    }
+    
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return sortMethod == .Recent ? 1 : categories.count
     }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        view.tintColor = UIColor(colorLiteralRed: 86/255, green: 100/255, blue: 115/255, alpha: 1.0)
-//        let header = view as! UITableViewHeaderFooterView
-//        header.textLabel!.textColor = UIColor.whiteColor()
+        let header = view as! UITableViewHeaderFooterView
+        header.contentView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if sortMethod == .Category {
+            let header = UITableViewHeaderFooterView(frame: CGRectMake(0,0,tableView.frame.size.width,10))
+        
+            let totalLabel: UILabel = UILabel()
+            let totals = totalScore(categories[section])
+        
+            if (gradeViewType == .Point) {
+                totalLabel.text = totals.totalPoints + "/" + totals.possiblePoints
+            } else {
+                totalLabel.text = percentage(totals.totalPoints, possiblePoints: totals.possiblePoints)
+            }
+            
+            totalLabel.textColor = UIColor.lightGrayColor()
+
+        
+            totalLabel.translatesAutoresizingMaskIntoConstraints = false
+            header.addSubview(totalLabel)
+        
+            NSLayoutConstraint(item: totalLabel, attribute: .Trailing, relatedBy: .Equal, toItem: header, attribute: .TrailingMargin, multiplier: 1, constant: 8).active = true
+            NSLayoutConstraint(item: totalLabel, attribute: .CenterY, relatedBy: .Equal, toItem: header, attribute: .CenterY, multiplier: 1, constant: 0).active = true
+            return header
+        }
+        
+        return nil
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Assignments"
+        return sortMethod == .Recent ? "Assignments" : categories[section].capitalizedString
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let assignments: [Assignment] = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
-        return assignments.count
+        if sortMethod == .Recent {
+            let assignments: [Assignment] = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
+            return assignments.count
+        } else {
+            let category = categories[section]
+            var assignments = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
+            assignments = assignments.filter{return $0.category == category}
+            return assignments.count
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 44
     }
     
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("assignmentCell", forIndexPath: indexPath) as! AssignmentTableViewCell
         let mp = markingPeriods[selectedMPIndex]
-        var assignments: [Assignment] = mp.assignments!.allObjects as! [Assignment]
+        
+        var assignments: [Assignment]
+        if sortMethod == .Recent {
+            assignments = mp.assignments!.allObjects as! [Assignment]
+        } else {
+            let category = categories[indexPath.section]
+            assignments = mp.assignments!.allObjects as! [Assignment]
+            assignments = assignments.filter{return $0.category == category}
+        }
+        
         // sort by date
         assignments.sortInPlace{ $0.dateCreated!.compare($1.dateCreated!) == NSComparisonResult.OrderedDescending }
         cell.assignmentNameLabel.text = assignments[indexPath.row].name
@@ -128,13 +211,13 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if (gradeViewType == .Point) {
             cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
         } else {
-            cell.pointsGradeLabel.text = getPercentage(assignments[indexPath.row].totalPoints!, possiblePoints: assignments[indexPath.row].possiblePoints!)
+            cell.pointsGradeLabel.text = percentage(assignments[indexPath.row].totalPoints!, possiblePoints: assignments[indexPath.row].possiblePoints!)
         }
         
         return cell
     }
     
-    func getPercentage(totalPoints: String, possiblePoints: String) -> String {
+    func percentage(totalPoints: String, possiblePoints: String) -> String {
         let totalPointsNumber = NSDecimalNumber(string: totalPoints)
         let possiblePointsNumber = NSDecimalNumber(string: possiblePoints)
         
@@ -152,6 +235,59 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let percentage = totalPointsNumber.decimalNumberByDividingBy(possiblePointsNumber).decimalNumberByMultiplyingBy(100)
         return numberFormatter.stringFromNumber(percentage)! + "%"
         
+    }
+    
+    @IBAction func showFilterView(sender: AnyObject) {
+        let alert = UIAlertController(title: "Sorting Method", message: "Choose a method to sort the assignments.", preferredStyle: .Alert)
+        let recent = UIAlertAction(title: "Most Recent", style: .Default) { [unowned self] action in
+            self.sortMethod = .Recent
+            self.tableView.reloadData()
+        }
+        let category = UIAlertAction(title: "Category", style: .Default) { [unowned self] action in
+            self.sortMethod = .Category
+            self.tableView.reloadData()
+        }
+        alert.addAction(recent)
+        alert.addAction(category)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    func calculateCategories(markingPeriodIndex num: Int) {
+        let mp = markingPeriods[num]
+        
+        let assignments = mp.assignments!.allObjects as! [Assignment]
+        
+        var categories: [String] = []
+        for a in assignments {
+            if let category = a.category where categories.indexOf(category) == nil {
+                categories.append(category)
+            }
+        }
+        
+        categories.sortInPlace{$0 > $1}
+        self.categories = categories
+    }
+    
+    func totalScore(category: String) -> (totalPoints: String, possiblePoints: String) {
+        var assignments = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
+        assignments = assignments.filter{$0.category == category}
+        
+        var total: NSDecimalNumber = 0
+        var possible: NSDecimalNumber = 0
+        for a in assignments {
+            
+            let totalPoints = NSDecimalNumber(string: a.totalPoints)
+            guard totalPoints.doubleValue.isNaN != true else {
+                possible = possible.decimalNumberByAdding(NSDecimalNumber(string: a.possiblePoints))
+                break
+            }
+            
+            total = total.decimalNumberByAdding(NSDecimalNumber(string: a.totalPoints))
+            possible = possible.decimalNumberByAdding(NSDecimalNumber(string: a.possiblePoints))
+        }
+        
+        return (total.stringValue, possible.stringValue)
     }
     
 

@@ -11,8 +11,8 @@ import Alamofire
 import Kanna
 
 class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-	@IBOutlet var date: UILabel!
-	@IBOutlet var letterDay: UILabel!
+	var date: String?
+	var letterDay: String?
 	@IBOutlet var tableView: UITableView!
 	@IBOutlet var loading: UIActivityIndicatorView!
 	@IBOutlet var errorView: UIView!
@@ -48,8 +48,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 			.response(completionHandler: { request, response, data, error in
 				dispatch_async(dispatch_get_main_queue(), {
 					if (error != nil) {
-						self.date.text = "Error!"
-						self.letterDay.text = error?.description
+						self.date = "Error!"
+						self.letterDay = error?.description
 						self.stopLoadingAnimation()
 						self.tableView.reloadData()
 					} else {
@@ -129,14 +129,14 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr[2]//th[\(index + 1)]"
 								let text = doc.xpath(letterDayXPath)[0].text!
                                 self.currentLetterDay = text.substringFromIndex(text.endIndex.advancedBy(-1))
-								self.letterDay.text = "Letter Day: " + self.currentLetterDay!
+								self.letterDay = "Letter Day: " + self.currentLetterDay!
                                 
                                 self.tabBarController?.tabBar.items![1].badgeValue = self.currentLetterDay
                                 
                                 
 								let formatter = NSDateFormatter()
 								formatter.dateFormat = "EEEE, LLLL d"
-								self.date.text = formatter.stringFromDate(NSDate())
+								self.date = formatter.stringFromDate(NSDate())
 
 								self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
 								self.tableView.hidden = false
@@ -157,10 +157,11 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func scheduleNotFound() {
-		date.text = ""
-		letterDay.text = ""
+		date = ""
+		letterDay = ""
 		tableView.hidden = true
 		errorView.hidden = false
+        tableView.reloadData()
 	}
 
 	func today() -> String {
@@ -199,15 +200,13 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func startLoadingAnimation() {
-		date.hidden = true
-		letterDay.hidden = true
+		tableView.hidden = true
 		loading.startAnimating()
 		errorView.hidden = true
 	}
 
 	func stopLoadingAnimation() {
-		date.hidden = false
-		letterDay.hidden = false
+		tableView.hidden = false
 		loading.stopAnimating()
 	}
 
@@ -221,17 +220,31 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return periods.count
+		return periods.count + 1
 	}
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return (indexPath.row == 0) ? 95 : 75
+    }
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("today") as! ScheduleTodayCell
+            cell.date.text = date
+            cell.letterDay.text = letterDay
+            cell.separatorInset = UIEdgeInsetsMake(0, 10000, 0, 0)
+            cell.indentationWidth = 10000 * -1
+            cell.indentationLevel = 1
+            return cell
+        }
+        
 		let cell = tableView.dequeueReusableCellWithIdentifier("period") as! ScheduleCell
-		cell.name.text = periodNames[indexPath.row]
-		cell.period.text = periods[indexPath.row]
-		cell.teacher.text = periodTeachers[indexPath.row]
-		cell.room.text = "RM: \(periodRooms[indexPath.row])"
-		cell.colorTab.backgroundColor = colors[indexPath.row % colors.count]
-        cell.time.text = times[safe: indexPath.row]
+		cell.name.text = periodNames[indexPath.row - 1]
+		cell.period.text = periods[indexPath.row - 1]
+		cell.teacher.text = periodTeachers[indexPath.row - 1]
+		cell.room.text = "RM: \(periodRooms[indexPath.row - 1])"
+		cell.colorTab.backgroundColor = colors[(indexPath.row - 1) % colors.count]
+        cell.time.text = times[safe: indexPath.row - 1]
 
 		return cell
 	}
