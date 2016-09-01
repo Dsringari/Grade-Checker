@@ -26,6 +26,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var selectedMPIndex: Int!
     var gradeViewType: GradeViewType = .Point
     var sortMethod: Sorting = .Recent
+    var assignmentsToSetOld: [Assignment] = []
     
     enum GradeViewType {
         case Point
@@ -71,6 +72,13 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
         pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        for a in assignmentsToSetOld {
+            a.newUpdate = NSNumber(bool: false)
+        }
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
     }
     
     @IBAction func showPoints() {
@@ -214,6 +222,16 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.pointsGradeLabel.text = percentage(assignments[indexPath.row].totalPoints!, possiblePoints: assignments[indexPath.row].possiblePoints!)
         }
         
+        if assignments[indexPath.row].newUpdate.boolValue {
+            cell.badge.image = UIImage(named: "Recently Updated")!
+            if assignmentsToSetOld.indexOf(assignments[indexPath.row]) == nil {
+                assignmentsToSetOld.append(assignments[indexPath.row])
+            }
+        } else {
+            cell.badge.image = nil
+        }
+
+        
         return cell
     }
     
@@ -235,21 +253,6 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let percentage = totalPointsNumber.decimalNumberByDividingBy(possiblePointsNumber).decimalNumberByMultiplyingBy(100)
         return numberFormatter.stringFromNumber(percentage)! + "%"
         
-    }
-    
-    @IBAction func showFilterView(sender: AnyObject) {
-        let alert = UIAlertController(title: "Sorting Method", message: "Choose a method to sort the assignments.", preferredStyle: .Alert)
-        let recent = UIAlertAction(title: "Most Recent", style: .Default) { [unowned self] action in
-            self.sortMethod = .Recent
-            self.tableView.reloadData()
-        }
-        let category = UIAlertAction(title: "Category", style: .Default) { [unowned self] action in
-            self.sortMethod = .Category
-            self.tableView.reloadData()
-        }
-        alert.addAction(recent)
-        alert.addAction(category)
-        presentViewController(alert, animated: true, completion: nil)
     }
     
     

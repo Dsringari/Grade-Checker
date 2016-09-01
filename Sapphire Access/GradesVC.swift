@@ -81,6 +81,11 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout), name: "logout", object: nil)
 
 	}
+    
+    override func viewDidAppear(animated: Bool) {
+        subjects = student.subjects?.allObjects as? [Subject]
+        tableview.reloadData()
+    }
 
 	func logout() {
 		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
@@ -235,6 +240,28 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			return s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedDescending
 
 		})
+        
+        
+        // Set which subjects have badges
+        let updatedSubjects = subjects!.filter({ (s: Subject) in
+            if let markingPeriods = s.markingPeriods?.allObjects as? [MarkingPeriod] {
+                var allAssignments: [Assignment] = []
+                for mp in markingPeriods {
+                    if let assignments = mp.assignments?.allObjects as? [Assignment] {
+                        allAssignments.appendContentsOf(assignments)
+                    }
+                }
+                return !allAssignments.filter({ return $0.newUpdate.boolValue }).isEmpty
+            }
+            
+            return false
+        })
+        
+        for subject in updatedSubjects {
+            badges[subjects!.indexOf(subject)!] = .Updated
+        }
+
+        
 
 		return subjects!.count
 	}
@@ -272,6 +299,19 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			}
 
 			cell.lastUpdatedLabel.text = "Last Updated: " + dateString
+            
+            if let badge = badges[indexPath.row] {
+                switch badge {
+                case .Updated:
+                    cell.badge.hidden = false
+                    cell.badge.image = UIImage(named: "Recently Updated")!
+                default:
+                    cell.badge.hidden = true
+                }
+            } else {
+                cell.badge.hidden = true
+            }
+
 
 			return cell
 
