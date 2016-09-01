@@ -13,6 +13,8 @@
 		FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */; };
 		FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBF01CBDBDEF00A461AC /* User.swift */; };
 		FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC06632C1CBC3AA9005D1310 /* CoreData.framework */; };
+		FC07DC591D788C6500B5F3F5 /* ProfileStudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */; };
+		FC07DC5B1D78990C00B5F3F5 /* SwitchStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */; };
 		FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26281CE1630900D14D70 /* AboutVC.swift */; };
@@ -48,12 +50,8 @@
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 		FCF045F61CEFA90900E2DAEA /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF045F51CEFA90900E2DAEA /* LockVC.swift */; };
 		FCF0E0001CF646B0003B20D7 /* StaticDataTableViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF0DFFF1CF646B0003B20D7 /* StaticDataTableViewController.framework */; };
-		FCF0E0021CF64F1A003B20D7 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0E0011CF64F1A003B20D7 /* SettingsVC.swift */; };
-		FCF0E0041CF65994003B20D7 /* ChangeStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0E0031CF65994003B20D7 /* ChangeStudentVC.swift */; };
-		FCF0E0061CF6621B003B20D7 /* StudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF0E0051CF6621B003B20D7 /* StudentCell.swift */; };
 		FCF30B231CF7D4EC00055F7C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */; };
 		FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */; };
-		FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */; };
 		FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +64,8 @@
 		FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC00EBF01CBDBDEF00A461AC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FC06632C1CBC3AA9005D1310 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileStudentCell.swift; sourceTree = "<group>"; };
+		FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchStudentVC.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC1E26281CE1630900D14D70 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
@@ -103,12 +103,8 @@
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		FCF045F51CEFA90900E2DAEA /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
 		FCF0DFFF1CF646B0003B20D7 /* StaticDataTableViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StaticDataTableViewController.framework; path = "Pods/../build/Debug-iphoneos/StaticDataTableViewController/StaticDataTableViewController.framework"; sourceTree = "<group>"; };
-		FCF0E0011CF64F1A003B20D7 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
-		FCF0E0031CF65994003B20D7 /* ChangeStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeStudentVC.swift; sourceTree = "<group>"; };
-		FCF0E0051CF6621B003B20D7 /* StudentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCell.swift; sourceTree = "<group>"; };
 		FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeVC.swift; sourceTree = "<group>"; };
-		FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutCell.swift; sourceTree = "<group>"; };
 		FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,12 +217,11 @@
 				FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */,
 				FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */,
 				FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */,
-				FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */,
-				FCF0E0051CF6621B003B20D7 /* StudentCell.swift */,
 				FC217FE61D24335000B0ED9B /* ScheduleCell.swift */,
 				FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */,
 				FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */,
 				FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */,
+				FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -242,8 +237,7 @@
 				FCF045F51CEFA90900E2DAEA /* LockVC.swift */,
 				FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */,
 				FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */,
-				FCF0E0011CF64F1A003B20D7 /* SettingsVC.swift */,
-				FCF0E0031CF65994003B20D7 /* ChangeStudentVC.swift */,
+				FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */,
 				FC1E26281CE1630900D14D70 /* AboutVC.swift */,
 				FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */,
 			);
@@ -457,9 +451,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCF0E0061CF6621B003B20D7 /* StudentCell.swift in Sources */,
+				FC07DC5B1D78990C00B5F3F5 /* SwitchStudentVC.swift in Sources */,
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
-				FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */,
 				FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */,
 				FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */,
 				FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */,
@@ -476,6 +469,7 @@
 				FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */,
 				FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */,
 				FC217FE51D242D1500B0ED9B /* ScheduleVC.swift in Sources */,
+				FC07DC591D788C6500B5F3F5 /* ProfileStudentCell.swift in Sources */,
 				FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
 				FCE14E561CE78114001280BC /* ContainerVC.swift in Sources */,
@@ -485,14 +479,12 @@
 				FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */,
 				FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */,
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
-				FCF0E0041CF65994003B20D7 /* ChangeStudentVC.swift in Sources */,
 				FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */,
 				FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */,
 				FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */,
 				FC4AC80D1D4FA38400D004AC /* Student.swift in Sources */,
 				FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */,
 				FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */,
-				FCF0E0021CF64F1A003B20D7 /* SettingsVC.swift in Sources */,
 				FC4AC80C1D4FA38400D004AC /* Student+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

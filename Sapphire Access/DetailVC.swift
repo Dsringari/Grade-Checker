@@ -280,7 +280,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let totalPoints = NSDecimalNumber(string: a.totalPoints)
             guard totalPoints.doubleValue.isNaN != true else {
                 possible = possible.decimalNumberByAdding(NSDecimalNumber(string: a.possiblePoints))
-                break
+                continue
             }
             
             total = total.decimalNumberByAdding(NSDecimalNumber(string: a.totalPoints))

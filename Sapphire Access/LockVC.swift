@@ -15,7 +15,6 @@ class LockVC: UIViewController {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 
 	var user: User!
-    var delegate: GradesVCDelegate!
     
 
 	override func viewDidLoad() {
@@ -26,7 +25,7 @@ class LockVC: UIViewController {
 			self.continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
 		}
 	}
-
+    
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -42,7 +41,7 @@ class LockVC: UIViewController {
                 
 				if (successful) {
                     self.dismissViewControllerAnimated(true, completion: nil)
-                    self.delegate.studentChanged({})
+                    NSNotificationCenter.defaultCenter().postNotificationName("loadStudent", object: nil)
 				} else {
                     var err = error
                     if (error!.code == NSURLErrorTimedOut) {
@@ -130,9 +129,7 @@ class LockVC: UIViewController {
     }
     
     func logout() {
-        dismissViewControllerAnimated(true, completion: {
-            self.delegate.logout()
-        })
+        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: self)
     }
 
 

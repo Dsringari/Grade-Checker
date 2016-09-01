@@ -11,11 +11,6 @@ import MagicalRecord
 import CoreData
 import GoogleMobileAds
 
-protocol GradesVCDelegate {
-	func logout() -> Void
-	func studentChanged(completionHandler: () -> Void)
-}
-
 enum Badge {
 	case Updated
 	case Mock
@@ -28,7 +23,7 @@ enum PopUpViewType {
     case noGrades
 }
 
-class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, GradesVCDelegate {
+class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var popUpView: UIView!
     @IBOutlet var popUpViewText: UILabel!
@@ -75,15 +70,15 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		let request = GADRequest()
 		request.testDevices = ["9a231882e8eb1d8e2aa640a79a41bb2b"];
 		adView.loadRequest(request)
+        hidePopUpView()
 		
-		// Load the subjects
-		if let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
-			self.student = student
-			loadStudent()
-		}
-        
+        loadStudent()
+		
         popUpViewButton.addTarget(self, action: #selector(loadStudent), forControlEvents: .TouchUpInside)
         popUpViewButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loadStudent), name: "loadStudent", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout), name: "logout", object: nil)
 
 	}
 
@@ -117,39 +112,12 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		print(error)
 	}
 
-	override func viewWillAppear(animated: Bool) {
-		super.viewWillAppear(animated)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
-	}
-
-	override func viewWillDisappear(animated: Bool) {
-		super.viewWillDisappear(animated)
-		NSNotificationCenter.defaultCenter().removeObserver(self)
-	}
-
-	func refreshTableView() {
-		let settings = NSUserDefaults.standardUserDefaults()
-		if settings.boolForKey("updatedInBackground") {
-			settings.setBool(false, forKey: "updatedInBackground")
-			NSManagedObjectContext.MR_defaultContext().refreshObject(student, mergeChanges: false)
-			self.tableview.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-		}
-	}
-
-	func studentChanged(completionHandler: () -> Void) {
-		settingsCompletionHandler = completionHandler
-		let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
-		let student = Student.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", argumentArray: [selectedStudentName]))
-		self.student = student
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(callSettingsCompletionHandler), name: "doneReloading", object: nil)
-		loadStudent()
-	}
-
-	func callSettingsCompletionHandler() {
-		settingsCompletionHandler()
-	}
-
 	func loadStudent() {
+        let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
+        guard let student = Student.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", argumentArray: [selectedStudentName])) else {
+            return
+        }
+        self.student = student
 		subjects = nil
 		// Get the first name and set it as the title. We do this here so that the name will update when the student changes in the settings
 		self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades"
@@ -159,7 +127,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                 dispatch_async(dispatch_get_main_queue(), {
                     if (successful) {
                         NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
-                        self.tableview.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+                        self.tableview.reloadData()
                         self.updateRefreshControl()
                         self.stopLoading()
                         let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
@@ -186,7 +154,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 					dispatch_async(dispatch_get_main_queue(), {
 						// Refresh the ui's student object
 						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
-						self.tableview.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+						self.tableview.reloadData()
 						self.refreshControl.endRefreshing()
 						self.updateRefreshControl()
 					})
@@ -282,10 +250,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 
 			// sort marking periods by descending number and ignore empty marking periods
 			markingPeriods = markingPeriods.filter { !$0.empty!.boolValue }.sort { Int($0.number!) > Int($1.number!) }
-
-			if (markingPeriods.count == 0) {
-
-			}
+            
 			let recentMP = markingPeriods[0]
 
 			// Remove %
@@ -307,17 +272,6 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			}
 
 			cell.lastUpdatedLabel.text = "Last Updated: " + dateString
-
-			if let badge = badges[indexPath.row] {
-				switch badge {
-				case .Updated:
-					cell.badge.image = UIImage(named: "Recently Updated")!
-				default:
-					cell.badge.hidden = true
-				}
-			} else {
-				cell.badge.hidden = true
-			}
 
 			return cell
 
@@ -359,13 +313,12 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 	}
 
 	func startLoading() {
-		activityIndicator.startAnimating()
-		showPopUpView(.loading)
+		refreshControl.beginRefreshing()
+        self.tableview.setContentOffset(CGPointMake(0, tableview.contentOffset.y - refreshControl.frame.size.height), animated: true)
 	}
 
 	func stopLoading() {
-		activityIndicator.stopAnimating()
-		hidePopUpView()
+		refreshControl.endRefreshing()
 	}
     
     func showPopUpView(type: PopUpViewType) {
@@ -415,9 +368,6 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			let sV = segue.destinationViewController as! DetailVC
 			sV.subject = selectedSubject
 			self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-		} else if segue.identifier == "lock" {
-			let lockVC = segue.destinationViewController as! LockVC
-			lockVC.delegate = self
 		}
 	}
 }

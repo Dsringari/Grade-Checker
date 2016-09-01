@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet var profilePictureView: UIImageView!
+    var profilePicture: UIImage?
     var subjects: [Subject]?
     var student: Student?
     var studentCount: Int {
@@ -21,35 +21,37 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var tableview: UITableView!
     
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var gradeLabel: UILabel!
-    @IBOutlet var schoolLabel: UILabel!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableview.delegate = self
         tableview.dataSource = self
-        profilePictureView.layer.cornerRadius = 11
-        profilePictureView.clipsToBounds = true
 
         // Do any additional setup after loading the view.
         loadStudent()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loadStudent), name: "loadStudent", object: nil)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if let student = student {
+            subjects = student.subjects?.allObjects as? [Subject]
+            subjects?.sortInPlace({s1, s2 in return s1.name! < s2.name})
+            tableview.reloadData()
+        }
     }
     
     func loadStudent() {
         student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!)
         if let student = student {
-            nameLabel.text = student.name
-            gradeLabel.text = "Grade " + student.grade!
-            schoolLabel.text = student.school
             subjects = student.subjects?.allObjects as? [Subject]
             subjects?.sortInPlace({s1, s2 in return s1.name! < s2.name})
         }
         startLoadingAnimation()
         getImage(student!.id!) { image in
             dispatch_async(dispatch_get_main_queue()) {
-                self.profilePictureView.image = image
+                self.profilePicture = image
                 self.stopLoadingAnimation()
+                self.tableview.reloadData()
             }
         }
     }
@@ -65,20 +67,11 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func startLoadingAnimation() {
         activityIndicator.startAnimating()
         tableview.hidden = true
-        profilePictureView.hidden = true
-        nameLabel.hidden = true
-        gradeLabel.hidden = true
-        schoolLabel.hidden = true
     }
     
     func stopLoadingAnimation() {
         activityIndicator.stopAnimating()
         tableview.hidden = false
-        profilePictureView.hidden = false
-        nameLabel.hidden = false
-        gradeLabel.hidden = false
-        schoolLabel.hidden = false
-        tableview.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,11 +84,13 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "" : "Courses"
+        return section == 1 ? "Courses" : nil
     }
     
+    // Hide the headers and footers when the switch profile section should be hidden. Also hide the header and footer for the first section
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 && studentCount == 1 ? 0.01 : UITableViewAutomaticDimension
+        return section == 0 ? 165 : UITableViewAutomaticDimension
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -113,7 +108,25 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("profileStudentCell") as! ProfileStudentCell
+            if let student = student {
+                cell.nameLabel.text = student.name
+                cell.gradeLabel.text = "Grade " + student.grade!
+                cell.schoolLabel.text = student.school
+                
+                cell.picture.layer.cornerRadius = 11
+                cell.picture.clipsToBounds = true
+                cell.picture.image = profilePicture
+            }
+            return cell
+        }
+        return nil
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         if indexPath.section == 0 {
             let cell = tableview.dequeueReusableCellWithIdentifier("switchProfileCell")!
             return cell
@@ -131,6 +144,15 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if indexPath.section == 0 {
+            performSegueWithIdentifier("switchStudent", sender: self)
+        } else {
+            
+        }
     }
     
     func calculateAverageGrade(subject: Subject) -> String? {

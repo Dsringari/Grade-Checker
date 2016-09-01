@@ -17,9 +17,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	@IBOutlet var loading: UIActivityIndicatorView!
 	@IBOutlet var errorView: UIView!
 
-	lazy var student: Student = {
-		return Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!)!
-	}()
+	var student: Student?
+	
 
 	var periodNames: [String] = []
 	var periodTeachers: [String] = []
@@ -39,9 +38,19 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		tableView.dataSource = self
 		loadSchedule()
 		errorView.hidden = true
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loadSchedule), name: "loadStudent", object: nil)
 	}
 
 	func loadSchedule() {
+        if let studentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent") {
+            student = Student.MR_findFirstByAttribute("name", withValue: studentName)
+        }
+        
+        guard let student = student else {
+            return
+        }
+        
 		startLoadingAnimation()
 		Alamofire.request(.GET, "http://192.168.1.3/CommunityWebPortal/Backpack/StudentSchedule.cfm-STUDENT_RID=\(student.id!).html") // FIXME: THIS TOO
 		.validate()
@@ -138,7 +147,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								formatter.dateFormat = "EEEE, LLLL d"
 								self.date = formatter.stringFromDate(NSDate())
 
-								self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+								self.tableView.reloadData()
 								self.tableView.hidden = false
 								self.stopLoadingAnimation()
 
@@ -161,6 +170,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		letterDay = ""
 		tableView.hidden = true
 		errorView.hidden = false
+        self.tabBarController?.tabBar.items![1].badgeValue = nil
         tableView.reloadData()
 	}
 
