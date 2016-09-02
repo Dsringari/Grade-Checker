@@ -104,13 +104,14 @@ class UpdateService {
 
 						var errors: [NSError] = []
 						let downloadGroup = dispatch_group_create()
+                        var subjectsToDelete : [Subject] = Subject.MR_findByAttribute("student", withValue: self.student, inContext: self.context) as! [Subject]
 						for index in 0..<subjectLinks.count {
 							let address = "http://192.168.1.3/CommunityWebPortal/Backpack/" + subjectLinks[index]["href"]! // FIXME: Return to normal pleb
 							let sectionGUID = address.componentsSeparatedByString("&")[1].componentsSeparatedByString("=")[1].stringByReplacingOccurrencesOfString(".html", withString: "") // TODO: return to normal
 
 							dispatch_group_enter(downloadGroup)
-							if let oldSubject = Subject.MR_findFirstByAttribute("sectionGUID", withValue: sectionGUID, inContext: self.context) {
-								// finish this
+                            if let oldSubject = subjectsToDelete.filter({$0.sectionGUID == sectionGUID}).first {
+                                subjectsToDelete.removeObject(oldSubject)
 								self.updateMarkingPeriodInformation(oldSubject, completion: { successful, error in
 									if (error != nil) {
 										errors.append(error!)
@@ -135,7 +136,12 @@ class UpdateService {
 								}
 
 							}
-						}
+                            
+                        }
+                        
+                        for s in subjectsToDelete {
+                            s.MR_deleteEntity()
+                        }
 
 						// Runs when every callback in the for loop has completed
 						dispatch_group_notify(downloadGroup, dispatch_get_main_queue(), {

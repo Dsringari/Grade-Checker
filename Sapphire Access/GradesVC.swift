@@ -11,17 +11,14 @@ import MagicalRecord
 import CoreData
 import GoogleMobileAds
 
-enum Badge {
-	case Updated
-	case Mock
-	case Both
+
+enum Sorting: Int {
+    case Recent
+    case Alphabetical
+    case NumericalGrade
 }
 
-enum PopUpViewType {
-    case loading
-    case noInternet
-    case noGrades
-}
+
 
 class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -30,7 +27,19 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     @IBOutlet var popUpViewButton: UIButton!
 	@IBOutlet var adView: GADBannerView!
 	@IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
-
+    
+    enum Badge {
+        case Updated
+        case Mock
+        case Both
+    }
+    
+    enum PopUpViewType {
+        case loading
+        case noInternet
+        case noGrades
+    }
+   
     
 	var settingsCompletionHandler: (() -> Void)!
 
@@ -48,6 +57,8 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		refreshControl.tintColor = UIColor.lightGrayColor()
 		return refreshControl
 	}()
+    
+    var sortMethod: Sorting = .Recent
 
 	var selectedSubject: Subject!
 
@@ -62,53 +73,71 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		self.tableViewController.tableView = self.tableview
 		self.tableViewController.refreshControl = self.refreshControl
 		updateRefreshControl()
-		// Setup Admob
-		adView.adSize = kGADAdSizeSmartBannerPortrait
-		adView.adUnitID = "ca-app-pub-9355707484240783/4024228355"
-		adView.rootViewController = self
-		adView.delegate = self
-		let request = GADRequest()
-		request.testDevices = ["9a231882e8eb1d8e2aa640a79a41bb2b"];
-		adView.loadRequest(request)
-        hidePopUpView()
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.setupAdmob()
+        }
 		
+        hidePopUpView()
+        
+        checkSortingMethod()
+        
         loadStudent()
 		
         popUpViewButton.addTarget(self, action: #selector(loadStudent), forControlEvents: .TouchUpInside)
         popUpViewButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loadStudent), name: "loadStudent", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(logout), name: "logout", object: nil)
-
 	}
     
+    func setupAdmob() {
+        // Setup Admob
+        adView.adSize = kGADAdSizeSmartBannerPortrait
+        adView.adUnitID = "ca-app-pub-9355707484240783/4024228355"
+        adView.rootViewController = self
+        adView.delegate = self
+        let request = GADRequest()
+        request.testDevices = ["9a231882e8eb1d8e2aa640a79a41bb2b"];
+        adView.loadRequest(request)
+    }
+    
+    override func viewWillDisappear(animated: Bool){
+        super.viewDidAppear(animated)
+        
+        if self.navigationController!.viewControllers.contains(self) == false  //any other hierarchy compare if it contains self or not
+        {
+            // the view has been removed from the navigation stack or hierarchy, back is probably the cause
+            // this will be slow with a large stack however.
+            
+            NSNotificationCenter.defaultCenter().removeObserver(self)
+        }
+    }
+    
+    func checkSortingMethod() {
+        let sortingNumber = NSUserDefaults.standardUserDefaults().integerForKey("sortMethod")
+        sortMethod = Sorting(rawValue: sortingNumber)!
+    }
+    
     override func viewDidAppear(animated: Bool) {
+        checkSortingMethod()
         subjects = student.subjects?.allObjects as? [Subject]
         tableview.reloadData()
     }
 
-	func logout() {
-		User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
-		NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-
-		NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "selectedStudent")
-		self.tabBarController!.navigationController!.popToRootViewControllerAnimated(false)
-		NSNotificationCenter.defaultCenter().postNotificationName("tabBarDismissed", object: nil)
-	}
-
 	func adViewDidReceiveAd(bannerView: GADBannerView!) {
+        self.tableViewBottomConstraint.constant = 50
+        self.view.addSubview(self.adView)
+        
+        if #available(iOS 9.0, *) {
+            self.adView.bottomAnchor.constraintEqualToAnchor(self.bottomLayoutGuide.topAnchor)
+        } else {
+            // Fallback on earlier versions
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|[adView]|", options: [], metrics: nil, views: ["adView": self.adView])
+        }
+        
+        NSLayoutConstraint.constraintsWithVisualFormat("|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
+        
 		UIView.animateWithDuration(0.5, animations: {
-			self.tableViewBottomConstraint.constant = 50
-			self.view.addSubview(self.adView)
-
-			if #available(iOS 9.0, *) {
-				self.adView.bottomAnchor.constraintEqualToAnchor(self.bottomLayoutGuide.topAnchor)
-			} else {
-				// Fallback on earlier versions
-				NSLayoutConstraint.constraintsWithVisualFormat("V:|[adView]|", options: [], metrics: nil, views: ["adView": self.adView])
-			}
-
-			NSLayoutConstraint.constraintsWithVisualFormat("|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
 			self.view.layoutIfNeeded()
 		})
 	}
@@ -217,30 +246,45 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			} 
              */
 		}
-
-		// Sort by Most Recently Updated
-		subjects!.sortInPlace({ (s1: Subject, s2: Subject) -> Bool in
-
-			guard s1.mostRecentDate != nil || s2.mostRecentDate != nil else {
-				if s1.mostRecentDate == nil && s2.mostRecentDate == nil {
-					return s1.name < s2.name
-				}
-
-				if s1.mostRecentDate == nil {
-					return true
-				}
-
-				return false
-			}
-
-			if (s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedSame) {
-				return s1.name < s2.name
-			}
-
-			return s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedDescending
-
-		})
         
+        switch sortMethod {
+        case .Recent:
+            subjects!.sortInPlace({ (s1: Subject, s2: Subject) -> Bool in
+                
+                guard s1.mostRecentDate != nil || s2.mostRecentDate != nil else {
+                    if s1.mostRecentDate == nil && s2.mostRecentDate == nil {
+                        return s1.name < s2.name
+                    }
+                    
+                    if s1.mostRecentDate == nil {
+                        return true
+                    }
+                    
+                    return false
+                }
+                
+                if (s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedSame) {
+                    return s1.name < s2.name
+                }
+                
+                return s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedDescending
+                
+            })
+        case .Alphabetical:
+            subjects!.sortInPlace{$0.name < $1.name}
+        case .NumericalGrade:
+            subjects!.sortInPlace{ (s1: Subject, s2: Subject) -> Bool in
+                
+                var mps1 = s1.markingPeriods?.allObjects as! [MarkingPeriod]
+                mps1.sortInPlace{$0.number > $1.number}
+                var mps2 = s2.markingPeriods?.allObjects as! [MarkingPeriod]
+                mps2.sortInPlace{$0.number > $1.number}
+                
+                let mostRecentGrade1 = NSDecimalNumber(string: mps1[0].percentGrade)
+                let mostRecentGrade2 = NSDecimalNumber(string: mps2[0].percentGrade)
+                return mostRecentGrade1.compare(mostRecentGrade2) == .OrderedDescending
+            }
+        }
         
         // Set which subjects have badges
         let updatedSubjects = subjects!.filter({ (s: Subject) in

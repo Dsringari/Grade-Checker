@@ -72,13 +72,24 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
         pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(dismissSelf), name: "loadStudent", object: nil)
+        
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    func dismissSelf() {
+        navigationController?.popViewControllerAnimated(false)
+    }
+    
+    func setShownUpdatesOld() {
         for a in assignmentsToSetOld {
             a.newUpdate = NSNumber(bool: false)
         }
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        setShownUpdatesOld()
     }
     
     @IBAction func showPoints() {
@@ -108,6 +119,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         calculateCategories(markingPeriodIndex: selectedMPIndex)
         percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
         pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
+        setShownUpdatesOld()
         self.tableView.reloadData()
     }
     

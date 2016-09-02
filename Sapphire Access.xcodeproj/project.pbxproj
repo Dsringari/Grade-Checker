@@ -33,6 +33,7 @@
 		FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */; };
 		FC639FA21C8F8FFD006C71A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */; };
 		FC639FA51C8F8FFD006C71A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */; };
+		FC6A2DD11D79CDAA002E50DD /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */; };
 		FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */; };
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FC9C61531CDBFEC200442285 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C61511CDBFEC200442285 /* Subject.swift */; };
@@ -41,6 +42,7 @@
 		FCC29A6D1CD177FD004002B5 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */; };
 		FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */; };
 		FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */; };
+		FCD61DAB1D79E74D00CA44F0 /* AppearanceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD61DAA1D79E74D00CA44F0 /* AppearanceVC.swift */; };
 		FCE14E561CE78114001280BC /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE14E551CE78114001280BC /* ContainerVC.swift */; };
 		FCE231051CDD657900D1B08B /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231041CDD657900D1B08B /* MagicalRecord.framework */; };
 		FCE231071CDD657D00D1B08B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231061CDD657D00D1B08B /* Kanna.framework */; };
@@ -86,6 +88,7 @@
 		FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC639FA41C8F8FFD006C71A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC639FA61C8F8FFD006C71A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectTableViewCell.swift; sourceTree = "<group>"; };
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FC9C61511CDBFEC200442285 /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
@@ -94,6 +97,7 @@
 		FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDSelectionCell.swift; sourceTree = "<group>"; };
 		FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		FCD61DAA1D79E74D00CA44F0 /* AppearanceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceVC.swift; sourceTree = "<group>"; };
 		FCE14E551CE78114001280BC /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		FCE231041CDD657900D1B08B /* MagicalRecord.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MagicalRecord.framework; path = "Pods/../build/Debug-iphoneos/MagicalRecord.framework"; sourceTree = "<group>"; };
 		FCE231061CDD657D00D1B08B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sapphire_Access-hiywhoigwkgnqxaahsdsylwzwzgj/Build/Products/Debug-iphonesimulator/Kanna.framework"; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 		FCC29A721CD19902004002B5 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FCD61DA91D79E73400CA44F0 /* Settings */,
 				FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */,
 				FCE14E551CE78114001280BC /* ContainerVC.swift */,
 				FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */,
@@ -260,6 +265,15 @@
 				FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */,
 			);
 			name = CoreData;
+			sourceTree = "<group>";
+		};
+		FCD61DA91D79E73400CA44F0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */,
+				FCD61DAA1D79E74D00CA44F0 /* AppearanceVC.swift */,
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC07DC5B1D78990C00B5F3F5 /* SwitchStudentVC.swift in Sources */,
+				FC6A2DD11D79CDAA002E50DD /* SettingVC.swift in Sources */,
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
 				FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */,
 				FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */,
@@ -460,6 +475,7 @@
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
+				FCD61DAB1D79E74D00CA44F0 /* AppearanceVC.swift in Sources */,
 				FC43AC421D74CF7E00D74974 /* ScheduleTodayCell.swift in Sources */,
 				FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,

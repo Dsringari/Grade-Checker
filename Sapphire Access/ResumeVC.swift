@@ -56,7 +56,7 @@ class ResumeVC: UIViewController {
 		// Try to Login
 		self.activityIndicator.startAnimating()
 		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
-			dispatch_async(dispatch_get_main_queue(), {
+			dispatch_async(dispatch_get_main_queue()) {
 				self.activityIndicator.stopAnimating()
 				if (successful) {
 
@@ -80,7 +80,7 @@ class ResumeVC: UIViewController {
 					self.presentViewController(alert, animated: true, completion: nil)
 
 				}
-			})
+			}
 		})
 	}
 
@@ -95,7 +95,7 @@ class ResumeVC: UIViewController {
 				let localizedReasonString = "Login with Touch ID"
 				context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
 
-					dispatch_async(dispatch_get_main_queue(), {
+					dispatch_async(dispatch_get_main_queue()) {
 
 						if (success) {
 
@@ -109,16 +109,16 @@ class ResumeVC: UIViewController {
 									self.continueButton.enabled = true
 								})
 								failed.addAction(Ok)
-								dispatch_async(dispatch_get_main_queue(), {
-									self.presentViewController(failed, animated: true, completion: nil)
-								})
+								
+                                self.presentViewController(failed, animated: true, completion: nil)
+								
 
 								return
 							}
 
 							self.backToLogin()
 						}
-					})
+					}
 				})
 			} else {
 				var title: String!
