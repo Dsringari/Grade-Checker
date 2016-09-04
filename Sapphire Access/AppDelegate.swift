@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Override point for customization after application launch.
 
 		// Set default preferences
-        let appDefaults = ["useTouchID": NSNumber(bool: false), "sortMethod": NSNumber(integer: Sorting.Recent.rawValue)]
+        let appDefaults = ["useTouchID": false, "sortMethod": NSNumber(integer: Sorting.Recent.rawValue)]
 		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
         
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.grayColor()], forState: .Normal)
@@ -57,16 +57,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		}
         
-        if NSUserDefaults.standardUserDefaults().boolForKey("useTouchID") {
-            if let mainTabBarController = tabBarController {
-                mainTabBarController.selectedIndex = 0
-                if let nVC = mainTabBarController.viewControllers?.first as? UINavigationController {
-                    if let gradesVC = nVC.visibleViewController as? GradesVC {
-                        gradesVC.performSegueWithIdentifier("lock", sender: nil)
-                    }
+        
+        if let mainTabBarController = tabBarController {
+            mainTabBarController.selectedIndex = 0
+            if let nVC = mainTabBarController.viewControllers?.first as? UINavigationController {
+                if let gradesVC = nVC.visibleViewController as? GradesVC {
+                    gradesVC.performSegueWithIdentifier("lock", sender: nil)
                 }
             }
         }
+        
 	}
 
 	func applicationWillEnterForeground(application: UIApplication) {

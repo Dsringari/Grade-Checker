@@ -15,6 +15,7 @@
 		FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC06632C1CBC3AA9005D1310 /* CoreData.framework */; };
 		FC07DC591D788C6500B5F3F5 /* ProfileStudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */; };
 		FC07DC5B1D78990C00B5F3F5 /* SwitchStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */; };
+		FC1140E41D7BA4FD006AF294 /* LoginOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1140E31D7BA4FD006AF294 /* LoginOptionsVC.swift */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */; };
 		FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26281CE1630900D14D70 /* AboutVC.swift */; };
@@ -23,6 +24,9 @@
 		FC2800AB1D4EC04400780C3E /* ProfileSubjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
 		FC2E9B691D25D2F10066D8C4 /* ScheduleTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */; };
+		FC36A79D1D7B606500832772 /* AverageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36A79C1D7B606500832772 /* AverageCell.swift */; };
+		FC36A79F1D7B60D800832772 /* SubjectInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36A79E1D7B60D800832772 /* SubjectInfoVC.swift */; };
+		FC36A7A11D7B638700832772 /* SapphireAccessHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36A7A01D7B638700832772 /* SapphireAccessHelper.swift */; };
 		FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */; };
 		FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */; };
 		FC43AC421D74CF7E00D74974 /* ScheduleTodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */; };
@@ -42,7 +46,7 @@
 		FCC29A6D1CD177FD004002B5 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */; };
 		FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */; };
 		FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */; };
-		FCD61DAB1D79E74D00CA44F0 /* AppearanceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD61DAA1D79E74D00CA44F0 /* AppearanceVC.swift */; };
+		FCD61DAB1D79E74D00CA44F0 /* AppearanceOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD61DAA1D79E74D00CA44F0 /* AppearanceOptionsVC.swift */; };
 		FCE14E561CE78114001280BC /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE14E551CE78114001280BC /* ContainerVC.swift */; };
 		FCE231051CDD657900D1B08B /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231041CDD657900D1B08B /* MagicalRecord.framework */; };
 		FCE231071CDD657D00D1B08B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231061CDD657D00D1B08B /* Kanna.framework */; };
@@ -68,6 +72,7 @@
 		FC06632C1CBC3AA9005D1310 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileStudentCell.swift; sourceTree = "<group>"; };
 		FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchStudentVC.swift; sourceTree = "<group>"; };
+		FC1140E31D7BA4FD006AF294 /* LoginOptionsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginOptionsVC.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC1E26281CE1630900D14D70 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
@@ -76,6 +81,9 @@
 		FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSubjectCell.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
 		FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTitleCell.swift; sourceTree = "<group>"; };
+		FC36A79C1D7B606500832772 /* AverageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AverageCell.swift; sourceTree = "<group>"; };
+		FC36A79E1D7B60D800832772 /* SubjectInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectInfoVC.swift; sourceTree = "<group>"; };
+		FC36A7A01D7B638700832772 /* SapphireAccessHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SapphireAccessHelper.swift; sourceTree = "<group>"; };
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTodayCell.swift; sourceTree = "<group>"; };
@@ -97,7 +105,7 @@
 		FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDSelectionCell.swift; sourceTree = "<group>"; };
 		FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
-		FCD61DAA1D79E74D00CA44F0 /* AppearanceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceVC.swift; sourceTree = "<group>"; };
+		FCD61DAA1D79E74D00CA44F0 /* AppearanceOptionsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceOptionsVC.swift; sourceTree = "<group>"; };
 		FCE14E551CE78114001280BC /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		FCE231041CDD657900D1B08B /* MagicalRecord.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MagicalRecord.framework; path = "Pods/../build/Debug-iphoneos/MagicalRecord.framework"; sourceTree = "<group>"; };
 		FCE231061CDD657D00D1B08B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sapphire_Access-hiywhoigwkgnqxaahsdsylwzwzgj/Build/Products/Debug-iphonesimulator/Kanna.framework"; sourceTree = "<group>"; };
@@ -226,6 +234,7 @@
 				FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */,
 				FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */,
 				FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */,
+				FC36A79C1D7B606500832772 /* AverageCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -245,6 +254,7 @@
 				FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */,
 				FC1E26281CE1630900D14D70 /* AboutVC.swift */,
 				FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */,
+				FC36A79E1D7B60D800832772 /* SubjectInfoVC.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -254,6 +264,7 @@
 			children = (
 				FCF028221C9DC690008AC891 /* ErrorTypes.swift */,
 				FC2953181CB73BA400DD38CE /* DSHelper.swift */,
+				FC36A7A01D7B638700832772 /* SapphireAccessHelper.swift */,
 			);
 			name = "Swift Helpers";
 			sourceTree = "<group>";
@@ -271,7 +282,8 @@
 			isa = PBXGroup;
 			children = (
 				FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */,
-				FCD61DAA1D79E74D00CA44F0 /* AppearanceVC.swift */,
+				FCD61DAA1D79E74D00CA44F0 /* AppearanceOptionsVC.swift */,
+				FC1140E31D7BA4FD006AF294 /* LoginOptionsVC.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -475,16 +487,19 @@
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
-				FCD61DAB1D79E74D00CA44F0 /* AppearanceVC.swift in Sources */,
+				FCD61DAB1D79E74D00CA44F0 /* AppearanceOptionsVC.swift in Sources */,
 				FC43AC421D74CF7E00D74974 /* ScheduleTodayCell.swift in Sources */,
 				FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,
 				FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */,
+				FC1140E41D7BA4FD006AF294 /* LoginOptionsVC.swift in Sources */,
 				FCF045F61CEFA90900E2DAEA /* LockVC.swift in Sources */,
 				FC2E9B691D25D2F10066D8C4 /* ScheduleTitleCell.swift in Sources */,
 				FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */,
 				FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */,
+				FC36A7A11D7B638700832772 /* SapphireAccessHelper.swift in Sources */,
 				FC217FE51D242D1500B0ED9B /* ScheduleVC.swift in Sources */,
+				FC36A79F1D7B60D800832772 /* SubjectInfoVC.swift in Sources */,
 				FC07DC591D788C6500B5F3F5 /* ProfileStudentCell.swift in Sources */,
 				FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
@@ -498,6 +513,7 @@
 				FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */,
 				FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */,
 				FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */,
+				FC36A79D1D7B606500832772 /* AverageCell.swift in Sources */,
 				FC4AC80D1D4FA38400D004AC /* Student.swift in Sources */,
 				FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */,
 				FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */,

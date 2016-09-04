@@ -74,9 +74,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		self.tableViewController.refreshControl = self.refreshControl
 		updateRefreshControl()
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.setupAdmob()
-        }
+        setupAdmob()
 		
         hidePopUpView()
         
@@ -306,7 +304,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         }
 
         
-
+        print("finished counting")
 		return subjects!.count
 	}
 

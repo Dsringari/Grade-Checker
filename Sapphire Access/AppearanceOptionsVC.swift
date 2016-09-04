@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppearanceVC: UITableViewController {
+class AppearanceOptionsVC: UITableViewController {
     
     var sortMethod: Sorting = .Recent
 

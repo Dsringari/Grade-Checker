@@ -14,19 +14,28 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var segmentedControl: UISegmentedControl!
     @IBOutlet var sortingSegmentedControl: UISegmentedControl!
-    @IBOutlet var toolbar: UIView!
     @IBOutlet var percentageButton: UIButton!
     @IBOutlet var pointsButton: UIButton!
     @IBOutlet var toolbarHeight: NSLayoutConstraint!
+    @IBOutlet var toolbar: UIView!
+    @IBOutlet var sortingSegmentTop: NSLayoutConstraint!
+    @IBOutlet var filterButton: UIBarButtonItem!
     
     var navHairLine: UIImageView!
     var subject: Subject!
     var markingPeriods: [MarkingPeriod]!
     var categories: [String] = []
-    var selectedMPIndex: Int!
+    var selectedMPIndex: Int = 0
     var gradeViewType: GradeViewType = .Point
     var sortMethod: Sorting = .Recent
     var assignmentsToSetOld: [Assignment] = []
+    var viewType: ViewType = .AllMarkingPeriods
+    
+    
+    enum ViewType {
+        case AllMarkingPeriods
+        case OneMarkingPeriod(markingPeriodNumber: String)
+    }
     
     enum GradeViewType {
         case Point
@@ -43,7 +52,6 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 44
-        self.title = subject.name
        
         
         // Find the hairline so we can hide it
@@ -57,17 +65,33 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Remove toolbar's border
         self.navigationController!.toolbar.clipsToBounds = true
         
-        // Setup Segmented Control
-        // Get all the Valid Marking Periods
         let mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
         markingPeriods = mps.filter{!$0.empty!.boolValue}.sort{Int($0.number!) < Int($1.number!)} // Only want non empty marking periods
-        segmentedControl.removeAllSegments()
-        for index in 0..<markingPeriods.count {
-            segmentedControl.insertSegmentWithTitle("MP " + markingPeriods[index].number!, atIndex: index, animated: false)
+        
+        if case let ViewType.OneMarkingPeriod(number) = viewType {
+            self.title = "Marking Period \(number)"
+            
+            if let mp = markingPeriods.filter({$0.number == number}).first {
+                let index = markingPeriods.indexOf(mp)!
+                selectedMPIndex = index
+            }
+            sortingSegmentTop.constant = 8
+            segmentedControl.hidden = true
+            navigationItem.rightBarButtonItems?.removeObject(filterButton)
+            
+            self.view.layoutIfNeeded()
+        } else {
+            self.title = subject.name
+            selectedMPIndex = markingPeriods.count - 1
+            segmentedControl.removeAllSegments()
+            for index in 0..<markingPeriods.count {
+                segmentedControl.insertSegmentWithTitle("MP " + markingPeriods[index].number!, atIndex: index, animated: false)
+            }
+            segmentedControl.selectedSegmentIndex = selectedMPIndex
+            
+            segmentedControl.sizeToFit()
         }
-        selectedMPIndex = markingPeriods.count - 1
-        segmentedControl.selectedSegmentIndex = selectedMPIndex
-        segmentedControl.sizeToFit()
+        
         calculateCategories(markingPeriodIndex: selectedMPIndex)
         percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
         pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
@@ -146,7 +170,10 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else {
             sortMethod = .Category
         }
-        showOrHideOptions(0.33)
+        
+        if case ViewType.AllMarkingPeriods = viewType {
+            showOrHideOptions(0.33)
+        }
         self.tableView.reloadData()
     }
     
@@ -208,8 +235,6 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 44
     }
-    
-    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("assignmentCell", forIndexPath: indexPath) as! AssignmentTableViewCell

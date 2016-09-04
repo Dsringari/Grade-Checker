@@ -17,6 +17,8 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let count = Int(Student.MR_countOfEntities())
         return count
     }
+    var selectedSubject: Subject?
+    
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
 
     @IBOutlet var tableview: UITableView!
@@ -84,7 +86,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 1 ? "Courses" : nil
+        return section == 1 ? "Course Averages" : nil
     }
     
     // Hide the headers and footers when the switch profile section should be hidden. Also hide the header and footer for the first section
@@ -139,7 +141,11 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if let ytd = dictionaryFromOtherGradesJSON(subject.otherGrades)?["YTD"] {
             cell.percentGrade.text = ytd + "%"
         } else {
-            cell.percentGrade.text = calculateAverageGrade(subject)
+            if let average = calculateAverageGrade(subject) {
+                cell.percentGrade.text = average + "%"
+            } else {
+                cell.percentGrade.text = "N/A"
+            }
         }
         
         
@@ -151,68 +157,20 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             performSegueWithIdentifier("switchStudent", sender: self)
         } else {
-            
+            selectedSubject = subjects![indexPath.row]
+            performSegueWithIdentifier("subjectInfo", sender: self)
         }
     }
     
-    func calculateAverageGrade(subject: Subject) -> String? {
-        guard let markingPeriods = subject.markingPeriods?.allObjects as? [MarkingPeriod] else {
-            return nil
-        }
         
-        var total: NSDecimalNumber = 0
-        var mpCount: NSDecimalNumber = 0
-        for mp in markingPeriods {
 
-            // Remove %
-            guard let percentgradeString = mp.percentGrade?.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("") else {
-                break
-            }
-            
-            total = total.decimalNumberByAdding(NSDecimalNumber(string: percentgradeString))
-            mpCount = mpCount.decimalNumberByAdding(1)
-        }
-        
-        if let mt = dictionaryFromOtherGradesJSON(subject.otherGrades)?["MT"] {
-            mpCount = mpCount.decimalNumberByAdding(0.5)
-            total = total.decimalNumberByAdding(NSDecimalNumber(string: mt))
-        }
-        
-        if let fe = dictionaryFromOtherGradesJSON(subject.otherGrades)?["FE"] {
-            mpCount = mpCount.decimalNumberByAdding(0.5)
-            total = total.decimalNumberByAdding(NSDecimalNumber(string: fe))
-        }
-        
-        if (mpCount.doubleValue == 0) {
-            return nil
-        }
-        
-        let average = total.decimalNumberByDividingBy(mpCount)
-        return String(Int(round(average.doubleValue))) + "%"
-    }
-    
-    
-    func dictionaryFromOtherGradesJSON(string: String?) -> [String: String]? {
-        guard let jsonData = string?.dataUsingEncoding(NSUTF8StringEncoding) else {
-            return nil
-        }
-        
-        do {
-            return try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [String: String]
-        } catch {
-            return nil
-        }
-    }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "subjectInfo" {
+            let subjectInfoVC = segue.destinationViewController as! SubjectInfoVC
+            subjectInfoVC.subject = selectedSubject
+        }
     }
-    */
+
 
 }

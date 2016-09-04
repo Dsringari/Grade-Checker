@@ -39,7 +39,7 @@ class UpdateService {
 			}
             
             let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-            config.timeoutIntervalForRequest = 4
+            config.timeoutIntervalForRequest = 10
             config.requestCachePolicy = .ReloadIgnoringLocalCacheData
             alamofireManager = Alamofire.Manager(configuration: config)
 		} catch let error as NSError {
@@ -140,7 +140,7 @@ class UpdateService {
                         }
                         
                         for s in subjectsToDelete {
-                            s.MR_deleteEntity()
+                            s.MR_deleteEntityInContext(self.context)
                         }
 
 						// Runs when every callback in the for loop has completed
@@ -251,24 +251,29 @@ class UpdateService {
 											currentMP.possiblePoints = result.possiblePoints
 											currentMP.totalPoints = result.totalPoints
 											currentMP.percentGrade = result.percentGrade
+                                            var assignmentsToDelete = currentMP.assignments!.allObjects as! [Assignment]
 											for assignment in result.assignments {
 												let dateFormatter = NSDateFormatter()
 												// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
 												dateFormatter.dateFormat = "MM/dd/yy"
+                                                var dateCreated: NSDate = NSDate()
+                                                if let date = assignment.date {
+                                                    dateCreated = dateFormatter.dateFromString(date)!
+                                                }
 
-												if let oldAssignment = Assignment.MR_findFirstWithPredicate(NSPredicate(format: "name == %@ AND category == %@ AND markingPeriod == %@", argumentArray: [assignment.name!, assignment.category!, currentMP]), inContext: self.context) {
+                                                if let oldAssignment = assignmentsToDelete.filter({$0.name == assignment.name && $0.category == assignment.category && $0.dateCreated == dateCreated}).first {
+                                                    assignmentsToDelete.removeObject(oldAssignment)
 													oldAssignment.totalPoints = assignment.totalPoints
 													oldAssignment.possiblePoints = assignment.possiblePoints
-													if let date = assignment.date {
-														oldAssignment.dateCreated = dateFormatter.dateFromString(date)
-													}
+													oldAssignment.dateCreated = dateCreated
                                                     
-                                                    oldAssignment.newUpdate = !oldAssignment.changedValues().isEmpty
+                                                    // We don't want to set assignments as old here. We should only change it in detail vc.
+                                                    if !oldAssignment.changedValues().isEmpty {
+                                                        oldAssignment.newUpdate = true
+                                                    }
 												} else {
 													if let newA = Assignment.MR_createEntityInContext(self.context) {
-														if let date = assignment.date {
-															newA.dateCreated = dateFormatter.dateFromString(date)
-														}
+														newA.dateCreated = dateCreated
 														newA.name = assignment.name
 														newA.totalPoints = assignment.totalPoints
 														newA.possiblePoints = assignment.possiblePoints
@@ -279,6 +284,10 @@ class UpdateService {
 												}
 
 											}
+                                            
+                                            for a in assignmentsToDelete {
+                                                a.MR_deleteEntityInContext(self.context)
+                                            }
 
 										} else {
 											currentMP.empty = NSNumber(bool: true)
