@@ -35,7 +35,7 @@ class LoginService {
         let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
         let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
                                           cachePolicy: .UseProtocolCachePolicy,
                                           timeoutInterval: 3)
         request.HTTPMethod = "POST"
@@ -69,7 +69,7 @@ class LoginService {
 			let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
 			let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
 
-			let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
+			let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
 				cachePolicy: .UseProtocolCachePolicy,
 				timeoutInterval: 3)
 			request.HTTPMethod = "POST"
@@ -91,7 +91,7 @@ class LoginService {
 
 	func logout(completionHandler: (failed: Bool, error: NSError?) -> Void) {
 		let session = NSURLSession.sharedSession()
-		let request = NSURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 3)
+		let request = NSURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 3)
 
 		let logoutTask = session.dataTaskWithRequest(request, completionHandler: { data, response, error in
 			if (error != nil) {
@@ -107,7 +107,7 @@ class LoginService {
 
 	private func getMainPageHtml() {
 
-		let request = NSMutableURLRequest(URL: NSURL(string: "http://192.168.1.3/CommunityWebPortal/Welcome.cfm.html")!,
+		let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
 			cachePolicy: .UseProtocolCachePolicy,
 			timeoutInterval: 3.0)
 		request.HTTPMethod = "GET"
@@ -126,7 +126,7 @@ class LoginService {
 						case " Student Backpack - Sapphire Community Web Portal ":
 							// Retrieve student information from backpack screen
 							
-							let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["title"]!.stringByReplacingOccurrencesOfString(".html", withString: "") // TODO: REMOVE ME
+							let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]! 
 							let id = i.componentsSeparatedByString("=")[1]
                             var student = Student.MR_findFirstByAttribute("id", withValue: id, inContext: NSManagedObjectContext.MR_defaultContext())
                             if student == nil {
@@ -156,7 +156,6 @@ class LoginService {
 							for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/a") {
 								var id = e["href"]!
 								id = id.componentsSeparatedByString("=")[1]
-                                id = id.stringByReplacingOccurrencesOfString(".html", withString: "") // TODO: REMOVE ME WHEN RELASEING
                                 if let oldStudent = Student.MR_findFirstByAttribute("id", withValue: id, inContext: NSManagedObjectContext.MR_defaultContext()) {
                                     students.append(oldStudent)
                                 } else {

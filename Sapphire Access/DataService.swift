@@ -65,7 +65,7 @@ class UpdateService {
         }
 
 		// Load the main courses page
-		let coursesURL: String = "http://192.168.1.3/CommunityWebPortal/Backpack/StudentClasses.cfm-STUDENT_RID=" + student.id! + ".html"
+		let coursesURL: String = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + student.id!
 		alamofireManager.request(.GET, coursesURL)
 			.validate()
 			.response { request, response, data, error in
@@ -106,8 +106,8 @@ class UpdateService {
 						let downloadGroup = dispatch_group_create()
                         var subjectsToDelete : [Subject] = Subject.MR_findByAttribute("student", withValue: self.student, inContext: self.context) as! [Subject]
 						for index in 0..<subjectLinks.count {
-							let address = "http://192.168.1.3/CommunityWebPortal/Backpack/" + subjectLinks[index]["href"]! // FIXME: Return to normal pleb
-							let sectionGUID = address.componentsSeparatedByString("&")[1].componentsSeparatedByString("=")[1].stringByReplacingOccurrencesOfString(".html", withString: "") // TODO: return to normal
+							let address = "https://pamet-sapphire.k12system.com" + subjectLinks[index]["href"]!
+							let sectionGUID = address.componentsSeparatedByString("&")[1].componentsSeparatedByString("=")[1]
 
 							dispatch_group_enter(downloadGroup)
                             if let oldSubject = subjectsToDelete.filter({$0.sectionGUID == sectionGUID}).first {
@@ -182,7 +182,7 @@ class UpdateService {
 						var mpURLStrings: [String] = []
 						for node in doc.xpath(mpXPath) {
 							if let mpURLString = node["href"] {
-								mpURLStrings.append("http://192.168.1.3/CommunityWebPortal/Backpack/" + mpURLString) // TODO: Return me to normal
+								mpURLStrings.append("https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/" + mpURLString)
 							}
 						}
 

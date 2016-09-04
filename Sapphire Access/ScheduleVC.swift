@@ -52,7 +52,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
 		startLoadingAnimation()
-		Alamofire.request(.GET, "http://192.168.1.3/CommunityWebPortal/Backpack/StudentSchedule.cfm-STUDENT_RID=\(student.id!).html") // FIXME: THIS TOO
+		Alamofire.request(.GET, "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentSchedule.cfm?STUDENT_RID=\(student.id!)")
 		.validate()
 			.response(completionHandler: { request, response, data, error in
 				dispatch_async(dispatch_get_main_queue(), {
@@ -177,7 +177,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	func today() -> String {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "MM/dd/yyyy"
-		return "06/01/2016" // formatter.stringFromDate(NSDate()) //FIXME: THIS TOO THANKS BB
+		return formatter.stringFromDate(NSDate())
 	}
 
 	func reset() {
