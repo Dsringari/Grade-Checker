@@ -165,7 +165,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                         self.stopLoading()
                         let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
                         UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-                        NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
+                        UIApplication.sharedApplication().registerForRemoteNotifications()
 					
                     } else {
                         self.stopLoading()

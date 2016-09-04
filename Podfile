@@ -10,6 +10,7 @@ pod "MagicalRecord"
 pod 'Firebase/AdMob'
 pod 'Firebase/Core'
 pod 'Firebase/Crash'
+pod 'Firebase/Messaging'
 pod 'Alamofire'
 pod 'StaticDataTableViewController'
 pod 'ReachabilitySwift'

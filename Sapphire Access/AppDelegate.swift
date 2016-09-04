@@ -35,6 +35,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		return true
 	}
+    
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        if application.applicationState == .Inactive || application.applicationState == .Background {
+            
+        } else {
+            let notification = UILocalNotification()
+            if let aps = userInfo["aps"] {
+                notification.alertBody = aps["alert"] as? String
+            }
+            notification.soundName = UILocalNotificationDefaultSoundName
+            application.presentLocalNotificationNow(notification)
+        }
+    }
+    
+    func registerForPushNotifications(application: UIApplication) {
+        let notificationSettings = UIUserNotificationSettings(
+            forTypes: [.Badge, .Sound, .Alert], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
+    }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != .None {
+            application.registerForRemoteNotifications()
+        }
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        var tokenString = ""
+        
+        for i in 0..<deviceToken.length {
+            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        }
+        
+        //Tricky line
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Unknown)
+        print("Device Token:", tokenString)
+    }
+
 
 	func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		return true
@@ -57,16 +97,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		}
         
-        if NSUserDefaults.standardUserDefaults().boolForKey("useTouchID") {
-            if let mainTabBarController = tabBarController {
-                mainTabBarController.selectedIndex = 0
-                if let nVC = mainTabBarController.viewControllers?.first as? UINavigationController {
-                    if let gradesVC = nVC.visibleViewController as? GradesVC {
-                        gradesVC.performSegueWithIdentifier("lock", sender: nil)
-                    }
+        
+        if let mainTabBarController = tabBarController {
+            mainTabBarController.selectedIndex = 0
+            if let nVC = mainTabBarController.viewControllers?.first as? UINavigationController {
+                if let gradesVC = nVC.visibleViewController as? GradesVC {
+                    gradesVC.performSegueWithIdentifier("lock", sender: nil)
                 }
             }
         }
+        
         
 	}
 

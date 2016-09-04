@@ -39,7 +39,7 @@ class UpdateService {
 			}
             
             let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-            config.timeoutIntervalForRequest = 10
+            config.timeoutIntervalForRequest = 4
             config.requestCachePolicy = .ReloadIgnoringLocalCacheData
             alamofireManager = Alamofire.Manager(configuration: config)
 		} catch let error as NSError {
@@ -182,7 +182,7 @@ class UpdateService {
 						var mpURLStrings: [String] = []
 						for node in doc.xpath(mpXPath) {
 							if let mpURLString = node["href"] {
-								mpURLStrings.append("https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/" + mpURLString)
+								mpURLStrings.append("https://pamet-sapphire.k12system.com" + mpURLString)
 							}
 						}
 
@@ -193,7 +193,7 @@ class UpdateService {
 								markingPeriods.append(mp)
 							} else if let mp = MarkingPeriod.MR_createEntityInContext(self.context) {
 								mp.htmlPage = mpURLStrings[index]
-								mp.number = mpURLStrings[index].componentsSeparatedByString("MP_CODE=")[1].stringByReplacingOccurrencesOfString(".html", withString: "")
+								mp.number = mpURLStrings[index].componentsSeparatedByString("MP_CODE=")[1]
 								mp.subject = subject
 								mp.empty = NSNumber(bool: false)
 								markingPeriods.append(mp)
