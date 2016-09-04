@@ -58,7 +58,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 				dispatch_async(dispatch_get_main_queue(), {
 					if (error != nil) {
 						self.date = "Error!"
-						self.letterDay = error?.description
+						self.letterDay = "Failed to Load!"
 						self.stopLoadingAnimation()
 						self.tableView.reloadData()
 					} else {

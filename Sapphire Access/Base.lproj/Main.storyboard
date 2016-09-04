@@ -124,10 +124,8 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Bm2-qC-Ttj" secondAttribute="trailing" id="Ccj-Am-7LT">
-                                                    <variation key="widthClass=compact" constant="0.0"/>
-                                                </constraint>
-                                                <constraint firstItem="AOE-VR-Xdm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gSh-RE-9oU" secondAttribute="trailing" constant="10" id="ESt-RD-TGx"/>
+                                                <constraint firstAttribute="trailing" secondItem="Bm2-qC-Ttj" secondAttribute="trailing" id="Ccj-Am-7LT"/>
+                                                <constraint firstItem="AOE-VR-Xdm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gSh-RE-9oU" secondAttribute="trailing" constant="5" id="ESt-RD-TGx"/>
                                                 <constraint firstItem="AOE-VR-Xdm" firstAttribute="centerY" secondItem="gSh-RE-9oU" secondAttribute="centerY" id="pCg-BW-h3M"/>
                                                 <constraint firstItem="Bm2-qC-Ttj" firstAttribute="centerY" secondItem="ocG-2G-OZS" secondAttribute="centerY" id="pZ1-Ys-f3f"/>
                                                 <constraint firstItem="gSh-RE-9oU" firstAttribute="centerY" secondItem="ocG-2G-OZS" secondAttribute="centerY" id="qxA-5x-RBa"/>
@@ -257,7 +255,6 @@
                             <mask key="subviews">
                                 <exclude reference="jZn-lp-KrL"/>
                                 <exclude reference="cSn-ed-jQb"/>
-                                <exclude reference="H8e-yI-E4D"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="111-o5-Ogy"/>
@@ -492,12 +489,12 @@
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="B3D-cl-Sap"/>
-                                        <exclude reference="OC9-Jg-4MW"/>
-                                        <exclude reference="ki6-kY-ax5"/>
-                                        <exclude reference="pOH-Ga-0jh"/>
                                         <exclude reference="EF4-OP-uO5"/>
                                         <exclude reference="GlC-rJ-SXE"/>
                                         <exclude reference="URv-S8-oDT"/>
+                                        <exclude reference="OC9-Jg-4MW"/>
+                                        <exclude reference="ki6-kY-ax5"/>
+                                        <exclude reference="pOH-Ga-0jh"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
@@ -507,12 +504,12 @@
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="B3D-cl-Sap"/>
-                                        <include reference="OC9-Jg-4MW"/>
-                                        <include reference="ki6-kY-ax5"/>
-                                        <include reference="pOH-Ga-0jh"/>
                                         <include reference="EF4-OP-uO5"/>
                                         <include reference="GlC-rJ-SXE"/>
                                         <include reference="URv-S8-oDT"/>
+                                        <include reference="OC9-Jg-4MW"/>
+                                        <include reference="ki6-kY-ax5"/>
+                                        <include reference="pOH-Ga-0jh"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1911,7 +1908,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="207" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tw-oi-VVn">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Course Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tw-oi-VVn">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2112,12 +2109,18 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
                                                     <color key="textColor" red="0.027450980390000001" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="29" y="8" width="183" height="33"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Letter Day: C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNb-hY-boX">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
                                                     <color key="textColor" red="0.027450980390000001" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="48" y="53" width="144" height="33"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -2223,6 +2226,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="140" y="27" width="74" height="20"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RM: A200 DUR: YR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmR-tS-Nb6">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>

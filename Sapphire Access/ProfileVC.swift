@@ -58,10 +58,10 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func getImage(studentID: String, completion: (UIImage) -> Void) {
+    func getImage(studentID: String, completion: (UIImage?) -> Void) {
         Alamofire.request(.GET, "http://192.168.1.3/CommunityWebPortal/GetPic.cfm-id=" + self.student!.id! + ".jpeg").responseData(completionHandler: {response in // TODO: Change this back ty
             if let data = response.data {
-                completion(UIImage(data: data, scale: 1)!)
+                completion(UIImage(data: data, scale: 1))
             }
         })
     }

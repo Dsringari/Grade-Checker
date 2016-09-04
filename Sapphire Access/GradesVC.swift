@@ -144,7 +144,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		print(error)
 	}
 
-	func loadStudent() {
+    func loadStudent() {
         let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
         guard let student = Student.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", argumentArray: [selectedStudentName])) else {
             return
@@ -159,6 +159,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                 dispatch_async(dispatch_get_main_queue(), {
                     if (successful) {
                         NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
+                        self.hidePopUpView()
                         self.tableview.reloadData()
                         self.updateRefreshControl()
                         self.stopLoading()
@@ -185,6 +186,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 				if (successful) {
 					dispatch_async(dispatch_get_main_queue(), {
 						// Refresh the ui's student object
+                        self.hidePopUpView()
 						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
 						self.tableview.reloadData()
 						self.refreshControl.endRefreshing()
@@ -285,12 +287,12 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         }
         
         // Set which subjects have badges
-        let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "SUBQUERY(markingPeriods, $t, ANY $t.assignments.newUpdate == %@).@count != 0", argumentArray: [true])) as! [Subject]
+        let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "SUBQUERY(markingPeriods, $m, ANY $m.assignments.newUpdate == %@).@count != 0", argumentArray: [true])) as! [Subject]
         for subject in updatedSubjects {
-            badges[subjects!.indexOf(subject)!] = .Updated
+            if let index = subjects?.indexOf(subject) {
+                badges[index] = .Updated
+            }
         }
-        
-        print("finished counting")
 		return subjects!.count
 	}
 
@@ -381,12 +383,20 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 	}
 
 	func startLoading() {
-		refreshControl.beginRefreshing()
-        self.tableview.setContentOffset(CGPointMake(0, tableview.contentOffset.y - refreshControl.frame.size.height), animated: true)
+        if !popUpView.hidden {
+            hidePopUpView()
+            showPopUpView(.loading)
+            activityIndicator.startAnimating()
+        } else {
+            refreshControl.beginRefreshing()
+            self.tableview.setContentOffset(CGPointMake(0, tableview.contentOffset.y - refreshControl.frame.size.height), animated: true)
+        }
 	}
 
 	func stopLoading() {
 		refreshControl.endRefreshing()
+        hidePopUpView()
+        activityIndicator.stopAnimating()
 	}
     
     func showPopUpView(type: PopUpViewType) {
