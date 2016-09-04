@@ -173,7 +173,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8e-yI-E4D">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H8e-yI-E4D">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="5ed-fj-RgQ">
@@ -259,15 +259,15 @@
                             <mask key="constraints">
                                 <exclude reference="111-o5-Ogy"/>
                                 <exclude reference="Nsu-N4-Xah"/>
-                                <exclude reference="Jsd-gR-n0s"/>
-                                <exclude reference="MEt-RA-fi6"/>
-                                <exclude reference="ppn-hh-Qwa"/>
-                                <exclude reference="qMc-Is-srY"/>
                                 <exclude reference="IzC-eR-uag"/>
                                 <exclude reference="KPr-mD-Laf"/>
                                 <exclude reference="mKa-wt-3J1"/>
                                 <exclude reference="7fX-tH-Whp"/>
                                 <exclude reference="hDj-7G-xz0"/>
+                                <exclude reference="Jsd-gR-n0s"/>
+                                <exclude reference="MEt-RA-fi6"/>
+                                <exclude reference="ppn-hh-Qwa"/>
+                                <exclude reference="qMc-Is-srY"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -278,15 +278,15 @@
                             <mask key="constraints">
                                 <include reference="111-o5-Ogy"/>
                                 <include reference="Nsu-N4-Xah"/>
-                                <include reference="Jsd-gR-n0s"/>
-                                <include reference="MEt-RA-fi6"/>
-                                <include reference="ppn-hh-Qwa"/>
-                                <include reference="qMc-Is-srY"/>
                                 <include reference="IzC-eR-uag"/>
                                 <include reference="KPr-mD-Laf"/>
                                 <include reference="mKa-wt-3J1"/>
                                 <include reference="7fX-tH-Whp"/>
                                 <include reference="hDj-7G-xz0"/>
+                                <include reference="Jsd-gR-n0s"/>
+                                <include reference="MEt-RA-fi6"/>
+                                <include reference="ppn-hh-Qwa"/>
+                                <include reference="qMc-Is-srY"/>
                             </mask>
                         </variation>
                     </view>
@@ -2109,18 +2109,12 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
                                                     <color key="textColor" red="0.027450980390000001" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="29" y="8" width="183" height="33"/>
-                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Letter Day: C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNb-hY-boX">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
                                                     <color key="textColor" red="0.027450980390000001" green="0.34901960780000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="48" y="53" width="144" height="33"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -2226,9 +2220,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="140" y="27" width="74" height="20"/>
-                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RM: A200 DUR: YR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmR-tS-Nb6">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>

@@ -39,6 +39,7 @@
 		FC639FA51C8F8FFD006C71A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */; };
 		FC6A2DD11D79CDAA002E50DD /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */; };
 		FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */; };
+		FC754ED11D7BE0FD008AD5F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC754ED01D7BE0FD008AD5F7 /* GoogleService-Info.plist */; };
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FC9C61531CDBFEC200442285 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C61511CDBFEC200442285 /* Subject.swift */; };
 		FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */; };
@@ -56,7 +57,6 @@
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
 		FCF045F61CEFA90900E2DAEA /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF045F51CEFA90900E2DAEA /* LockVC.swift */; };
 		FCF0E0001CF646B0003B20D7 /* StaticDataTableViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF0DFFF1CF646B0003B20D7 /* StaticDataTableViewController.framework */; };
-		FCF30B231CF7D4EC00055F7C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */; };
 		FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */; };
 		FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
@@ -98,6 +98,7 @@
 		FC639FA61C8F8FFD006C71A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectTableViewCell.swift; sourceTree = "<group>"; };
+		FC754ED01D7BE0FD008AD5F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FC9C61511CDBFEC200442285 /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesVC.swift; sourceTree = "<group>"; };
@@ -115,7 +116,6 @@
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		FCF045F51CEFA90900E2DAEA /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
 		FCF0DFFF1CF646B0003B20D7 /* StaticDataTableViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StaticDataTableViewController.framework; path = "Pods/../build/Debug-iphoneos/StaticDataTableViewController/StaticDataTableViewController.framework"; sourceTree = "<group>"; };
-		FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeVC.swift; sourceTree = "<group>"; };
 		FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,7 +209,7 @@
 				FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */,
 				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
 				FC639FA61C8F8FFD006C71A7 /* Info.plist */,
-				FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */,
+				FC754ED01D7BE0FD008AD5F7 /* GoogleService-Info.plist */,
 			);
 			path = "Sapphire Access";
 			sourceTree = "<group>";
@@ -363,7 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC639FA51C8F8FFD006C71A7 /* LaunchScreen.storyboard in Resources */,
-				FCF30B231CF7D4EC00055F7C /* GoogleService-Info.plist in Resources */,
+				FC754ED11D7BE0FD008AD5F7 /* GoogleService-Info.plist in Resources */,
 				FC639FA21C8F8FFD006C71A7 /* Assets.xcassets in Resources */,
 				FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */,
 			);
@@ -471,7 +471,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Replace this path with the path to the key you just downloaded\nJSON_FILE=./Firebase/service\\ account.json\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:793866081990:ios:3c2cdd0c65dcb559\n\ndefaults write com.google.SymbolUpload version -integer 1   # creates file if it does not exist\nJSON=$(cat \"${JSON_FILE}\")\n/usr/bin/plutil -replace \"app_${GOOGLE_APP_ID//:/_}\" -json \"${JSON}\" \"$HOME/Library/Preferences/com.google.SymbolUpload.plist\"\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
+			shellScript = "# Replace this path with the path to the key you just downloaded\nJSON_FILE=./Sapphire\\ Access-858a010b7c8c.json\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:793866081990:ios:3c2cdd0c65dcb559\n\ndefaults write com.google.SymbolUpload version -integer 1   # creates file if it does not exist\nJSON=$(cat \"${JSON_FILE}\")\n/usr/bin/plutil -replace \"app_${GOOGLE_APP_ID//:/_}\" -json \"${JSON}\" \"$HOME/Library/Preferences/com.google.SymbolUpload.plist\"\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
 		};
 /* End PBXShellScriptBuildPhase section */
 

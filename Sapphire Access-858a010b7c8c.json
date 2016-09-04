@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "admob-app-id-7951887157",
+  "private_key_id": "858a010b7c8cd3e7d98db8e25babc7c689df84b9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDPdrEXm5jEN22H\ncIruLRIIlg1wfw4Uh5tqI5LNlwqqQP6jV4KHuXirBLmYaZreRDv0WQJEtVdECP4h\ngSbrQg9SLQWNZ/3LGm7VRenO8PHxO2NQUmLcJ4ibJxGuiULj+BlZ9pHyFV0m+oHH\nqenKAQkyA8BGV9xzlKbo45UU7ozYRJvx7MtifJhDJft/K7pldTPB1ZCjGtXlt4KR\nMyxI/J8CK2ljT2Z/D+hv86kHiOsafY9vLA6Z0tZtaSbaLxiHfid1FmLaJasDG2Vm\n1kSAhl96Zj8DjWLKL63tWzBR7/w7ZYqjc1q6VEXjo9URJR0H1hfUwSbBD9C7Y59+\neNR705SfAgMBAAECggEBAKPGdxbD5l0/xF9fIM3VFp9glUtxgZQDWVT4sDNMQUcV\n9+7KbmjmqbOYD0uaUn+ULiA/A+NppHI5ByU755VgmOeuUuvGZDupqkUC5AhRfS2K\nTGRkJVbWfqi8tuCpyvxcJuc2FxCcfOUAbONJ5x1oo/GvtGHTilxTxU+kGVRk3Rr7\n4X6Epiz/9VrLn5KeXL52oTHFwY4cHKplOEI2zvp5STimtnM++WBs+YEyuynGnJqz\npFlt34JDArpq0GTal41FUGYl7jYHlFpu1QXhyBSJAAopSBV3IaDDMyr27Ym+u1B+\nSHwIMGNJxhlN7wYm7wXgUzdRW5VBbbNZDWNSkixhC4ECgYEA+Xo3Kc6C2UpFJWRS\ncliUWoNoYGB0eS2xi8p/xKB22I0EBKlSfZ1pNIC/6qFJb14DSSMUpg5koaIEQ6n2\nb40HaiFwCJnprBoWk3PZzocRegzx4hI21hZN+XiWquSZTqmyKekL5y89kAmijmyK\nj4q1YIAlz95czIyXEkkl7LpSG7kCgYEA1ONF0XfrKrXlBUyyfaAUlrLQNxbrWJv8\nxFjQ2cb2auL28fVMxUHkU/zq2FhiXcNxh+ew/u38c7+R9ibJAcT/y+CLDnbpuaAg\nQXA9qxtMBW/Ilw+BlWl5+KGv2uOZZO702PpKutv9r3aLyMe56x/eDHD3jzkCuiJV\n8xR3z7uNTxcCgYEA9iGf3v1Bl0NxKMzrkqjV5N8U0VEYWJ2+Nx7YI5P07P1jY33y\nRsBQlV4Y+lGZ8+ga8cNMkfBNVDJWZrN+0Nug3xKSR8oiAovSjjOURfB4S6QN2G8D\n7wAeeeyBKaVTo4pEnpiwB6xR3pPC7yUjJy9Ady63H3hQsfZa7c2BPycr7vECgYB+\n27PGH8yOFfgUUWDnhVXfe0yiF1FE6ycTpc1GiM5cYUVAZ6lIvnweJE+ZfgmX0Bg+\nIS2SrCRMoTKMWQ5ctJStW+/hPbEHQUkXVZgZ91k0wCjrA313mHPrWgYdzJSi1dYn\n2fZgJSmlvmGL0qCSYNoD1elfelyKqF1JTcAblKqfHwKBgQDKfeir2f7iz4SRWyZf\n4ScidWgVDp41g/ijZdSG5oimGVU7LGbZSW6BcaL0hnc0pu0yujIG8jzceIEq1xVc\nEg42OJUoquGu0Vqld6UwFljddiV92cqQihg++kfgtgw9VKZkL2b50dkrG23WtmL/\nXt7nTXoq8AEdWeTj/dcVXdmWCg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "symbol-upload-service-account@admob-app-id-7951887157.iam.gserviceaccount.com",
+  "client_id": "109523198648407207113",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/symbol-upload-service-account%40admob-app-id-7951887157.iam.gserviceaccount.com"
+}
