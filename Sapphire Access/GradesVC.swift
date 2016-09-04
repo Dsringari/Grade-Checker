@@ -285,24 +285,10 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         }
         
         // Set which subjects have badges
-        let updatedSubjects = subjects!.filter({ (s: Subject) in
-            if let markingPeriods = s.markingPeriods?.allObjects as? [MarkingPeriod] {
-                var allAssignments: [Assignment] = []
-                for mp in markingPeriods {
-                    if let assignments = mp.assignments?.allObjects as? [Assignment] {
-                        allAssignments.appendContentsOf(assignments)
-                    }
-                }
-                return !allAssignments.filter({ return $0.newUpdate.boolValue }).isEmpty
-            }
-            
-            return false
-        })
-        
+        let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "SUBQUERY(markingPeriods, $t, ANY $t.assignments.newUpdate == %@).@count != 0", argumentArray: [true])) as! [Subject]
         for subject in updatedSubjects {
             badges[subjects!.indexOf(subject)!] = .Updated
         }
-
         
         print("finished counting")
 		return subjects!.count
