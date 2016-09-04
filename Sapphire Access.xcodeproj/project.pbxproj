@@ -7,35 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		724C837149ED7EB4B79A6D94 /* Pods_Sapphire_Access.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F532C3480F147BEB23B417F /* Pods_Sapphire_Access.framework */; };
+		1C706F708AF6EC51BEF82AE2 /* Pods_Sapphire_Access.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03D214EF2849FB616FA992A /* Pods_Sapphire_Access.framework */; };
 		FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBED1CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift */; };
 		FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */; };
 		FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */; };
 		FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBF01CBDBDEF00A461AC /* User.swift */; };
-		FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */; };
-		FC00EC021CBDBFE700A461AC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00EC001CBDBFE700A461AC /* Student.swift */; };
 		FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC06632C1CBC3AA9005D1310 /* CoreData.framework */; };
-		FC15CF551CD2B19A001457AD /* StudentSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */; };
+		FC07DC591D788C6500B5F3F5 /* ProfileStudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */; };
+		FC07DC5B1D78990C00B5F3F5 /* SwitchStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */; };
+		FC1140E41D7BA4FD006AF294 /* LoginOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1140E31D7BA4FD006AF294 /* LoginOptionsVC.swift */; };
 		FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC19E3271C923340002401D8 /* DSLoginService.swift */; };
 		FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */; };
 		FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1E26281CE1630900D14D70 /* AboutVC.swift */; };
+		FC217FE51D242D1500B0ED9B /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */; };
+		FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC217FE61D24335000B0ED9B /* ScheduleCell.swift */; };
+		FC2800AB1D4EC04400780C3E /* ProfileSubjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */; };
 		FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2953181CB73BA400DD38CE /* DSHelper.swift */; };
+		FC2E9B691D25D2F10066D8C4 /* ScheduleTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */; };
+		FC36A79D1D7B606500832772 /* AverageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36A79C1D7B606500832772 /* AverageCell.swift */; };
+		FC36A79F1D7B60D800832772 /* SubjectInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36A79E1D7B60D800832772 /* SubjectInfoVC.swift */; };
+		FC36A7A11D7B638700832772 /* SapphireAccessHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36A7A01D7B638700832772 /* SapphireAccessHelper.swift */; };
 		FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */; };
 		FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */; };
+		FC43AC421D74CF7E00D74974 /* ScheduleTodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */; };
+		FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A3EE81D1DD71500D9BC48 /* DataService.swift */; };
+		FC4AC80C1D4FA38400D004AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */; };
+		FC4AC80D1D4FA38400D004AC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80B1D4FA38400D004AC /* Student.swift */; };
 		FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */; };
 		FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */; };
 		FC639FA21C8F8FFD006C71A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */; };
 		FC639FA51C8F8FFD006C71A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */; };
-		FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */; };
+		FC6A2DD11D79CDAA002E50DD /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */; };
 		FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */; };
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FC9C61531CDBFEC200442285 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C61511CDBFEC200442285 /* Subject.swift */; };
 		FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */; };
 		FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */; };
 		FCC29A6D1CD177FD004002B5 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */; };
-		FCC29A6F1CD198A1004002B5 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */; };
 		FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */; };
 		FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */; };
+		FCD61DAB1D79E74D00CA44F0 /* AppearanceOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD61DAA1D79E74D00CA44F0 /* AppearanceOptionsVC.swift */; };
 		FCE14E561CE78114001280BC /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE14E551CE78114001280BC /* ContainerVC.swift */; };
 		FCE231051CDD657900D1B08B /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231041CDD657900D1B08B /* MagicalRecord.framework */; };
 		FCE231071CDD657D00D1B08B /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE231061CDD657D00D1B08B /* Kanna.framework */; };
@@ -43,45 +54,58 @@
 		FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEB706D1CE52AC10065240A /* SelectStudentVC.swift */; };
 		FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FCEF55DE1C9DCD8100F0190E /* Model.xcdatamodeld */; };
 		FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF028221C9DC690008AC891 /* ErrorTypes.swift */; };
+		FCF045F61CEFA90900E2DAEA /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF045F51CEFA90900E2DAEA /* LockVC.swift */; };
+		FCF0E0001CF646B0003B20D7 /* StaticDataTableViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF0DFFF1CF646B0003B20D7 /* StaticDataTableViewController.framework */; };
+		FCF30B231CF7D4EC00055F7C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */; };
 		FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */; };
-		FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */; };
+		FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0F532C3480F147BEB23B417F /* Pods_Sapphire_Access.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sapphire_Access.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		22C4B49432F5C302C9BC13A8 /* Pods-Sapphire Access.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sapphire Access.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access.release.xcconfig"; sourceTree = "<group>"; };
-		4B28DC3C8A95947E5CCE1DD7 /* Pods-Sapphire Access.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sapphire Access.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access.debug.xcconfig"; sourceTree = "<group>"; };
-		542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grade_Checker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		53D202C9F39F931B8E05FF56 /* Pods-Sapphire Access.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sapphire Access.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access.debug.xcconfig"; sourceTree = "<group>"; };
+		BD57F444F05BA670AE1C0BCD /* Pods-Sapphire Access.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sapphire Access.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access.release.xcconfig"; sourceTree = "<group>"; };
+		E03D214EF2849FB616FA992A /* Pods_Sapphire_Access.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sapphire_Access.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC00EBED1CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MarkingPeriod+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkingPeriod.swift; sourceTree = "<group>"; };
 		FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC00EBF01CBDBDEF00A461AC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FC00EC001CBDBFE700A461AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		FC06632C1CBC3AA9005D1310 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentSelectionCell.swift; sourceTree = "<group>"; };
+		FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileStudentCell.swift; sourceTree = "<group>"; };
+		FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchStudentVC.swift; sourceTree = "<group>"; };
+		FC1140E31D7BA4FD006AF294 /* LoginOptionsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginOptionsVC.swift; sourceTree = "<group>"; };
 		FC19E3271C923340002401D8 /* DSLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginService.swift; sourceTree = "<group>"; };
 		FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC1E26281CE1630900D14D70 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
+		FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
+		FC217FE61D24335000B0ED9B /* ScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
+		FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSubjectCell.swift; sourceTree = "<group>"; };
 		FC2953181CB73BA400DD38CE /* DSHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSHelper.swift; sourceTree = "<group>"; };
+		FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTitleCell.swift; sourceTree = "<group>"; };
+		FC36A79C1D7B606500832772 /* AverageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AverageCell.swift; sourceTree = "<group>"; };
+		FC36A79E1D7B60D800832772 /* SubjectInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectInfoVC.swift; sourceTree = "<group>"; };
+		FC36A7A01D7B638700832772 /* SapphireAccessHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SapphireAccessHelper.swift; sourceTree = "<group>"; };
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTodayCell.swift; sourceTree = "<group>"; };
+		FC4A3EE81D1DD71500D9BC48 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FC4AC80B1D4FA38400D004AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Sapphire Access.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sapphire Access.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC639F9F1C8F8FFD006C71A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC639FA41C8F8FFD006C71A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC639FA61C8F8FFD006C71A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSDataService.swift; sourceTree = "<group>"; };
+		FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectTableViewCell.swift; sourceTree = "<group>"; };
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FC9C61511CDBFEC200442285 /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradesVC.swift; sourceTree = "<group>"; };
 		FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
-		FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDSelectionCell.swift; sourceTree = "<group>"; };
 		FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		FCD61DAA1D79E74D00CA44F0 /* AppearanceOptionsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceOptionsVC.swift; sourceTree = "<group>"; };
 		FCE14E551CE78114001280BC /* ContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		FCE231041CDD657900D1B08B /* MagicalRecord.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MagicalRecord.framework; path = "Pods/../build/Debug-iphoneos/MagicalRecord.framework"; sourceTree = "<group>"; };
 		FCE231061CDD657D00D1B08B /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sapphire_Access-hiywhoigwkgnqxaahsdsylwzwzgj/Build/Products/Debug-iphonesimulator/Kanna.framework"; sourceTree = "<group>"; };
@@ -89,8 +113,11 @@
 		FCEB706D1CE52AC10065240A /* SelectStudentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectStudentVC.swift; sourceTree = "<group>"; };
 		FCEF55DF1C9DCD8100F0190E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FCF028221C9DC690008AC891 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
+		FCF045F51CEFA90900E2DAEA /* LockVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
+		FCF0DFFF1CF646B0003B20D7 /* StaticDataTableViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StaticDataTableViewController.framework; path = "Pods/../build/Debug-iphoneos/StaticDataTableViewController/StaticDataTableViewController.framework"; sourceTree = "<group>"; };
+		FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeVC.swift; sourceTree = "<group>"; };
-		FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutCell.swift; sourceTree = "<group>"; };
+		FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,23 +125,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCF0E0001CF646B0003B20D7 /* StaticDataTableViewController.framework in Frameworks */,
 				FCE231091CDD658100D1B08B /* Spring.framework in Frameworks */,
 				FCE231071CDD657D00D1B08B /* Kanna.framework in Frameworks */,
 				FCE231051CDD657900D1B08B /* MagicalRecord.framework in Frameworks */,
 				FCC29A6D1CD177FD004002B5 /* LocalAuthentication.framework in Frameworks */,
 				FC06632D1CBC3AA9005D1310 /* CoreData.framework in Frameworks */,
-				724C837149ED7EB4B79A6D94 /* Pods_Sapphire_Access.framework in Frameworks */,
+				1C706F708AF6EC51BEF82AE2 /* Pods_Sapphire_Access.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		179BCF40F63A2CCA170CCAA5 /* Pods */ = {
+		30D008391C6CB897091637C1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4B28DC3C8A95947E5CCE1DD7 /* Pods-Sapphire Access.debug.xcconfig */,
-				22C4B49432F5C302C9BC13A8 /* Pods-Sapphire Access.release.xcconfig */,
+				53D202C9F39F931B8E05FF56 /* Pods-Sapphire Access.debug.xcconfig */,
+				BD57F444F05BA670AE1C0BCD /* Pods-Sapphire Access.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -122,13 +150,13 @@
 		3A39DB40D025CD77D3B363B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FCF0DFFF1CF646B0003B20D7 /* StaticDataTableViewController.framework */,
 				FCE231081CDD658100D1B08B /* Spring.framework */,
 				FCE231061CDD657D00D1B08B /* Kanna.framework */,
 				FCE231041CDD657900D1B08B /* MagicalRecord.framework */,
 				FCC29A6C1CD177FD004002B5 /* LocalAuthentication.framework */,
 				FC06632C1CBC3AA9005D1310 /* CoreData.framework */,
-				542517305F34D455266AFE09 /* Pods_Grade_Checker.framework */,
-				0F532C3480F147BEB23B417F /* Pods_Sapphire_Access.framework */,
+				E03D214EF2849FB616FA992A /* Pods_Sapphire_Access.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -140,12 +168,12 @@
 				FC00EBEE1CBDBDEF00A461AC /* MarkingPeriod.swift */,
 				FC00EBEF1CBDBDEF00A461AC /* User+CoreDataProperties.swift */,
 				FC00EBF01CBDBDEF00A461AC /* User.swift */,
-				FC00EBFF1CBDBFE700A461AC /* Student+CoreDataProperties.swift */,
-				FC00EC001CBDBFE700A461AC /* Student.swift */,
 				FC1E26261CE150F100D14D70 /* Subject+CoreDataProperties.swift */,
 				FC9C61511CDBFEC200442285 /* Subject.swift */,
 				FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */,
 				FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */,
+				FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */,
+				FC4AC80B1D4FA38400D004AC /* Student.swift */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -156,7 +184,7 @@
 				FC639F991C8F8FFD006C71A7 /* Sapphire Access */,
 				FC639F981C8F8FFD006C71A7 /* Products */,
 				3A39DB40D025CD77D3B363B3 /* Frameworks */,
-				179BCF40F63A2CCA170CCAA5 /* Pods */,
+				30D008391C6CB897091637C1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -181,6 +209,7 @@
 				FC639FA31C8F8FFD006C71A7 /* LaunchScreen.storyboard */,
 				FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */,
 				FC639FA61C8F8FFD006C71A7 /* Info.plist */,
+				FCF30B221CF7D4EC00055F7C /* GoogleService-Info.plist */,
 			);
 			path = "Sapphire Access";
 			sourceTree = "<group>";
@@ -189,7 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				FC19E3271C923340002401D8 /* DSLoginService.swift */,
-				FC63B8251C9CADD000FFDAC8 /* DSDataService.swift */,
+				FC4A3EE81D1DD71500D9BC48 /* DataService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -200,8 +229,12 @@
 				FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */,
 				FCCFDC1B1CD0163D008CCEDC /* AssignmentTableViewCell.swift */,
 				FCC29A781CD19994004002B5 /* TouchIDSelectionCell.swift */,
-				FC15CF541CD2B19A001457AD /* StudentSelectionCell.swift */,
-				FCFA97DC1CE6B43F0073DFC4 /* LogOutCell.swift */,
+				FC217FE61D24335000B0ED9B /* ScheduleCell.swift */,
+				FC2E9B681D25D2F10066D8C4 /* ScheduleTitleCell.swift */,
+				FC2800AA1D4EC04400780C3E /* ProfileSubjectCell.swift */,
+				FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */,
+				FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */,
+				FC36A79C1D7B606500832772 /* AverageCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -209,14 +242,19 @@
 		FCC29A721CD19902004002B5 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FCD61DA91D79E73400CA44F0 /* Settings */,
+				FC217FE41D242D1500B0ED9B /* ScheduleVC.swift */,
 				FCE14E551CE78114001280BC /* ContainerVC.swift */,
 				FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */,
 				FCFA97DA1CE6668F0073DFC4 /* ResumeVC.swift */,
 				FCEB706D1CE52AC10065240A /* SelectStudentVC.swift */,
+				FCF045F51CEFA90900E2DAEA /* LockVC.swift */,
 				FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */,
 				FCB6D7881CCC846A00F1A9F6 /* DetailVC.swift */,
-				FCC29A6E1CD198A1004002B5 /* SettingsVC.swift */,
+				FC07DC5A1D78990C00B5F3F5 /* SwitchStudentVC.swift */,
 				FC1E26281CE1630900D14D70 /* AboutVC.swift */,
+				FCFE9BFD1D4D443700B253E2 /* ProfileVC.swift */,
+				FC36A79E1D7B60D800832772 /* SubjectInfoVC.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -226,6 +264,7 @@
 			children = (
 				FCF028221C9DC690008AC891 /* ErrorTypes.swift */,
 				FC2953181CB73BA400DD38CE /* DSHelper.swift */,
+				FC36A7A01D7B638700832772 /* SapphireAccessHelper.swift */,
 			);
 			name = "Swift Helpers";
 			sourceTree = "<group>";
@@ -239,6 +278,16 @@
 			name = CoreData;
 			sourceTree = "<group>";
 		};
+		FCD61DA91D79E73400CA44F0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */,
+				FCD61DAA1D79E74D00CA44F0 /* AppearanceOptionsVC.swift */,
+				FC1140E31D7BA4FD006AF294 /* LoginOptionsVC.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -246,15 +295,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC639FA91C8F8FFD006C71A7 /* Build configuration list for PBXNativeTarget "Sapphire Access" */;
 			buildPhases = (
+				3CF42E12707ED0877C542733 /* [CP] Check Pods Manifest.lock */,
 				FC1E26231CE1374E00D14D70 /* Set the build number to the count of Git commits */,
-				5EDB95526956A78CAF4B1EB8 /* Check Pods Manifest.lock */,
 				FCC71DA71C950DD6000913D1 /* Check for Warning Tags */,
 				FC639F931C8F8FFD006C71A7 /* Sources */,
 				FC639F941C8F8FFD006C71A7 /* Frameworks */,
 				FC639F951C8F8FFD006C71A7 /* Resources */,
-				E7C16904363DCFC337368AB2 /* Embed Pods Frameworks */,
-				963E8759A260AF2DFFD1BF2E /* Copy Pods Resources */,
 				FC1E26251CE1378D00D14D70 /* Set Build number to "Development" */,
+				2976EB38A329D2F5C15F19B9 /* [CP] Embed Pods Frameworks */,
+				4642756918B28A00B4274C28 /* [CP] Copy Pods Resources */,
+				FCF30B211CF7D18900055F7C /* Firebase */,
 			);
 			buildRules = (
 			);
@@ -271,7 +321,7 @@
 		FC639F8F1C8F8FFD006C71A7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Dhruv Sringari";
 				TargetAttributes = {
@@ -280,6 +330,9 @@
 						DevelopmentTeam = M23B6AYLDX;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -310,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC639FA51C8F8FFD006C71A7 /* LaunchScreen.storyboard in Resources */,
+				FCF30B231CF7D4EC00055F7C /* GoogleService-Info.plist in Resources */,
 				FC639FA21C8F8FFD006C71A7 /* Assets.xcassets in Resources */,
 				FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */,
 			);
@@ -318,14 +372,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5EDB95526956A78CAF4B1EB8 /* Check Pods Manifest.lock */ = {
+		2976EB38A329D2F5C15F19B9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3CF42E12707ED0877C542733 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,34 +402,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		963E8759A260AF2DFFD1BF2E /* Copy Pods Resources */ = {
+		4642756918B28A00B4274C28 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E7C16904363DCFC337368AB2 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sapphire Access/Pods-Sapphire Access-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FC1E26231CE1374E00D14D70 /* Set the build number to the count of Git commits */ = {
@@ -405,6 +459,20 @@
 			shellPath = /bin/sh;
 			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
+		FCF30B211CF7D18900055F7C /* Firebase */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Firebase;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Replace this path with the path to the key you just downloaded\nJSON_FILE=./Firebase/service\\ account.json\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:793866081990:ios:3c2cdd0c65dcb559\n\ndefaults write com.google.SymbolUpload version -integer 1   # creates file if it does not exist\nJSON=$(cat \"${JSON_FILE}\")\n/usr/bin/plutil -replace \"app_${GOOGLE_APP_ID//:/_}\" -json \"${JSON}\" \"$HOME/Library/Preferences/com.google.SymbolUpload.plist\"\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -412,35 +480,47 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC07DC5B1D78990C00B5F3F5 /* SwitchStudentVC.swift in Sources */,
+				FC6A2DD11D79CDAA002E50DD /* SettingVC.swift in Sources */,
 				FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */,
-				FCFA97DD1CE6B43F0073DFC4 /* LogOutCell.swift in Sources */,
 				FC1E26291CE1630900D14D70 /* AboutVC.swift in Sources */,
-				FC15CF551CD2B19A001457AD /* StudentSelectionCell.swift in Sources */,
 				FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */,
-				FC63B8261C9CADD000FFDAC8 /* DSDataService.swift in Sources */,
 				FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */,
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */,
-				FC00EC011CBDBFE700A461AC /* Student+CoreDataProperties.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
+				FCD61DAB1D79E74D00CA44F0 /* AppearanceOptionsVC.swift in Sources */,
+				FC43AC421D74CF7E00D74974 /* ScheduleTodayCell.swift in Sources */,
 				FCFA97DB1CE6668F0073DFC4 /* ResumeVC.swift in Sources */,
 				FCCFDC1C1CD0163D008CCEDC /* AssignmentTableViewCell.swift in Sources */,
 				FCC29A791CD19994004002B5 /* TouchIDSelectionCell.swift in Sources */,
-				FCC29A6F1CD198A1004002B5 /* SettingsVC.swift in Sources */,
+				FC1140E41D7BA4FD006AF294 /* LoginOptionsVC.swift in Sources */,
+				FCF045F61CEFA90900E2DAEA /* LockVC.swift in Sources */,
+				FC2E9B691D25D2F10066D8C4 /* ScheduleTitleCell.swift in Sources */,
 				FC1E26271CE150F100D14D70 /* Subject+CoreDataProperties.swift in Sources */,
 				FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */,
+				FC36A7A11D7B638700832772 /* SapphireAccessHelper.swift in Sources */,
+				FC217FE51D242D1500B0ED9B /* ScheduleVC.swift in Sources */,
+				FC36A79F1D7B60D800832772 /* SubjectInfoVC.swift in Sources */,
+				FC07DC591D788C6500B5F3F5 /* ProfileStudentCell.swift in Sources */,
 				FC00EBF81CBDBDEF00A461AC /* MarkingPeriod.swift in Sources */,
 				FC19E3281C923340002401D8 /* DSLoginService.swift in Sources */,
 				FCE14E561CE78114001280BC /* ContainerVC.swift in Sources */,
 				FC00EBF91CBDBDEF00A461AC /* User+CoreDataProperties.swift in Sources */,
 				FC9C61531CDBFEC200442285 /* Subject.swift in Sources */,
-				FC00EC021CBDBFE700A461AC /* Student.swift in Sources */,
+				FC2800AB1D4EC04400780C3E /* ProfileSubjectCell.swift in Sources */,
+				FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */,
 				FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */,
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
 				FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */,
+				FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */,
 				FC00EBF71CBDBDEF00A461AC /* MarkingPeriod+CoreDataProperties.swift in Sources */,
+				FC36A79D1D7B606500832772 /* AverageCell.swift in Sources */,
+				FC4AC80D1D4FA38400D004AC /* Student.swift in Sources */,
 				FCB6D7891CCC846A00F1A9F6 /* DetailVC.swift in Sources */,
+				FC217FE71D24335000B0ED9B /* ScheduleCell.swift in Sources */,
+				FC4AC80C1D4FA38400D004AC /* Student+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,7 +631,7 @@
 		};
 		FC639FAA1C8F8FFD006C71A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B28DC3C8A95947E5CCE1DD7 /* Pods-Sapphire Access.debug.xcconfig */;
+			baseConfigurationReference = 53D202C9F39F931B8E05FF56 /* Pods-Sapphire Access.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -559,12 +639,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/StaticDataTableViewController",
 				);
 				INFOPLIST_FILE = "Sapphire Access/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SringariDhruv.Sapphire-Access";
 				PRODUCT_NAME = "Sapphire Access";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -572,7 +654,7 @@
 		};
 		FC639FAB1C8F8FFD006C71A7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 22C4B49432F5C302C9BC13A8 /* Pods-Sapphire Access.release.xcconfig */;
+			baseConfigurationReference = BD57F444F05BA670AE1C0BCD /* Pods-Sapphire Access.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -580,12 +662,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/StaticDataTableViewController",
 				);
 				INFOPLIST_FILE = "Sapphire Access/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SringariDhruv.Sapphire-Access";
 				PRODUCT_NAME = "Sapphire Access";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

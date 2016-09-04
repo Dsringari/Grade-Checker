@@ -11,7 +11,6 @@ import CoreData
 import MagicalRecord
 import Spring
 import LocalAuthentication
-import EZLoadingActivity
 
 class DSLoginView: UIViewController {
 
@@ -100,7 +99,7 @@ class DSLoginView: UIViewController {
 				kbHeight = keyboardFrame.height
 
 				setConstant = keyboardConstraint.constant
-				keyboardConstraint.constant = kbHeight! + 30
+				keyboardConstraint.constant = kbHeight! + 15
 
 				UIView.animateWithDuration(keyboardAnimationDuration, animations: {
 					self.view.layoutIfNeeded()

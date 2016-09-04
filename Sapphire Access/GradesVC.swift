@@ -11,56 +11,131 @@ import MagicalRecord
 import CoreData
 import GoogleMobileAds
 
-class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsVCDelegate, GADBannerViewDelegate {
+
+enum Sorting: Int {
+    case Recent
+    case Alphabetical
+    case NumericalGrade
+}
+
+
+
+class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
-	@IBOutlet var activityView: UIView!
-	@IBOutlet var tableview: UITableView!
-	@IBOutlet var refreshButton: UIBarButtonItem!
+	@IBOutlet var popUpView: UIView!
+    @IBOutlet var popUpViewText: UILabel!
+    @IBOutlet var popUpViewButton: UIButton!
 	@IBOutlet var adView: GADBannerView!
 	@IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
-
+    
+    enum Badge {
+        case Updated
+        case Mock
+        case Both
+    }
+    
+    enum PopUpViewType {
+        case loading
+        case noInternet
+        case noGrades
+    }
+   
+    
 	var settingsCompletionHandler: (() -> Void)!
 
+	// Create an instance of a UITableViewController. This will host the tableview in order to solve uirefreshcontrol bugs
+	private let tableViewController = UITableViewController()
+	@IBOutlet var tableview: UITableView!
+
 	var student: Student!
-	var subjects: [Subject]! = []
+	var subjects: [Subject]?
+	var badges: [Int: Badge] = [:]
 	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-	var isRefreshing = false
 	lazy var refreshControl: UIRefreshControl = {
 		let refreshControl = UIRefreshControl()
 		refreshControl.addTarget(self, action: #selector(pullToRefresh), forControlEvents: .ValueChanged)
-		refreshControl.tintColor = UIColor.whiteColor()
+		refreshControl.tintColor = UIColor.lightGrayColor()
 		return refreshControl
 	}()
+    
+    var sortMethod: Sorting = .Recent
 
 	var selectedSubject: Subject!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		// Setup Tableview
 		tableview.delegate = self
 		tableview.dataSource = self
-		tableview.addSubview(refreshControl)
-
-		adView.adSize = kGADAdSizeSmartBannerPortrait
-		adView.adUnitID = "ca-app-pub-9355707484240783/4024228355"
-		adView.rootViewController = self
-		adView.delegate = self
-		let request = GADRequest()
-		request.testDevices = ["9c687019dd43e1fdf830b4e54a8e6aaf"]
-		adView.loadRequest(request)
-
-		if let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
-			self.student = student
-		}
-
-		loadStudent()
+		// Setup RefreshControl
+		self.addChildViewController(self.tableViewController)
+		self.tableViewController.tableView = self.tableview
+		self.tableViewController.refreshControl = self.refreshControl
+		updateRefreshControl()
+        
+        setupAdmob()
+		
+        hidePopUpView()
+        
+        checkSortingMethod()
+        
+        loadStudent()
+		
+        popUpViewButton.addTarget(self, action: #selector(loadStudent), forControlEvents: .TouchUpInside)
+        popUpViewButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loadStudent), name: "loadStudent", object: nil)
 	}
+    
+    func setupAdmob() {
+        // Setup Admob
+        adView.adSize = kGADAdSizeSmartBannerPortrait
+        adView.adUnitID = "ca-app-pub-9355707484240783/4024228355"
+        adView.rootViewController = self
+        adView.delegate = self
+        let request = GADRequest()
+        request.testDevices = ["9a231882e8eb1d8e2aa640a79a41bb2b"];
+        adView.loadRequest(request)
+    }
+    
+    override func viewWillDisappear(animated: Bool){
+        super.viewDidAppear(animated)
+        
+        if self.navigationController!.viewControllers.contains(self) == false  //any other hierarchy compare if it contains self or not
+        {
+            // the view has been removed from the navigation stack or hierarchy, back is probably the cause
+            // this will be slow with a large stack however.
+            
+            NSNotificationCenter.defaultCenter().removeObserver(self)
+        }
+    }
+    
+    func checkSortingMethod() {
+        let sortingNumber = NSUserDefaults.standardUserDefaults().integerForKey("sortMethod")
+        sortMethod = Sorting(rawValue: sortingNumber)!
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        checkSortingMethod()
+        subjects = student.subjects?.allObjects as? [Subject]
+        tableview.reloadData()
+    }
 
 	func adViewDidReceiveAd(bannerView: GADBannerView!) {
-		tableViewBottomConstraint.constant = 50
+        self.tableViewBottomConstraint.constant = 50
+        self.view.addSubview(self.adView)
+        
+        if #available(iOS 9.0, *) {
+            self.adView.bottomAnchor.constraintEqualToAnchor(self.bottomLayoutGuide.topAnchor)
+        } else {
+            // Fallback on earlier versions
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|[adView]|", options: [], metrics: nil, views: ["adView": self.adView])
+        }
+        
+        NSLayoutConstraint.constraintsWithVisualFormat("|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
+        
 		UIView.animateWithDuration(0.5, animations: {
-			self.view.addSubview(self.adView)
-			self.adView.bottomAnchor.constraintEqualToAnchor(self.bottomLayoutGuide.topAnchor)
-			NSLayoutConstraint.constraintsWithVisualFormat("|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
 			self.view.layoutIfNeeded()
 		})
 	}
@@ -69,141 +144,63 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 		print(error)
 	}
 
-	override func viewWillAppear(animated: Bool) {
-		super.viewWillAppear(animated)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: UIApplicationDidBecomeActiveNotification, object: UIApplication.sharedApplication())
-	}
-
-	override func viewWillDisappear(animated: Bool) {
-		super.viewWillDisappear(animated)
-		NSNotificationCenter.defaultCenter().removeObserver(self)
-	}
-
-	func refreshTableView() {
-		let settings = NSUserDefaults.standardUserDefaults()
-		if settings.boolForKey("updatedInBackground") {
-			settings.setBool(false, forKey: "updatedInBackground")
-			NSManagedObjectContext.MR_defaultContext().refreshObject(student, mergeChanges: false)
-			self.tableview.reloadData()
-		}
-	}
-
-	func reloadData(completionHandler: () -> Void) {
-		settingsCompletionHandler = completionHandler
-		let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
-		let student = Student.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", argumentArray: [selectedStudentName]))
-		self.student = student
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(callSettingsCompletionHandler), name: "doneReloading", object: nil)
-		loadStudent()
-	}
-
-	func callSettingsCompletionHandler() {
-		settingsCompletionHandler()
-	}
-
-	func loadStudent() {
-		self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades" // Get the first name and set it as the title
+    func loadStudent() {
+        let selectedStudentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!
+        guard let student = Student.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", argumentArray: [selectedStudentName])) else {
+            return
+        }
+        self.student = student
+		subjects = nil
+		// Get the first name and set it as the title. We do this here so that the name will update when the student changes in the settings
+		self.navigationItem.title = student.name!.componentsSeparatedByString(" ")[0] + "'s Grades"
 		startLoading()
-		isRefreshing = true
-		let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
-			if (successful) {
-				dispatch_async(dispatch_get_main_queue(), {
-					NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
-					self.tableview.reloadData()
-					self.updateRefreshControl()
-					self.stopLoading()
-					let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-					UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
-					self.isRefreshing = false
-					NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
-				})
-			} else {
-				dispatch_async(dispatch_get_main_queue(), {
-					self.stopLoading()
-					var err = error
-					if (error!.code == NSURLErrorTimedOut) {
-						err = badConnectionError
-					}
-					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-					alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-					self.presentViewController(alert, animated: true, completion: nil)
-					self.isRefreshing = false
-					NSNotificationCenter.defaultCenter().postNotificationName("doneReloading", object: nil)
-				})
-			}
-		})
-	}
-
-	@IBAction func refresh(sender: AnyObject) {
-		if !isRefreshing {
-			refreshButton.enabled = false
-			isRefreshing = true
-			refreshControl.beginRefreshing()
-			tableview.userInteractionEnabled = false
-			tableview.setContentOffset(CGPointMake(0, -refreshControl.frame.size.height), animated: true)
-			let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
-				if (successful) {
-					dispatch_async(dispatch_get_main_queue(), {
-						// Refresh the ui's student object
-						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
-
-						self.tableview.reloadData()
-						self.updateRefreshControl()
-
-						self.refreshControl.endRefreshing()
-						self.refreshButton.enabled = true
-						self.isRefreshing = false
-						self.tableview.userInteractionEnabled = true
-					})
-				} else {
-					dispatch_async(dispatch_get_main_queue(), {
-						self.refreshControl.endRefreshing()
-						self.refreshButton.enabled = true
-						self.isRefreshing = false
-						var err = error
-						if (error!.code == NSURLErrorTimedOut) {
-							err = badConnectionError
-						}
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: nil)
-						self.tableview.userInteractionEnabled = false
-					})
-				}
+		if let service = UpdateService(studentID: student.objectID) {
+			service.updateStudentInformation({ successful, error in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if (successful) {
+                        NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
+                        self.hidePopUpView()
+                        self.tableview.reloadData()
+                        self.updateRefreshControl()
+                        self.stopLoading()
+                        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+                        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+                        UIApplication.sharedApplication().registerForRemoteNotifications()
+					
+                    } else {
+                        self.stopLoading()
+                        if error! == noGradesError {
+                            self.showPopUpView(.noGrades)
+                        } else {
+                            self.showPopUpView(.noInternet)
+                        }
+                    }
+                })
 			})
 		}
 	}
 
 	func pullToRefresh() {
-		if !isRefreshing {
-			isRefreshing = true
-			refreshButton.enabled = false
-			tableview.userInteractionEnabled = false
-			let _ = UpdateService(studentID: student.objectID, completionHandler: { successful, error in
+		if let service = UpdateService(studentID: student.objectID) {
+			service.updateStudentInformation({ successful, error in
 				if (successful) {
 					dispatch_async(dispatch_get_main_queue(), {
 						// Refresh the ui's student object
+                        self.hidePopUpView()
 						NSManagedObjectContext.MR_defaultContext().refreshObject(self.student, mergeChanges: false)
 						self.tableview.reloadData()
-						self.updateRefreshControl()
 						self.refreshControl.endRefreshing()
-						self.isRefreshing = false
-						self.refreshButton.enabled = true
-						self.tableview.userInteractionEnabled = true
+						self.updateRefreshControl()
 					})
 				} else {
 					dispatch_async(dispatch_get_main_queue(), {
 						self.refreshControl.endRefreshing()
-						self.isRefreshing = false
-						self.refreshButton.enabled = true
-						var err = error
-						if (error!.code == NSURLErrorTimedOut) {
-							err = badConnectionError
-						}
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: nil)
-						self.tableview.userInteractionEnabled = true
+                        self.stopLoading()
+                        if error! == noGradesError {
+                            self.showPopUpView(.noGrades)
+                        } else {
+                            self.showPopUpView(.noInternet)
+                        }
 					})
 				}
 			})
@@ -220,77 +217,97 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if (student.subjects!.count == 0) {
+		guard let sMOs = student.subjects?.allObjects as? [Subject] else {
 			return 0
 		}
-		subjects = student.subjects!.allObjects as! [Subject]
+
+		subjects = sMOs
+		badges.removeAll()
 
 		// Remove invalid subjects
-		for subject in subjects {
+		for subject in subjects! {
 			var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
 			mps = mps.filter { !$0.empty!.boolValue } // filter marking periods with no assignments
 
-//			for mp in mps {
-//				print(mp.subject!.name! + " " + mp.number!)
-//			}
-
 			if mps.count == 0 { // Don't show subject if all the marking periods are empty
-				subjects.removeObject(subject)
+				subjects!.removeObject(subject)
 				continue
 			}
 
 			mps.sortInPlace { Int($0.number!) > Int($1.number!) } // sort marking periods by descending number
-			let recentMP = mps[0]
+            
+            /*
+             
+            let recentMP = mps[0]
 			let percentgradeString = recentMP.percentGrade!.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("")
 
 			if (percentgradeString == "") { // Don't show subject if the most recent marking period with assignments has zero percent grade or strange grading
-				subjects.removeObject(subject)
-			}
+				subjects!.removeObject(subject)
+			} 
+             */
 		}
-
-		// Sort by Most Recently Updated
-		subjects.sortInPlace({ (s1: Subject, s2: Subject) -> Bool in
-			let s1MostRecentDate: NSDate
-			let s2MostRecentDate: NSDate
-
-			if let date = s1.lastUpdated {
-				s1MostRecentDate = date
-			} else {
-				s1MostRecentDate = s1.mostRecentAssignment!.dateCreated!
-			}
-
-			if let date = s2.lastUpdated {
-				s2MostRecentDate = date
-			} else {
-				s2MostRecentDate = s2.mostRecentAssignment!.dateCreated!
-			}
-
-			if (s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedSame) {
-				return s1.name < s2.name
-			}
-
-			return s1MostRecentDate.compare(s2MostRecentDate) == NSComparisonResult.OrderedDescending
-
-		})
-		return subjects.count
+        
+        switch sortMethod {
+        case .Recent:
+            subjects!.sortInPlace({ (s1: Subject, s2: Subject) -> Bool in
+                
+                guard s1.mostRecentDate != nil || s2.mostRecentDate != nil else {
+                    if s1.mostRecentDate == nil && s2.mostRecentDate == nil {
+                        return s1.name < s2.name
+                    }
+                    
+                    if s1.mostRecentDate == nil {
+                        return true
+                    }
+                    
+                    return false
+                }
+                
+                if (s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedSame) {
+                    return s1.name < s2.name
+                }
+                
+                return s1.mostRecentDate!.compare(s2.mostRecentDate!) == NSComparisonResult.OrderedDescending
+                
+            })
+        case .Alphabetical:
+            subjects!.sortInPlace{$0.name < $1.name}
+        case .NumericalGrade:
+            subjects!.sortInPlace{ (s1: Subject, s2: Subject) -> Bool in
+                
+                var mps1 = s1.markingPeriods?.allObjects as! [MarkingPeriod]
+                mps1.sortInPlace{$0.number > $1.number}
+                var mps2 = s2.markingPeriods?.allObjects as! [MarkingPeriod]
+                mps2.sortInPlace{$0.number > $1.number}
+                
+                let mostRecentGrade1 = NSDecimalNumber(string: mps1[0].percentGrade)
+                let mostRecentGrade2 = NSDecimalNumber(string: mps2[0].percentGrade)
+                return mostRecentGrade1.compare(mostRecentGrade2) == .OrderedDescending
+            }
+        }
+        
+        // Set which subjects have badges
+        let updatedSubjects = Subject.MR_findAllWithPredicate(NSPredicate(format: "SUBQUERY(markingPeriods, $m, ANY $m.assignments.newUpdate == %@).@count != 0", argumentArray: [true])) as! [Subject]
+        for subject in updatedSubjects {
+            if let index = subjects?.indexOf(subject) {
+                badges[index] = .Updated
+            }
+        }
+		return subjects!.count
 	}
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		if (!isRefreshing) {
-			let cell = tableView.dequeueReusableCellWithIdentifier("subjectCell", forIndexPath: indexPath) as! SubjectTableViewCell
 
-			let subject: Subject = subjects[indexPath.row]
+		let cell = tableView.dequeueReusableCellWithIdentifier("subjectCell", forIndexPath: indexPath) as! SubjectTableViewCell
 
+		if let subject = subjects?[indexPath.row] {
 			cell.subjectNameLabel.text = subject.name
 
-			var markingPeriods: [MarkingPeriod] = subjects[indexPath.row].markingPeriods!.allObjects as! [MarkingPeriod]
+			var markingPeriods: [MarkingPeriod] = subjects![indexPath.row].markingPeriods!.allObjects as! [MarkingPeriod]
 
 			// sort marking periods by descending number and ignore empty marking periods
 			markingPeriods = markingPeriods.filter { !$0.empty!.boolValue }.sort { Int($0.number!) > Int($1.number!) }
-
-			if (markingPeriods.count == 0) {
-
-			}
+            
 			let recentMP = markingPeriods[0]
 
 			// Remove %
@@ -304,20 +321,37 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 			// cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
 			cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
 
-			if let date = subject.lastUpdated {
-				cell.lastUpdatedLabel.text = "Last Updated: " + relativeDateStringForDate(date)
+			let dateString: String
+			if let date = subject.mostRecentDate {
+				dateString = relativeDateStringForDate(date)
 			} else {
-				cell.lastUpdatedLabel.text = "Last Updated: " + relativeDateStringForDate(subject.mostRecentAssignment!.dateCreated!)
+				dateString = "N/A"
 			}
 
-			// cell.backgroundColor = lightB
+			cell.lastUpdatedLabel.text = "Last Updated: " + dateString
+            
+            if let badge = badges[indexPath.row] {
+                switch badge {
+                case .Updated:
+                    cell.badge.hidden = false
+                    cell.badge.image = UIImage(named: "Recently Updated")!
+                default:
+                    cell.badge.hidden = true
+                }
+            } else {
+                cell.badge.hidden = true
+            }
+
+
 			return cell
+
 		}
-        return UITableViewCell()
+
+		return UITableViewCell()
 	}
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		selectedSubject = subjects[indexPath.row]
+		selectedSubject = subjects![indexPath.row]
 		performSegueWithIdentifier("subjectView", sender: nil)
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 	}
@@ -325,9 +359,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 	func updateRefreshControl() {
 		// set the refresh control's title
 		let formatter: NSDateFormatter = NSDateFormatter()
-		formatter.dateFormat = "MMM d, h:mm a"
-		let title = "Last Update: " + formatter.stringFromDate(NSDate())
-		let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+		formatter.dateFormat = "h:mm a"
+		let title = "Updated at \(formatter.stringFromDate(NSDate()))"
+		let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.lightGrayColor()])
 		self.refreshControl.attributedTitle = attributedTitle
 	}
 
@@ -349,16 +383,63 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Se
 	}
 
 	func startLoading() {
-		activityIndicator.startAnimating()
-		activityView.hidden = false
-		refreshButton.enabled = false
+        if !popUpView.hidden {
+            hidePopUpView()
+            showPopUpView(.loading)
+            activityIndicator.startAnimating()
+        } else {
+            refreshControl.beginRefreshing()
+            self.tableview.setContentOffset(CGPointMake(0, tableview.contentOffset.y - refreshControl.frame.size.height), animated: true)
+        }
 	}
 
 	func stopLoading() {
-		activityIndicator.stopAnimating()
-		activityView.hidden = true
-		refreshButton.enabled = true
+		refreshControl.endRefreshing()
+        hidePopUpView()
+        activityIndicator.stopAnimating()
 	}
+    
+    func showPopUpView(type: PopUpViewType) {
+        
+        tableview.userInteractionEnabled=false
+        switch type {
+        case .loading:
+            popUpViewButton.hidden = true
+            popUpViewText.hidden = true
+            break
+        case .noInternet:
+            popUpViewButton.hidden = false
+            popUpViewText.hidden = false
+            popUpViewButton.adjustsImageWhenHighlighted = true
+            popUpViewButton.setImage(UIImage(named: "Internet Icon"), forState: .Normal)
+            popUpViewText.text = "We could not connect to the internet. Tap to retry."
+            break
+        case .noGrades:
+            popUpViewButton.hidden = false
+            popUpViewText.hidden = false
+            popUpViewButton.adjustsImageWhenHighlighted = true
+            popUpViewButton.setImage(UIImage(named: "Triangle Logo"), forState: .Normal)
+            popUpViewText.text = "No courses were found in Sapphire. Tap to retry."
+            break
+        }
+        
+        popUpView.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.popUpView.alpha = 1
+        })
+    }
+    
+    func hidePopUpView() {
+        tableview.userInteractionEnabled = true
+        UIView.animateWithDuration(0.3, animations: {
+            self.popUpView.alpha = 0
+        })
+        popUpView.hidden = true
+        popUpViewButton.hidden = true
+        popUpViewText.hidden = true
+    }
+    
+    
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if (segue.identifier == "subjectView") {

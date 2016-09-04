@@ -9,11 +9,6 @@
 import UIKit
 import MagicalRecord
 
-struct SegueIdentifier {
-	static let login = "login"
-	static let resume = "resume"
-	static var initial: String?
-}
 
 class ContainerVC: UIViewController {
 

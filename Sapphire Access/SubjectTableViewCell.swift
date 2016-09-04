@@ -10,9 +10,9 @@ import UIKit
 
 class SubjectTableViewCell: UITableViewCell {
     @IBOutlet var subjectNameLabel: UILabel!
-    @IBOutlet var letterGradeLabel: UILabel!
     @IBOutlet var percentGradeLabel: UILabel!
     @IBOutlet var lastUpdatedLabel: UILabel!
+    @IBOutlet var badge: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

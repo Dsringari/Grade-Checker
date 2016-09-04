@@ -1,0 +1,11 @@
+Sapphire Access is the best way to check your grades if your school uses the Parent Portal or Sapphire systems. Never again will you have to scramble with your username, password, and pin to check your score on that test everyone is talking about. And with notifications you will be the first to know what you received before your friends. Have a nosy friend? Well too bad for them because the app can be optionally secured with Touch ID.
+
+Features:
+       • Automatic sign in
+       • Optional privacy shield with Touch ID
+       • Notifies you when your grades have been updated
+       • Much more convenient than the website
+
+Note: At this point in time Sapphire Access will only work for students in the Methacton School District, expect more to be coming soon.
+
+Disclaimer: Sapphire Access is not affiliated with K12 Systems, Inc.

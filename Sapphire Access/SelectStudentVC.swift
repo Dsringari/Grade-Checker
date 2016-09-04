@@ -51,7 +51,11 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 		tableView.delegate = self
 		tableView.dataSource = self
 
-		tableView.cellLayoutMarginsFollowReadableWidth = false
+        if #available(iOS 9.0, *) {
+            tableView.cellLayoutMarginsFollowReadableWidth = false
+        } else {
+            // Fallback on earlier versions
+        }
         willDisableContinueButton()
 	}
     
@@ -70,7 +74,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         if touchIDSwitch.on && hasTouchID {
             let context = LAContext()
             self.continueButton.enabled = false
-            context.evaluatePolicy(.DeviceOwnerAuthentication, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: NSError?) in
+            context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: NSError?) in
                 dispatch_async(dispatch_get_main_queue(), {
                     self.continueButton.enabled = true
                     if (success) {

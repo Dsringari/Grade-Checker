@@ -15,8 +15,8 @@ class ResumeVC: UIViewController {
 	@IBOutlet var continueButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	var containerVC: ContainerVC!
-    
-    var user: User!
+
+	var user: User!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,7 +25,7 @@ class ResumeVC: UIViewController {
 		containerVC = navigationController!.parentViewController as! ContainerVC
 
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didDismissTabBar), name: "tabBarDismissed", object: nil)
-        refresh()
+		refresh()
 	}
 
 	func didDismissTabBar() {
@@ -36,44 +36,50 @@ class ResumeVC: UIViewController {
 		}
 
 	}
-    
-    func refresh() {
-        let settings = NSUserDefaults.standardUserDefaults()
-        if let name = settings.stringForKey("selectedStudent") {
-            if let student = Student.MR_findFirstByAttribute("name", withValue: name) {
-                user = student.user
-                continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
-            } else {
-                backToLogin()
-            }
-            
-        } else {
-            backToLogin()
-        }
-    }
+
+	func refresh() {
+		let settings = NSUserDefaults.standardUserDefaults()
+		if let name = settings.stringForKey("selectedStudent") {
+			if let student = Student.MR_findFirstByAttribute("name", withValue: name) {
+				user = student.user
+				continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
+			} else {
+				backToLogin()
+			}
+
+		} else {
+			backToLogin()
+		}
+	}
 
 	func login() {
 		// Try to Login
-        self.activityIndicator.startAnimating()
+		self.activityIndicator.startAnimating()
 		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
-			self.activityIndicator.stopAnimating()
-			if (successful) {
-				dispatch_async(dispatch_get_main_queue(), {
+			dispatch_async(dispatch_get_main_queue()) {
+				self.activityIndicator.stopAnimating()
+				if (successful) {
+
 					self.performSegueWithIdentifier("returnHome", sender: self)
-				})
-			} else {
-				// If we failed
-				dispatch_async(dispatch_get_main_queue(), {
+
+				} else {
+					// If we failed
+
 					var err = error
 					if (error!.code == NSURLErrorTimedOut) {
 						err = badConnectionError
 					}
-					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-					alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
-						self.backToLogin()
-						}))
+					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedRecoverySuggestion, preferredStyle: .Alert)
+					if err == badLoginError {
+						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+							self.backToLogin()
+							}))
+					} else {
+						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+					}
 					self.presentViewController(alert, animated: true, completion: nil)
-				})
+
+				}
 			}
 		})
 	}
@@ -89,10 +95,10 @@ class ResumeVC: UIViewController {
 				let localizedReasonString = "Login with Touch ID"
 				context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
 
-					dispatch_async(dispatch_get_main_queue(), {
-                        
+					dispatch_async(dispatch_get_main_queue()) {
+
 						if (success) {
-							
+
 							self.login()
 							self.continueButton.enabled = true
 						} else {
@@ -103,16 +109,16 @@ class ResumeVC: UIViewController {
 									self.continueButton.enabled = true
 								})
 								failed.addAction(Ok)
-								dispatch_async(dispatch_get_main_queue(), {
-									self.presentViewController(failed, animated: true, completion: nil)
-								})
+								
+                                self.presentViewController(failed, animated: true, completion: nil)
+								
 
 								return
 							}
 
 							self.backToLogin()
 						}
-					})
+					}
 				})
 			} else {
 				var title: String!

@@ -1,15 +1,20 @@
 //
-//  StudentSelectionCell.swift
-//  Grade Checker
+//  ScheduleCell.swift
+//  Sapphire Access
 //
-//  Created by Dhruv Sringari on 4/28/16.
+//  Created by Dhruv Sringari on 6/29/16.
 //  Copyright © 2016 Dhruv Sringari. All rights reserved.
 //
 
 import UIKit
 
-class StudentSelectionCell: UITableViewCell {
-    @IBOutlet var nameLabel: UILabel!
+class ScheduleCell: UITableViewCell {
+    @IBOutlet var colorTab: UIView!
+    @IBOutlet var period: UILabel!
+    @IBOutlet var name: UILabel!
+    @IBOutlet var teacher: UILabel!
+    @IBOutlet var room: UILabel!
+    @IBOutlet var time: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
