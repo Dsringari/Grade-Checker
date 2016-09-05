@@ -25,46 +25,19 @@ class SubjectInfoVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = subject.name
+        self.title = "Algebra 2/Trig"
         
-        markingPeriods = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-        markingPeriods = markingPeriods.filter{!$0.empty!.boolValue}
-        markingPeriods.sortInPlace{$0.number < $1.number}
         
-        let otherInfo = dictionaryFromOtherGradesJSON(subject.otherGrades)
-        
-        if let ytd = otherInfo?["YTD"] {
-            average = ytd + "%"
-            print("Calculated Average: \(calculateAverageGrade(subject, roundToWholeNumber: false)!)")
-        } else {
-            if let average = calculateAverageGrade(subject, roundToWholeNumber: false) {
-                self.average = average + "%"
-            } else {
-                self.average = "N/A"
-            }
-        }
+        average = "97%"
         
         // ORDER IS VERY IMPORTANT HERE
         
-        for mp in markingPeriods {
-            if Int(mp.number!)! <= 2 {
-                cells.append(CellType.MarkingPeriod(number: mp.number!, grade: mp.percentGrade!))
-            }
-        }
-        
-        if let mt = otherInfo?["MT"] {
-            cells.append(CellType.Other(name: "Mid-Term", grade: mt))
-        }
-        
-        for mp in markingPeriods {
-            if Int(mp.number!)! > 2 {
-                cells.append(CellType.MarkingPeriod(number: mp.number!, grade: mp.percentGrade!))
-            }
-        }
-        
-        if let fe = otherInfo?["FE"] {
-            cells.append(CellType.Other(name: "Final Exam", grade: fe))
-        }
+        cells.append(CellType.MarkingPeriod(number: "1", grade: "95%"))
+        cells.append(CellType.MarkingPeriod(number: "2", grade: "98%"))
+        cells.append(CellType.Other(name: "Mid-Term", grade: "97"))
+        cells.append(CellType.MarkingPeriod(number: "3", grade: "99%"))
+        cells.append(CellType.MarkingPeriod(number: "4", grade: "94%"))
+        cells.append(CellType.Other(name: "Final Exam", grade: "95"))
         
 
         

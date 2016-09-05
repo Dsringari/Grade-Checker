@@ -46,6 +46,9 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         case Recent
         case Category
     }
+    
+    var assignmentNames: [String] = []
+    var assignmentPoints: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,39 +67,17 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         // Remove toolbar's border
         self.navigationController!.toolbar.clipsToBounds = true
+        self.title = "Algebra 2/Trig"
+        self.segmentedControl.selectedSegmentIndex = 3
+        self.pointsButton.setTitle("330/336", forState: .Normal)
+        self.percentageButton.setTitle("96.46%", forState: .Normal)
         
-        let mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-        markingPeriods = mps.filter{!$0.empty!.boolValue}.sort{Int($0.number!) < Int($1.number!)} // Only want non empty marking periods
+        assignmentNames = ["Chapter 15 Quiz","Chapter 14 Test","Homework 2","Homework 1","Chapter 13 Test","Chapter 11 Test","Extra Packet","Worksheet #5"]
+        assignmentPoints = ["42/50","38/40","5/5","4/5","95/100","93/100","90/100","5/5","9/10"]
         
-        if case let ViewType.OneMarkingPeriod(number) = viewType {
-            self.title = "Marking Period \(number)"
-            
-            if let mp = markingPeriods.filter({$0.number == number}).first {
-                let index = markingPeriods.indexOf(mp)!
-                selectedMPIndex = index
-            }
-            sortingSegmentTop.constant = 8
-            segmentedControl.hidden = true
-            navigationItem.rightBarButtonItems?.removeObject(filterButton)
-            
-            self.view.layoutIfNeeded()
-        } else {
-            self.title = subject.name
-            selectedMPIndex = markingPeriods.count - 1
-            segmentedControl.removeAllSegments()
-            for index in 0..<markingPeriods.count {
-                segmentedControl.insertSegmentWithTitle("MP " + markingPeriods[index].number!, atIndex: index, animated: false)
-            }
-            segmentedControl.selectedSegmentIndex = selectedMPIndex
-            
-            segmentedControl.sizeToFit()
-        }
         
-        calculateCategories(markingPeriodIndex: selectedMPIndex)
-        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
-        pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(dismissSelf), name: "loadStudent", object: nil)
+        self.tabBarController?.tabBar.items![1].badgeValue = "A"
+       
         
     }
     
@@ -137,15 +118,6 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func segmentedControlChanged(sender: AnyObject) {
-        selectedMPIndex = segmentedControl.selectedSegmentIndex
-        calculateCategories(markingPeriodIndex: selectedMPIndex)
-        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
-        pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
-        setShownUpdatesOld()
-        self.tableView.reloadData()
-    }
     
     
     @IBAction func showHideFilterOptions(sender: AnyObject) {
@@ -188,48 +160,12 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         header.contentView.backgroundColor = UIColor.groupTableViewBackgroundColor()
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        if sortMethod == .Category {
-            let header = UITableViewHeaderFooterView(frame: CGRectMake(0,0,tableView.frame.size.width,10))
-        
-            let totalLabel: UILabel = UILabel()
-            let totals = totalScore(categories[section])
-        
-            if (gradeViewType == .Point) {
-                totalLabel.text = totals.totalPoints + "/" + totals.possiblePoints
-            } else {
-                totalLabel.text = percentage(totals.totalPoints, possiblePoints: totals.possiblePoints)
-            }
-            
-            totalLabel.textColor = UIColor.lightGrayColor()
-
-        
-            totalLabel.translatesAutoresizingMaskIntoConstraints = false
-            header.addSubview(totalLabel)
-        
-            NSLayoutConstraint(item: totalLabel, attribute: .Trailing, relatedBy: .Equal, toItem: header, attribute: .TrailingMargin, multiplier: 1, constant: 8).active = true
-            NSLayoutConstraint(item: totalLabel, attribute: .CenterY, relatedBy: .Equal, toItem: header, attribute: .CenterY, multiplier: 1, constant: 0).active = true
-            return header
-        }
-        
-        return nil
-    }
-    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sortMethod == .Recent ? "Assignments" : categories[section].capitalizedString
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if sortMethod == .Recent {
-            let assignments: [Assignment] = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
-            return assignments.count
-        } else {
-            let category = categories[section]
-            var assignments = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
-            assignments = assignments.filter{return $0.category == category}
-            return assignments.count
-        }
+        return assignmentNames.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -238,36 +174,12 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("assignmentCell", forIndexPath: indexPath) as! AssignmentTableViewCell
-        let mp = markingPeriods[selectedMPIndex]
+        cell.assignmentNameLabel.text = assignmentNames[indexPath.row]
+        cell.pointsGradeLabel.text = assignmentPoints[indexPath.row]
         
-        var assignments: [Assignment]
-        if sortMethod == .Recent {
-            assignments = mp.assignments!.allObjects as! [Assignment]
-        } else {
-            let category = categories[indexPath.section]
-            assignments = mp.assignments!.allObjects as! [Assignment]
-            assignments = assignments.filter{return $0.category == category}
+        if indexPath.row != 0 || indexPath.row != 1 {
+            cell.badge.hidden =  true
         }
-        
-        // sort by date
-        assignments.sortInPlace{ $0.dateCreated!.compare($1.dateCreated!) == NSComparisonResult.OrderedDescending }
-        cell.assignmentNameLabel.text = assignments[indexPath.row].name
-        
-        if (gradeViewType == .Point) {
-            cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
-        } else {
-            cell.pointsGradeLabel.text = percentage(assignments[indexPath.row].totalPoints!, possiblePoints: assignments[indexPath.row].possiblePoints!)
-        }
-        
-        if assignments[indexPath.row].newUpdate.boolValue {
-            cell.badge.image = UIImage(named: "Recently Updated")!
-            if assignmentsToSetOld.indexOf(assignments[indexPath.row]) == nil {
-                assignmentsToSetOld.append(assignments[indexPath.row])
-            }
-        } else {
-            cell.badge.image = nil
-        }
-
         
         return cell
     }

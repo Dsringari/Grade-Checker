@@ -29,33 +29,13 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableview.dataSource = self
 
         // Do any additional setup after loading the view.
-        loadStudent()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loadStudent), name: "loadStudent", object: nil)
     }
+    
+    var subjectNames = ["Algebra 2/Trig", "Honors English 9", "Chemistry 3", "World Literature Basics", "SPANISH 4 HON", "Legendary Tropics of Java"]
+    var subjectPercentages = ["97%", "88%", "76%", "92%", "100%", "83%"]
     
     override func viewDidAppear(animated: Bool) {
-        if let student = student {
-            subjects = student.subjects?.allObjects as? [Subject]
-            subjects?.sortInPlace({s1, s2 in return s1.name! < s2.name})
-            tableview.reloadData()
-        }
-    }
-    
-    func loadStudent() {
-        student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!)
-        if let student = student {
-            subjects = student.subjects?.allObjects as? [Subject]
-            subjects?.sortInPlace({s1, s2 in return s1.name! < s2.name})
-        }
-        startLoadingAnimation()
-        getImage(student!.id!) { image in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.profilePicture = image
-                self.stopLoadingAnimation()
-                self.tableview.reloadData()
-            }
-        }
+        
     }
     
     func getImage(studentID: String, completion: (UIImage?) -> Void) {
@@ -100,28 +80,20 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return studentCount > 1 ? 1 : 0
-        } else {
-            guard let subjects = subjects else {
-                return 0
-            }
-            return subjects.count
-        }
+        return section == 0 ? 1 : subjectNames.count
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("profileStudentCell") as! ProfileStudentCell
-            if let student = student {
-                cell.nameLabel.text = student.name
-                cell.gradeLabel.text = "Grade " + student.grade!
-                cell.schoolLabel.text = student.school
+            
+                cell.nameLabel.text = "Andrew"
+                cell.gradeLabel.text = "Grade 10"
+                cell.schoolLabel.text = "Methacton Highschool"
                 
                 cell.picture.layer.cornerRadius = 11
                 cell.picture.clipsToBounds = true
-                cell.picture.image = profilePicture
-            }
+            
             return cell
         }
         return nil
@@ -135,18 +107,8 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         let cell = tableview.dequeueReusableCellWithIdentifier("profileSubjectCell") as! ProfileSubjectCell
-        let subject = subjects![indexPath.row]
-        cell.name.text = subject.name
-        
-        if let ytd = dictionaryFromOtherGradesJSON(subject.otherGrades)?["YTD"] {
-            cell.percentGrade.text = ytd + "%"
-        } else {
-            if let average = calculateAverageGrade(subject) {
-                cell.percentGrade.text = average + "%"
-            } else {
-                cell.percentGrade.text = "N/A"
-            }
-        }
+        cell.name.text = subjectNames[indexPath.row]
+        cell.percentGrade.text = subjectPercentages[indexPath.row]
         
         
         return cell
@@ -157,7 +119,6 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             performSegueWithIdentifier("switchStudent", sender: self)
         } else {
-            selectedSubject = subjects![indexPath.row]
             performSegueWithIdentifier("subjectInfo", sender: self)
         }
     }
@@ -168,7 +129,6 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "subjectInfo" {
             let subjectInfoVC = segue.destinationViewController as! SubjectInfoVC
-            subjectInfoVC.subject = selectedSubject
         }
     }
 

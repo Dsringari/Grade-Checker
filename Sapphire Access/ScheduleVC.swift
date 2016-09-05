@@ -43,16 +43,8 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func loadSchedule() {
-        if let studentName = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent") {
-            student = Student.MR_findFirstByAttribute("name", withValue: studentName)
-        }
-        
-        guard let student = student else {
-            return
-        }
-        
 		startLoadingAnimation()
-		Alamofire.request(.GET, "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentSchedule.cfm?STUDENT_RID=\(student.id!)")
+		Alamofire.request(.GET, "http://localhost/CommunityWebPortal/Backpack/StudentSchedule.cfm-STUDENT_RID=181012.html")
 		.validate()
 			.response(completionHandler: { request, response, data, error in
 				dispatch_async(dispatch_get_main_queue(), {
@@ -140,7 +132,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 self.currentLetterDay = text.substringFromIndex(text.endIndex.advancedBy(-1))
 								self.letterDay = "Letter Day: " + self.currentLetterDay!
                                 
-                                self.tabBarController?.tabBar.items![1].badgeValue = self.currentLetterDay
+                                
                                 
                                 
 								let formatter = NSDateFormatter()
@@ -177,7 +169,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	func today() -> String {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "MM/dd/yyyy"
-		return formatter.stringFromDate(NSDate())
+		return "06/01/2016"
 	}
 
 	func reset() {
