@@ -10,7 +10,6 @@ import UIKit
 
 class ScheduleTodayCell: UITableViewCell {
 
-    @IBOutlet var date: UILabel!
     @IBOutlet var letterDay: UILabel!
     
     override func awakeFromNib() {

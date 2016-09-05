@@ -11,21 +11,17 @@ import Alamofire
 import Kanna
 
 class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-	var date: String?
-	var letterDay: String?
 	@IBOutlet var tableView: UITableView!
 	@IBOutlet var loading: UIActivityIndicatorView!
 	@IBOutlet var errorView: UIView!
+    @IBOutlet var errorImage: UIImageView!
+    @IBOutlet var errorText: UILabel!
+    @IBOutlet var daySegmentedControl: UISegmentedControl!
 
 	var student: Student?
 	
-
-	var periodNames: [String] = []
-	var periodTeachers: [String] = []
-	var periodRooms: [String] = []
-	var periods: [String] = []
-    var times: [String] = []
-    var currentLetterDay: String?
+    var schedules: [(date: String, names: [String], teachers: [String], periods: [String], rooms: [String], times: [String], letterDay: String)] = []
+    var selectedDayIndex: Int = 0
 
 	// red, orange, yellow, green, teal blue, blue, purple, pink
 	var colors: [UIColor] = [UIColor(red: 255, green: 59, blue: 48), UIColor(red: 255, green: 149, blue: 0), UIColor(red: 255, green: 204, blue: 0), UIColor(red: 76, green: 217, blue: 100), UIColor(red: 90, green: 200, blue: 250), UIColor(red: 0, green: 122, blue: 255), UIColor(red: 88, green: 86, blue: 214), UIColor(red: 255, green: 45, blue: 85)]
@@ -37,7 +33,18 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		tableView.delegate = self
 		tableView.dataSource = self
 		loadSchedule()
-		errorView.hidden = true
+        
+        // Find the hairline so we can hide it
+        for view in self.navigationController!.navigationBar.subviews {
+            for aView in view.subviews {
+                if (aView.isKindOfClass(UIImageView) &&  aView.bounds.size.width == self.navigationController!.navigationBar.frame.size.width && aView.bounds.size.height < 2) {
+                    aView.removeFromSuperview()
+                }
+            }
+        }
+        // Remove toolbar's border
+        self.navigationController!.toolbar.clipsToBounds = true
+
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loadSchedule), name: "loadStudent", object: nil)
 	}
@@ -57,30 +64,28 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 			.response(completionHandler: { request, response, data, error in
 				dispatch_async(dispatch_get_main_queue(), {
 					if (error != nil) {
-						self.date = "Error!"
-						self.letterDay = "Failed to Load!"
+						self.errorText.text = "Error! Failed to Load"
 						self.stopLoadingAnimation()
+                        self.showErrorView(false)
 						self.tableView.reloadData()
 					} else {
                         
 						if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
-							var currentDayIndex: Int? = nil
 							var tbody = ""
 							var datesXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr[1]//th" // *[@id="contentPipe"]/div[2]/table/tbody/tr[1] //*[@id="contentPipe"]/div[2]/table/tbody/tr[1]/th[2]
-							let today = self.today()
+                            var availableDayIndices: [Int] = []
+                            var dates: [String] = []
 							for index in 0..<doc.xpath(datesXPath).count {
 								// the first header is a blank space
 								if (index == 0) {
 									continue
-								}
-								let node = doc.xpath(datesXPath)[index]
-
-								if (node.text! == today) {
-									currentDayIndex = index
-								}
+                                }
+								availableDayIndices.append(index)
+                                dates.append(doc.xpath(datesXPath)[index].text!)
 							}
 
-							if (currentDayIndex == nil) {
+							if (availableDayIndices.count == 0) {
+                                dates = []
 								tbody = "tbody/"
 								datesXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr[1]//th"
 
@@ -89,87 +94,105 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 									if (index == 0) {
 										continue
 									}
-									let node = doc.xpath(datesXPath)[index]
 
-									if (node.text! == today) {
-										currentDayIndex = index
-									}
+									availableDayIndices.append(index)
+                                    dates.append(doc.xpath(datesXPath)[index].text!)
 								}
 							}
                             
-							if let index = currentDayIndex {
-                                self.reset()
+                            guard availableDayIndices.count != 0 else {
+                                self.stopLoadingAnimation()
+                                self.scheduleNotFound()
+                                return
+                            }
+                            
+                            self.reset()
+                            for index in availableDayIndices {
+                                
+                                var names: [String] = []
 								let periodNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr/td[\(index)]/div/div[1]/a"
 								for node in doc.xpath(periodNameXPath) {
-									self.periodNames.append(node.text!)
+									names.append(node.text!)
 								}
 
 								let teacherNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr/td[\(index)]/div/div[3]"
-
+                                var teachers: [String] = []
 								for node in doc.xpath(teacherNameXPath) {
 									var text = node.text!
 									text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet).joinWithSeparator("")
 									// insert a space in between first and last name
 									let name = self.splitNames(text)
-									self.periodTeachers.append(name)
+									teachers.append(name)
 								}
 
 								let roomXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr/td[\(index)]/div/div[4]"
+                                var rooms: [String] = []
 								for node in doc.xpath(roomXPath) {
 									var text = node.text!
 									text = text.componentsSeparatedByString("DUR:")[0]
 									text = text.componentsSeparatedByString("RM:")[1]
 									text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890").invertedSet).joinWithSeparator("")
-									self.periodRooms.append(text)
+									rooms.append(text)
 								}
 
 								let periodXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr/th[count(parent::tr/th)=1]"
+                                var periods: [String] = []
 								let nodes = doc.xpath(periodXPath)
 								for i in 0..<nodes.count {
-									self.periods.append(nodes[i].text!)
+									periods.append(nodes[i].text!)
 								}
                                 
                                 let timeXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr/td[1]/div/div[5]"
+                                var times: [String] = []
                                 for node in doc.xpath(timeXPath) {
                                     let text = node.text!.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "12345567890:-").invertedSet).joinWithSeparator("")
-                                    self.times.append(text)
+                                    times.append(text)
                                 }
 
 								let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr[2]//th[\(index + 1)]"
+                                var letterDay: String
 								let text = doc.xpath(letterDayXPath)[0].text!
-                                self.currentLetterDay = text.substringFromIndex(text.endIndex.advancedBy(-1))
-								self.letterDay = "Letter Day: " + self.currentLetterDay!
+                                letterDay = text.substringFromIndex(text.endIndex.advancedBy(-1))
                                 
-                                self.tabBarController?.tabBar.items![1].badgeValue = self.currentLetterDay
-                                
-                                
-								let formatter = NSDateFormatter()
-								formatter.dateFormat = "EEEE, LLLL d"
-								self.date = formatter.stringFromDate(NSDate())
-
-								self.tableView.reloadData()
-								self.tableView.hidden = false
-								self.stopLoadingAnimation()
-
-							} else {
-								self.scheduleNotFound()
-								self.stopLoadingAnimation()
+                                self.schedules.append((dates[index-1],names, teachers, periods, rooms, times, letterDay))
 							}
+                            
+                            let days = self.schedules.map{$0.date}
+                            self.daySegmentedControl.removeAllSegments()
+                            let today = self.today()
+                            for index in 0..<days.count {
+                                if days[index] == today {
+                                    self.selectedDayIndex = index
+                                    self.tabBarController?.tabBar.items![1].badgeValue = self.schedules[self.selectedDayIndex].letterDay
+                                }
+                                self.daySegmentedControl.insertSegmentWithTitle(self.dateToDayOfWeek(days[index]), atIndex: index, animated: false)
+                            }
+                            self.daySegmentedControl.selectedSegmentIndex = self.selectedDayIndex
+                            self.navigationController?.navigationBar.topItem?.title = self.dateToText(days[self.selectedDayIndex])
+                            
+                            self.tableView.reloadData()
+                            self.tableView.hidden = false
+                            self.stopLoadingAnimation()
 						}
 					}
 				})
 		})
 	}
+    
+    
+    @IBAction func dayChanged(sender: AnyObject) {
+        selectedDayIndex = daySegmentedControl.selectedSegmentIndex
+        navigationController?.navigationBar.topItem?.title = self.dateToText(schedules[selectedDayIndex].date)
+        tableView.reloadData()
+    }
 	@IBAction func reload(sender: AnyObject) {
 		self.student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!)!
 		loadSchedule()
 	}
 
 	func scheduleNotFound() {
-		date = ""
-		letterDay = ""
-		tableView.hidden = true
-		errorView.hidden = false
+        errorText.text = "No Schedule Found"
+		showErrorView(false)
         self.tabBarController?.tabBar.items![1].badgeValue = nil
         tableView.reloadData()
 	}
@@ -179,13 +202,25 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		formatter.dateFormat = "MM/dd/yyyy"
 		return formatter.stringFromDate(NSDate())
 	}
+    
+    func dateToDayOfWeek(date: String) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        let date = formatter.dateFromString(date)!
+        formatter.dateFormat = "EEE"
+        return formatter.stringFromDate(date)
+    }
+    
+    func dateToText(date: String) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        let date = formatter.dateFromString(date)!
+        formatter.dateFormat = "MMMM, d"
+        return formatter.stringFromDate(date)
+    }
 
 	func reset() {
-		periods = []
-		periodNames = []
-		periodRooms = []
-		periodTeachers = []
-        times = []
+		schedules = []
 	}
 
 	// Takes JessicaMcGroary and returns Jessica McGroary
@@ -210,15 +245,32 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func startLoadingAnimation() {
-		tableView.hidden = true
-		loading.startAnimating()
-		errorView.hidden = true
+		showErrorView(true)
+        loading.startAnimating()
 	}
 
 	func stopLoadingAnimation() {
-		tableView.hidden = false
-		loading.stopAnimating()
+		hideErrorView()
+        loading.stopAnimating()
 	}
+    
+    func showErrorView(loading: Bool) {
+        if loading {
+            errorView.hidden = false
+            errorImage.hidden = true
+            errorText.hidden = true
+        } else {
+            errorView.hidden = false
+            errorImage.hidden = false
+            errorText.hidden = false
+        }
+    }
+    
+    func hideErrorView() {
+        errorView.hidden = true
+        errorImage.hidden = true
+        errorText.hidden = true
+    }
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -230,18 +282,17 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return periods.count + 1
+        return schedules.count != 0 ? schedules[selectedDayIndex].names.count+1 : 0
 	}
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return (indexPath.row == 0) ? 95 : 75
+        return 75
     }
 
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("today") as! ScheduleTodayCell
-            cell.date.text = date
-            cell.letterDay.text = letterDay
+            cell.letterDay.text = "Letter Day: " + schedules[selectedDayIndex].letterDay
             cell.separatorInset = UIEdgeInsetsMake(0, 10000, 0, 0)
             cell.indentationWidth = 10000 * -1
             cell.indentationLevel = 1
@@ -249,12 +300,13 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
 		let cell = tableView.dequeueReusableCellWithIdentifier("period") as! ScheduleCell
-		cell.name.text = periodNames[indexPath.row - 1]
-		cell.period.text = periods[indexPath.row - 1]
-		cell.teacher.text = periodTeachers[indexPath.row - 1]
-		cell.room.text = "RM: \(periodRooms[indexPath.row - 1])"
+        let schedule = schedules[selectedDayIndex]
+		cell.name.text = schedule.names[indexPath.row - 1]
+		cell.period.text = schedule.periods[indexPath.row - 1]
+		cell.teacher.text = schedule.teachers[indexPath.row - 1]
+		cell.room.text = "RM: \(schedule.rooms[indexPath.row - 1])"
 		cell.colorTab.backgroundColor = colors[(indexPath.row - 1) % colors.count]
-        cell.time.text = times[safe: indexPath.row - 1]
+        cell.time.text = schedule.times[safe: indexPath.row - 1]
 
 		return cell
 	}
