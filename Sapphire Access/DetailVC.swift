@@ -283,7 +283,11 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         numberFormatter.roundingMode = .RoundHalfUp
         numberFormatter.numberStyle = .DecimalStyle
         
-        guard possiblePointsNumber.compare(0) != .OrderedSame else {
+        guard !totalPointsNumber.doubleValue.isNaN else {
+            return "0.0%"
+        }
+        
+        guard possiblePointsNumber.compare(0) != .OrderedSame && !possiblePointsNumber.doubleValue.isNaN && !totalPointsNumber.doubleValue.isNaN else {
             return "N/A"
         }
         
