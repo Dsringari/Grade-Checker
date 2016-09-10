@@ -435,10 +435,11 @@ class UpdateService {
 	func refreshLastUpdatedDates(completion: CompletionType) {
 		// Get the landing page
 
-		alamofireManager.request(.GET, "http://127.0.0.1/CommunityWebPortal/Backpack/StudentHome.cfm-STUDENT_RID=" + student.id! + ".html")
+		alamofireManager.request(.GET, "http://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
 			.validate()
 			.response(completionHandler: { request, response, data, error in
 				if (error != nil) {
+                    print(error?.description)
 					completion(successful: false, error: error)
 					return
 				}

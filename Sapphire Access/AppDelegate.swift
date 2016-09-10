@@ -97,12 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		}
         
-        
-        if let mainTabBarController = tabBarController {
-            mainTabBarController.selectedIndex = 0
-            if let nVC = mainTabBarController.viewControllers?.first as? UINavigationController {
-                if let gradesVC = nVC.visibleViewController as? GradesVC {
-                    gradesVC.performSegueWithIdentifier("lock", sender: nil)
+        if NSUserDefaults.standardUserDefaults().boolForKey("useTouchID") {
+            if let mainTabBarController = tabBarController {
+                mainTabBarController.selectedIndex = 0
+                if let nVC = mainTabBarController.viewControllers?.first as? UINavigationController {
+                    if let gradesVC = nVC.visibleViewController as? GradesVC {
+                        gradesVC.performSegueWithIdentifier("lock", sender: nil)
+                    }
                 }
             }
         }
