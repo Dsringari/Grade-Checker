@@ -13,14 +13,14 @@ import UIKit
 // Array Extensions
 extension Array where Element: Equatable {
 	// Removes an Object from a swift array
-	mutating func removeObject(object: Element) {
-		if let index = self.indexOf(object) {
-			self.removeAtIndex(index)
+	mutating func removeObject(_ object: Element) {
+		if let index = self.index(of: object) {
+			self.remove(at: index)
 		}
 	}
 
 	// Removes a set of objects from a swift array
-	mutating func removeObjectsInArray(array: [Element]) {
+	mutating func removeObjectsInArray(_ array: [Element]) {
 		for object in array {
 			self.removeObject(object)
 		}
@@ -37,32 +37,32 @@ extension Array where Element: Equatable {
 }
 
 extension NSArray {
-	func getObjectInArray(predicateString: String, args: [AnyObject]?) -> AnyObject? {
+	func getObjectInArray(_ predicateString: String, args: [AnyObject]?) -> AnyObject? {
 		let predicate = NSPredicate(format: predicateString, argumentArray: args)
-		let result = self.filteredArrayUsingPredicate(predicate)
+		let result = self.filtered(using: predicate)
 		if result.count == 0 {
 			return nil
 		} else if result.count > 1 {
 			print("Wanted one object got multiple returning nil")
 			return nil
 		}
-		return result[0]
+		return result[0] as AnyObject?
 	}
 
-	class func getObjectsInArray(predicateString: String, args: [AnyObject]?, array: NSArray) -> [AnyObject] {
+	class func getObjectsInArray(_ predicateString: String, args: [AnyObject]?, array: NSArray) -> [AnyObject] {
 		let predicate = NSPredicate(format: predicateString, argumentArray: args)
-		let result = array.filteredArrayUsingPredicate(predicate)
+		let result = array.filtered(using: predicate)
 		if result.count == 0 {
 			return []
 		}
-		return result
+		return result as [AnyObject]
 	}
 
 }
 
-extension CollectionType {
+extension Collection {
 	/// Returns the element at the specified index iff it is within bounds, otherwise nil.
-	subscript (safe index: Index) -> Generator.Element? {
+	subscript (safe index: Index) -> Iterator.Element? {
 		return indices.contains(index) ? self[index]: nil
 	}
 }
@@ -89,7 +89,7 @@ extension UIApplication {
 		}
 
 		// Otherwise, we must get the root UIViewController and iterate through presented views
-		if let rootController = UIApplication.sharedApplication().keyWindow?.rootViewController {
+		if let rootController = UIApplication.shared.keyWindow?.rootViewController {
 
 			var currentController: UIViewController! = rootController
 
@@ -107,7 +107,7 @@ extension UIApplication {
 	/// Returns the navigation controller if it exists
 	class func getNavigationController() -> UINavigationController? {
 
-		if let navigationController = UIApplication.sharedApplication().keyWindow?.rootViewController {
+		if let navigationController = UIApplication.shared.keyWindow?.rootViewController {
 
 			return navigationController as? UINavigationController
 		}
@@ -117,19 +117,19 @@ extension UIApplication {
 
 extension UIView {
 	func snapshot() -> UIImage {
-		UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.mainScreen().scale)
-		drawViewHierarchyInRect(bounds, afterScreenUpdates: true)
+		UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
+		drawHierarchy(in: bounds, afterScreenUpdates: true)
 		let result = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		return result
+		return result!
 	}
 }
 
 
 extension UIImageView {
-    public func imageFromUrl(urlString: String) {
-        if let url = NSURL(string: urlString) {
-            NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: {data, response, error in
+    public func imageFromUrl(_ urlString: String) {
+        if let url = URL(string: urlString) {
+            URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
                 self.image = UIImage(data: data!, scale: 1)
             })
         }
@@ -139,36 +139,36 @@ extension UIImageView {
 extension UITableViewCell {
 	func removeMargins() {
 
-		if self.respondsToSelector(Selector("setSeparatorInset:")) {
-			self.separatorInset = UIEdgeInsetsZero
+		if self.responds(to: #selector(setter: UITableViewCell.separatorInset)) {
+			self.separatorInset = UIEdgeInsets.zero
 		}
 
-		if self.respondsToSelector(Selector("setPreservesSuperviewLayoutMargins:")) {
+		if self.responds(to: #selector(setter: UIView.preservesSuperviewLayoutMargins)) {
 			self.preservesSuperviewLayoutMargins = false
 		}
 
-		if self.respondsToSelector(Selector("setLayoutMargins:")) {
-			self.layoutMargins = UIEdgeInsetsZero
+		if self.responds(to: #selector(setter: UIView.layoutMargins)) {
+			self.layoutMargins = UIEdgeInsets.zero
 		}
 	}
 }
 
-func relativeDateStringForDate(date: NSDate) -> String {
-	let components = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date, toDate: NSDate(), options: [])
+func relativeDateStringForDate(_ date: Date) -> String {
+	let components = (Calendar.current as NSCalendar).components([.day, .month, .year], from: date, to: Date(), options: [])
 
-	if (components.year > 0) {
+	if (components.year! > 0) {
 		if (components.year == 1) {
-			return String(format: "%ld year ago", arguments: [components.month])
+			return String(format: "%ld year ago", arguments: [components.month!])
 		}
-		return String(format: "%ld years ago", arguments: [components.year])
-	} else if (components.month > 0) {
+		return String(format: "%ld years ago", arguments: [components.year!])
+	} else if (components.month! > 0) {
 		if (components.month == 1) {
-			return String(format: "%ld month ago", arguments: [components.month])
+			return String(format: "%ld month ago", arguments: [components.month!])
 		}
-		return String(format: "%ld months ago", arguments: [components.month])
-	} else if (components.day > 0) {
-		if (components.day > 1) {
-			return String(format: "%ld days ago", arguments: [components.day])
+		return String(format: "%ld months ago", arguments: [components.month!])
+	} else if (components.day! > 0) {
+		if (components.day! > 1) {
+			return String(format: "%ld days ago", arguments: [components.day!])
 		} else {
 			return "Yesterday"
 		}

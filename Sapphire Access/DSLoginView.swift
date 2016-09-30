@@ -30,7 +30,7 @@ class DSLoginView: UIViewController {
 	var setConstant: CGFloat?
 	var isHidden: Bool = true
 
-	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+	let appDelegate = UIApplication.shared.delegate as! AppDelegate
 	var validatedUser: User!
 	var selectedStudentIndex: Int = 0
 
@@ -40,81 +40,81 @@ class DSLoginView: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
         loginButtonTitleText = loginButton.titleLabel?.text
-		containerVC = self.navigationController!.parentViewController! as! ContainerVC
+		containerVC = self.navigationController!.parent! as! ContainerVC
 
 		// If the user taps outside the textfields close the keyboard
 		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
 		view.addGestureRecognizer(tap)
 
 		// Center Text
-		usernameField.contentVerticalAlignment = .Center
-		passwordField.contentVerticalAlignment = .Center
-		pinField.contentVerticalAlignment = .Center
+		usernameField.contentVerticalAlignment = .center
+		passwordField.contentVerticalAlignment = .center
+		pinField.contentVerticalAlignment = .center
 	}
 
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		// Setup Button Activity Indicator
-		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
-		activityIndicator.hidden = true
+		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+		activityIndicator.isHidden = true
 		loginButton.addSubview(activityIndicator)
 
 		// Check If we have a user already
-		if let user = User.MR_findFirst() {
-			user.MR_deleteEntity()
-			NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+		if let user = User.mr_findFirst() {
+			user.mr_deleteEntity()
+			NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
 		}
 
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		registerForKeyboardNotifications()
 	}
 
-	override func viewWillDisappear(animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		deregisterFromKeyboardNotifications()
 	}
 
 	func registerForKeyboardNotifications()
 	{
 		// Adding notifies on keyboard appearing
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 	}
 
 	func deregisterFromKeyboardNotifications()
 	{
 		// Removing notifies on keyboard appearing
-		NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 	}
 
-	func keyboardWillShow(notification: NSNotification) {
+	func keyboardWillShow(_ notification: Notification) {
 		if (isHidden) {
             
-			if let kbFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] {
+			if let kbFrame = (notification as NSNotification).userInfo?[UIKeyboardFrameEndUserInfoKey] {
                 isHidden = false
-				let keyboardAnimationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
-				let keyboardFrame = kbFrame.CGRectValue
-				kbHeight = keyboardFrame.height
+				let keyboardAnimationDuration = (notification as NSNotification).userInfo![UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
+				let keyboardFrame = (kbFrame as AnyObject).cgRectValue
+				kbHeight = keyboardFrame?.height
 
 				setConstant = keyboardConstraint.constant
 				keyboardConstraint.constant = kbHeight! + 15
 
-				UIView.animateWithDuration(keyboardAnimationDuration, animations: {
+				UIView.animate(withDuration: keyboardAnimationDuration, animations: {
 					self.view.layoutIfNeeded()
 				})
 			}
 		}
 	}
 
-	func keyboardWillHide(notification: NSNotification)
+	func keyboardWillHide(_ notification: Notification)
 	{
 		if let constant = setConstant {
 			isHidden = true
-			let animationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+			let animationDuration = (notification as NSNotification).userInfo![UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
 			keyboardConstraint.constant = constant
-			UIView.animateWithDuration(animationDuration, animations: {
+			UIView.animate(withDuration: animationDuration, animations: {
 				self.view.layoutIfNeeded()
 			})
 
@@ -122,17 +122,17 @@ class DSLoginView: UIViewController {
 
 	}
 
-	@IBAction func forgotPassword(sender: AnyObject) {
-		UIApplication.sharedApplication().openURL(NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Public/ForgotPassword.cfm")!)
+	@IBAction func forgotPassword(_ sender: AnyObject) {
+		UIApplication.shared.openURL(URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Public/ForgotPassword.cfm")!)
 	}
 
 	// Ask if the user wants to use touch id every time they log in with a new account
-	@IBAction func login(sender: AnyObject) {
+	@IBAction func login(_ sender: AnyObject) {
 		self.view.endEditing(true)
 		// Reset Activity Indicator Pos incase button moved
-		activityIndicator.center = CGPointMake(loginButton.frame.size.width/2, loginButton.frame.size.height / 2)
+		activityIndicator.center = CGPoint(x: loginButton.frame.size.width/2, y: loginButton.frame.size.height / 2)
 		self.view.layoutIfNeeded()
-		let user: User = User.MR_createEntity()!
+		let user: User = User.mr_createEntity()!
 		user.username = usernameField.text!
 		user.password = passwordField.text!
 		user.pin = pinField.text!
@@ -140,30 +140,30 @@ class DSLoginView: UIViewController {
 		loginUser(user)
 	}
 
-	func loginUser(user: User) {
+	func loginUser(_ user: User) {
 		// Try to Login
 		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
 
-			dispatch_async(dispatch_get_main_queue(), {
+			DispatchQueue.main.async(execute: {
 				self.clearFields()
 				if (successful) {
 					self.stopLoading()
-					self.performSegueWithIdentifier("selectStudent", sender: self)
+					self.performSegue(withIdentifier: "selectStudent", sender: self)
 				} else {
 					// If we failed
 					self.stopLoading()
 					self.shakeLoginButton({
-						user.MR_deleteEntity()
+						user.mr_deleteEntity()
 						var err = error
 						if (error!.code == NSURLErrorTimedOut) {
 							err = badConnectionError
 						}
-						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .Alert)
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-						self.presentViewController(alert, animated: true, completion: {
+						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .alert)
+						alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+						self.present(alert, animated: true, completion: {
 							// delete the invalid user
-							User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
-							NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+							User.mr_deleteAll(matching: NSPredicate(value: true))
+							NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
 						})
 					})
 				}
@@ -178,26 +178,26 @@ class DSLoginView: UIViewController {
 	}
 
 	func startLoading() {
-		loginButton.userInteractionEnabled = false
-        loginButton.setTitle("", forState: .Normal)
-		activityIndicator.hidden = false
+		loginButton.isUserInteractionEnabled = false
+        loginButton.setTitle("", for: .normal)
+		activityIndicator.isHidden = false
 		activityIndicator.startAnimating()
 	}
 
 	func stopLoading() {
 
 		activityIndicator.stopAnimating()
-		activityIndicator.hidden = true
-        loginButton.setTitle(loginButtonTitleText, forState: .Normal)
-		loginButton.userInteractionEnabled = true
+		activityIndicator.isHidden = true
+        loginButton.setTitle(loginButtonTitleText, for: .normal)
+		loginButton.isUserInteractionEnabled = true
 	}
 
-	func shakeLoginButton(completion: () -> Void) {
+	func shakeLoginButton(_ completion: @escaping () -> Void) {
 
 		loginButton.animation = "shake"
 		loginButton.duration = 1
 		// loginButton.curve = "spring"
-		loginButton.animateNext(completion)
+		loginButton.animateNext(completion: completion)
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -206,7 +206,7 @@ class DSLoginView: UIViewController {
 	}
 
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
 	}
 }

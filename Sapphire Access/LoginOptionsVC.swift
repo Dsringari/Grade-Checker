@@ -13,39 +13,39 @@ import StaticDataTableViewController
 class LoginOptionsVC: UITableViewController {
     
     lazy var hasTouchID: Bool = {
-        return LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil)
+        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }()
 
     @IBOutlet var touchIDSwitch: UISwitch!
     override func viewDidLoad() {
         super.viewDidLoad()
-        touchIDSwitch.enabled = hasTouchID
-        touchIDSwitch.on = NSUserDefaults.standardUserDefaults().boolForKey("useTouchID")
+        touchIDSwitch.isEnabled = hasTouchID
+        touchIDSwitch.isOn = UserDefaults.standard.bool(forKey: "useTouchID")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func updatePreferences(sender: AnyObject) {
-        if touchIDSwitch.on {
-            LAContext().evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: "Touch ID to Verify") { successful, error in
-                dispatch_async(dispatch_get_main_queue()) {
+    @IBAction func updatePreferences(_ sender: AnyObject) {
+        if touchIDSwitch.isOn {
+            LAContext().evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Touch ID to Verify") { successful, error in
+                DispatchQueue.main.async {
                     if successful {
-                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "useTouchID")
+                        UserDefaults.standard.set(true, forKey: "useTouchID")
                     } else {
                         self.touchIDSwitch.setOn(false, animated: true)
-                        if (error!.code == LAError.AuthenticationFailed.rawValue) {
-                            let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match.", preferredStyle: .Alert)
-                            let OK = UIAlertAction(title: "OK", style: .Cancel, handler:nil)
+                        if (error!._code == LAError.Code.authenticationFailed.rawValue) {
+                            let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match.", preferredStyle: .alert)
+                            let OK = UIAlertAction(title: "OK", style: .cancel, handler:nil)
                             failed.addAction(OK)
-                            self.presentViewController(failed, animated: true, completion: nil)
+                            self.present(failed, animated: true, completion: nil)
                         }
                     }
                 }
             }
         } else {
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "useTouchID")
+            UserDefaults.standard.set(false, forKey: "useTouchID")
         }
         
     }

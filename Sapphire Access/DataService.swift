@@ -13,19 +13,19 @@ import MagicalRecord
 import Alamofire
 import ReachabilitySwift
 
-typealias CompletionType = (successful: Bool, error: NSError?) -> Void
+typealias CompletionType = (_ successful: Bool, _ error: NSError?) -> Void
 
 class UpdateService {
 	let student: Student
 	let kCharacterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.*+-"
-	let context = NSManagedObjectContext.MR_context()
+	let context = NSManagedObjectContext.mr_()
     let firstLoad: Bool
     
-    var alamofireManager: Alamofire.Manager
+    var alamofireManager: Alamofire.SessionManager
 
 	init?(studentID: NSManagedObjectID) {
 		do {
-			let object = try context.existingObjectWithID(studentID)
+			let object = try context.existingObject(with: studentID)
 			if let s = object as? Student {
 				student = s
                 if let subs = student.subjects {
@@ -38,10 +38,10 @@ class UpdateService {
 				return nil
 			}
             
-            let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+            let config = URLSessionConfiguration.default
             config.timeoutIntervalForRequest = 4
-            config.requestCachePolicy = .ReloadIgnoringLocalCacheData
-            alamofireManager = Alamofire.Manager(configuration: config)
+            config.requestCachePolicy = .reloadIgnoringLocalCacheData
+            alamofireManager = Alamofire.SessionManager(configuration: config)
 		} catch let error as NSError {
 			print("Failed to find student with object ID \(studentID). Error: \(error)")
 			return nil
@@ -49,18 +49,18 @@ class UpdateService {
 
 	}
 
-	func updateStudentInformation(completion: CompletionType) {
+	func updateStudentInformation(_ completion: @escaping CompletionType) {
         
         let reachability: Reachability
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
         } catch {
-            completion(successful: false, error: badConnectionError)
+            completion(false, badConnectionError)
             return
         }
         
         guard reachability.isReachable() else {
-            completion(successful: false, error: badConnectionError)
+            completion(false, badConnectionError)
             return
         }
 
@@ -164,7 +164,7 @@ class UpdateService {
 		}
 	}
 
-	func updateMarkingPeriodInformation(subject: Subject, completion: CompletionType) {
+	func updateMarkingPeriodInformation(_ subject: Subject, completion: @escaping CompletionType) {
 		alamofireManager.request(.GET, subject.htmlPage!)
 			.validate()
 			.response { request, response, data, error in
@@ -310,7 +310,7 @@ class UpdateService {
 		}
 	}
 
-	private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
+	fileprivate func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
@@ -340,11 +340,11 @@ class UpdateService {
 			return nil
 		}
 
-		assigntmentIndex = String(headers.indexOf("Assignment")! + 1)
-		totalScoreIndex = String(headers.indexOf("totalScore")! + 1)
-		possibleScoreIndex = String(headers.indexOf("possibleScore")! + 1)
-		dueDateIndex = String(headers.indexOf("DateDue")! + 1)
-		categoryIndex = String(headers.indexOf("Category")! + 1)
+		assigntmentIndex = String(headers.index(of: "Assignment")! + 1)
+		totalScoreIndex = String(headers.index(of: "totalScore")! + 1)
+		possibleScoreIndex = String(headers.index(of: "possibleScore")! + 1)
+		dueDateIndex = String(headers.index(of: "DateDue")! + 1)
+		categoryIndex = String(headers.index(of: "Category")! + 1)
 
 		// Parse all the assignments while ignoring the assignment descriptions and teacher comments
 		let assignmentsXpath = "//*[@id=\"assignments\"]//tr/td[not(contains(@class, 'assignDesc')) and not(contains(@class, 'assignComments'))]/.."
@@ -366,7 +366,7 @@ class UpdateService {
 		if let percentageTextElement = doc.at_xpath(percentageTextXpath) {
 			var text = percentageTextElement.text!
 			// Remove all the spaces and other characters
-			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.%").invertedSet).joinWithSeparator("")
+			text = text.componentsSeparatedByCharactersInSet(CharacterSet(charactersInString: "1234567890.%").invertedSet).joinWithSeparator("")
 			// If we have a marking period with assignments but 0/0 points change the % to 0.00%
 			if (text == "%") {
 				text = "0.00%"
@@ -382,7 +382,7 @@ class UpdateService {
 		if let pointsTextElement = doc.at_xpath(pointsTextXpath) {
 			var text = pointsTextElement.text!
 			// Remove all the spaces and other characters
-			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890./").invertedSet).joinWithSeparator("")
+			text = text.componentsSeparatedByCharactersInSet(CharacterSet(charactersInString: "1234567890./").invertedSet).joinWithSeparator("")
 			// Seperate the String into Possible / Total Points
 			totalPoints = text.componentsSeparatedByString("/")[0]
 			possiblePoints = text.componentsSeparatedByString("/")[1]
@@ -432,7 +432,7 @@ class UpdateService {
 		return (assignments, totalPoints, possiblePoints, percentGrade)
 	}
 
-	func refreshLastUpdatedDates(completion: CompletionType) {
+	func refreshLastUpdatedDates(_ completion: @escaping CompletionType) {
 		// Get the landing page
 
 		alamofireManager.request(.GET, "http://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)

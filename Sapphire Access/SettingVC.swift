@@ -23,29 +23,29 @@ class SettingVC: StaticDataTableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return section == 0 ? 3 : 1
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if indexPath.section == 1 && indexPath.row == 0 {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 {
             logout()
         }
     }
     
     func logout() {
-        User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
-        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "selectedStudent")
+        User.mr_deleteAll(matching: NSPredicate(value: true))
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+        UserDefaults.standard.set(nil, forKey: "selectedStudent")
         
-        navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(true)
-        NSNotificationCenter.defaultCenter().postNotificationName("tabBarDismissed", object: nil)
+        navigationController?.tabBarController?.navigationController?.popToRootViewController(animated: true)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "tabBarDismissed"), object: nil)
         
         
         

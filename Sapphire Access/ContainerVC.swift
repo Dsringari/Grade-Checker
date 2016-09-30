@@ -19,10 +19,10 @@ class ContainerVC: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		if NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent") == nil {
-			currentViewController = storyboard?.instantiateViewControllerWithIdentifier("login")
+		if UserDefaults.standard.string(forKey: "selectedStudent") == nil {
+			currentViewController = storyboard?.instantiateViewController(withIdentifier: "login")
 		} else {
-			currentViewController = storyboard?.instantiateViewControllerWithIdentifier("resume")
+			currentViewController = storyboard?.instantiateViewController(withIdentifier: "resume")
 		}
         
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(popToResume), name: "popToResume", object: nil)
@@ -33,13 +33,13 @@ class ContainerVC: UIViewController {
 
 	}
 
-	func addSubview(subView: UIView, toView parentView: UIView) {
+	func addSubview(_ subView: UIView, toView parentView: UIView) {
 		parentView.addSubview(subView)
 
 		var viewBindingsDict = [String: AnyObject]()
 		viewBindingsDict["subView"] = subView
-		parentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|", options: [], metrics: nil, views: viewBindingsDict))
-		parentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|", options: [], metrics: nil, views: viewBindingsDict))
+		parentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[subView]|", options: [], metrics: nil, views: viewBindingsDict))
+		parentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[subView]|", options: [], metrics: nil, views: viewBindingsDict))
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -47,8 +47,8 @@ class ContainerVC: UIViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
-	func cycleFromViewController(oldViewController: UIViewController, toViewController newViewController: UIViewController) {
-		oldViewController.willMoveToParentViewController(nil)
+	func cycleFromViewController(_ oldViewController: UIViewController, toViewController newViewController: UIViewController) {
+		oldViewController.willMove(toParentViewController: nil)
 		self.addChildViewController(newViewController)
 		self.addSubview(newViewController.view, toView: self.containerView!)
 
@@ -56,19 +56,19 @@ class ContainerVC: UIViewController {
 
 		oldViewController.view.removeFromSuperview()
 		oldViewController.removeFromParentViewController()
-		newViewController.didMoveToParentViewController(self)
+		newViewController.didMove(toParentViewController: self)
 
 	}
 
 	func toLogin() {
-		let newViewController = self.storyboard?.instantiateViewControllerWithIdentifier("login")
+		let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "login")
 		newViewController!.view.translatesAutoresizingMaskIntoConstraints = false
 		cycleFromViewController(currentViewController!, toViewController: newViewController!)
 		currentViewController = newViewController
 	}
     
     func toResume() {
-        let newViewController = self.storyboard?.instantiateViewControllerWithIdentifier("resume")
+        let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "resume")
         newViewController!.view.translatesAutoresizingMaskIntoConstraints = false
         cycleFromViewController(currentViewController!, toViewController: newViewController!)
         currentViewController = newViewController

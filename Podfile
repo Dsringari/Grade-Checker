@@ -4,14 +4,14 @@
 use_frameworks!
 
 target 'Sapphire Access' do
-pod 'Kanna', '~> 1.0.0'
-pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
+pod 'Kanna', '~> 2.0.0'
+pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
 pod "MagicalRecord"
 pod 'Firebase/AdMob'
 pod 'Firebase/Core'
 pod 'Firebase/Crash'
 pod 'Firebase/Messaging'
-pod 'Alamofire'
+pod 'Alamofire', '~> 4.0'
 pod 'StaticDataTableViewController'
 pod 'ReachabilitySwift'
 end

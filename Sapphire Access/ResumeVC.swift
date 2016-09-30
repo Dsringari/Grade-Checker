@@ -22,27 +22,27 @@ class ResumeVC: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 
-		containerVC = navigationController!.parentViewController as! ContainerVC
+		containerVC = navigationController!.parent as! ContainerVC
 
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didDismissTabBar), name: "tabBarDismissed", object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(didDismissTabBar), name: NSNotification.Name(rawValue: "tabBarDismissed"), object: nil)
 		refresh()
 	}
 
 	func didDismissTabBar() {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
-		let settings = NSUserDefaults.standardUserDefaults()
-		if (settings.stringForKey("selectedStudent") == nil) {
+		NotificationCenter.default.removeObserver(self)
+		let settings = UserDefaults.standard
+		if (settings.string(forKey: "selectedStudent") == nil) {
 			backToLogin()
 		}
 
 	}
 
 	func refresh() {
-		let settings = NSUserDefaults.standardUserDefaults()
-		if let name = settings.stringForKey("selectedStudent") {
-			if let student = Student.MR_findFirstByAttribute("name", withValue: name) {
+		let settings = UserDefaults.standard
+		if let name = settings.string(forKey: "selectedStudent") {
+			if let student = Student.mr_findFirst(byAttribute: "name", withValue: name) {
 				user = student.user
-				continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
+				continueButton.setTitle("Continue as " + student.name!, for: UIControlState())
 			} else {
 				backToLogin()
 			}
@@ -56,11 +56,11 @@ class ResumeVC: UIViewController {
 		// Try to Login
 		self.activityIndicator.startAnimating()
 		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
-			dispatch_async(dispatch_get_main_queue()) {
+			DispatchQueue.main.async {
 				self.activityIndicator.stopAnimating()
 				if (successful) {
 
-					self.performSegueWithIdentifier("returnHome", sender: self)
+					self.performSegue(withIdentifier: "returnHome", sender: self)
 
 				} else {
 					// If we failed
@@ -69,48 +69,48 @@ class ResumeVC: UIViewController {
 					if (error!.code == NSURLErrorTimedOut) {
 						err = badConnectionError
 					}
-					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedRecoverySuggestion, preferredStyle: .Alert)
+					let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedRecoverySuggestion, preferredStyle: .alert)
 					if err == badLoginError {
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+						alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
 							self.backToLogin()
 							}))
 					} else {
-						alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+						alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
 					}
-					self.presentViewController(alert, animated: true, completion: nil)
+					self.present(alert, animated: true, completion: nil)
 
 				}
 			}
 		})
 	}
 
-	@IBAction func continuePressed(sender: AnyObject) {
-		let settings = NSUserDefaults.standardUserDefaults()
+	@IBAction func continuePressed(_ sender: AnyObject) {
+		let settings = UserDefaults.standard
 
-		if settings.boolForKey("useTouchID") {
-			continueButton.enabled = false
+		if settings.bool(forKey: "useTouchID") {
+			continueButton.isEnabled = false
 			var error: NSError?
-			if LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
+			if LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
 				let context: LAContext = LAContext()
 				let localizedReasonString = "Login with Touch ID"
-				context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
+				context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
 
-					dispatch_async(dispatch_get_main_queue()) {
+					DispatchQueue.main.async {
 
 						if (success) {
 
 							self.login()
-							self.continueButton.enabled = true
+							self.continueButton.isEnabled = true
 						} else {
-							if (error!.code == LAError.AuthenticationFailed.rawValue) {
-								let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .Alert)
-								let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+							if (error!._code == LAError.Code.authenticationFailed.rawValue) {
+								let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .alert)
+								let Ok = UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
 									self.backToLogin()
-									self.continueButton.enabled = true
+									self.continueButton.isEnabled = true
 								})
 								failed.addAction(Ok)
 								
-                                self.presentViewController(failed, animated: true, completion: nil)
+                                self.present(failed, animated: true, completion: nil)
 								
 
 								return
@@ -124,22 +124,22 @@ class ResumeVC: UIViewController {
 				var title: String!
 				var message: String!
 				switch error!.code {
-				case LAError.TouchIDNotEnrolled.rawValue:
+				case LAError.Code.touchIDNotEnrolled.rawValue:
 					title = "Touch ID Not Enabled"
 					message = "Setup Touch ID in your settings"
-				case LAError.PasscodeNotSet.rawValue:
+				case LAError.Code.passcodeNotSet.rawValue:
 					title = "Passcode Not Set"
 					message = "Setup a Passcode to use Touch ID"
 				default:
 					title = "Touch ID Not Availabe"
 					message = "We couldn't access Touch ID"
 				}
-				let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-				alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+				let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
 					self.backToLogin()
-					self.continueButton.enabled = true
+					self.continueButton.isEnabled = true
 					}))
-				self.presentViewController(alert, animated: true, completion: nil)
+				self.present(alert, animated: true, completion: nil)
 			}
 		} else {
 			login()
@@ -148,9 +148,9 @@ class ResumeVC: UIViewController {
 	}
 
 	func backToLogin() {
-		dispatch_async(dispatch_get_main_queue(), {
-			User.MR_deleteAllMatchingPredicate(NSPredicate(value: true))
-			NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+		DispatchQueue.main.async(execute: {
+			User.mr_deleteAll(matching: NSPredicate(value: true))
+			NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
 			self.containerVC.toLogin()
 		})
 	}

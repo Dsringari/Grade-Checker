@@ -7,6 +7,17 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class SubjectInfoVC: UITableViewController {
     
@@ -18,8 +29,8 @@ class SubjectInfoVC: UITableViewController {
     
     
     enum CellType {
-        case MarkingPeriod(number: String, grade: String)
-        case Other(name: String, grade: String)
+        case markingPeriod(number: String, grade: String)
+        case other(name: String, grade: String)
     }
 
     override func viewDidLoad() {
@@ -29,7 +40,7 @@ class SubjectInfoVC: UITableViewController {
         
         markingPeriods = subject.markingPeriods!.allObjects as! [MarkingPeriod]
         markingPeriods = markingPeriods.filter{!$0.empty!.boolValue}
-        markingPeriods.sortInPlace{$0.number < $1.number}
+        markingPeriods.sort{$0.number < $1.number}
         
         let otherInfo = dictionaryFromOtherGradesJSON(subject.otherGrades)
         
@@ -48,22 +59,22 @@ class SubjectInfoVC: UITableViewController {
         
         for mp in markingPeriods {
             if Int(mp.number!)! <= 2 {
-                cells.append(CellType.MarkingPeriod(number: mp.number!, grade: mp.percentGrade!))
+                cells.append(CellType.markingPeriod(number: mp.number!, grade: mp.percentGrade!))
             }
         }
         
         if let mt = otherInfo?["MT"] {
-            cells.append(CellType.Other(name: "Mid-Term", grade: mt))
+            cells.append(CellType.other(name: "Mid-Term", grade: mt))
         }
         
         for mp in markingPeriods {
             if Int(mp.number!)! > 2 {
-                cells.append(CellType.MarkingPeriod(number: mp.number!, grade: mp.percentGrade!))
+                cells.append(CellType.markingPeriod(number: mp.number!, grade: mp.percentGrade!))
             }
         }
         
         if let fe = otherInfo?["FE"] {
-            cells.append(CellType.Other(name: "Final Exam", grade: fe))
+            cells.append(CellType.other(name: "Final Exam", grade: fe))
         }
         
 
@@ -78,11 +89,11 @@ class SubjectInfoVC: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         }
@@ -90,53 +101,53 @@ class SubjectInfoVC: UITableViewController {
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("averageCell") as! AverageCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "averageCell") as! AverageCell
             cell.averageLabel.text = "Average: " + average
-            cell.selectionStyle = .None
+            cell.selectionStyle = .none
             return cell
         }
         
-        let cell = UITableViewCell(style: .Value1, reuseIdentifier: nil)
-        let cellInfo = cells[indexPath.row]
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+        let cellInfo = cells[(indexPath as NSIndexPath).row]
         
         switch cellInfo {
-        case let .MarkingPeriod(number, grade):
+        case let .markingPeriod(number, grade):
             cell.textLabel?.text = "Marking Period \(number)"
             cell.detailTextLabel?.text = grade
             cell.detailTextLabel?.textColor = UIColor(red: 7, green: 89, blue: 128)
-            cell.accessoryType = .DisclosureIndicator
-        case let .Other(name, grade):
+            cell.accessoryType = .disclosureIndicator
+        case let .other(name, grade):
             cell.textLabel?.text = name
             cell.detailTextLabel?.text = grade + "%"
             cell.detailTextLabel?.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint(item: cell.detailTextLabel!, attribute: .Trailing, relatedBy: .Equal, toItem: cell.contentView, attribute: .TrailingMargin, multiplier: 1, constant: -20).active = true
-            NSLayoutConstraint(item: cell.detailTextLabel!, attribute: .CenterY, relatedBy: .Equal, toItem: cell.contentView, attribute: .CenterY, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: cell.detailTextLabel!, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailingMargin, multiplier: 1, constant: -20).isActive = true
+            NSLayoutConstraint(item: cell.detailTextLabel!, attribute: .centerY, relatedBy: .equal, toItem: cell.contentView, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
             cell.contentView.layoutIfNeeded()
-            cell.selectionStyle = .None
+            cell.selectionStyle = .none
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        guard indexPath.section == 1 else {return}
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard (indexPath as NSIndexPath).section == 1 else {return}
         
-        if case let CellType.MarkingPeriod(number, _) = cells[indexPath.row] {
+        if case let CellType.markingPeriod(number, _) = cells[(indexPath as NSIndexPath).row] {
             selectedMPNumber = number
-            performSegueWithIdentifier("showMP", sender: self)
+            performSegue(withIdentifier: "showMP", sender: self)
         }
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMP" {
-            let detailVC = segue.destinationViewController as! DetailVC
+            let detailVC = segue.destination as! DetailVC
             detailVC.subject = subject
-            detailVC.viewType = DetailVC.ViewType.OneMarkingPeriod(markingPeriodNumber: selectedMPNumber)
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+            detailVC.viewType = DetailVC.ViewType.oneMarkingPeriod(markingPeriodNumber: selectedMPNumber)
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
     }
 }

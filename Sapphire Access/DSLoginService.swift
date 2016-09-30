@@ -13,36 +13,36 @@ import MagicalRecord
 
 class LoginService {
 	var user: User
-	let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-	let completion: (successful: Bool, error: NSError?) -> Void
+	let appDelegate = UIApplication.shared.delegate as! AppDelegate
+	let completion: (_ successful: Bool, _ error: NSError?) -> Void
 
-	init(loginUserWithID userID: NSManagedObjectID, completionHandler completion: (successful: Bool, error: NSError?) -> Void) {
-		user = NSManagedObjectContext.MR_defaultContext().objectWithID(userID) as! User
+	init(loginUserWithID userID: NSManagedObjectID, completionHandler completion: @escaping (_ successful: Bool, _ error: NSError?) -> Void) {
+		user = NSManagedObjectContext.mr_default().object(with: userID) as! User
 		self.completion = completion
 		login()
 	}
     
     // refreshes a logged in user
-    init(refreshUserWithID userID: NSManagedObjectID, completion: (successful: Bool, error: NSError?) -> Void) {
-        user = NSManagedObjectContext.MR_defaultContext().objectWithID(userID) as! User
+    init(refreshUserWithID userID: NSManagedObjectID, completion: @escaping (_ successful: Bool, _ error: NSError?) -> Void) {
+        user = NSManagedObjectContext.mr_default().object(with: userID) as! User
         self.completion = completion
         
-        let session = NSURLSession.sharedSession()
+        let session = URLSession.shared
         let headers = [
             "content-type": "application/x-www-form-urlencoded"
         ]
         
         let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
-        let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
+        let postData = NSData(data: postString.data(using: String.Encoding.utf8)!) as Data
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
-                                          cachePolicy: .UseProtocolCachePolicy,
+        let request = NSMutableURLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
+                                          cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 3)
-        request.HTTPMethod = "POST"
+        request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
-        request.HTTPBody = postData
+        request.httpBody = postData
         
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+        let dataTask = session.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
                 self.completion(successful: false, error: error)
                 return
@@ -58,25 +58,25 @@ class LoginService {
 		// Logout First to avoid problems with logging in with the parent account and then a student account
 		logout { failed, error in
 			if (failed) {
-				self.completion(successful: false, error: error)
+				self.completion(false, error)
 				return
 			}
-			let session = NSURLSession.sharedSession()
+			let session = URLSession.shared
 			let headers = [
 				"content-type": "application/x-www-form-urlencoded"
 			]
 
 			let postString = "javascript=true&j_username=" + self.user.username! + "&j_password=" + self.user.password! + "&j_pin=" + self.user.pin!
-			let postData = NSMutableData(data: postString.dataUsingEncoding(NSUTF8StringEncoding)!)
+			let postData = NSData(data: postString.data(using: String.Encoding.utf8)!) as Data
 
-			let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
-				cachePolicy: .UseProtocolCachePolicy,
+			let request = NSMutableURLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
+				cachePolicy: .useProtocolCachePolicy,
 				timeoutInterval: 3)
-			request.HTTPMethod = "POST"
+			request.httpMethod = "POST"
 			request.allHTTPHeaderFields = headers
-			request.HTTPBody = postData
+			request.httpBody = postData
 
-			let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+			let dataTask = session.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
 				if (error != nil) {
 					self.completion(successful: false, error: error)
 					return
@@ -89,37 +89,37 @@ class LoginService {
 		}
 	}
 
-	func logout(completionHandler: (failed: Bool, error: NSError?) -> Void) {
-		let session = NSURLSession.sharedSession()
-		let request = NSURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1")!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 3)
+	func logout(_ completionHandler: @escaping (_ failed: Bool, _ error: NSError?) -> Void) {
+		let session = URLSession.shared
+		let request = URLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1")!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 3)
 
-		let logoutTask = session.dataTaskWithRequest(request, completionHandler: { data, response, error in
+		let logoutTask = session.dataTask(with: request, completionHandler: { data, response, error in
 			if (error != nil) {
-				completionHandler(failed: true, error: error)
+				completionHandler(true, error as NSError?)
 				return
 			}
-			completionHandler(failed: false, error: nil)
+			completionHandler(false, nil)
 		})
 		logoutTask.resume()
 	}
 
 	// Because of sapphire's strange cookie detection, we have to make a seperate request for the main page. Depending on the title of the page, we can determine whether the user has inputed the correct credentials.
 
-	private func getMainPageHtml() {
+	fileprivate func getMainPageHtml() {
 
-		let request = NSMutableURLRequest(URL: NSURL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
-			cachePolicy: .UseProtocolCachePolicy,
+		let request = NSMutableURLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
+			cachePolicy: .useProtocolCachePolicy,
 			timeoutInterval: 3.0)
-		request.HTTPMethod = "GET"
+		request.httpMethod = "GET"
 
-		let session = NSURLSession.sharedSession()
-		let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+		let session = URLSession.shared
+		let dataTask = session.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
 				self.completion(successful: false, error: error)
 			} else {
-				if let html: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
+				if let html: String = NSString(data: data!, encoding: String.Encoding.utf8) as? String {
 
-					if let doc = Kanna.HTML(html: html, encoding: NSUTF8StringEncoding) {
+					if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
 
 						switch (doc.title!) {
 							// This user is a student account so it has one student.
@@ -127,14 +127,14 @@ class LoginService {
 							// Retrieve student information from backpack screen
 							
 							let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]! 
-							let id = i.componentsSeparatedByString("=")[1]
-                            var student = Student.MR_findFirstByAttribute("id", withValue: id, inContext: NSManagedObjectContext.MR_defaultContext())
+							let id = i.components(separatedBy: "=")[1]
+                            var student = Student.mr_findFirst(byAttribute: "id", withValue: id, in: NSManagedObjectContext.mr_default())
                             if student == nil {
-                                student = Student.MR_createEntityInContext(NSManagedObjectContext.MR_defaultContext())
+                                student = Student.mr_createEntity(in: NSManagedObjectContext.mr_default())
                             }
 							let name: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/a")[0]["title"]!
 							let g: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[1]")[0]["title"]!
-							let grade = g.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890").invertedSet).joinWithSeparator("")
+							let grade = g.components(separatedBy: CharacterSet(charactersIn: "1234567890").inverted).joined(separator: "")
 							let school: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[2]")[0]["title"]!
 
 							student?.id = id
@@ -142,7 +142,7 @@ class LoginService {
 							student?.grade = grade
 							student?.school = school
 							student?.user = self.user
-							NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+							NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
                             self.completion(successful: true, error: nil)
 							// This user is a parent
 						case " Welcome - Sapphire Community Web Portal ":
@@ -188,7 +188,7 @@ class LoginService {
 								students[index].school = schools[index]
 								students[index].user = self.user
 							}
-							NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+							NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
 							self.completion(successful: true, error: nil)
                         // Failed to Login
 						default:
