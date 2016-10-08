@@ -26,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.gray], for: UIControlState())
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red: 43, green: 130, blue: 201)], for: .selected)
         
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        
 		// Start the Magic!
 		MagicalRecord.setLoggingLevel(.warn)
 		MagicalRecord.setShouldDeleteStoreOnModelMismatch(true)

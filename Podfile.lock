@@ -56,7 +56,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Kanna (~> 2.0.0)
   - MagicalRecord
-  - ReachabilitySwift
+  - ReachabilitySwift (~> 3)
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift3`)
   - StaticDataTableViewController
 
@@ -88,6 +88,6 @@ SPEC CHECKSUMS:
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   StaticDataTableViewController: 7ea8d7bc8c7f0a4e9255a320224462c7346c1d4a
 
-PODFILE CHECKSUM: c5bc465833fe1bea3afa7eedd642bed984dd5fb2
+PODFILE CHECKSUM: 384f907d05e573908f5cd817e9b764203d3d6a90
 
 COCOAPODS: 1.0.1

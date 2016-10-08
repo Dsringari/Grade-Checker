@@ -64,15 +64,6 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.rowHeight = 44
        
-        
-        // Find the hairline so we can hide it
-        for view in self.navigationController!.navigationBar.subviews {
-            for aView in view.subviews {
-                if (aView.isKind(of: UIImageView.self) &&  aView.bounds.size.width == self.navigationController!.navigationBar.frame.size.width && aView.bounds.size.height < 2) {
-                    aView.removeFromSuperview()
-                }
-            }
-        }
         // Remove toolbar's border
         self.navigationController!.toolbar.clipsToBounds = true
         
@@ -112,7 +103,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func dismissSelf() {
-        navigationController?.popViewController(animated: false)
+        _ = navigationController?.popViewController(animated: false)
     }
     
     func setShownUpdatesOld() {

@@ -23,6 +23,7 @@ class LoginService {
 	}
     
     // refreshes a logged in user
+    @discardableResult
     init(refreshUserWithID userID: NSManagedObjectID, completion: @escaping (_ successful: Bool, _ error: NSError?) -> Void) {
         user = NSManagedObjectContext.mr_default().object(with: userID) as! User
         self.completion = completion
@@ -37,17 +38,17 @@ class LoginService {
         
         let request = NSMutableURLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
                                           cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 3)
+                                          timeoutInterval: 10)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = headers
         request.httpBody = postData
         
-        let dataTask = session.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             if (error != nil) {
-                self.completion(successful: false, error: error)
+                self.completion(false, error as NSError?)
                 return
             } else {
-                self.completion(successful: true, error: nil)
+                self.completion(true, nil)
             }
         })
         
@@ -71,14 +72,14 @@ class LoginService {
 
 			let request = NSMutableURLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
 				cachePolicy: .useProtocolCachePolicy,
-				timeoutInterval: 3)
+				timeoutInterval: 10)
 			request.httpMethod = "POST"
 			request.allHTTPHeaderFields = headers
 			request.httpBody = postData
 
-			let dataTask = session.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
+			let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
 				if (error != nil) {
-					self.completion(successful: false, error: error)
+					self.completion(false, error as NSError?)
 					return
 				} else {
 					self.getMainPageHtml()
@@ -91,7 +92,7 @@ class LoginService {
 
 	func logout(_ completionHandler: @escaping (_ failed: Bool, _ error: NSError?) -> Void) {
 		let session = URLSession.shared
-		let request = URLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1")!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 3)
+		let request = URLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1")!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
 
 		let logoutTask = session.dataTask(with: request, completionHandler: { data, response, error in
 			if (error != nil) {
@@ -109,15 +110,15 @@ class LoginService {
 
 		let request = NSMutableURLRequest(url: URL(string: "https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm")!,
 			cachePolicy: .useProtocolCachePolicy,
-			timeoutInterval: 3.0)
+			timeoutInterval: 10)
 		request.httpMethod = "GET"
 
 		let session = URLSession.shared
-		let dataTask = session.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
+		let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
 			if (error != nil) {
-				self.completion(successful: false, error: error)
+				self.completion(false, error as NSError?)
 			} else {
-				if let html: String = NSString(data: data!, encoding: String.Encoding.utf8) as? String {
+				if let html: String = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as? String {
 
 					if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
 
@@ -143,7 +144,7 @@ class LoginService {
 							student?.school = school
 							student?.user = self.user
 							NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
-                            self.completion(successful: true, error: nil)
+                            self.completion(true, nil)
 							// This user is a parent
 						case " Welcome - Sapphire Community Web Portal ":
                             
@@ -155,11 +156,11 @@ class LoginService {
                             var students: [Student] = []
 							for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/a") {
 								var id = e["href"]!
-								id = id.componentsSeparatedByString("=")[1]
-                                if let oldStudent = Student.MR_findFirstByAttribute("id", withValue: id, inContext: NSManagedObjectContext.MR_defaultContext()) {
+                                id = id.components(separatedBy: "=")[1]
+                                if let oldStudent = Student.mr_findFirst(byAttribute: "id", withValue: id, in: NSManagedObjectContext.mr_default()) {
                                     students.append(oldStudent)
                                 } else {
-                                    if let newStudent = Student.MR_createEntityInContext(NSManagedObjectContext.MR_defaultContext()) {
+                                    if let newStudent = Student.mr_createEntity(in: NSManagedObjectContext.mr_default()) {
                                         students.append(newStudent)
                                     }
                                 }
@@ -171,7 +172,7 @@ class LoginService {
 							var grades: [String] = []
 							for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/div[1]") {
 								let g = e["title"]!
-								let grade = g.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890").invertedSet).joinWithSeparator("")
+                                let grade = g.components(separatedBy: CharacterSet(charactersIn: "1234567890").inverted).joined(separator: "")
 								grades.append(grade)
 							}
 
@@ -189,16 +190,16 @@ class LoginService {
 								students[index].user = self.user
 							}
 							NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
-							self.completion(successful: true, error: nil)
+							self.completion(true, nil)
                         // Failed to Login
 						default:
-							self.completion(successful: false, error: badLoginError)
+							self.completion(false, badLoginError)
 						}
 					} else {
-						self.completion(successful: false, error: unknownResponseError)
+						self.completion(false, unknownResponseError)
 					}
 				} else {
-					self.completion(successful: false, error: unknownResponseError)
+					self.completion(false, unknownResponseError)
 				}
 			}
 		})

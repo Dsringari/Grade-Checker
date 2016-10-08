@@ -13,6 +13,6 @@ pod 'Firebase/Crash'
 pod 'Firebase/Messaging'
 pod 'Alamofire', '~> 4.0'
 pod 'StaticDataTableViewController'
-pod 'ReachabilitySwift'
+pod 'ReachabilitySwift', '~> 3'
 end
 

@@ -288,7 +288,6 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                 }
                 
                 return s1.mostRecentDate!.compare(s2.mostRecentDate! as Date) == ComparisonResult.orderedDescending
-                
             })
         case .alphabetical:
             subjects!.sort{$0.name < $1.name}
@@ -296,8 +295,10 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             subjects!.sort{ (s1: Subject, s2: Subject) -> Bool in
                 
                 var mps1 = s1.markingPeriods?.allObjects as! [MarkingPeriod]
+                mps1 = mps1.filter{!$0.empty!.boolValue}
                 mps1.sort{$0.number > $1.number}
                 var mps2 = s2.markingPeriods?.allObjects as! [MarkingPeriod]
+                mps2 = mps2.filter{!$0.empty!.boolValue}
                 mps2.sort{$0.number > $1.number}
                 
                 let mostRecentGrade1 = NSDecimalNumber(string: mps1[0].percentGrade)

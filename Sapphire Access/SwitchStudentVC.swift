@@ -53,7 +53,7 @@ class SwitchStudentVC: UITableViewController {
             tableView.reloadData()
             NotificationCenter.default.post(name: Notification.Name("loadStudent"), object: nil)
             navigationController?.tabBarController?.selectedIndex = 0
-            navigationController?.popViewController(animated: false)
+            _ = navigationController?.popViewController(animated: false)
             
             
         }

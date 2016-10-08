@@ -44,7 +44,7 @@ class SettingVC: StaticDataTableViewController {
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         UserDefaults.standard.set(nil, forKey: "selectedStudent")
         
-        navigationController?.tabBarController?.navigationController?.popToRootViewController(animated: true)
+        _ = navigationController?.tabBarController?.navigationController?.popToRootViewController(animated: true)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "tabBarDismissed"), object: nil)
         
         

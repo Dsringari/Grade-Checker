@@ -152,7 +152,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								let letterDayXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr[2]//th[\(index + 1)]"
                                 var letterDay: String
 								let text = doc.xpath(letterDayXPath)[0].text!
-                                letterDay = text.substring(to: text.index(text.endIndex, offsetBy: -1))
+                                letterDay = text.substring(from: text.index(text.endIndex, offsetBy: -1))
                                 
                                 self.schedules.append((dates[index-1],names, teachers, periods, rooms, times, letterDay))
 							}
