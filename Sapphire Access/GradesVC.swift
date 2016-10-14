@@ -115,7 +115,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         adView.rootViewController = self
         adView.delegate = self
         let request = GADRequest()
-        request.testDevices = ["9a231882e8eb1d8e2aa640a79a41bb2b"];
+        request.testDevices = ["f0b003932cbcc49284626d4b1cd3a5f5"];
         adView.load(request)
     }
     
