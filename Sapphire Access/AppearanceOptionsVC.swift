@@ -38,7 +38,7 @@ class AppearanceOptionsVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if (indexPath as NSIndexPath).row == sortMethod.rawValue {
+        if indexPath.row == sortMethod.rawValue {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -47,7 +47,7 @@ class AppearanceOptionsVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if ((indexPath as NSIndexPath).row != sortMethod.rawValue) {
+        if (indexPath.row != sortMethod.rawValue) {
             sortMethod = Sorting(rawValue: (indexPath as NSIndexPath).row)!
             UserDefaults.standard.set(sortMethod.rawValue, forKey: "sortMethod")
             tableView.reloadData()

@@ -178,8 +178,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			service.updateStudentInformation({ successful, error in
                 DispatchQueue.main.async(execute: {
                     if (successful) {
-                        NSManagedObjectContext.mr_default().refresh(self.student, mergeChanges: false)
                         self.hidePopUpView()
+                        NSManagedObjectContext.mr_default().refresh(self.student, mergeChanges: true)
+                        self.subjects = self.student.subjects?.allObjects as? [Subject]
                         self.tableview.reloadData()
                         self.updateRefreshControl()
                         self.stopLoading()
@@ -207,7 +208,8 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 					DispatchQueue.main.async(execute: {
 						// Refresh the ui's student object
                         self.hidePopUpView()
-						NSManagedObjectContext.mr_default().refresh(self.student, mergeChanges: false)
+                        NSManagedObjectContext.mr_default().refresh(self.student, mergeChanges: true)
+                        self.subjects = self.student.subjects?.allObjects as? [Subject]
 						self.tableview.reloadData()
 						self.refreshControl.endRefreshing()
 						self.updateRefreshControl()

@@ -19,7 +19,7 @@ class SwitchStudentVC: UITableViewController {
         
         if let students = Student.mr_findAll() {
             self.students = students as! [Student]
-            self.students = self.students.sorted{$0.grade! < $1.grade!}
+            self.students = self.students.sorted{$0.grade! > $1.grade!}
         }
 
         // Uncomment the following line to preserve selection between presentations
@@ -47,9 +47,9 @@ class SwitchStudentVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if selectedStudentName != students[(indexPath as NSIndexPath).row].name {
-            UserDefaults.standard.set(students[(indexPath as NSIndexPath).row].name, forKey: "selectedStudent")
-            selectedStudentName = students[(indexPath as NSIndexPath).row].name
+        if selectedStudentName != students[indexPath.row].name {
+            UserDefaults.standard.set(students[indexPath.row].name, forKey: "selectedStudent")
+            selectedStudentName = students[indexPath.row].name
             tableView.reloadData()
             NotificationCenter.default.post(name: Notification.Name("loadStudent"), object: nil)
             navigationController?.tabBarController?.selectedIndex = 0

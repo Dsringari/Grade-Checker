@@ -153,8 +153,9 @@ class UpdateService {
                                     }
                                 } else {
                                     self.refreshLastUpdatedDates({ successful, error in
-                                        self.context.mr_saveToPersistentStoreAndWait()
-                                        completion(true, nil) // We don't care if this fails, it's an optional method
+                                        downloadGroup.notify(queue: DispatchQueue.main) {
+                                            completion(true, nil) // We don't care if this fails, it's an optional method
+                                        }
                                     })
                                 }
                             }
