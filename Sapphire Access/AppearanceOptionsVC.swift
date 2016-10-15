@@ -48,7 +48,7 @@ class AppearanceOptionsVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if (indexPath.row != sortMethod.rawValue) {
-            sortMethod = Sorting(rawValue: (indexPath as NSIndexPath).row)!
+            sortMethod = Sorting(rawValue: indexPath.row)!
             UserDefaults.standard.set(sortMethod.rawValue, forKey: "sortMethod")
             tableView.reloadData()
         }

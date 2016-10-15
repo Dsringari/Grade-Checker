@@ -63,7 +63,7 @@ class SwitchStudentVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         
-        cell.textLabel?.text = students[(indexPath as NSIndexPath).row].name
+        cell.textLabel?.text = students[indexPath.row].name
         
         if let selectedStudentName = selectedStudentName , selectedStudentName == cell.textLabel?.text {
             cell.accessoryType = .checkmark

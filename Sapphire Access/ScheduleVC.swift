@@ -290,7 +290,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath as NSIndexPath).row == 0 {
+        if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "today") as! ScheduleTodayCell
             cell.letterDay.text = "Letter Day: " + schedules[selectedDayIndex].letterDay
             cell.separatorInset = UIEdgeInsetsMake(0, 10000, 0, 0)
@@ -301,12 +301,12 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
 		let cell = tableView.dequeueReusableCell(withIdentifier: "period") as! ScheduleCell
         let schedule = schedules[selectedDayIndex]
-		cell.name.text = schedule.names[(indexPath as NSIndexPath).row - 1]
-		cell.period.text = schedule.periods[(indexPath as NSIndexPath).row - 1]
-		cell.teacher.text = schedule.teachers[(indexPath as NSIndexPath).row - 1]
-		cell.room.text = "RM: \(schedule.rooms[(indexPath as NSIndexPath).row - 1])"
-		cell.colorTab.backgroundColor = colors[((indexPath as NSIndexPath).row - 1) % colors.count]
-        cell.time.text = schedule.times[safe: (indexPath as NSIndexPath).row - 1]
+		cell.name.text = schedule.names[indexPath.row - 1]
+		cell.period.text = schedule.periods[indexPath.row - 1]
+		cell.teacher.text = schedule.teachers[indexPath.row - 1]
+		cell.room.text = "RM: \(schedule.rooms[indexPath.row - 1])"
+		cell.colorTab.backgroundColor = colors[(indexPath.row - 1) % colors.count]
+        cell.time.text = schedule.times[safe: indexPath.row - 1]
 
 		return cell
 	}

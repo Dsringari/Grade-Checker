@@ -184,11 +184,11 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if (indexPath as NSIndexPath).section == 0 {
+		if indexPath.section == 0 {
 			let cell = UITableViewCell(style: .default, reuseIdentifier: "selectStudentCell")
-			cell.textLabel?.text = students[(indexPath as NSIndexPath).row].name
+			cell.textLabel?.text = students[indexPath.row].name
 
-			if ((indexPath as NSIndexPath).row == selectedIndex) {
+			if (indexPath.row == selectedIndex) {
 				cell.accessoryType = .checkmark
 			} else {
 				cell.accessoryType = .none
@@ -209,12 +209,12 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if ((indexPath as NSIndexPath).section == 0) {
+		if (indexPath.section == 0) {
 			if let index = selectedIndex {
 				tableView.cellForRow(at: IndexPath(row: index, section: 0))?.accessoryType = .none
 			}
 			tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-			selectedIndex = (indexPath as NSIndexPath).row
+			selectedIndex = indexPath.row
 		}
 
 		tableView.deselectRow(at: indexPath, animated: true)

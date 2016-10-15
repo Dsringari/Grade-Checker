@@ -246,25 +246,25 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if sortMethod == .recent {
             assignments = mp.assignments!.allObjects as! [Assignment]
         } else {
-            let category = categories[(indexPath as NSIndexPath).section]
+            let category = categories[indexPath.section]
             assignments = mp.assignments!.allObjects as! [Assignment]
             assignments = assignments.filter{return $0.category == category}
         }
         
         // sort by date
         assignments.sort{ $0.dateCreated!.compare($1.dateCreated! as Date) == ComparisonResult.orderedDescending }
-        cell.assignmentNameLabel.text = assignments[(indexPath as NSIndexPath).row].name
+        cell.assignmentNameLabel.text = assignments[indexPath.row].name
         
         if (gradeViewType == .point) {
-            cell.pointsGradeLabel.text = assignments[(indexPath as NSIndexPath).row].totalPoints! + "/" + assignments[(indexPath as NSIndexPath).row].possiblePoints!
+            cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
         } else {
-            cell.pointsGradeLabel.text = percentage(assignments[(indexPath as NSIndexPath).row].totalPoints!, possiblePoints: assignments[(indexPath as NSIndexPath).row].possiblePoints!)
+            cell.pointsGradeLabel.text = percentage(assignments[indexPath.row].totalPoints!, possiblePoints: assignments[indexPath.row].possiblePoints!)
         }
         
-        if assignments[(indexPath as NSIndexPath).row].newUpdate.boolValue {
+        if assignments[indexPath.row].newUpdate.boolValue {
             cell.badge.image = UIImage(named: "Recently Updated")!
-            if assignmentsToSetOld.index(of: assignments[(indexPath as NSIndexPath).row]) == nil {
-                assignmentsToSetOld.append(assignments[(indexPath as NSIndexPath).row])
+            if assignmentsToSetOld.index(of: assignments[indexPath.row]) == nil {
+                assignmentsToSetOld.append(assignments[indexPath.row])
             }
         } else {
             cell.badge.image = nil

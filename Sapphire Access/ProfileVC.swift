@@ -140,13 +140,13 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if (indexPath as NSIndexPath).section == 0 {
+        if indexPath.section == 0 {
             let cell = tableview.dequeueReusableCell(withIdentifier: "switchProfileCell")!
             return cell
         }
         
         let cell = tableview.dequeueReusableCell(withIdentifier: "profileSubjectCell") as! ProfileSubjectCell
-        let subject = subjects![(indexPath as NSIndexPath).row]
+        let subject = subjects![indexPath.row]
         cell.name.text = subject.name
         
         if let ytd = dictionaryFromOtherGradesJSON(subject.otherGrades)?["YTD"] {
@@ -165,10 +165,10 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if (indexPath as NSIndexPath).section == 0 {
+        if indexPath.section == 0 {
             performSegue(withIdentifier: "switchStudent", sender: self)
         } else {
-            selectedSubject = subjects![(indexPath as NSIndexPath).row]
+            selectedSubject = subjects![indexPath.row]
             performSegue(withIdentifier: "subjectInfo", sender: self)
         }
     }

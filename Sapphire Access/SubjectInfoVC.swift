@@ -102,7 +102,7 @@ class SubjectInfoVC: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath as NSIndexPath).section == 0 {
+        if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "averageCell") as! AverageCell
             cell.averageLabel.text = "Average: " + average
             cell.selectionStyle = .none
@@ -110,7 +110,7 @@ class SubjectInfoVC: UITableViewController {
         }
         
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
-        let cellInfo = cells[(indexPath as NSIndexPath).row]
+        let cellInfo = cells[indexPath.row]
         
         switch cellInfo {
         case let .markingPeriod(number, grade):
@@ -133,9 +133,9 @@ class SubjectInfoVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard (indexPath as NSIndexPath).section == 1 else {return}
+        guard indexPath.section == 1 else {return}
         
-        if case let CellType.markingPeriod(number, _) = cells[(indexPath as NSIndexPath).row] {
+        if case let CellType.markingPeriod(number, _) = cells[indexPath.row] {
             selectedMPNumber = number
             performSegue(withIdentifier: "showMP", sender: self)
         }

@@ -323,10 +323,10 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 
 		let cell = tableView.dequeueReusableCell(withIdentifier: "subjectCell", for: indexPath) as! SubjectTableViewCell
 
-		if let subject = subjects?[(indexPath as NSIndexPath).row] {
+		if let subject = subjects?[indexPath.row] {
 			cell.subjectNameLabel.text = subject.name
 
-			var markingPeriods: [MarkingPeriod] = subjects![(indexPath as NSIndexPath).row].markingPeriods!.allObjects as! [MarkingPeriod]
+			var markingPeriods: [MarkingPeriod] = subjects![indexPath.row].markingPeriods!.allObjects as! [MarkingPeriod]
 
 			// sort marking periods by descending number and ignore empty marking periods
 			markingPeriods = markingPeriods.filter { !$0.empty!.boolValue }.sorted { Int($0.number!) > Int($1.number!) }
@@ -353,7 +353,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 
 			cell.lastUpdatedLabel.text = "Last Updated: " + dateString
             
-            if let badge = badges[(indexPath as NSIndexPath).row] {
+            if let badge = badges[indexPath.row] {
                 switch badge {
                 case .updated:
                     cell.badge.isHidden = false
@@ -374,7 +374,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		selectedSubject = subjects![(indexPath as NSIndexPath).row]
+		selectedSubject = subjects![indexPath.row]
 		performSegue(withIdentifier: "subjectView", sender: nil)
 		tableView.deselectRow(at: indexPath, animated: true)
 	}
