@@ -20,9 +20,9 @@ class LockVC: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let user = User.MR_findFirst(), let student = Student.MR_findFirstByAttribute("name", withValue: NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")!) {
+		if let user = User.mr_findFirst(), let student = Student.mr_findFirst(byAttribute: "name", withValue: UserDefaults.standard.string(forKey: "selectedStudent")!) {
 			self.user = user
-			self.continueButton.setTitle("Continue as " + student.name!, forState: .Normal)
+			self.continueButton.setTitle("Continue as " + student.name!, for: UIControlState())
 		}
 	}
     
@@ -35,27 +35,27 @@ class LockVC: UIViewController {
 		// Try to Login
 		self.activityIndicator.startAnimating()
 		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
-			dispatch_async(dispatch_get_main_queue(), {
+			DispatchQueue.main.async(execute: {
                 
 				self.activityIndicator.stopAnimating()
                 
 				if (successful) {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    NSNotificationCenter.defaultCenter().postNotificationName("loadStudent", object: nil)
+                    self.dismiss(animated: true, completion: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "loadStudent"), object: nil)
 				} else {
                     var err = error
                     if (error!.code == NSURLErrorTimedOut) {
                         err = badConnectionError
                     }
-                    let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedRecoverySuggestion, preferredStyle: .Alert)
+                    let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedRecoverySuggestion, preferredStyle: .alert)
                     if err == badLoginError {
-                        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+                        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
                             self.logout()
                         }))
                     } else {
-                        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
                     }
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
 
 				}
                 
@@ -63,35 +63,35 @@ class LockVC: UIViewController {
 		})
 	}
     
-    @IBAction func continuePressed(sender: AnyObject) {
-        let settings = NSUserDefaults.standardUserDefaults()
+    @IBAction func continuePressed(_ sender: AnyObject) {
+        let settings = UserDefaults.standard
         
-        if settings.boolForKey("useTouchID") {
-            continueButton.enabled = false
+        if settings.bool(forKey: "useTouchID") {
+            continueButton.isEnabled = false
             var error: NSError?
-            if LAContext().canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
+            if LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
                 let context: LAContext = LAContext()
                 let localizedReasonString = "Login with Touch ID"
-                context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         
                         if (success) {
                             
                             self.login()
-                            self.continueButton.enabled = true
+                            self.continueButton.isEnabled = true
                         } else {
-                            if (error!.code == LAError.AuthenticationFailed.rawValue) {
-                                let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .Alert)
-                                let Ok = UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
-                                    self.dismissViewControllerAnimated(true, completion: {
+                            if (error!._code == LAError.Code.authenticationFailed.rawValue) {
+                                let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .alert)
+                                let Ok = UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
+                                    self.dismiss(animated: true, completion: {
                                         
                                     })
-                                    self.continueButton.enabled = true
+                                    self.continueButton.isEnabled = true
                                 })
                                 failed.addAction(Ok)
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    self.presentViewController(failed, animated: true, completion: nil)
+                                DispatchQueue.main.async(execute: {
+                                    self.present(failed, animated: true, completion: nil)
                                 })
                                 
                                 return
@@ -105,22 +105,22 @@ class LockVC: UIViewController {
                 var title: String!
                 var message: String!
                 switch error!.code {
-                case LAError.TouchIDNotEnrolled.rawValue:
+                case LAError.Code.touchIDNotEnrolled.rawValue:
                     title = "Touch ID Not Enabled"
                     message = "Setup Touch ID in your settings"
-                case LAError.PasscodeNotSet.rawValue:
+                case LAError.Code.passcodeNotSet.rawValue:
                     title = "Passcode Not Set"
                     message = "Setup a Passcode to use Touch ID"
                 default:
                     title = "Touch ID Not Availabe"
                     message = "We couldn't access Touch ID"
                 }
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { _ in
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
                     self.logout()
-                    self.continueButton.enabled = true
+                    self.continueButton.isEnabled = true
                 }))
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
         } else {
             login()
@@ -129,7 +129,7 @@ class LockVC: UIViewController {
     }
     
     func logout() {
-        NSNotificationCenter.defaultCenter().postNotificationName("logout", object: self)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "logout"), object: self)
     }
 
 

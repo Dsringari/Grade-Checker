@@ -14,7 +14,7 @@ import CoreData
 
 extension Assignment {
 
-    @NSManaged var dateCreated: NSDate?
+    @NSManaged var dateCreated: Date?
     @NSManaged var name: String?
     @NSManaged var possiblePoints: String?
     @NSManaged var totalPoints: String?

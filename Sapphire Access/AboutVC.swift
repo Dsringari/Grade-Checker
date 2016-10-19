@@ -14,8 +14,8 @@ class AboutVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-        let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as! String
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
         
         versionLabel.text = version + "." + build
     }

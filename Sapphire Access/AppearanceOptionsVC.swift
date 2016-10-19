@@ -10,12 +10,12 @@ import UIKit
 
 class AppearanceOptionsVC: UITableViewController {
     
-    var sortMethod: Sorting = .Recent
+    var sortMethod: Sorting = .recent
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let sortingNumber = NSUserDefaults.standardUserDefaults().integerForKey("sortMethod")
+        let sortingNumber = UserDefaults.standard.integer(forKey: "sortMethod")
         sortMethod = Sorting(rawValue: sortingNumber)!
 
     }
@@ -27,29 +27,29 @@ class AppearanceOptionsVC: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 3
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == sortMethod.rawValue {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         if (indexPath.row != sortMethod.rawValue) {
             sortMethod = Sorting(rawValue: indexPath.row)!
-            NSUserDefaults.standardUserDefaults().setInteger(sortMethod.rawValue, forKey: "sortMethod")
+            UserDefaults.standard.set(sortMethod.rawValue, forKey: "sortMethod")
             tableView.reloadData()
         }
     }

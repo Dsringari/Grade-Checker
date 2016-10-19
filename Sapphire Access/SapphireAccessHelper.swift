@@ -8,7 +8,7 @@
 
 import UIKit
 
-func calculateAverageGrade(subject: Subject, roundToWholeNumber: Bool = true) -> String? {
+func calculateAverageGrade(_ subject: Subject, roundToWholeNumber: Bool = true) -> String? {
     guard var markingPeriods = subject.markingPeriods?.allObjects as? [MarkingPeriod] else {
         return nil
     }
@@ -21,12 +21,12 @@ func calculateAverageGrade(subject: Subject, roundToWholeNumber: Bool = true) ->
     for mp in markingPeriods {
         
         // Remove %
-        guard let percentgradeString = mp.percentGrade?.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("") else {
+        guard let percentgradeString = mp.percentGrade?.components(separatedBy: CharacterSet(charactersIn: "1234567890.").inverted).joined(separator: "") else {
             continue
         }
         
-        mpTotal = mpTotal.decimalNumberByAdding(NSDecimalNumber(string: percentgradeString))
-        mpCount = mpCount.decimalNumberByAdding(1)
+        mpTotal = mpTotal.adding(NSDecimalNumber(string: percentgradeString))
+        mpCount = mpCount.adding(1)
     }
     
     
@@ -34,51 +34,51 @@ func calculateAverageGrade(subject: Subject, roundToWholeNumber: Bool = true) ->
         return nil
     }
     
-    mpTotal = mpTotal.decimalNumberByMultiplyingBy(0.2)
-    mpPossible = mpPossible.decimalNumberByMultiplyingBy(mpCount)
+    mpTotal = mpTotal.multiplying(by: 0.2)
+    mpPossible = mpPossible.multiplying(by: mpCount)
     
     var midtermFinalTotal: NSDecimalNumber = 0
     var midtermFinalCount: NSDecimalNumber = 0
     var midtermFinalPossible: NSDecimalNumber = 10
     if let mt = dictionaryFromOtherGradesJSON(subject.otherGrades)?["MT"] {
-        midtermFinalCount = midtermFinalCount.decimalNumberByAdding(1)
-        midtermFinalTotal = midtermFinalTotal.decimalNumberByAdding(NSDecimalNumber(string: mt))
+        midtermFinalCount = midtermFinalCount.adding(1)
+        midtermFinalTotal = midtermFinalTotal.adding(NSDecimalNumber(string: mt))
     }
     
     if let fe = dictionaryFromOtherGradesJSON(subject.otherGrades)?["FE"] {
-        midtermFinalCount = midtermFinalCount.decimalNumberByAdding(1)
-        midtermFinalTotal = midtermFinalTotal.decimalNumberByAdding(NSDecimalNumber(string: fe))
+        midtermFinalCount = midtermFinalCount.adding(1)
+        midtermFinalTotal = midtermFinalTotal.adding(NSDecimalNumber(string: fe))
     }
-    midtermFinalTotal = midtermFinalTotal.decimalNumberByMultiplyingBy(0.1)
-    midtermFinalPossible = midtermFinalPossible.decimalNumberByMultiplyingBy(midtermFinalCount)
+    midtermFinalTotal = midtermFinalTotal.multiplying(by: 0.1)
+    midtermFinalPossible = midtermFinalPossible.multiplying(by: midtermFinalCount)
     
-    let total = mpTotal.decimalNumberByAdding(midtermFinalTotal)
-    let possible = mpPossible.decimalNumberByAdding(midtermFinalPossible)
+    let total = mpTotal.adding(midtermFinalTotal)
+    let possible = mpPossible.adding(midtermFinalPossible)
     
     
-    let average = total.decimalNumberByDividingBy(possible).decimalNumberByMultiplyingByPowerOf10(2)
+    let average = total.dividing(by: possible).multiplying(byPowerOf10: 2)
     if roundToWholeNumber {
         return String(Int(round(average.doubleValue)))
     }
     
-    let numberFormatter = NSNumberFormatter()
+    let numberFormatter = NumberFormatter()
     numberFormatter.minimumFractionDigits = 2
     numberFormatter.maximumFractionDigits = 2
     numberFormatter.minimumIntegerDigits = 1
-    numberFormatter.roundingMode = .RoundHalfUp
-    numberFormatter.numberStyle = .DecimalStyle
-    return numberFormatter.stringFromNumber(average)
+    numberFormatter.roundingMode = .halfUp
+    numberFormatter.numberStyle = .decimal
+    return numberFormatter.string(from: average)
     
 }
 
 
-func dictionaryFromOtherGradesJSON(string: String?) -> [String: String]? {
-    guard let jsonData = string?.dataUsingEncoding(NSUTF8StringEncoding) else {
+func dictionaryFromOtherGradesJSON(_ string: String?) -> [String: String]? {
+    guard let jsonData = string?.data(using: String.Encoding.utf8) else {
         return nil
     }
     
     do {
-        return try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [String: String]
+        return try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: String]
     } catch {
         return nil
     }

@@ -16,18 +16,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
-	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
 
 		// Set default preferences
-        let appDefaults = ["useTouchID": false, "sortMethod": NSNumber(integer: Sorting.Recent.rawValue)]
-		NSUserDefaults.standardUserDefaults().registerDefaults(appDefaults)
+        let appDefaults = ["useTouchID": false, "sortMethod": NSNumber(value: Sorting.recent.rawValue as Int)]
+		UserDefaults.standard.register(defaults: appDefaults)
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.grayColor()], forState: .Normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red: 43, green: 130, blue: 201)], forState: .Selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.gray], for: UIControlState())
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red: 43, green: 130, blue: 201)], for: .selected)
+        
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         
 		// Start the Magic!
-		MagicalRecord.setLoggingLevel(.Warn)
+		MagicalRecord.setLoggingLevel(.warn)
 		MagicalRecord.setShouldDeleteStoreOnModelMismatch(true)
         MagicalRecord.setupCoreDataStack()
 
@@ -37,12 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
     
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        if application.applicationState == .Inactive || application.applicationState == .Background {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        if application.applicationState == .inactive || application.applicationState == .background {
             
         } else {
             let notification = UILocalNotification()
-            if let aps = userInfo["aps"] {
+            if let aps = userInfo["aps"] as? [AnyHashable: Any] {
                 notification.alertBody = aps["alert"] as? String
             }
             notification.soundName = UILocalNotificationDefaultSoundName
@@ -50,59 +53,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func registerForPushNotifications(application: UIApplication) {
+    func registerForPushNotifications(_ application: UIApplication) {
         let notificationSettings = UIUserNotificationSettings(
-            forTypes: [.Badge, .Sound, .Alert], categories: nil)
+            types: [.badge, .sound, .alert], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
     }
     
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        if notificationSettings.types != .None {
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != UIUserNotificationType() {
             application.registerForRemoteNotifications()
         }
     }
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
         var tokenString = ""
         
-        for i in 0..<deviceToken.length {
+        for i in 0..<deviceToken.count {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
         
         //Tricky line
-        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Unknown)
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.unknown)
         print("Device Token:", tokenString)
     }
 
 
-	func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		return true
 	}
 
-	func applicationWillResignActive(application: UIApplication) {
+	func applicationWillResignActive(_ application: UIApplication) {
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 		// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 	}
 
-	func applicationDidEnterBackground(application: UIApplication) {
+	func applicationDidEnterBackground(_ application: UIApplication) {
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 
 
 		var tabBarController: UITabBarController?
-		if let containerVC = UIApplication.sharedApplication().keyWindow?.rootViewController as? ContainerVC {
+		if let containerVC = UIApplication.shared.keyWindow?.rootViewController as? ContainerVC {
 			if let navigationController = containerVC.currentViewController as? UINavigationController {
 				tabBarController = navigationController.visibleViewController as? UITabBarController
 			}
 		}
         
-        if NSUserDefaults.standardUserDefaults().boolForKey("useTouchID") {
+        if UserDefaults.standard.bool(forKey: "useTouchID") {
             if let mainTabBarController = tabBarController {
                 mainTabBarController.selectedIndex = 0
                 if let nVC = mainTabBarController.viewControllers?.first as? UINavigationController {
                     if let gradesVC = nVC.visibleViewController as? GradesVC {
-                        gradesVC.performSegueWithIdentifier("lock", sender: nil)
+                        gradesVC.performSegue(withIdentifier: "lock", sender: nil)
                     }
                 }
             }
@@ -111,15 +114,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 	}
 
-	func applicationWillEnterForeground(application: UIApplication) {
+	func applicationWillEnterForeground(_ application: UIApplication) {
 		// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	}
 
-	func applicationDidBecomeActive(application: UIApplication) {
+	func applicationDidBecomeActive(_ application: UIApplication) {
 		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	}
 
-	func applicationWillTerminate(application: UIApplication) {
+	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 		MagicalRecord.cleanUp()
 	}

@@ -9,6 +9,17 @@
 import UIKit
 import MagicalRecord
 import GoogleMobileAds
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
@@ -26,25 +37,25 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var markingPeriods: [MarkingPeriod]!
     var categories: [String] = []
     var selectedMPIndex: Int = 0
-    var gradeViewType: GradeViewType = .Point
-    var sortMethod: Sorting = .Recent
+    var gradeViewType: GradeViewType = .point
+    var sortMethod: Sorting = .recent
     var assignmentsToSetOld: [Assignment] = []
-    var viewType: ViewType = .AllMarkingPeriods
+    var viewType: ViewType = .allMarkingPeriods
     
     
     enum ViewType {
-        case AllMarkingPeriods
-        case OneMarkingPeriod(markingPeriodNumber: String)
+        case allMarkingPeriods
+        case oneMarkingPeriod(markingPeriodNumber: String)
     }
     
     enum GradeViewType {
-        case Point
-        case Percentage
+        case point
+        case percentage
     }
     
     enum Sorting {
-        case Recent
-        case Category
+        case recent
+        case category
     }
 
     override func viewDidLoad() {
@@ -53,30 +64,21 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.rowHeight = 44
        
-        
-        // Find the hairline so we can hide it
-        for view in self.navigationController!.navigationBar.subviews {
-            for aView in view.subviews {
-                if (aView.isKindOfClass(UIImageView) &&  aView.bounds.size.width == self.navigationController!.navigationBar.frame.size.width && aView.bounds.size.height < 2) {
-                    aView.removeFromSuperview()
-                }
-            }
-        }
         // Remove toolbar's border
         self.navigationController!.toolbar.clipsToBounds = true
         
         let mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-        markingPeriods = mps.filter{!$0.empty!.boolValue}.sort{Int($0.number!) < Int($1.number!)} // Only want non empty marking periods
+        markingPeriods = mps.filter{!$0.empty!.boolValue}.sorted{Int($0.number!) < Int($1.number!)} // Only want non empty marking periods
         
-        if case let ViewType.OneMarkingPeriod(number) = viewType {
+        if case let ViewType.oneMarkingPeriod(number) = viewType {
             self.title = "Marking Period \(number)"
             
             if let mp = markingPeriods.filter({$0.number == number}).first {
-                let index = markingPeriods.indexOf(mp)!
+                let index = markingPeriods.index(of: mp)!
                 selectedMPIndex = index
             }
             sortingSegmentTop.constant = 8
-            segmentedControl.hidden = true
+            segmentedControl.isHidden = true
             navigationItem.rightBarButtonItems?.removeObject(filterButton)
             
             self.view.layoutIfNeeded()
@@ -85,7 +87,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             selectedMPIndex = markingPeriods.count - 1
             segmentedControl.removeAllSegments()
             for index in 0..<markingPeriods.count {
-                segmentedControl.insertSegmentWithTitle("MP " + markingPeriods[index].number!, atIndex: index, animated: false)
+                segmentedControl.insertSegment(withTitle: "MP " + markingPeriods[index].number!, at: index, animated: false)
             }
             segmentedControl.selectedSegmentIndex = selectedMPIndex
             
@@ -93,40 +95,40 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         calculateCategories(markingPeriodIndex: selectedMPIndex)
-        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
-        pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
+        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, for: UIControlState())
+        pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, for: UIControlState())
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(dismissSelf), name: "loadStudent", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissSelf), name: NSNotification.Name(rawValue: "loadStudent"), object: nil)
         
     }
     
     func dismissSelf() {
-        navigationController?.popViewControllerAnimated(false)
+        _ = navigationController?.popViewController(animated: false)
     }
     
     func setShownUpdatesOld() {
         for a in assignmentsToSetOld {
-            a.newUpdate = NSNumber(bool: false)
+            a.newUpdate = NSNumber(value: false as Bool)
         }
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
 
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         setShownUpdatesOld()
     }
     
     @IBAction func showPoints() {
-        gradeViewType = .Point
-        pointsButton.setBackgroundImage(UIImage(named: "SelectedViewTypeBackground"), forState: .Normal)
-        percentageButton.setBackgroundImage(nil, forState: .Normal)
+        gradeViewType = .point
+        pointsButton.setBackgroundImage(UIImage(named: "SelectedViewTypeBackground"), for: UIControlState())
+        percentageButton.setBackgroundImage(nil, for: UIControlState())
         tableView.reloadData()
     }
     
     @IBAction func showPercentage() {
-        gradeViewType = .Percentage
-        percentageButton.setBackgroundImage(UIImage(named: "SelectedViewTypeBackground"), forState: .Normal)
-        pointsButton.setBackgroundImage(nil, forState: .Normal)
+        gradeViewType = .percentage
+        percentageButton.setBackgroundImage(UIImage(named: "SelectedViewTypeBackground"), for: UIControlState())
+        pointsButton.setBackgroundImage(nil, for: UIControlState())
         tableView.reloadData()
     }
     
@@ -138,40 +140,40 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    @IBAction func segmentedControlChanged(sender: AnyObject) {
+    @IBAction func segmentedControlChanged(_ sender: AnyObject) {
         selectedMPIndex = segmentedControl.selectedSegmentIndex
         calculateCategories(markingPeriodIndex: selectedMPIndex)
-        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, forState: .Normal)
-        pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, forState: .Normal)
+        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, for: UIControlState())
+        pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, for: UIControlState())
         setShownUpdatesOld()
         self.tableView.reloadData()
     }
     
     
-    @IBAction func showHideFilterOptions(sender: AnyObject) {
+    @IBAction func showHideFilterOptions(_ sender: AnyObject) {
         showOrHideOptions()
     }
     
-    func showOrHideOptions(delay: Double = 0) {
+    func showOrHideOptions(_ delay: Double = 0) {
         if toolbarHeight.constant == 44 {
             self.toolbarHeight.constant = 80
         } else {
             self.toolbarHeight.constant = 44
         }
         
-        UIView.animateWithDuration(0.5, delay: delay, usingSpringWithDamping: 0.66, initialSpringVelocity: 1, options: [], animations: {
+        UIView.animate(withDuration: 0.5, delay: delay, usingSpringWithDamping: 0.66, initialSpringVelocity: 1, options: [], animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
-    @IBAction func sortingMethodChanged(sender: AnyObject) {
+    @IBAction func sortingMethodChanged(_ sender: AnyObject) {
         if sortingSegmentedControl.selectedSegmentIndex == 0 {
-            sortMethod = .Recent
+            sortMethod = .recent
         } else {
-            sortMethod = .Category
+            sortMethod = .category
         }
         
-        if case ViewType.AllMarkingPeriods = viewType {
+        if case ViewType.allMarkingPeriods = viewType {
             showOrHideOptions(0.33)
         }
         self.tableView.reloadData()
@@ -179,49 +181,49 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return sortMethod == .Recent ? 1 : categories.count
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sortMethod == .recent ? 1 : categories.count
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.contentView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        header.contentView.backgroundColor = UIColor.groupTableViewBackground
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if sortMethod == .Category {
-            let header = UITableViewHeaderFooterView(frame: CGRectMake(0,0,tableView.frame.size.width,10))
+        if sortMethod == .category {
+            let header = UITableViewHeaderFooterView(frame: CGRect(x: 0,y: 0,width: tableView.frame.size.width,height: 10))
         
             let totalLabel: UILabel = UILabel()
             let totals = totalScore(categories[section])
         
-            if (gradeViewType == .Point) {
+            if (gradeViewType == .point) {
                 totalLabel.text = totals.totalPoints + "/" + totals.possiblePoints
             } else {
                 totalLabel.text = percentage(totals.totalPoints, possiblePoints: totals.possiblePoints)
             }
             
-            totalLabel.textColor = UIColor.lightGrayColor()
+            totalLabel.textColor = UIColor.lightGray
 
         
             totalLabel.translatesAutoresizingMaskIntoConstraints = false
             header.addSubview(totalLabel)
         
-            NSLayoutConstraint(item: totalLabel, attribute: .Trailing, relatedBy: .Equal, toItem: header, attribute: .TrailingMargin, multiplier: 1, constant: 8).active = true
-            NSLayoutConstraint(item: totalLabel, attribute: .CenterY, relatedBy: .Equal, toItem: header, attribute: .CenterY, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: totalLabel, attribute: .trailing, relatedBy: .equal, toItem: header, attribute: .trailingMargin, multiplier: 1, constant: 8).isActive = true
+            NSLayoutConstraint(item: totalLabel, attribute: .centerY, relatedBy: .equal, toItem: header, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
             return header
         }
         
         return nil
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sortMethod == .Recent ? "Assignments" : categories[section].capitalizedString
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sortMethod == .recent ? "Assignments" : categories[section].capitalized
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if sortMethod == .Recent {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if sortMethod == .recent {
             let assignments: [Assignment] = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
             return assignments.count
         } else {
@@ -232,16 +234,16 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("assignmentCell", forIndexPath: indexPath) as! AssignmentTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "assignmentCell", for: indexPath) as! AssignmentTableViewCell
         let mp = markingPeriods[selectedMPIndex]
         
         var assignments: [Assignment]
-        if sortMethod == .Recent {
+        if sortMethod == .recent {
             assignments = mp.assignments!.allObjects as! [Assignment]
         } else {
             let category = categories[indexPath.section]
@@ -250,10 +252,10 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         // sort by date
-        assignments.sortInPlace{ $0.dateCreated!.compare($1.dateCreated!) == NSComparisonResult.OrderedDescending }
+        assignments.sort{ $0.dateCreated!.compare($1.dateCreated! as Date) == ComparisonResult.orderedDescending }
         cell.assignmentNameLabel.text = assignments[indexPath.row].name
         
-        if (gradeViewType == .Point) {
+        if (gradeViewType == .point) {
             cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
         } else {
             cell.pointsGradeLabel.text = percentage(assignments[indexPath.row].totalPoints!, possiblePoints: assignments[indexPath.row].possiblePoints!)
@@ -261,7 +263,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         if assignments[indexPath.row].newUpdate.boolValue {
             cell.badge.image = UIImage(named: "Recently Updated")!
-            if assignmentsToSetOld.indexOf(assignments[indexPath.row]) == nil {
+            if assignmentsToSetOld.index(of: assignments[indexPath.row]) == nil {
                 assignmentsToSetOld.append(assignments[indexPath.row])
             }
         } else {
@@ -272,27 +274,27 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func percentage(totalPoints: String, possiblePoints: String) -> String {
+    func percentage(_ totalPoints: String, possiblePoints: String) -> String {
         let totalPointsNumber = NSDecimalNumber(string: totalPoints)
         let possiblePointsNumber = NSDecimalNumber(string: possiblePoints)
         
-        let numberFormatter = NSNumberFormatter()
+        let numberFormatter = NumberFormatter()
         numberFormatter.minimumFractionDigits = 1
         numberFormatter.maximumFractionDigits = 1
         numberFormatter.minimumIntegerDigits = 1
-        numberFormatter.roundingMode = .RoundHalfUp
-        numberFormatter.numberStyle = .DecimalStyle
+        numberFormatter.roundingMode = .halfUp
+        numberFormatter.numberStyle = .decimal
         
         guard !totalPointsNumber.doubleValue.isNaN else {
             return "0.0%"
         }
         
-        guard possiblePointsNumber.compare(0) != .OrderedSame && !possiblePointsNumber.doubleValue.isNaN && !totalPointsNumber.doubleValue.isNaN else {
+        guard possiblePointsNumber.compare(0) != .orderedSame && !possiblePointsNumber.doubleValue.isNaN && !totalPointsNumber.doubleValue.isNaN else {
             return "N/A"
         }
         
-        let percentage = totalPointsNumber.decimalNumberByDividingBy(possiblePointsNumber).decimalNumberByMultiplyingBy(100)
-        return numberFormatter.stringFromNumber(percentage)! + "%"
+        let percentage = totalPointsNumber.dividing(by: possiblePointsNumber).multiplying(by: 100)
+        return numberFormatter.string(from: percentage)! + "%"
         
     }
     
@@ -304,16 +306,16 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         var categories: [String] = []
         for a in assignments {
-            if let category = a.category where categories.indexOf(category) == nil {
+            if let category = a.category , categories.index(of: category) == nil {
                 categories.append(category)
             }
         }
         
-        categories.sortInPlace{$0 > $1}
+        categories.sort{$0 > $1}
         self.categories = categories
     }
     
-    func totalScore(category: String) -> (totalPoints: String, possiblePoints: String) {
+    func totalScore(_ category: String) -> (totalPoints: String, possiblePoints: String) {
         var assignments = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
         assignments = assignments.filter{$0.category == category}
         
@@ -323,12 +325,12 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             let totalPoints = NSDecimalNumber(string: a.totalPoints)
             guard totalPoints.doubleValue.isNaN != true else {
-                possible = possible.decimalNumberByAdding(NSDecimalNumber(string: a.possiblePoints))
+                possible = possible.adding(NSDecimalNumber(string: a.possiblePoints))
                 continue
             }
             
-            total = total.decimalNumberByAdding(NSDecimalNumber(string: a.totalPoints))
-            possible = possible.decimalNumberByAdding(NSDecimalNumber(string: a.possiblePoints))
+            total = total.adding(NSDecimalNumber(string: a.totalPoints))
+            possible = possible.adding(NSDecimalNumber(string: a.possiblePoints))
         }
         
         return (total.stringValue, possible.stringValue)

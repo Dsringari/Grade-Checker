@@ -13,19 +13,19 @@ import MagicalRecord
 import Alamofire
 import ReachabilitySwift
 
-typealias CompletionType = (successful: Bool, error: NSError?) -> Void
+typealias CompletionType = (_ successful: Bool, _ error: NSError?) -> Void
 
 class UpdateService {
 	let student: Student
 	let kCharacterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.*+-"
-	let context = NSManagedObjectContext.MR_context()
+	let context = NSManagedObjectContext.mr_()
     let firstLoad: Bool
     
-    var alamofireManager: Alamofire.Manager
+    var alamofireManager: Alamofire.SessionManager
 
 	init?(studentID: NSManagedObjectID) {
 		do {
-			let object = try context.existingObjectWithID(studentID)
+			let object = try context.existingObject(with: studentID)
 			if let s = object as? Student {
 				student = s
                 if let subs = student.subjects {
@@ -38,10 +38,10 @@ class UpdateService {
 				return nil
 			}
             
-            let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-            config.timeoutIntervalForRequest = 4
-            config.requestCachePolicy = .ReloadIgnoringLocalCacheData
-            alamofireManager = Alamofire.Manager(configuration: config)
+            let config = URLSessionConfiguration.default
+            config.timeoutIntervalForRequest = 10
+            config.requestCachePolicy = .reloadIgnoringLocalCacheData
+            alamofireManager = Alamofire.SessionManager(configuration: config)
 		} catch let error as NSError {
 			print("Failed to find student with object ID \(studentID). Error: \(error)")
 			return nil
@@ -49,133 +49,136 @@ class UpdateService {
 
 	}
 
-	func updateStudentInformation(completion: CompletionType) {
+	func updateStudentInformation(_ completion: @escaping CompletionType) {
         
-        let reachability: Reachability
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            completion(successful: false, error: badConnectionError)
+        guard Reachability() != nil else {
+            completion(false, badConnectionError)
             return
         }
         
-        guard reachability.isReachable() else {
-            completion(successful: false, error: badConnectionError)
-            return
-        }
-
-		// Load the main courses page
-		let coursesURL: String = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + student.id!
-		alamofireManager.request(.GET, coursesURL)
-			.validate()
-			.response { request, response, data, error in
-				if let error = error {
-                    if error.code == NSURLErrorTimedOut {
-                        completion(successful: false, error: badConnectionError)
-                    } else {
-                        completion(successful: false, error: error)
-                    }
-				} else {
-					if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
-						let subjectLinksPath = "//*[@id=\"contentPipe\"]/table//tr[@class!=\"classNotGraded\"]//td/a" // finds all the links on the visable table NOTE: DO NOT INCLUDE /tbody FOR SIMPLE TABLES WITHOUT A HEADER AND FOOTER
-						let subjectLinks = doc.xpath(subjectLinksPath)
-
-						var names: [String] = []
-						for link in subjectLinks {
-							names.append(link.text!.substringToIndex(link.text!.endIndex.predecessor())) // Remove the space after the name
-						}
-                        
-                        guard names.count != 0 else {
-                            completion(successful: false, error: noGradesError)
-                            return
+        LoginService(refreshUserWithID: student.user!.objectID) { successful, error in
+            guard successful else {
+                completion(false, badLoginError)
+                return
+            }
+            
+            // Load the main courses page
+            let coursesURL: String = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + self.student.id!
+            self.alamofireManager.request(coursesURL)
+                .validate()
+                .response { response in
+                    if let error = response.error as? NSError {
+                        if error.code == NSURLErrorTimedOut {
+                            completion(false, badConnectionError)
+                        } else {
+                            completion(false, error)
                         }
-
-						let teacherXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[2]"
-						var teachers: [String] = []
-						for teacherElement in doc.xpath(teacherXPath) {
-							teachers.append(teacherElement.text!)
-						}
-
-						let roomXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[4]"
-						var rooms: [String] = []
-						for roomElement in doc.xpath(roomXPath) {
-							rooms.append(roomElement.text!)
-						}
-
-						var errors: [NSError] = []
-						let downloadGroup = dispatch_group_create()
-                        var subjectsToDelete : [Subject] = Subject.MR_findByAttribute("student", withValue: self.student, inContext: self.context) as! [Subject]
-						for index in 0..<subjectLinks.count {
-							let address = "https://pamet-sapphire.k12system.com" + subjectLinks[index]["href"]!
-							let sectionGUID = address.componentsSeparatedByString("&")[1].componentsSeparatedByString("=")[1]
-
-							dispatch_group_enter(downloadGroup)
-                            if let oldSubject = subjectsToDelete.filter({$0.sectionGUID == sectionGUID}).first {
-                                subjectsToDelete.removeObject(oldSubject)
-								self.updateMarkingPeriodInformation(oldSubject, completion: { successful, error in
-									if (error != nil) {
-										errors.append(error!)
-									}
-									dispatch_group_leave(downloadGroup)
-								})
-							} else {
-								if let subject = Subject.MR_createEntityInContext(self.context) {
-									subject.htmlPage = address
-									subject.name = names[index]
-									subject.teacher = teachers[index]
-									subject.room = rooms[index]
-									subject.sectionGUID = sectionGUID
-									subject.student = self.student
-
-									self.updateMarkingPeriodInformation(subject, completion: { successful, error in
-										if (error != nil) {
-											errors.append(error!)
-										}
-										dispatch_group_leave(downloadGroup)
-									})
-								}
-
-							}
+                    } else {
+                        if let doc = Kanna.HTML(html: response.data!, encoding: String.Encoding.utf8) {
+                            let subjectLinksPath = "//*[@id=\"contentPipe\"]/table//tr[@class!=\"classNotGraded\"]//td/a" // finds all the links on the visable table NOTE: DO NOT INCLUDE /tbody FOR SIMPLE TABLES WITHOUT A HEADER AND FOOTER
+                            let subjectLinks = doc.xpath(subjectLinksPath)
                             
-                        }
-                        
-                        for s in subjectsToDelete {
-                            s.MR_deleteEntityInContext(self.context)
-                        }
-
-						// Runs when every callback in the for loop has completed
-						dispatch_group_notify(downloadGroup, dispatch_get_main_queue(), {
-							if let error = errors.first {
-								self.context.reset()
-                                if error.code == NSURLErrorTimedOut {
-                                    completion(successful: false, error: badConnectionError)
+                            var names: [String] = []
+                            for link in subjectLinks {
+                                names.append(link.text!.substring(to: link.text!.index(before: link.text!.endIndex))) // Remove the space after the name
+                            }
+                            
+                            guard names.count != 0 else {
+                                completion(false, noGradesError)
+                                return
+                            }
+                            
+                            let teacherXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[2]"
+                            var teachers: [String] = []
+                            for teacherElement in doc.xpath(teacherXPath) {
+                                teachers.append(teacherElement.text!)
+                            }
+                            
+                            let roomXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[4]"
+                            var rooms: [String] = []
+                            for roomElement in doc.xpath(roomXPath) {
+                                rooms.append(roomElement.text!)
+                            }
+                            
+                            var errors: [NSError] = []
+                            let downloadGroup = DispatchGroup()
+                            var subjectsToDelete : [Subject] = Subject.mr_find(byAttribute: "student", withValue: self.student, in: self.context) as! [Subject]
+                            for (index, node) in subjectLinks.enumerated() {
+                                let address = "https://pamet-sapphire.k12system.com" + node["href"]!
+                                let sectionGUID = address.components(separatedBy: "&")[1].components(separatedBy: "=")[1]
+                                
+                                downloadGroup.enter()
+                                if let oldSubject = subjectsToDelete.filter({$0.sectionGUID == sectionGUID}).first {
+                                    subjectsToDelete.removeObject(oldSubject)
+                                    self.updateMarkingPeriodInformation(oldSubject, completion: { successful, error in
+                                        if (error != nil) {
+                                            errors.append(error!)
+                                        }
+                                        downloadGroup.leave()
+                                    })
                                 } else {
-                                    completion(successful: false, error: error)
+                                    if let subject = Subject.mr_createEntity(in: self.context) {
+                                        subject.htmlPage = address
+                                        subject.name = names[index]
+                                        subject.teacher = teachers[index]
+                                        subject.room = rooms[index]
+                                        subject.sectionGUID = sectionGUID
+                                        subject.student = self.student
+                                        
+                                        self.updateMarkingPeriodInformation(subject, completion: { successful, error in
+                                            if (error != nil) {
+                                                errors.append(error!)
+                                            }
+                                            downloadGroup.leave()
+                                        })
+                                    }
+                                    
                                 }
-							} else {
-								self.context.MR_saveToPersistentStoreAndWait()
-								self.refreshLastUpdatedDates({ successful, error in
-									completion(successful: true, error: nil) // We don't care if this fails, it's an optional method
-								})
-							}
-						})
-					}
-				}
-		}
-	}
+                                
+                            }
+                            
+                            for s in subjectsToDelete {
+                                s.mr_deleteEntity(in: self.context)
+                            }
+                            
+                            // Runs when every callback in the for loop has completed
+                            
+                            downloadGroup.notify(queue: DispatchQueue.main) {
+                                if let error = errors.first {
+                                    self.context.reset()
+                                    if error.code == NSURLErrorTimedOut {
+                                        completion(false, badConnectionError)
+                                    } else {
+                                        completion(false, error)
+                                    }
+                                } else {
+                                    self.refreshLastUpdatedDates({ successful, error in
+                                        downloadGroup.notify(queue: DispatchQueue.main) {
+                                            completion(true, nil) // We don't care if this fails, it's an optional method
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
+            }
+            
+        }
 
-	func updateMarkingPeriodInformation(subject: Subject, completion: CompletionType) {
-		alamofireManager.request(.GET, subject.htmlPage!)
+    }
+
+	func updateMarkingPeriodInformation(_ subject: Subject, completion: @escaping CompletionType) {
+		alamofireManager.request(subject.htmlPage!)
 			.validate()
-			.response { request, response, data, error in
-				if let error = error {
+			.response { response in
+				if let error = response.error as? NSError {
                     if error.code == NSURLErrorTimedOut {
-                        completion(successful: false, error: badConnectionError)
+                        completion(false, badConnectionError)
                     } else {
-                        completion(successful: false, error: error)
+                        completion(false, error)
                     }
 				} else {
-					if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) {
+					if let doc = Kanna.HTML(html: response.data!, encoding: String.Encoding.utf8) {
 						let mpXPath = "//*[@id=\"contentPipe\"]/div[3]/table/tr//td[a]/a"
 						let otherXPath = "//*[@id=\"contentPipe\"]/div[3]/table/tr//td[b]"
 
@@ -188,14 +191,14 @@ class UpdateService {
 
 						var markingPeriods: [MarkingPeriod] = []
 						for index in 0..<mpURLStrings.count {
-							if let mp = MarkingPeriod.MR_findFirstByAttribute("htmlPage", withValue: mpURLStrings[index], inContext: self.context) {
-								mp.empty = NSNumber(bool: false)
+							if let mp = MarkingPeriod.mr_findFirst(byAttribute: "htmlPage", withValue: mpURLStrings[index], in: self.context) {
+								mp.empty = NSNumber(value: false)
 								markingPeriods.append(mp)
-							} else if let mp = MarkingPeriod.MR_createEntityInContext(self.context) {
+							} else if let mp = MarkingPeriod.mr_createEntity(in: self.context) {
 								mp.htmlPage = mpURLStrings[index]
-								mp.number = mpURLStrings[index].componentsSeparatedByString("MP_CODE=")[1]
+                                mp.number = mpURLStrings[index].components(separatedBy: "MP_CODE=")[1]
 								mp.subject = subject
-								mp.empty = NSNumber(bool: false)
+								mp.empty = NSNumber(value: false)
 								markingPeriods.append(mp)
 							}
 						}
@@ -204,10 +207,10 @@ class UpdateService {
 						var otherGradeScores: [String] = []
 						for node in doc.xpath(otherXPath) {
 							if let string = node.text {
-								if let range = string.rangeOfString("(") {
-									let x = string.substringToIndex(range.endIndex.predecessor())
-									let title = x.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet).joinWithSeparator("")
-									let score = x.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "123456778910").invertedSet).joinWithSeparator("")
+                                if let range = string.range(of: "(") {
+                                    let x = string.substring(to: string.index(before: range.upperBound))
+                                    let title = x.components(separatedBy: CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").inverted).joined(separator: "")
+									let score = x.components(separatedBy: CharacterSet(charactersIn: "123456778910").inverted).joined(separator: "")
 									otherGradeTitles.append(title)
 									otherGradeScores.append(score)
 								}
@@ -216,36 +219,36 @@ class UpdateService {
 						}
 
 						// Stores the other grades as a json string so we dont have to create more entities in core data.
-						let otherGradeDictionary = NSDictionary(objects: otherGradeScores, forKeys: otherGradeTitles)
+						let otherGradeDictionary = NSDictionary(objects: otherGradeScores, forKeys: otherGradeTitles as [NSCopying])
 						do {
-							let jsonData = try NSJSONSerialization.dataWithJSONObject(otherGradeDictionary, options: [])
-							if let jsonString = String(data: jsonData, encoding: NSUTF8StringEncoding) {
+							let jsonData = try JSONSerialization.data(withJSONObject: otherGradeDictionary, options: [])
+							if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8) {
 								subject.otherGrades = jsonString
 							}
 						} catch let error as NSError {
 							print(error)
 						}
 
-						let mpDownloadGroup = dispatch_group_create()
+						let mpDownloadGroup = DispatchGroup()
 						var errors: [NSError] = []
 						for mp in markingPeriods {
-							dispatch_group_enter(mpDownloadGroup)
-							self.alamofireManager.request(.GET, mp.htmlPage!)
+							mpDownloadGroup.enter()
+							self.alamofireManager.request(mp.htmlPage!)
 								.validate()
-								.response(completionHandler: { request, response, data, error in
-									guard error == nil else {
-										errors.append(error!)
-										dispatch_group_leave(mpDownloadGroup)
+								.response(completionHandler: { response in
+									guard response.error == nil else {
+										errors.append(response.error! as NSError)
+										mpDownloadGroup.leave()
 										return
 									}
 
-									guard let mpPageDoc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) else {
+									guard let mpPageDoc = Kanna.HTML(html: response.data!, encoding: String.Encoding.utf8) else {
 										errors.append(unknownResponseError)
-										dispatch_group_leave(mpDownloadGroup)
+										mpDownloadGroup.leave()
 										return
 									}
 
-									if let currentMP = MarkingPeriod.MR_findFirstByAttribute("htmlPage", withValue: response!.URL!.absoluteString, inContext: self.context) {
+									if let currentMP = MarkingPeriod.mr_findFirst(byAttribute: "htmlPage", withValue: response.response!.url!.absoluteString, in: self.context) {
 										if let result = self.parseMarkingPeriodPage(html: mpPageDoc) {
 
 											currentMP.possiblePoints = result.possiblePoints
@@ -253,64 +256,64 @@ class UpdateService {
 											currentMP.percentGrade = result.percentGrade
                                             var assignmentsToDelete = currentMP.assignments!.allObjects as! [Assignment]
 											for assignment in result.assignments {
-												let dateFormatter = NSDateFormatter()
+												let dateFormatter = DateFormatter()
 												// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
 												dateFormatter.dateFormat = "MM/dd/yy"
                                                 var dateCreated: NSDate = NSDate()
                                                 if let date = assignment.date {
-                                                    dateCreated = dateFormatter.dateFromString(date)!
+                                                    dateCreated = dateFormatter.date(from: date)! as NSDate
                                                 }
 
-                                                if let oldAssignment = assignmentsToDelete.filter({$0.name == assignment.name && $0.category == assignment.category && $0.dateCreated == dateCreated}).first {
+                                                if let oldAssignment = assignmentsToDelete.filter({$0.name == assignment.name && $0.category == assignment.category && $0.dateCreated == dateCreated as Date}).first {
                                                     assignmentsToDelete.removeObject(oldAssignment)
 													oldAssignment.totalPoints = assignment.totalPoints
 													oldAssignment.possiblePoints = assignment.possiblePoints
-													oldAssignment.dateCreated = dateCreated
+													oldAssignment.dateCreated = dateCreated as Date
                                                     
                                                     // We don't want to set assignments as old here. We should only change it in detail vc.
                                                     if !oldAssignment.changedValues().isEmpty {
                                                         oldAssignment.newUpdate = true
                                                     }
 												} else {
-													if let newA = Assignment.MR_createEntityInContext(self.context) {
-														newA.dateCreated = dateCreated
+													if let newA = Assignment.mr_createEntity(in: self.context) {
+														newA.dateCreated = dateCreated as Date
 														newA.name = assignment.name
 														newA.totalPoints = assignment.totalPoints
 														newA.possiblePoints = assignment.possiblePoints
 														newA.category = assignment.category
 														newA.markingPeriod = currentMP
-                                                        newA.newUpdate = !self.firstLoad
+                                                        newA.newUpdate = !self.firstLoad as NSNumber
 													}
 												}
 
 											}
                                             
                                             for a in assignmentsToDelete {
-                                                a.MR_deleteEntityInContext(self.context)
+                                                a.mr_deleteEntity(in: self.context)
                                             }
 
 										} else {
-											currentMP.empty = NSNumber(bool: true)
+											currentMP.empty = NSNumber(value: true)
 										}
 									}
 
-									dispatch_group_leave(mpDownloadGroup)
+									mpDownloadGroup.leave()
 							})
 						}
-
-						dispatch_group_notify(mpDownloadGroup, dispatch_get_main_queue(), {
-							if let error = errors.first {
-								completion(successful: false, error: error)
-							} else {
-								completion(successful: true, error: nil)
-							}
-						})
+                        
+                        mpDownloadGroup.notify(queue: DispatchQueue.main) {
+                            if let error = errors.first {
+                                completion(false, error)
+                            } else {
+                                completion(true, nil)
+                            }
+                        }
 					}
 				}
 		}
 	}
 
-	private func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
+	fileprivate func parseMarkingPeriodPage(html doc: HTMLDocument) -> (assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)], totalPoints: String, possiblePoints: String, percentGrade: String)? {
 		var percentGrade: String = ""
 		var totalPoints: String = ""
 		var possiblePoints: String = ""
@@ -340,11 +343,11 @@ class UpdateService {
 			return nil
 		}
 
-		assigntmentIndex = String(headers.indexOf("Assignment")! + 1)
-		totalScoreIndex = String(headers.indexOf("totalScore")! + 1)
-		possibleScoreIndex = String(headers.indexOf("possibleScore")! + 1)
-		dueDateIndex = String(headers.indexOf("DateDue")! + 1)
-		categoryIndex = String(headers.indexOf("Category")! + 1)
+		assigntmentIndex = String(headers.index(of: "Assignment")! + 1)
+		totalScoreIndex = String(headers.index(of: "totalScore")! + 1)
+		possibleScoreIndex = String(headers.index(of: "possibleScore")! + 1)
+		dueDateIndex = String(headers.index(of: "DateDue")! + 1)
+		categoryIndex = String(headers.index(of: "Category")! + 1)
 
 		// Parse all the assignments while ignoring the assignment descriptions and teacher comments
 		let assignmentsXpath = "//*[@id=\"assignments\"]//tr/td[not(contains(@class, 'assignDesc')) and not(contains(@class, 'assignComments'))]/.."
@@ -366,7 +369,7 @@ class UpdateService {
 		if let percentageTextElement = doc.at_xpath(percentageTextXpath) {
 			var text = percentageTextElement.text!
 			// Remove all the spaces and other characters
-			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.%").invertedSet).joinWithSeparator("")
+			text = text.components(separatedBy: CharacterSet(charactersIn: "1234567890.%").inverted).joined(separator: "")
 			// If we have a marking period with assignments but 0/0 points change the % to 0.00%
 			if (text == "%") {
 				text = "0.00%"
@@ -382,10 +385,10 @@ class UpdateService {
 		if let pointsTextElement = doc.at_xpath(pointsTextXpath) {
 			var text = pointsTextElement.text!
 			// Remove all the spaces and other characters
-			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890./").invertedSet).joinWithSeparator("")
+			text = text.components(separatedBy: CharacterSet(charactersIn: "1234567890./").inverted).joined(separator: "")
 			// Seperate the String into Possible / Total Points
-			totalPoints = text.componentsSeparatedByString("/")[0]
-			possiblePoints = text.componentsSeparatedByString("/")[1]
+            totalPoints = text.components(separatedBy: "/")[0]
+			possiblePoints = text.components(separatedBy: "/")[1]
 		} else {
 			print("Failed to find pointsTextElement!")
 			return nil
@@ -395,7 +398,7 @@ class UpdateService {
 		var aTotalPoints: [String] = []
 		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + totalScoreIndex + "]") {
 			var text = aE.text!
-			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: kCharacterSet).invertedSet).joinWithSeparator("")
+			text = text.components(separatedBy: CharacterSet(charactersIn: kCharacterSet).inverted).joined(separator: "")
 			aTotalPoints.append(text)
 		}
 
@@ -403,7 +406,7 @@ class UpdateService {
 		var aPossiblePoints: [String] = []
 		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + possibleScoreIndex + "]") {
 			var text = aE.text!
-			text = text.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("")
+			text = text.components(separatedBy: NSCharacterSet(charactersIn: "1234567890.").inverted).joined(separator: "")
 			aPossiblePoints.append(text)
 		}
 
@@ -432,19 +435,18 @@ class UpdateService {
 		return (assignments, totalPoints, possiblePoints, percentGrade)
 	}
 
-	func refreshLastUpdatedDates(completion: CompletionType) {
+	func refreshLastUpdatedDates(_ completion: @escaping CompletionType) {
 		// Get the landing page
 
-		alamofireManager.request(.GET, "http://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
+		alamofireManager.request("http://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
 			.validate()
-			.response(completionHandler: { request, response, data, error in
-				if (error != nil) {
-                    print(error?.description)
-					completion(successful: false, error: error)
+			.response(completionHandler: { response in
+				if (response.error != nil) {
+					completion(false, response.error as NSError?)
 					return
 				}
 
-				if let doc = Kanna.HTML(html: data!, encoding: NSUTF8StringEncoding) { // BTW A PARENT ACCOUNT CAN HAVE ONLY ONE STUDENT
+				if let doc = Kanna.HTML(html: response.data!, encoding: String.Encoding.utf8) { // BTW A PARENT ACCOUNT CAN HAVE ONLY ONE STUDENT
 					// Get all the Class Names
 					var namePath: String
 					var datePath: String
@@ -485,21 +487,21 @@ class UpdateService {
 					}
 
 					for index in 0 ..< names.count {
-						if let subject = Subject.MR_findFirstByAttribute("name", withValue: names[index], inContext: self.context) {
+						if let subject = Subject.mr_findFirst(byAttribute: "name", withValue: names[index], in: self.context) {
 							let dateString = dates[index]
-							let dateFormatter = NSDateFormatter()
+							let dateFormatter = DateFormatter()
 							// http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
-							dateFormatter.dateFormat = "MM/dd/yy"
-							let date = dateFormatter.dateFromString(dateString)
-							subject.lastUpdated = date
+							dateFormatter.dateFormat = "M/d/yy"
+                            if let date = dateFormatter.date(from: dateString) {
+                                subject.lastUpdated = date
+                            }
 						}
 					}
-
-					self.context.MR_saveToPersistentStoreAndWait()
-					completion(successful: true, error: nil)
+					self.context.mr_saveToPersistentStoreAndWait()
+					completion(true, nil)
 
 				} else {
-					completion(successful: false, error: unknownResponseError)
+					completion(false, unknownResponseError)
 				}
 
 		})

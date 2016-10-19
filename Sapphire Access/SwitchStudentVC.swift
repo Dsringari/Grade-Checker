@@ -8,17 +8,18 @@
 
 import UIKit
 
+
 class SwitchStudentVC: UITableViewController {
     
     var students: [Student] = []
-    var selectedStudentName: String? = NSUserDefaults.standardUserDefaults().stringForKey("selectedStudent")
+    var selectedStudentName: String? = UserDefaults.standard.string(forKey: "selectedStudent")
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let students = Student.MR_findAll() {
+        if let students = Student.mr_findAll() {
             self.students = students as! [Student]
-            self.students = self.students.sort{$0.grade < $1.grade}
+            self.students = self.students.sorted{$0.grade! > $1.grade!}
         }
 
         // Uncomment the following line to preserve selection between presentations
@@ -35,39 +36,39 @@ class SwitchStudentVC: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return students.count
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         if selectedStudentName != students[indexPath.row].name {
-            NSUserDefaults.standardUserDefaults().setObject(students[indexPath.row].name, forKey: "selectedStudent")
+            UserDefaults.standard.set(students[indexPath.row].name, forKey: "selectedStudent")
             selectedStudentName = students[indexPath.row].name
             tableView.reloadData()
-            NSNotificationCenter.defaultCenter().postNotificationName("loadStudent", object: nil)
+            NotificationCenter.default.post(name: Notification.Name("loadStudent"), object: nil)
             navigationController?.tabBarController?.selectedIndex = 0
-            navigationController?.popViewControllerAnimated(false)
+            _ = navigationController?.popViewController(animated: false)
             
             
         }
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         
         cell.textLabel?.text = students[indexPath.row].name
         
-        if let selectedStudentName = selectedStudentName where selectedStudentName == cell.textLabel?.text {
-            cell.accessoryType = .Checkmark
+        if let selectedStudentName = selectedStudentName , selectedStudentName == cell.textLabel?.text {
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
 
         // Configure the cell...
