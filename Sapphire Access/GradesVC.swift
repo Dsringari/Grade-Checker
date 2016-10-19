@@ -138,7 +138,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     
     override func viewDidAppear(_ animated: Bool) {
         checkSortingMethod()
-        subjects = student.subjects?.allObjects as? [Subject]
+        self.subjects = Subject.mr_find(byAttribute: "student", withValue: self.student) as? [Subject]
         tableview.reloadData()
     }
 
@@ -179,8 +179,8 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                 DispatchQueue.main.async(execute: {
                     if (successful) {
                         self.hidePopUpView()
-                        NSManagedObjectContext.mr_default().refresh(self.student, mergeChanges: true)
-                        self.subjects = self.student.subjects?.allObjects as? [Subject]
+                        self.student = NSManagedObjectContext.mr_default().object(with: self.student.objectID) as! Student
+                        self.subjects = Subject.mr_find(byAttribute: "student", withValue: self.student) as? [Subject]
                         self.tableview.reloadData()
                         self.updateRefreshControl()
                         self.stopLoading()
@@ -208,8 +208,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 					DispatchQueue.main.async(execute: {
 						// Refresh the ui's student object
                         self.hidePopUpView()
-                        NSManagedObjectContext.mr_default().refresh(self.student, mergeChanges: true)
-                        self.subjects = self.student.subjects?.allObjects as? [Subject]
+                        self.subjects = Subject.mr_find(byAttribute: "student", withValue: self.student) as? [Subject]
 						self.tableview.reloadData()
 						self.refreshControl.endRefreshing()
 						self.updateRefreshControl()
@@ -239,13 +238,10 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let sMOs = student.subjects?.allObjects as? [Subject] else {
-			return 0
-		}
-
-		subjects = sMOs
 		badges.removeAll()
-
+        guard subjects != nil else {
+            return 0
+        }
 		// Remove invalid subjects
 		for subject in subjects! {
 			var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
