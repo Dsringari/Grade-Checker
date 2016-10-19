@@ -43,7 +43,7 @@ class Subject: NSManagedObject {
 	}
     
     /// Returns the most recent date that the subject has between the mostRecentAssignment and lastUpdated values
-    lazy var mostRecentDate: Date? = {
+    var mostRecentDate: Date? {
         if let date = self.lastUpdated, let assignment = self.mostRecentAssignment {
             return (date.compare(assignment.dateCreated! as Date) == ComparisonResult.orderedDescending ? date : assignment.dateCreated!) as Date
         } else if let assignment = self.mostRecentAssignment {
@@ -51,6 +51,6 @@ class Subject: NSManagedObject {
         }
         
         return nil
-    }()
+    }
 
 }
