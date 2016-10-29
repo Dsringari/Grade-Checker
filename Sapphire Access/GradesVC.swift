@@ -184,9 +184,6 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                         self.tableview.reloadData()
                         self.updateRefreshControl()
                         self.stopLoading()
-                        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-                        UIApplication.shared.registerUserNotificationSettings(notificationSettings)
-                        UIApplication.shared.registerForRemoteNotifications()
 					
                     } else {
                         self.stopLoading()

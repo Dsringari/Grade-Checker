@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import MagicalRecord
 import Firebase
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -35,49 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MagicalRecord.setupCoreDataStack()
 
 		FIRApp.configure()
+        Fabric.with([Crashlytics.self])
 
 		return true
 	}
-    
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        if application.applicationState == .inactive || application.applicationState == .background {
-            
-        } else {
-            let notification = UILocalNotification()
-            if let aps = userInfo["aps"] as? [AnyHashable: Any] {
-                notification.alertBody = aps["alert"] as? String
-            }
-            notification.soundName = UILocalNotificationDefaultSoundName
-            application.presentLocalNotificationNow(notification)
-        }
-    }
-    
-    func registerForPushNotifications(_ application: UIApplication) {
-        let notificationSettings = UIUserNotificationSettings(
-            types: [.badge, .sound, .alert], categories: nil)
-        application.registerUserNotificationSettings(notificationSettings)
-    }
-    
-    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
-        if notificationSettings.types != UIUserNotificationType() {
-            application.registerForRemoteNotifications()
-        }
-    }
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
-        var tokenString = ""
-        
-        for i in 0..<deviceToken.count {
-            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
-        }
-        
-        //Tricky line
-        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.unknown)
-        print("Device Token:", tokenString)
-    }
-
 
 	func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		return true

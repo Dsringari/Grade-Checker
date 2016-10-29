@@ -9,10 +9,10 @@ pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3
 pod "MagicalRecord"
 pod 'Firebase/AdMob'
 pod 'Firebase/Core'
-pod 'Firebase/Crash'
-pod 'Firebase/Messaging'
 pod 'Alamofire', '~> 4.0'
 pod 'StaticDataTableViewController'
 pod 'ReachabilitySwift', '~> 3'
+pod 'Fabric'
+pod 'Crashlytics'
 end
 
