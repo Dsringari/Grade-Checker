@@ -142,7 +142,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         tableview.reloadData()
     }
 
-	func adViewDidReceiveAd(_ bannerView: GADBannerView!) {
+	func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         self.tableViewBottomConstraint.constant = 50
         self.view.addSubview(self.adView)
         
@@ -160,7 +160,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		})
 	}
 
-	func adView(_ bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+	func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
 		print(error)
 	}
 
