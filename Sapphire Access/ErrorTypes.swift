@@ -13,7 +13,7 @@ private let unknownResponse = [NSLocalizedDescriptionKey: NSLocalizedString("Cou
 let unknownResponseError = NSError(domain: "Bad Response", code: 1, userInfo: unknownResponse)
 
 // This is the NSError for bad credentials
-private let badLogin = [NSLocalizedDescriptionKey: NSLocalizedString("Check Your Info", comment: ""), NSLocalizedFailureReasonErrorKey: NSLocalizedString("This account does not exist.", comment: ""), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please verify your credentials.", comment: "")]
+private let badLogin = [NSLocalizedDescriptionKey: NSLocalizedString("Invalid Credentials", comment: ""), NSLocalizedFailureReasonErrorKey: NSLocalizedString("This account does not exist.", comment: ""), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please verify your credentials.", comment: "")]
 let badLoginError = NSError(domain: "Bad Login", code: 1, userInfo: badLogin)
 
 // This is the NSError for a bad connection

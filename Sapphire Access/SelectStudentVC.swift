@@ -73,17 +73,18 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         if touchIDSwitch.isOn && hasTouchID {
             let context = LAContext()
+            context.localizedFallbackTitle = "" // Removes Enter Password Button
             self.continueButton.isEnabled = false
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: NSError?) in
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Touch ID to Verify", reply: { (success: Bool, error: Error?) in
                 DispatchQueue.main.async(execute: {
                     self.continueButton.isEnabled = true
                     if (success) {
                         settings.set(true, forKey: "useTouchID")
                         self.performSegue(withIdentifier: "firstTimeHome", sender: nil)
-                    } else {
+                    } else if let error = error as? NSError {
                         settings.set(false, forKey: "useTouchID")
                         self.touchIDSwitch.setOn(false, animated: true)
-                        if (error!.code == LAError.Code.authenticationFailed.rawValue) {
+                        if error.code == LAError.Code.authenticationFailed.rawValue {
                             let failed = UIAlertController(title: "Failed to Verify", message: "Your fingerprint did not match.", preferredStyle: .alert)
                             let Ok = UIAlertAction(title: "OK", style: .default, handler: nil)
                             failed.addAction(Ok)
@@ -91,7 +92,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                         }
                     }
                 })
-            } as! (Bool, Error?) -> Void)
+            })
         } else {
             settings.set(false, forKey: "useTouchID")
             self.performSegue(withIdentifier: "firstTimeHome", sender: nil)

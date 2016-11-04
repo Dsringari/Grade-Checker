@@ -9,12 +9,17 @@
 import UIKit
 import LocalAuthentication
 
+protocol LockDelegate {
+    func logout() -> Void
+}
+
 class LockVC: UIViewController {
 
 	@IBOutlet var continueButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 
 	var user: User!
+    var lockDelegate: LockDelegate!
     
 
 	override func viewDidLoad() {
@@ -75,29 +80,22 @@ class LockVC: UIViewController {
                 context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
                     
                     DispatchQueue.main.async(execute: {
-                        
+                        self.continueButton.isEnabled = true
                         if (success) {
-                            
                             self.login()
-                            self.continueButton.isEnabled = true
-                        } else {
-                            if (error!._code == LAError.Code.authenticationFailed.rawValue) {
+                        } else if let error = error as? NSError {
+                            if (error.code == LAError.Code.authenticationFailed.rawValue) {
                                 let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .alert)
                                 let Ok = UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
-                                    self.dismiss(animated: true, completion: {
-                                        
-                                    })
-                                    self.continueButton.isEnabled = true
+                                    self.logout()
                                 })
                                 failed.addAction(Ok)
                                 DispatchQueue.main.async(execute: {
                                     self.present(failed, animated: true, completion: nil)
                                 })
-                                
-                                return
+                            } else if error.code == LAError.Code.userFallback.rawValue {
+                                self.logout()
                             }
-                            
-                            self.logout()
                         }
                     })
                 })
@@ -129,7 +127,10 @@ class LockVC: UIViewController {
     }
     
     func logout() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "logout"), object: self)
+        self.dismiss(animated: false) {
+            self.lockDelegate.logout()
+        }
+        
     }
 
 

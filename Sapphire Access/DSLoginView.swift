@@ -145,10 +145,10 @@ class DSLoginView: UIViewController {
 		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
 
 			DispatchQueue.main.async(execute: {
-				self.clearFields()
 				if (successful) {
 					self.stopLoading()
 					self.performSegue(withIdentifier: "selectStudent", sender: self)
+                    self.clearFields()
 				} else {
 					// If we failed
 					self.stopLoading()
@@ -157,7 +157,9 @@ class DSLoginView: UIViewController {
 						var err = error
 						if (error!.code == NSURLErrorTimedOut) {
 							err = badConnectionError
-						}
+                        } else if error == badLoginError {
+                            self.clearFields()
+                        }
 						let alert = UIAlertController(title: err!.localizedDescription, message: err!.localizedFailureReason, preferredStyle: .alert)
 						alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
 						self.present(alert, animated: true, completion: {
@@ -172,7 +174,6 @@ class DSLoginView: UIViewController {
 	}
 
 	func clearFields() {
-		usernameField.text = nil
 		passwordField.text = nil
 		pinField.text = nil
 	}

@@ -322,7 +322,7 @@ class UpdateService {
 		var totalScoreIndex: String
 		var possibleScoreIndex: String
 		var dueDateIndex: String
-		var categoryIndex: String
+		var categoryIndex: String? = nil
 
 		// Find under which td are the headers we want under
 		var headers: [String] = []
@@ -347,8 +347,9 @@ class UpdateService {
 		totalScoreIndex = String(headers.index(of: "totalScore")! + 1)
 		possibleScoreIndex = String(headers.index(of: "possibleScore")! + 1)
 		dueDateIndex = String(headers.index(of: "DateDue")! + 1)
-		categoryIndex = String(headers.index(of: "Category")! + 1)
-
+        if let catIndex = headers.index(of: "Category") {
+            categoryIndex = String(catIndex+1)
+        }
 		// Parse all the assignments while ignoring the assignment descriptions and teacher comments
 		let assignmentsXpath = "//*[@id=\"assignments\"]//tr/td[not(contains(@class, 'assignDesc')) and not(contains(@class, 'assignComments'))]/.."
 
@@ -419,10 +420,13 @@ class UpdateService {
 
 		// Get all the categories
 		var aCategories: [String] = []
-		for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + categoryIndex + "]") {
-			let text = aE.text!
-			aCategories.append(text)
-		}
+        if let categoryIndex = categoryIndex {
+            for aE: XMLElement in doc.xpath(assignmentsXpath + "/td[" + categoryIndex + "]") {
+                let text = aE.text!
+                aCategories.append(text)
+            }
+        }
+		
 
 		// Build the assignment tuples
 		var assignments: [(name: String?, totalPoints: String?, possiblePoints: String?, date: String?, category: String?)] = []
