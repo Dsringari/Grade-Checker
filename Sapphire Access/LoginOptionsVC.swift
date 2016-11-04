@@ -29,14 +29,16 @@ class LoginOptionsVC: UITableViewController {
     }
     @IBAction func updatePreferences(_ sender: AnyObject) {
         if touchIDSwitch.isOn {
-            LAContext().evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Touch ID to Verify") { successful, error in
+            let context = LAContext()
+            context.localizedFallbackTitle = ""
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Touch ID to Verify") { successful, error in
                 DispatchQueue.main.async {
                     if successful {
                         UserDefaults.standard.set(true, forKey: "useTouchID")
-                    } else {
+                    } else if let error = error as? NSError {
                         self.touchIDSwitch.setOn(false, animated: true)
-                        if (error!._code == LAError.Code.authenticationFailed.rawValue) {
-                            let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match.", preferredStyle: .alert)
+                        if (error.code == LAError.Code.authenticationFailed.rawValue) {
+                            let failed = UIAlertController(title: "Failed to Verify", message: "Your fingerprint did not match.", preferredStyle: .alert)
                             let OK = UIAlertAction(title: "OK", style: .cancel, handler:nil)
                             failed.addAction(OK)
                             self.present(failed, animated: true, completion: nil)

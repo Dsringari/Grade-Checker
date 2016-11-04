@@ -301,10 +301,12 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
 		let cell = tableView.dequeueReusableCell(withIdentifier: "period") as! ScheduleCell
         let schedule = schedules[selectedDayIndex]
-		cell.name.text = schedule.names[indexPath.row - 1]
-		cell.period.text = schedule.periods[indexPath.row - 1]
-		cell.teacher.text = schedule.teachers[indexPath.row - 1]
-		cell.room.text = "RM: \(schedule.rooms[indexPath.row - 1])"
+        cell.name.text = schedule.names[safe: indexPath.row - 1]
+        cell.period.text = schedule.periods[safe: indexPath.row - 1]
+        cell.teacher.text = schedule.teachers[safe: indexPath.row - 1]
+        if let room = schedule.rooms[safe: indexPath.row - 1] {
+            cell.room.text = "RM: " + room
+        }
 		cell.colorTab.backgroundColor = colors[(indexPath.row - 1) % colors.count]
         cell.time.text = schedule.times[safe: indexPath.row - 1]
 

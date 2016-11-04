@@ -229,7 +229,12 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else {
             let category = categories[section]
             var assignments = markingPeriods[selectedMPIndex].assignments!.allObjects as! [Assignment]
-            assignments = assignments.filter{return $0.category == category}
+            assignments = assignments.filter {
+                if category == "No Category" {
+                    return $0.category == nil
+                }
+                return $0.category == category
+            }
             return assignments.count
         }
     }
@@ -248,7 +253,12 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else {
             let category = categories[indexPath.section]
             assignments = mp.assignments!.allObjects as! [Assignment]
-            assignments = assignments.filter{return $0.category == category}
+            assignments = assignments.filter {
+                if category == "No Category" {
+                    return $0.category == nil
+                }
+                return $0.category == category
+            }
         }
         
         // sort by date
@@ -306,7 +316,9 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         var categories: [String] = []
         for a in assignments {
-            if let category = a.category , categories.index(of: category) == nil {
+            if a.category == nil, categories.index(of: "No Category") == nil {
+                categories.append("No Category")
+            } else if let category = a.category, categories.index(of: category) == nil {
                 categories.append(category)
             }
         }

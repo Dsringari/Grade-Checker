@@ -40,7 +40,7 @@ enum Sorting: Int {
 
 
 
-class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
+class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, LockDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var popUpView: UIView!
     @IBOutlet var popUpViewText: UILabel!
@@ -455,6 +455,16 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         popUpViewText.isHidden = true
     }
     
+    func logout() {
+        User.mr_deleteAll(matching: NSPredicate(value: true))
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+        UserDefaults.standard.set(nil, forKey: "selectedStudent")
+        subjects = nil
+        
+        _ = navigationController?.tabBarController?.navigationController?.popToRootViewController(animated: false)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "tabBarDismissed"), object: nil)
+    }
+    
     
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -462,6 +472,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			let sV = segue.destination as! DetailVC
 			sV.subject = selectedSubject
 			self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-		}
+        } else if segue.identifier == "lock" {
+            let lockVC = segue.destination as! LockVC
+            lockVC.lockDelegate = self
+        }
 	}
 }

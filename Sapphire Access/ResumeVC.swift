@@ -96,17 +96,14 @@ class ResumeVC: UIViewController {
 				context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
 
 					DispatchQueue.main.async {
-
-						if (success) {
-
+                        self.continueButton.isEnabled = true
+                        if (success) {
 							self.login()
-							self.continueButton.isEnabled = true
-						} else {
-							if (error!._code == LAError.Code.authenticationFailed.rawValue) {
+						} else if let error = error as? NSError {
+							if (error.code == LAError.Code.authenticationFailed.rawValue) {
 								let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .alert)
 								let Ok = UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
 									self.backToLogin()
-									self.continueButton.isEnabled = true
 								})
 								failed.addAction(Ok)
 								
@@ -114,9 +111,9 @@ class ResumeVC: UIViewController {
 								
 
 								return
-							}
-
-							self.backToLogin()
+                            } else if error.code == LAError.Code.userFallback.rawValue {
+                                self.backToLogin()
+                            }
 						}
 					}
 				})

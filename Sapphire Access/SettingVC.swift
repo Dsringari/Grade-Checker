@@ -46,9 +46,6 @@ class SettingVC: StaticDataTableViewController {
         
         _ = navigationController?.tabBarController?.navigationController?.popToRootViewController(animated: true)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "tabBarDismissed"), object: nil)
-        
-        
-        
     }
     
     /*
