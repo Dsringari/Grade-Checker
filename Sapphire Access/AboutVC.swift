@@ -17,7 +17,7 @@ class AboutVC: UIViewController {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
         
-        versionLabel.text = version + "." + build
+        versionLabel.text = version + " (" + build + ")"
     }
 
     override func didReceiveMemoryWarning() {
