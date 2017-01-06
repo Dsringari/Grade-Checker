@@ -10,9 +10,6 @@ import UIKit
 import CoreData
 import MagicalRecord
 import Firebase
-import Fabric
-import Crashlytics
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -37,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MagicalRecord.setupCoreDataStack()
 
 		FIRApp.configure()
-        Fabric.with([Crashlytics.self])
 
 		return true
 	}
