@@ -15,13 +15,23 @@ import ReachabilitySwift
 
 typealias CompletionType = (_ successful: Bool, _ error: NSError?) -> Void
 
+class Manager {
+    static let sharedInstance = { () -> Alamofire.SessionManager in
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        config.urlCache = nil
+        config.httpCookieStorage = HTTPCookieStorage.shared
+        return Alamofire.SessionManager(configuration: config)
+    }()
+    private init() {} //This prevents usage of the default '()' initializer for this class.
+}
+
 class UpdateService {
 	let student: Student
 	let kCharacterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.*+-"
 	let context = NSManagedObjectContext.mr_()
     let firstLoad: Bool
-    
-    var alamofireManager: Alamofire.SessionManager
 
 	init?(studentID: NSManagedObjectID) {
 		do {
@@ -37,11 +47,6 @@ class UpdateService {
 				print("Failed to find student with object ID \(studentID). Could not cast NSManagedObject to Student")
 				return nil
 			}
-            
-            let config = URLSessionConfiguration.default
-            config.timeoutIntervalForRequest = 10
-            config.requestCachePolicy = .reloadIgnoringLocalCacheData
-            alamofireManager = Alamofire.SessionManager(configuration: config)
 		} catch let error as NSError {
 			print("Failed to find student with object ID \(studentID). Error: \(error)")
 			return nil
@@ -64,7 +69,7 @@ class UpdateService {
             
             // Load the main courses page
             let coursesURL: String = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + self.student.id!
-            self.alamofireManager.request(coursesURL)
+            Manager.sharedInstance.request(coursesURL)
                 .validate()
                 .response { response in
                     if let error = response.error as? NSError {
@@ -168,7 +173,7 @@ class UpdateService {
     }
 
 	func updateMarkingPeriodInformation(_ subject: Subject, completion: @escaping CompletionType) {
-		alamofireManager.request(subject.htmlPage!)
+		Manager.sharedInstance.request(subject.htmlPage!)
 			.validate()
 			.response { response in
 				if let error = response.error as? NSError {
@@ -233,7 +238,7 @@ class UpdateService {
 						var errors: [NSError] = []
 						for mp in markingPeriods {
 							mpDownloadGroup.enter()
-							self.alamofireManager.request(mp.htmlPage!)
+							Manager.sharedInstance.request(mp.htmlPage!)
 								.validate()
 								.response(completionHandler: { response in
 									guard response.error == nil else {
@@ -442,7 +447,7 @@ class UpdateService {
 	func refreshLastUpdatedDates(_ completion: @escaping CompletionType) {
 		// Get the landing page
 
-		alamofireManager.request("http://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
+		Manager.sharedInstance.request("http://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
 			.validate()
 			.response(completionHandler: { response in
 				if (response.error != nil) {

@@ -70,9 +70,11 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func getImage(_ studentID: String, completion: @escaping (UIImage?) -> Void) {
-        Alamofire.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/GetPic.cfm?id=" + self.student!.id!).responseData(completionHandler: {response in
+        Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/GetPic.cfm?id=" + self.student!.id!).responseData(completionHandler: {response in
             if let data = response.data {
                 completion(UIImage(data: data, scale: 1))
+            } else {
+                completion(nil)
             }
         })
     }

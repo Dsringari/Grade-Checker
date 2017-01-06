@@ -16,13 +16,13 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 	var touchIDSwitch: UISwitch!
 	var students: [Student]!
 	var selectedIndex: Int?
-    lazy var hasTouchID: Bool = {
-        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-    }()
+    var hasTouchID = false
 
     @IBOutlet var continueButton: UIButton!
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        hasTouchID = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
         
 		students = Student.mr_findAll() as! [Student]
 
@@ -71,7 +71,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
         
-        if touchIDSwitch.isOn && hasTouchID {
+        if touchIDSwitch.isOn{
             let context = LAContext()
             context.localizedFallbackTitle = "" // Removes Enter Password Button
             self.continueButton.isEnabled = false
@@ -197,7 +197,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 			cell.removeMargins()
 			return cell
 		}
-
+        
 		let cell = tableView.dequeueReusableCell(withIdentifier: "touchIDCell", for: indexPath) as! TouchIDSelectionCell
         cell.isUserInteractionEnabled = hasTouchID
         cell.textLabel?.isEnabled = hasTouchID

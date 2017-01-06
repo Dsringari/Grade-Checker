@@ -59,7 +59,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
 		startLoadingAnimation()
-		Alamofire.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentSchedule.cfm?STUDENT_RID=\(student.id!)")
+		Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentSchedule.cfm?STUDENT_RID=\(student.id!)")
 		.validate()
         .response { response in
 				DispatchQueue.main.async(execute: {
