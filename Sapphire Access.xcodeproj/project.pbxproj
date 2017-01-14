@@ -32,7 +32,6 @@
 		FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A3EE81D1DD71500D9BC48 /* DataService.swift */; };
 		FC4AC80C1D4FA38400D004AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */; };
 		FC4AC80D1D4FA38400D004AC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80B1D4FA38400D004AC /* Student.swift */; };
-		FC4B9A1D1E21D91D00D8022A /* NDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B9A1C1E21D91D00D8022A /* NDataService.swift */; };
 		FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */; };
 		FC639FA01C8F8FFD006C71A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC639F9E1C8F8FFD006C71A7 /* Main.storyboard */; };
 		FC639FA21C8F8FFD006C71A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC639FA11C8F8FFD006C71A7 /* Assets.xcassets */; };
@@ -89,7 +88,6 @@
 		FC4A3EE81D1DD71500D9BC48 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC4AC80B1D4FA38400D004AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
-		FC4B9A1C1E21D91D00D8022A /* NDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDataService.swift; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Sapphire Access.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sapphire Access.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC639F9A1C8F8FFD006C71A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC639F9F1C8F8FFD006C71A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -219,7 +217,6 @@
 			children = (
 				FC19E3271C923340002401D8 /* DSLoginService.swift */,
 				FC4A3EE81D1DD71500D9BC48 /* DataService.swift */,
-				FC4B9A1C1E21D91D00D8022A /* NDataService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -489,7 +486,6 @@
 				FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */,
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
-				FC4B9A1D1E21D91D00D8022A /* NDataService.swift in Sources */,
 				FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,
 				FCD61DAB1D79E74D00CA44F0 /* AppearanceOptionsVC.swift in Sources */,

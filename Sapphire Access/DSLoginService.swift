@@ -28,26 +28,20 @@ class LoginService {
         user = NSManagedObjectContext.mr_default().object(with: userID) as! User
         self.completion = completion
         
-        logout { success, error in
-            guard success else {
-                self.completion(false, error)
+        
+        let parameters = [
+            "javascrupt":"true",
+            "j_username":self.user.username!,
+            "j_password":self.user.password!,
+            "j_pin":self.user.pin!
+        ]
+        Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm", method: .post, parameters: parameters).validate().response { response in
+            guard response.error == nil else {
+                self.completion(false, response.error as NSError?)
                 return
             }
             
-            let parameters = [
-                "javascrupt":"true",
-                "j_username":self.user.username!,
-                "j_password":self.user.password!,
-                "j_pin":self.user.pin!
-            ]
-            Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm", method: .post, parameters: parameters).validate().response { response in
-                guard response.error == nil else {
-                    self.completion(false, response.error as NSError?)
-                    return
-                }
-                
-                self.completion(true, nil)
-            }
+            self.completion(true, nil)
         }
     }
 

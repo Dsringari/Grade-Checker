@@ -154,28 +154,33 @@ extension UITableViewCell {
 }
 
 func relativeDateStringForDate(_ date: Date) -> String {
-	let components = (Calendar.current as NSCalendar).components([.day, .month, .year], from: date, to: Date(), options: [])
-
-	if (components.year! > 0) {
-		if (components.year == 1) {
-			return String(format: "%ld year ago", arguments: [components.month!])
-		}
-		return String(format: "%ld years ago", arguments: [components.year!])
-	} else if (components.month! > 0) {
-		if (components.month == 1) {
-			return String(format: "%ld month ago", arguments: [components.month!])
-		}
-		return String(format: "%ld months ago", arguments: [components.month!])
-	} else if (components.day! > 0) {
-		if (components.day! > 1) {
-			return String(format: "%ld days ago", arguments: [components.day!])
-		} else {
-			return "Yesterday"
-		}
-	} else {
-		return "Today"
-	}
+    let components = (Calendar.current as NSCalendar).components([.day, .weekday, .weekOfYear], from: date, to: Date(), options: [])
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+    if components.weekOfYear! < 1 {
+        if components.day! > 0 {
+            switch components.day! {
+            case 1:
+                return "Yesterday"
+            case 2...6:
+                dateFormatter.dateFormat = "EEEE"
+                return dateFormatter.string(from: date)
+            default:
+                dateFormatter.dateFormat = "MM/dd/yy"
+                return dateFormatter.string(from: date)
+            }
+        } else {
+            return "Today"
+        }
+    } else {
+        dateFormatter.dateFormat = "MM/dd/yy"
+        return dateFormatter.string(from: date)
+    }
+    
+    
 }
+
+
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int) {
         let newRed = CGFloat(red)/255

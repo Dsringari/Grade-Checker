@@ -16,7 +16,12 @@ class AppearanceOptionsVC: UITableViewController {
         super.viewDidLoad()
 
         let sortingNumber = UserDefaults.standard.integer(forKey: "sortMethod")
-        sortMethod = Sorting(rawValue: sortingNumber)!
+        if let sort = Sorting(rawValue: sortingNumber) {
+            sortMethod = sort
+        } else {
+            sortMethod = .recent
+            UserDefaults.standard.set(Sorting.recent.rawValue, forKey: "sortMethod")
+        }
 
     }
 
@@ -34,7 +39,7 @@ class AppearanceOptionsVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

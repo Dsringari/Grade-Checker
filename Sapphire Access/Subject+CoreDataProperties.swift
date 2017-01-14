@@ -14,11 +14,10 @@ import CoreData
 
 extension Subject {
 
-    @NSManaged var htmlPage: String?
-    @NSManaged var name: String?
-    @NSManaged var room: String?
-    @NSManaged var sectionGUID: String?
-    @NSManaged var teacher: String?
+    @NSManaged var name: String
+    @NSManaged var room: String
+    @NSManaged var address: String
+    @NSManaged var teacher: String
     @NSManaged var lastUpdated: Date?
     /// This is a dictionary parsed into JSON
     @NSManaged var otherGrades: String?

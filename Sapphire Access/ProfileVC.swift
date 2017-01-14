@@ -48,7 +48,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidAppear(_ animated: Bool) {
         if let student = student {
             subjects = student.subjects?.allObjects as? [Subject]
-            subjects?.sort(by: {s1, s2 in return s1.name! < s2.name})
+            subjects?.sort(by: {s1, s2 in return s1.name < s2.name})
             tableview.reloadData()
         }
     }
@@ -57,7 +57,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         student = Student.mr_findFirst(byAttribute: "name", withValue: UserDefaults.standard.string(forKey: "selectedStudent")!)
         if let student = student {
             subjects = student.subjects?.allObjects as? [Subject]
-            subjects?.sort(by: {s1, s2 in return s1.name! < s2.name})
+            subjects?.sort(by: {s1, s2 in return s1.name < s2.name})
         }
         startLoadingAnimation()
         getImage(student!.id!) { image in

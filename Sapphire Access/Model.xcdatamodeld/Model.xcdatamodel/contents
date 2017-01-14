@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 7.0">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Xcode 7.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Assignment" representedClassName=".Assignment" syncable="YES">
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="newUpdate" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="possiblePoints" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="totalPoints" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="markingPeriod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MarkingPeriod" inverseName="assignments" inverseEntity="MarkingPeriod" syncable="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES">
+            <userInfo>
+                <entry key="dateFormat" value="MM/dd/yy-z"/>
+            </userInfo>
+        </attribute>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="newUpdate" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="possiblePoints" attributeType="String" syncable="YES"/>
+        <attribute name="totalPoints" attributeType="String" syncable="YES"/>
+        <relationship name="markingPeriod" maxCount="1" deletionRule="Nullify" destinationEntity="MarkingPeriod" inverseName="assignments" inverseEntity="MarkingPeriod" syncable="YES"/>
     </entity>
     <entity name="MarkingPeriod" representedClassName=".MarkingPeriod" syncable="YES">
-        <attribute name="empty" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="htmlPage" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address" attributeType="String" syncable="YES"/>
+        <attribute name="empty" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="number" attributeType="String" syncable="YES"/>
         <attribute name="percentGrade" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="possiblePoints" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalPoints" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="assignments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Assignment" inverseName="markingPeriod" inverseEntity="Assignment" syncable="YES"/>
-        <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" inverseName="markingPeriods" inverseEntity="Subject" syncable="YES"/>
+        <relationship name="subject" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" inverseName="markingPeriods" inverseEntity="Subject" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="subjectAddress"/>
+                <entry key="relatedByAttribute" value="address"/>
+            </userInfo>
+        </relationship>
+        <userInfo>
+            <entry key="relatedByAttribute" value="address"/>
+        </userInfo>
     </entity>
     <entity name="Student" representedClassName=".Student" syncable="YES">
         <attribute name="grade" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,15 +41,17 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="students" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Subject" representedClassName=".Subject" syncable="YES">
-        <attribute name="htmlPage" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastUpdated" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="otherGrades" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="room" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sectionGUID" attributeType="String" syncable="YES"/>
-        <attribute name="teacher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="room" attributeType="String" syncable="YES"/>
+        <attribute name="teacher" attributeType="String" syncable="YES"/>
         <relationship name="markingPeriods" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MarkingPeriod" inverseName="subject" inverseEntity="MarkingPeriod" syncable="YES"/>
         <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="subjects" inverseEntity="Student" syncable="YES"/>
+        <userInfo>
+            <entry key="relatedByAttribute" value="address"/>
+        </userInfo>
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
@@ -49,7 +63,7 @@
         <element name="Assignment" positionX="-369" positionY="369" width="128" height="150"/>
         <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="165"/>
         <element name="Student" positionX="-378" positionY="0" width="128" height="150"/>
-        <element name="Subject" positionX="-387" positionY="9" width="128" height="180"/>
+        <element name="Subject" positionX="-387" positionY="9" width="128" height="165"/>
         <element name="User" positionX="-369" positionY="-154" width="128" height="105"/>
     </elements>
 </model>

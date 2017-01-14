@@ -58,8 +58,8 @@ class SubjectInfoVC: UITableViewController {
         // ORDER IS VERY IMPORTANT HERE
         
         for mp in markingPeriods {
-            if Int(mp.number!)! <= 2 {
-                cells.append(CellType.markingPeriod(number: mp.number!, grade: mp.percentGrade!))
+            if Int(mp.number)! <= 2 {
+                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade!))
             }
         }
         
@@ -68,8 +68,8 @@ class SubjectInfoVC: UITableViewController {
         }
         
         for mp in markingPeriods {
-            if Int(mp.number!)! > 2 {
-                cells.append(CellType.markingPeriod(number: mp.number!, grade: mp.percentGrade!))
+            if Int(mp.number)! > 2 {
+                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade!))
             }
         }
         
