@@ -48,7 +48,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidAppear(_ animated: Bool) {
         if let student = student {
             subjects = student.subjects?.allObjects as? [Subject]
-            subjects?.sort(by: {s1, s2 in return s1.name! < s2.name})
+            subjects?.sort(by: {s1, s2 in return s1.name < s2.name})
             tableview.reloadData()
         }
     }
@@ -57,7 +57,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         student = Student.mr_findFirst(byAttribute: "name", withValue: UserDefaults.standard.string(forKey: "selectedStudent")!)
         if let student = student {
             subjects = student.subjects?.allObjects as? [Subject]
-            subjects?.sort(by: {s1, s2 in return s1.name! < s2.name})
+            subjects?.sort(by: {s1, s2 in return s1.name < s2.name})
         }
         startLoadingAnimation()
         getImage(student!.id!) { image in
@@ -70,9 +70,11 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func getImage(_ studentID: String, completion: @escaping (UIImage?) -> Void) {
-        Alamofire.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/GetPic.cfm?id=" + self.student!.id!).responseData(completionHandler: {response in
+        Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/GetPic.cfm?id=" + self.student!.id!).responseData(completionHandler: {response in
             if let data = response.data {
                 completion(UIImage(data: data, scale: 1))
+            } else {
+                completion(nil)
             }
         })
     }

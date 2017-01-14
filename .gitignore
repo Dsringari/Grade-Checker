@@ -7,7 +7,7 @@ build/
 DerivedData/
 
 ## Ignore Firebase
-Firebase/
+#Firebase/
 
 ## Various settings
 *.pbxuser

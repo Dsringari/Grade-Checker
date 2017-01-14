@@ -68,7 +68,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.navigationController!.toolbar.clipsToBounds = true
         
         let mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-        markingPeriods = mps.filter{!$0.empty!.boolValue}.sorted{Int($0.number!) < Int($1.number!)} // Only want non empty marking periods
+        markingPeriods = mps.filter{!$0.empty!.boolValue}.sorted{Int($0.number) < Int($1.number)} // Only want non empty marking periods
         
         if case let ViewType.oneMarkingPeriod(number) = viewType {
             self.title = "Marking Period \(number)"
@@ -87,7 +87,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             selectedMPIndex = markingPeriods.count - 1
             segmentedControl.removeAllSegments()
             for index in 0..<markingPeriods.count {
-                segmentedControl.insertSegment(withTitle: "MP " + markingPeriods[index].number!, at: index, animated: false)
+                segmentedControl.insertSegment(withTitle: "MP " + markingPeriods[index].number, at: index, animated: false)
             }
             segmentedControl.selectedSegmentIndex = selectedMPIndex
             
@@ -262,13 +262,13 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         // sort by date
-        assignments.sort{ $0.dateCreated!.compare($1.dateCreated! as Date) == ComparisonResult.orderedDescending }
+        assignments.sort{ $0.date.compare($1.date as Date) == ComparisonResult.orderedDescending }
         cell.assignmentNameLabel.text = assignments[indexPath.row].name
         
         if (gradeViewType == .point) {
-            cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints! + "/" + assignments[indexPath.row].possiblePoints!
+            cell.pointsGradeLabel.text = assignments[indexPath.row].totalPoints + "/" + assignments[indexPath.row].possiblePoints
         } else {
-            cell.pointsGradeLabel.text = percentage(assignments[indexPath.row].totalPoints!, possiblePoints: assignments[indexPath.row].possiblePoints!)
+            cell.pointsGradeLabel.text = percentage(assignments[indexPath.row].totalPoints, possiblePoints: assignments[indexPath.row].possiblePoints)
         }
         
         if assignments[indexPath.row].newUpdate.boolValue {

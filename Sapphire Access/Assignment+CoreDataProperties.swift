@@ -14,12 +14,14 @@ import CoreData
 
 extension Assignment {
 
-    @NSManaged var dateCreated: Date?
-    @NSManaged var name: String?
-    @NSManaged var possiblePoints: String?
-    @NSManaged var totalPoints: String?
+    @NSManaged var date: Date
+    @NSManaged var name: String
+    @NSManaged var possiblePoints: String
+    @NSManaged var totalPoints: String
     @NSManaged var category: String?
     @NSManaged var newUpdate: NSNumber
-    @NSManaged var markingPeriod: MarkingPeriod?
+    @NSManaged var markingPeriod: MarkingPeriod
+    
+    
 
 }

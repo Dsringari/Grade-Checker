@@ -35,12 +35,11 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 enum Sorting: Int {
     case recent
     case alphabetical
-    case numericalGrade
 }
 
 
 
-class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, LockDelegate {
+class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, LockDelegate, NSFetchedResultsControllerDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var popUpView: UIView!
     @IBOutlet var popUpViewText: UILabel!
@@ -63,14 +62,15 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     
 	var settingsCompletionHandler: (() -> Void)!
 
-	// Create an instance of a UITableViewController. This will host the tableview in order to solve uirefreshcontrol bugs
+	// Create an instance of a UITableViewController. This will host the tableView in order to solve uirefreshcontrol bugs
 	fileprivate let tableViewController = UITableViewController()
-	@IBOutlet var tableview: UITableView!
+	@IBOutlet var tableView: UITableView!
 
 	var student: Student!
-	var subjects: [Subject]?
+    var selectedSubject: Subject!
 	var badges: [Int: Badge] = [:]
 	let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
 	lazy var refreshControl: UIRefreshControl = {
 		let refreshControl = UIRefreshControl()
 		refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
@@ -78,27 +78,33 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		return refreshControl
 	}()
     
-    var sortMethod: Sorting = .recent
-
-	var selectedSubject: Subject!
-
+    var fetchedResultsController: NSFetchedResultsController<Subject>!
+    
+    var sortMethod: Sorting {
+        let sortingNumber = UserDefaults.standard.integer(forKey: "sortMethod")
+        if let sort = Sorting(rawValue: sortingNumber) {
+            return sort
+        } else {
+            UserDefaults.standard.set(Sorting.recent.rawValue, forKey: "sortMethod")
+            return .recent
+        }
+    }
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		// Setup Tableview
-		tableview.delegate = self
-		tableview.dataSource = self
+		tableView.delegate = self
+		tableView.dataSource = self
 		// Setup RefreshControl
-		self.addChildViewController(self.tableViewController)
-		self.tableViewController.tableView = self.tableview
-		self.tableViewController.refreshControl = self.refreshControl
+		addChildViewController(tableViewController)
+		tableViewController.tableView = tableView
+		tableViewController.refreshControl = refreshControl
 		updateRefreshControl()
         
         setupAdmob()
 		
         hidePopUpView()
-        
-        checkSortingMethod()
         
         loadStudent()
 		
@@ -131,57 +137,35 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         }
     }
     
-    func checkSortingMethod() {
-        let sortingNumber = UserDefaults.standard.integer(forKey: "sortMethod")
-        sortMethod = Sorting(rawValue: sortingNumber)!
+    override func viewDidAppear(_ animated: Bool) {
+        updateFetchResultsController()
+        tableView.reloadData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        checkSortingMethod()
-        self.subjects = Subject.mr_find(byAttribute: "student", withValue: self.student) as? [Subject]
-        tableview.reloadData()
-    }
-
-	func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        self.tableViewBottomConstraint.constant = 50
-        self.view.addSubview(self.adView)
-        
-        if #available(iOS 9.0, *) {
-            self.adView.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor)
-        } else {
-            // Fallback on earlier versions
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|[adView]|", options: [], metrics: nil, views: ["adView": self.adView])
-        }
-        
-        NSLayoutConstraint.constraints(withVisualFormat: "|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
-        
-		UIView.animate(withDuration: 0.5, animations: {
-			self.view.layoutIfNeeded()
-		})
-	}
-
-	func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
-		print(error)
-	}
-
     func loadStudent() {
         let selectedStudentName = UserDefaults.standard.string(forKey: "selectedStudent")!
         guard let student = Student.mr_findFirst(with: NSPredicate(format: "name == %@", argumentArray: [selectedStudentName])) else {
+            print("Failed to find student.")
             return
         }
         self.student = student
-		subjects = nil
 		// Get the first name and set it as the title. We do this here so that the name will update when the student changes in the settings
 		self.navigationItem.title = student.name!.components(separatedBy: " ")[0] + "'s Grades"
+        
+        fetchedResultsController = createFetchResultsController()
+        do {
+            try self.fetchedResultsController.performFetch()
+            self.tableView.reloadData()
+        } catch(let error) {
+            print(error)
+        }
+        
 		startLoading()
 		if let service = UpdateService(studentID: student.objectID) {
 			service.updateStudentInformation({ successful, error in
                 DispatchQueue.main.async(execute: {
                     if (successful) {
                         self.hidePopUpView()
-                        self.student = NSManagedObjectContext.mr_default().object(with: self.student.objectID) as! Student
-                        self.subjects = Subject.mr_find(byAttribute: "student", withValue: self.student) as? [Subject]
-                        self.tableview.reloadData()
                         self.updateRefreshControl()
                         self.stopLoading()
 					
@@ -203,10 +187,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			service.updateStudentInformation({ successful, error in
 				if (successful) {
 					DispatchQueue.main.async(execute: {
-						// Refresh the ui's student object
                         self.hidePopUpView()
-                        self.subjects = Subject.mr_find(byAttribute: "student", withValue: self.student) as? [Subject]
-						self.tableview.reloadData()
 						self.refreshControl.endRefreshing()
 						self.updateRefreshControl()
 					})
@@ -229,195 +210,85 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
-
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		badges.removeAll()
-        guard subjects != nil else {
-            return 0
-        }
-		// Remove invalid subjects
-		for subject in subjects! {
-			var mps = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-			mps = mps.filter { !$0.empty!.boolValue } // filter marking periods with no assignments
-
-			if mps.count == 0 { // Don't show subject if all the marking periods are empty
-				subjects!.removeObject(subject)
-				continue
-			}
-
-			mps.sort { Int($0.number!) > Int($1.number!) } // sort marking periods by descending number
-            
-            /*
-             
-            let recentMP = mps[0]
-			let percentgradeString = recentMP.percentGrade!.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "1234567890.").invertedSet).joinWithSeparator("")
-
-			if (percentgradeString == "") { // Don't show subject if the most recent marking period with assignments has zero percent grade or strange grading
-				subjects!.removeObject(subject)
-			} 
-             */
-		}
+    
+    func createFetchResultsController() -> NSFetchedResultsController<Subject> {
+        let fetchRequest = NSFetchRequest<Subject>(entityName: "Subject")
         
+        fetchRequest.sortDescriptors = sortDescriptors()
+        
+        fetchRequest.predicate = NSPredicate(format: "ANY markingPeriods.empty == false AND student == %@", argumentArray: [student])
+        let frc = NSFetchedResultsController<Subject>(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.mr_default(), sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        return frc
+    }
+    
+    func sortDescriptors() -> [NSSortDescriptor] {
+        let nameSort = NSSortDescriptor(key: "name", ascending: true)
         switch sortMethod {
         case .recent:
-            subjects!.sort(by: { (s1: Subject, s2: Subject) -> Bool in
-                
-                guard s1.mostRecentDate != nil || s2.mostRecentDate != nil else {
-                    if s1.mostRecentDate == nil && s2.mostRecentDate == nil {
-                        return s1.name < s2.name
-                    }
-                    
-                    if s1.mostRecentDate == nil {
-                        return true
-                    }
-                    
-                    return false
-                }
-                
-                if (s1.mostRecentDate!.compare(s2.mostRecentDate! as Date) == ComparisonResult.orderedSame) {
-                    return s1.name < s2.name
-                }
-                
-                return s1.mostRecentDate!.compare(s2.mostRecentDate! as Date) == ComparisonResult.orderedDescending
-            })
+            let recentSort = NSSortDescriptor(key: "lastUpdated", ascending: false)
+            return [recentSort, nameSort]
         case .alphabetical:
-            subjects!.sort{$0.name < $1.name}
-        case .numericalGrade:
-            subjects!.sort{ (s1: Subject, s2: Subject) -> Bool in
-                
-                var mps1 = s1.markingPeriods?.allObjects as! [MarkingPeriod]
-                mps1 = mps1.filter{!$0.empty!.boolValue}
-                mps1.sort{$0.number > $1.number}
-                var mps2 = s2.markingPeriods?.allObjects as! [MarkingPeriod]
-                mps2 = mps2.filter{!$0.empty!.boolValue}
-                mps2.sort{$0.number > $1.number}
-                
-                let mostRecentGrade1 = NSDecimalNumber(string: mps1[0].percentGrade)
-                let mostRecentGrade2 = NSDecimalNumber(string: mps2[0].percentGrade)
-                return mostRecentGrade1.compare(mostRecentGrade2) == .orderedDescending
-            }
+            return [nameSort]
         }
-        
-        // Set which subjects have badges
-        let updatedSubjects = Subject.mr_findAll(with: NSPredicate(format: "SUBQUERY(markingPeriods, $m, ANY $m.assignments.newUpdate == %@).@count != 0", argumentArray: [true])) as! [Subject]
-        for subject in updatedSubjects {
-            if let index = subjects?.index(of: subject) {
-                badges[index] = .updated
-            }
+    }
+    
+    func updateFetchResultsController() {
+        fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors()
+        do {
+            try fetchedResultsController.performFetch()
+            self.tableView.reloadData()
+        } catch (let error) {
+            print(error)
         }
-		return subjects!.count
-	}
-
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-		let cell = tableView.dequeueReusableCell(withIdentifier: "subjectCell", for: indexPath) as! SubjectTableViewCell
-
-		if let subject = subjects?[indexPath.row] {
-			cell.subjectNameLabel.text = subject.name
-
-			var markingPeriods: [MarkingPeriod] = subjects![indexPath.row].markingPeriods!.allObjects as! [MarkingPeriod]
-
-			// sort marking periods by descending number and ignore empty marking periods
-			markingPeriods = markingPeriods.filter { !$0.empty!.boolValue }.sorted { Int($0.number!) > Int($1.number!) }
-            
-			let recentMP = markingPeriods[0]
-
-			// Remove %
-			let percentgradeString = recentMP.percentGrade!.components(separatedBy: CharacterSet(charactersIn: "1234567890.").inverted).joined(separator: "")
-
-			// Round the percent to the nearest whole number
-			let numberFormatter = NumberFormatter()
-			let percentGradeDouble = numberFormatter.number(from: percentgradeString)!.doubleValue
-			let roundedPercentGrade: Int = Int(round(percentGradeDouble))
-
-			// cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
-			cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
-
-			let dateString: String
-			if let date = subject.mostRecentDate {
-				dateString = relativeDateStringForDate(date)
-			} else {
-				dateString = "N/A"
-			}
-
-			cell.lastUpdatedLabel.text = "Last Updated: " + dateString
-            
-            if let badge = badges[indexPath.row] {
-                switch badge {
-                case .updated:
-                    cell.badge.isHidden = false
-                    cell.badge.image = UIImage(named: "Recently Updated")!
-                default:
-                    cell.badge.isHidden = true
-                }
-            } else {
-                cell.badge.isHidden = true
-            }
-
-
-			return cell
-
-		}
-
-		return UITableViewCell()
-	}
-
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		selectedSubject = subjects![indexPath.row]
-		performSegue(withIdentifier: "subjectView", sender: nil)
-		tableView.deselectRow(at: indexPath, animated: true)
-	}
-
-	func updateRefreshControl() {
-		// set the refresh control's title
-		let formatter: DateFormatter = DateFormatter()
-		formatter.dateFormat = "h:mm a"
-		let title = "Updated at \(formatter.string(from: Date()))"
-		let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
-		self.refreshControl.attributedTitle = attributedTitle
-	}
-
-	func percentToLetterGrade(_ percentGrade: Int) -> String {
-		switch percentGrade {
-		case 0 ... 59:
-			return "F"
-		case 60 ... 69:
-			return "D"
-		case 70 ... 79:
-			return "C"
-		case 80 ... 89:
-			return "B"
-		case 90 ... 100:
-			return "A"
-		default:
-			return "A"
-		}
-	}
-
-	func startLoading() {
+    }
+    
+    func updateRefreshControl() {
+        // set the refresh control's title
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        let title = "Updated at \(formatter.string(from: Date()))"
+        let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        self.refreshControl.attributedTitle = attributedTitle
+    }
+    
+    func percentToLetterGrade(_ percentGrade: Int) -> String {
+        switch percentGrade {
+        case 0 ... 59:
+            return "F"
+        case 60 ... 69:
+            return "D"
+        case 70 ... 79:
+            return "C"
+        case 80 ... 89:
+            return "B"
+        case 90 ... 100:
+            return "A"
+        default:
+            return "A"
+        }
+    }
+    
+    func startLoading() {
         if !popUpView.isHidden {
             hidePopUpView()
             showPopUpView(.loading)
             activityIndicator.startAnimating()
         } else {
             refreshControl.beginRefreshing()
-            self.tableview.setContentOffset(CGPoint(x: 0, y: tableview.contentOffset.y - refreshControl.frame.size.height), animated: true)
+            tableView.setContentOffset(CGPoint(x: 0, y: tableView.contentOffset.y - refreshControl.frame.size.height), animated: true)
         }
-	}
-
-	func stopLoading() {
-		refreshControl.endRefreshing()
+    }
+    
+    func stopLoading() {
+        refreshControl.endRefreshing()
         hidePopUpView()
         activityIndicator.stopAnimating()
-	}
+    }
     
     func showPopUpView(_ type: PopUpViewType) {
         
-        tableview.isUserInteractionEnabled=false
+        tableView.isUserInteractionEnabled=false
         switch type {
         case .loading:
             popUpViewButton.isHidden = true
@@ -446,7 +317,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     }
     
     func hidePopUpView() {
-        tableview.isUserInteractionEnabled = true
+        tableView.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.3, animations: {
             self.popUpView.alpha = 0
         })
@@ -459,22 +330,181 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         User.mr_deleteAll(matching: NSPredicate(value: true))
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         UserDefaults.standard.set(nil, forKey: "selectedStudent")
-        subjects = nil
-        
         _ = navigationController?.tabBarController?.navigationController?.popToRootViewController(animated: false)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "tabBarDismissed"), object: nil)
     }
     
     
-
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if (segue.identifier == "subjectView") {
-			let sV = segue.destination as! DetailVC
-			sV.subject = selectedSubject
-			self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "subjectView") {
+            let sV = segue.destination as! DetailVC
+            sV.subject = selectedSubject
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         } else if segue.identifier == "lock" {
             let lockVC = segue.destination as! LockVC
             lockVC.lockDelegate = self
         }
+    }
+
+    
+    // MARK: - Table view data source
+
+
+	func numberOfSections(in tableView: UITableView) -> Int {
+        if let sections = fetchedResultsController.sections {
+            return sections.count
+        }
+        return 0
 	}
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+		badges.removeAll()
+        if let subjects = fetchedResultsController.fetchedObjects {
+            let subjects = subjects as NSArray
+            for (index,subject) in subjects.enumerated() {
+                let predicate = NSPredicate(format: "SUBQUERY(markingPeriods, $m, ANY $m.assignments.newUpdate == %@).@count != 0", argumentArray: [true])
+                if predicate.evaluate(with: subject) {
+                    badges[index] = .updated
+                }
+            }
+            return subjects.count
+        }
+        
+        return 0
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+		let cell = tableView.dequeueReusableCell(withIdentifier: "subjectCell", for: indexPath)
+        configureCell(cell, indexPath: indexPath)
+		return cell
+	}
+    
+    func configureCell(_ cell: UITableViewCell, indexPath: IndexPath) {
+        let cell = cell as! SubjectTableViewCell
+        let subject = fetchedResultsController.object(at: indexPath)
+        cell.subjectNameLabel.text = subject.name
+        
+        var markingPeriods: [MarkingPeriod] = subject.markingPeriods!.allObjects as! [MarkingPeriod]
+        
+        // sort marking periods by descending number and ignore empty marking periods
+        markingPeriods = markingPeriods.filter { !$0.empty!.boolValue }.sorted { Int($0.number) > Int($1.number) }
+        
+        let recentMP = markingPeriods[0]
+        
+        // Remove %
+        let percentgradeString = recentMP.percentGrade!.components(separatedBy: CharacterSet(charactersIn: "1234567890.").inverted).joined(separator: "")
+        
+        // Round the percent to the nearest whole number
+        let numberFormatter = NumberFormatter()
+        let percentGradeDouble = numberFormatter.number(from: percentgradeString)!.doubleValue
+        let roundedPercentGrade: Int = Int(round(percentGradeDouble))
+        
+        // cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
+        cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
+        
+        let dateString: String
+        if let date = subject.lastUpdated {
+            dateString = relativeDateStringForDate(date)
+        } else {
+            dateString = "N/A"
+        }
+        
+        cell.lastUpdatedLabel.text = "Last Updated: " + dateString
+        
+        if let badge = badges[indexPath.row] {
+            switch badge {
+            case .updated:
+                cell.badge.isHidden = false
+                cell.badge.image = UIImage(named: "Recently Updated")!
+            default:
+                cell.badge.isHidden = true
+            }
+        } else {
+            cell.badge.isHidden = true
+        }
+    }
+
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		selectedSubject = fetchedResultsController.object(at: indexPath)
+		performSegue(withIdentifier: "subjectView", sender: nil)
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
+    
+    // MARK: - Fetched Results Controller Delegate
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch(type) {
+        case .insert:
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with:UITableViewRowAnimation.fade)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                if let cell = tableView.cellForRow(at: indexPath) {
+                    configureCell(cell, indexPath: indexPath)
+                }
+            }
+        case .move:
+            if let indexPath = indexPath {
+                if let newIndexPath = newIndexPath {
+                    tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.fade)
+                }
+            }
+        }
+        
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch(type) {
+        case .insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: UITableViewRowAnimation.fade)
+        case .delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: UITableViewRowAnimation.fade)
+        default:
+            break
+        }
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    // MARK: - Adview delegate
+    
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        self.tableViewBottomConstraint.constant = 50
+        self.view.addSubview(self.adView)
+        
+        if #available(iOS 9.0, *) {
+            self.adView.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor)
+        } else {
+            // Fallback on earlier versions
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|[adView]|", options: [], metrics: nil, views: ["adView": self.adView])
+        }
+        
+        NSLayoutConstraint.constraints(withVisualFormat: "|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+        print(error)
+    }
+
+
+
 }
