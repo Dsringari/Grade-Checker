@@ -138,6 +138,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        updateFetchResultsController()
         tableView.reloadData()
     }
     
@@ -186,7 +187,6 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 			service.updateStudentInformation({ successful, error in
 				if (successful) {
 					DispatchQueue.main.async(execute: {
-						// Refresh the ui's student object
                         self.hidePopUpView()
 						self.refreshControl.endRefreshing()
 						self.updateRefreshControl()
@@ -214,19 +214,33 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     func createFetchResultsController() -> NSFetchedResultsController<Subject> {
         let fetchRequest = NSFetchRequest<Subject>(entityName: "Subject")
         
-        let nameSort = NSSortDescriptor(key: "name", ascending: true)
-        switch sortMethod {
-        case .recent:
-            let recentSort = NSSortDescriptor(key: "lastUpdated", ascending: false)
-            fetchRequest.sortDescriptors = [recentSort, nameSort]
-        case .alphabetical:
-            fetchRequest.sortDescriptors = [nameSort]
-        }
+        fetchRequest.sortDescriptors = sortDescriptors()
         
         fetchRequest.predicate = NSPredicate(format: "ANY markingPeriods.empty == false AND student == %@", argumentArray: [student])
         let frc = NSFetchedResultsController<Subject>(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.mr_default(), sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
         return frc
+    }
+    
+    func sortDescriptors() -> [NSSortDescriptor] {
+        let nameSort = NSSortDescriptor(key: "name", ascending: true)
+        switch sortMethod {
+        case .recent:
+            let recentSort = NSSortDescriptor(key: "lastUpdated", ascending: false)
+            return [recentSort, nameSort]
+        case .alphabetical:
+            return [nameSort]
+        }
+    }
+    
+    func updateFetchResultsController() {
+        fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors()
+        do {
+            try fetchedResultsController.performFetch()
+            self.tableView.reloadData()
+        } catch (let error) {
+            print(error)
+        }
     }
     
     func updateRefreshControl() {
