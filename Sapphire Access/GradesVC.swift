@@ -387,23 +387,15 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         let subject = fetchedResultsController.object(at: indexPath)
         cell.subjectNameLabel.text = subject.name
         
-        var markingPeriods: [MarkingPeriod] = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-        
-        // sort marking periods by descending number and ignore empty marking periods
-        markingPeriods = markingPeriods.filter { !$0.empty!.boolValue }.sorted { Int($0.number) > Int($1.number) }
-        
-        let recentMP = markingPeriods[0]
-        
-        // Remove %
-        let percentgradeString = recentMP.percentGrade!.components(separatedBy: CharacterSet(charactersIn: "1234567890.").inverted).joined(separator: "")
-        
         // Round the percent to the nearest whole number
-        let numberFormatter = NumberFormatter()
-        let percentGradeDouble = numberFormatter.number(from: percentgradeString)!.doubleValue
-        let roundedPercentGrade: Int = Int(round(percentGradeDouble))
-        
-        // cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
-        cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
+        if let grade = subject.mostRecentGrade {
+            let numberFormatter = NumberFormatter()
+            let percentGradeDouble = numberFormatter.number(from: grade)!.doubleValue
+            let roundedPercentGrade: Int = Int(round(percentGradeDouble))
+            cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
+        } else {
+            cell.percentGradeLabel.text = "N/A"
+        }
         
         let dateString: String
         if let date = subject.lastUpdated {

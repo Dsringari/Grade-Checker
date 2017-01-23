@@ -221,6 +221,9 @@ class UpdateService {
                                                 currentMP.totalPoints = result.totalPoints
                                                 currentMP.percentGrade = result.percentGrade
                                                 currentMP.empty = NSNumber(value: false)
+                                                if currentMP.subject.mostRecentMarkingPeriod() == currentMP {
+                                                    subject.mostRecentGrade = currentMP.percentGrade
+                                                }
                                                 
                                                 var assignmentsToDelete = currentMP.assignments!.allObjects as! [Assignment]
                                                 for assignment in result.assignments {
@@ -381,6 +384,7 @@ class UpdateService {
 			if (text == "%") {
 				text = "0.00%"
 			}
+            text.remove(at: text.index(before: text.endIndex)) // remove %
 			percentGrade = text
 		} else {
 			print("Failed to find percentageTextElement!")

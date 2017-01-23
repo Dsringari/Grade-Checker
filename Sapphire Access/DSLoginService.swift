@@ -53,11 +53,16 @@ class LoginService {
 				return
 			}
             
+            guard let username = self.user.username, let password = self.user.password, let pin = self.user.pin else {
+                self.completion(false, badLoginError)
+                return
+            }
+            
             let parameters = [
                 "javascrupt":"true",
-                "j_username":self.user.username!,
-                "j_password":self.user.password!,
-                "j_pin":self.user.pin!
+                "j_username": username,
+                "j_password": password,
+                "j_pin": pin
             ]
             
             Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm", method: .post, parameters: parameters).validate().response { response in

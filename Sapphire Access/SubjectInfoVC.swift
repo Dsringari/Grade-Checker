@@ -22,7 +22,8 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 class SubjectInfoVC: UITableViewController {
     
     var subject: Subject!
-    var average: String = ""
+    var average: String = "N/A"
+    var calculatedAverage: String = "N/A"
     var markingPeriods: [MarkingPeriod] = []
     var selectedMPNumber: String = "1"
     var cells : [CellType] = []
@@ -46,20 +47,17 @@ class SubjectInfoVC: UITableViewController {
         
         if let ytd = otherInfo?["YTD"] {
             average = ytd + "%"
-            print("Calculated Average: \(calculateAverageGrade(subject, roundToWholeNumber: false)!)")
-        } else {
-            if let average = calculateAverageGrade(subject, roundToWholeNumber: false) {
-                self.average = average + "%"
-            } else {
-                self.average = "N/A"
-            }
+        }
+        
+        if let average = calculateAverageGrade(subject, roundToWholeNumber: false) {
+            calculatedAverage = average + "%"
         }
         
         // ORDER IS VERY IMPORTANT HERE
         
         for mp in markingPeriods {
             if Int(mp.number)! <= 2 {
-                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade!))
+                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade! + "%"))
             }
         }
         
@@ -69,7 +67,7 @@ class SubjectInfoVC: UITableViewController {
         
         for mp in markingPeriods {
             if Int(mp.number)! > 2 {
-                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade!))
+                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade! + "%"))
             }
         }
         
@@ -88,14 +86,30 @@ class SubjectInfoVC: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Averages"
+        } else {
+            return "Grades"
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 0 {
+            return "The official average is the YTD. The calculated average is calculated by weighting each marking period as 20% of the final grade. The final exam and midterm make up the last 20%."
+        } else {
+            return "You can see the midterm and final averages here, when they are available."
+        }
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return cells.count == 0 ? 1 : 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return 2
         }
         return cells.count
     }
@@ -103,9 +117,16 @@ class SubjectInfoVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "averageCell") as! AverageCell
-            cell.averageLabel.text = "Average: " + average
+            let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+            cell.detailTextLabel?.textColor = UIColor(red: 7, green: 89, blue: 128)
             cell.selectionStyle = .none
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Official"
+                cell.detailTextLabel?.text = average
+            } else {
+                cell.textLabel?.text = "Calculated"
+                cell.detailTextLabel?.text = calculatedAverage
+            }
             return cell
         }
         
