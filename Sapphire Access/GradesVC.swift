@@ -35,6 +35,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 enum Sorting: Int {
     case recent
     case alphabetical
+    case numerical
 }
 
 
@@ -230,6 +231,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             return [recentSort, nameSort]
         case .alphabetical:
             return [nameSort]
+        case .numerical:
+            let gradeSort = NSSortDescriptor(key: "mostRecentGrade", ascending: false, selector: #selector(NSString.localizedStandardCompare(_:)))
+            return [gradeSort, nameSort]
         }
     }
     

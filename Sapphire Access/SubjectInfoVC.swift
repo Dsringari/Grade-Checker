@@ -97,9 +97,9 @@ class SubjectInfoVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 0 {
-            return "The official average is the YTD. The calculated average is calculated by weighting each marking period as 20% of the final grade. The final exam and midterm make up the last 20%."
+            return "The official average is the YTD, which is updated at the end of the marking period. The calculated average is determined by weighing each marking period as 20% of your final grade. The final exam and midterm make up the last 20%."
         } else {
-            return "You can see the midterm and final averages here, when they are available."
+            return "When midterm and final exam grades are posted, you can see them here."
         }
     }
 
