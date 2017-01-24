@@ -19,7 +19,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class SubjectInfoVC: UITableViewController {
+class SubjectInfoVC: UITableViewController  {
     
     var subject: Subject!
     var average: String = "N/A"
@@ -27,6 +27,14 @@ class SubjectInfoVC: UITableViewController {
     var markingPeriods: [MarkingPeriod] = []
     var selectedMPNumber: String = "1"
     var cells : [CellType] = []
+    
+    var accessoryView: UIView = {
+        let keyboardDoneButtonView = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissKeyboard))
+        keyboardDoneButtonView.items = [doneButton]
+        return keyboardDoneButtonView
+    }()
     
     
     enum CellType {
@@ -37,8 +45,11 @@ class SubjectInfoVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = subject.name
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
         
+        self.title = subject.name
         markingPeriods = subject.markingPeriods!.allObjects as! [MarkingPeriod]
         markingPeriods = markingPeriods.filter{!$0.empty!.boolValue}
         markingPeriods.sort{$0.number < $1.number}
@@ -90,28 +101,61 @@ class SubjectInfoVC: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Averages"
-        } else {
+        } else if section == 1 {
             return "Grades"
+        } else {
+            return "Settings"
         }
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 0 {
             return "The official average is the YTD, which is updated at the end of the marking period. The calculated average is determined by weighing each marking period as 20% of your final grade. The final exam and midterm make up the last 20%."
-        } else {
+        } else if section == 1 {
             return "When midterm and final exam grades are posted, you can see them here."
+        } else {
+            return "This is used to calculate your GPA for the year."
         }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return cells.count == 0 ? 1 : 2
+        return cells.count == 0 ? 1 : 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 2
+        } else if section == 1 {
+            return cells.count
+
+        } else {
+            return 2
         }
-        return cells.count
+    }
+    
+    func creditsChanged(_ textField: UITextField) {
+        if verify(text: textField.text) {
+            subject.credits = NSDecimalNumber(string: textField.text)
+        } else {
+            textField.text = subject.credits.stringValue
+        }
+    }
+    
+    func weightChanged(_ textField: UITextField) {
+        if verify(text: textField.text) {
+            subject.weight = NSDecimalNumber(string: textField.text)
+        } else {
+            textField.text = subject.weight.stringValue
+        }
+    }
+    
+    func verify(text: String?) -> Bool {
+        if let text = text, text != "" {
+            if let decimal = Decimal(string: text) {
+                return decimal >= 0
+            }
+        }
+        return false
     }
 
     
@@ -126,6 +170,19 @@ class SubjectInfoVC: UITableViewController {
             } else {
                 cell.textLabel?.text = "Calculated"
                 cell.detailTextLabel?.text = calculatedAverage
+            }
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "subjectOptionCell", for: indexPath) as! SubjectOptionCell
+            cell.textField.inputAccessoryView = accessoryView
+            if indexPath.row == 0 {
+                cell.name.text = "Credits"
+                cell.textField.text = subject.credits.stringValue
+                cell.textField.addTarget(self, action: #selector(creditsChanged(_:)), for: .editingDidEnd)
+            } else {
+                cell.name.text = "Weight"
+                cell.textField.text = subject.weight.stringValue
+                cell.textField.addTarget(self, action: #selector(weightChanged(_:)), for: .editingDidEnd)
             }
             return cell
         }
