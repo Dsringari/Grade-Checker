@@ -95,7 +95,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         calculateCategories(markingPeriodIndex: selectedMPIndex)
-        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, for: UIControlState())
+        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade! + "%", for: UIControlState())
         pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, for: UIControlState())
         
         NotificationCenter.default.addObserver(self, selector: #selector(dismissSelf), name: NSNotification.Name(rawValue: "loadStudent"), object: nil)
@@ -143,7 +143,7 @@ class DetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func segmentedControlChanged(_ sender: AnyObject) {
         selectedMPIndex = segmentedControl.selectedSegmentIndex
         calculateCategories(markingPeriodIndex: selectedMPIndex)
-        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade, for: UIControlState())
+        percentageButton.setTitle(markingPeriods[selectedMPIndex].percentGrade! + "%", for: UIControlState())
         pointsButton.setTitle(markingPeriods[selectedMPIndex].totalPoints! + "/" + markingPeriods[selectedMPIndex].possiblePoints!, for: UIControlState())
         setShownUpdatesOld()
         self.tableView.reloadData()

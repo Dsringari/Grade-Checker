@@ -19,9 +19,17 @@ extension Subject {
     @NSManaged var address: String
     @NSManaged var teacher: String
     @NSManaged var lastUpdated: Date?
-    /// This is a dictionary parsed into JSON
     @NSManaged var otherGrades: String?
+    @NSManaged var mostRecentGrade: String?
+    @NSManaged var weight: NSDecimalNumber
+    @NSManaged var credits: NSDecimalNumber
     @NSManaged var markingPeriods: NSSet?
     @NSManaged var student: Student?
+    
+    func mostRecentMarkingPeriod() -> MarkingPeriod {
+        var sortedMPs = markingPeriods!.allObjects as! [MarkingPeriod]
+        sortedMPs = sortedMPs.filter{!$0.empty!.boolValue}.sorted{$0.number > $1.number}
+        return sortedMPs[0]
+    }
 
 }

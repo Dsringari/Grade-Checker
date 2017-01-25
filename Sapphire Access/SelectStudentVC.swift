@@ -149,7 +149,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 			label.textColor = UIColor.white
 			label.font = UIFont.systemFont(ofSize: 13)
 			label.numberOfLines = 0
-			label.text = "Select a student to view their grades. You can change this later in settings."
+			label.text = "Select a student to view their grades. You can switch between them at anytime in the student tab."
 
 			footerView.addSubview(label)
 			return footerView

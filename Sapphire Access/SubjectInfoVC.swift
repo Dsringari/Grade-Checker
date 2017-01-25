@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MagicalRecord
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -19,13 +20,22 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class SubjectInfoVC: UITableViewController {
+class SubjectInfoVC: UITableViewController  {
     
     var subject: Subject!
-    var average: String = ""
+    var average: String = "N/A"
+    var calculatedAverage: String = "N/A"
     var markingPeriods: [MarkingPeriod] = []
     var selectedMPNumber: String = "1"
     var cells : [CellType] = []
+    
+    var accessoryView: UIView = {
+        let keyboardDoneButtonView = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissKeyboard))
+        keyboardDoneButtonView.items = [doneButton]
+        return keyboardDoneButtonView
+    }()
     
     
     enum CellType {
@@ -36,8 +46,11 @@ class SubjectInfoVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = subject.name
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
         
+        self.title = subject.name
         markingPeriods = subject.markingPeriods!.allObjects as! [MarkingPeriod]
         markingPeriods = markingPeriods.filter{!$0.empty!.boolValue}
         markingPeriods.sort{$0.number < $1.number}
@@ -46,20 +59,17 @@ class SubjectInfoVC: UITableViewController {
         
         if let ytd = otherInfo?["YTD"] {
             average = ytd + "%"
-            print("Calculated Average: \(calculateAverageGrade(subject, roundToWholeNumber: false)!)")
-        } else {
-            if let average = calculateAverageGrade(subject, roundToWholeNumber: false) {
-                self.average = average + "%"
-            } else {
-                self.average = "N/A"
-            }
+        }
+        
+        if let average = calculateAverageGrade(subject, roundToWholeNumber: false) {
+            calculatedAverage = average + "%"
         }
         
         // ORDER IS VERY IMPORTANT HERE
         
         for mp in markingPeriods {
             if Int(mp.number)! <= 2 {
-                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade!))
+                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade! + "%"))
             }
         }
         
@@ -69,7 +79,7 @@ class SubjectInfoVC: UITableViewController {
         
         for mp in markingPeriods {
             if Int(mp.number)! > 2 {
-                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade!))
+                cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade! + "%"))
             }
         }
         
@@ -88,24 +98,102 @@ class SubjectInfoVC: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Averages"
+        } else if section == 1 {
+            return "Grades"
+        } else {
+            return "Settings"
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 0 {
+            return "The official average is the YTD, which is updated at the end of the marking period. The calculated average is determined by weighing each marking period as 20% of your final grade. The final exam and midterm make up the last 20%."
+        } else if section == 1 {
+            return "When midterm and final exam grades are posted, you can see them here."
+        } else {
+            return "This is used to calculate your GPA for the year."
+        }
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return cells.count == 0 ? 1 : 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return 2
+        } else if section == 1 {
+            return cells.count
+
+        } else {
+            return 2
         }
-        return cells.count
+    }
+    
+    func creditsChanged(_ textField: UITextField) {
+        if verify(text: textField.text) {
+            subject.credits = NSDecimalNumber(string: textField.text)
+            NSManagedObjectContext.mr_default().mr_save({ context in
+                if let subject = self.subject.mr_(in: context) {
+                    subject.credits = NSDecimalNumber(string: textField.text)
+                }
+            })
+        } else {
+            textField.text = subject.credits.stringValue
+        }
+    }
+    
+    func weightChanged(_ textField: UITextField) {
+        if verify(text: textField.text) {
+            NSManagedObjectContext.mr_default().mr_save({ context in
+                if let subject = self.subject.mr_(in: context) {
+                    subject.weight = NSDecimalNumber(string: textField.text)
+                }
+            })
+        } else {
+            textField.text = subject.weight.stringValue
+        }
+    }
+    
+    func verify(text: String?) -> Bool {
+        if let text = text, text != "" {
+            if let decimal = Decimal(string: text) {
+                return decimal >= 0
+            }
+        }
+        return false
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "averageCell") as! AverageCell
-            cell.averageLabel.text = "Average: " + average
+            let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+            cell.detailTextLabel?.textColor = UIColor(red: 7, green: 89, blue: 128)
             cell.selectionStyle = .none
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Official"
+                cell.detailTextLabel?.text = average
+            } else {
+                cell.textLabel?.text = "Calculated"
+                cell.detailTextLabel?.text = calculatedAverage
+            }
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "subjectOptionCell", for: indexPath) as! SubjectOptionCell
+            cell.textField.inputAccessoryView = accessoryView
+            if indexPath.row == 0 {
+                cell.name.text = "Credits"
+                cell.textField.text = subject.credits.stringValue
+                cell.textField.addTarget(self, action: #selector(creditsChanged(_:)), for: .editingDidEnd)
+            } else {
+                cell.name.text = "Weight"
+                cell.textField.text = subject.weight.stringValue
+                cell.textField.addTarget(self, action: #selector(weightChanged(_:)), for: .editingDidEnd)
+            }
             return cell
         }
         

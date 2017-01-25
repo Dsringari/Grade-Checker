@@ -11,6 +11,7 @@ import Kanna
 import CoreData
 import MagicalRecord
 import Alamofire
+import FirebaseCrash
 import ReachabilitySwift
 
 typealias CompletionType = (_ successful: Bool, _ error: NSError?) -> Void
@@ -109,7 +110,7 @@ class UpdateService {
                             }
                             
                             // Delete all subjects that were not found by their address
-                            let predicate = NSPredicate(format: "NOT(address IN %@)", argumentArray: [addresses])
+                            let predicate = NSPredicate(format: "NOT(address IN %@) AND student == %@", argumentArray: [addresses, self.student])
                             Subject.mr_deleteAll(matching: predicate, in: self.context)
                             
                             let subjectDownloadTask = DispatchGroup()
@@ -189,7 +190,7 @@ class UpdateService {
 							if let mpAddress = node["href"] {
                                 let mp: [String: Any] = [
                                     "address": "https://pamet-sapphire.k12system.com" + mpAddress,
-                                    "empty": false,
+                                    "empty": true,
                                     "number": mpAddress.components(separatedBy: "MP_CODE=")[1],
                                     "subjectAddress": subjectAddress
                                 ]
@@ -219,6 +220,11 @@ class UpdateService {
                                                 currentMP.possiblePoints = result.possiblePoints
                                                 currentMP.totalPoints = result.totalPoints
                                                 currentMP.percentGrade = result.percentGrade
+                                                currentMP.empty = NSNumber(value: false)
+                                                if currentMP.subject.mostRecentMarkingPeriod() == currentMP {
+                                                    subject.mostRecentGrade = currentMP.percentGrade
+                                                }
+                                                
                                                 var assignmentsToDelete = currentMP.assignments!.allObjects as! [Assignment]
                                                 for assignment in result.assignments {
                                                     let dateFormatter = DateFormatter()
@@ -266,8 +272,6 @@ class UpdateService {
                                                     a.mr_deleteEntity(in: self.context)
                                                 }
                                                 
-                                            } else {
-                                                currentMP.empty = NSNumber(value: true)
                                             }
                                         }
                                         
@@ -349,6 +353,7 @@ class UpdateService {
 		assigntmentIndex = String(headers.index(of: "Assignment")! + 1)
 		totalScoreIndex = String(headers.index(of: "totalScore")! + 1)
 		possibleScoreIndex = String(headers.index(of: "possibleScore")! + 1)
+        FIRCrashMessage("Headers: \(headers)")
 		dueDateIndex = String(headers.index(of: "DateDue")! + 1)
         if let catIndex = headers.index(of: "Category") {
             categoryIndex = String(catIndex+1)
@@ -378,6 +383,7 @@ class UpdateService {
 			if (text == "%") {
 				text = "0.00%"
 			}
+            text.remove(at: text.index(before: text.endIndex)) // remove %
 			percentGrade = text
 		} else {
 			print("Failed to find percentageTextElement!")

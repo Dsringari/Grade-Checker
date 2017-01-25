@@ -39,6 +39,7 @@
 		FC6A2DD11D79CDAA002E50DD /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */; };
 		FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */; };
 		FC754ED11D7BE0FD008AD5F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC754ED01D7BE0FD008AD5F7 /* GoogleService-Info.plist */; };
+		FC897DF61E37B37F004E1238 /* SubjectOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC897DF51E37B37F004E1238 /* SubjectOptionCell.swift */; };
 		FC8B3E9F1C9226C700FA5E90 /* DSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */; };
 		FC9C61531CDBFEC200442285 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9C61511CDBFEC200442285 /* Subject.swift */; };
 		FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */; };
@@ -97,6 +98,7 @@
 		FC6A2DD01D79CDAA002E50DD /* SettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FC6AD9761CC9767100CE7ED2 /* SubjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectTableViewCell.swift; sourceTree = "<group>"; };
 		FC754ED01D7BE0FD008AD5F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FC897DF51E37B37F004E1238 /* SubjectOptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectOptionCell.swift; sourceTree = "<group>"; };
 		FC8B3E9E1C9226C700FA5E90 /* DSLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLoginView.swift; sourceTree = "<group>"; };
 		FC9C61511CDBFEC200442285 /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		FCB6D7861CCC83B300F1A9F6 /* GradesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GradesVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -232,6 +234,7 @@
 				FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */,
 				FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */,
 				FC36A79C1D7B606500832772 /* AverageCell.swift */,
+				FC897DF51E37B37F004E1238 /* SubjectOptionCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -397,7 +400,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		4642756918B28A00B4274C28 /* [CP] Copy Pods Resources */ = {
@@ -485,6 +488,7 @@
 				FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */,
 				FCB6D7871CCC83B300F1A9F6 /* GradesVC.swift in Sources */,
 				FCF028231C9DC690008AC891 /* ErrorTypes.swift in Sources */,
+				FC897DF61E37B37F004E1238 /* SubjectOptionCell.swift in Sources */,
 				FCEF55E01C9DCD8100F0190E /* Model.xcdatamodeld in Sources */,
 				FCEB706E1CE52AC10065240A /* SelectStudentVC.swift in Sources */,
 				FC639F9B1C8F8FFD006C71A7 /* AppDelegate.swift in Sources */,

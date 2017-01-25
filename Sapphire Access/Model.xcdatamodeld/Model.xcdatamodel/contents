@@ -42,12 +42,15 @@
     </entity>
     <entity name="Subject" representedClassName=".Subject" syncable="YES">
         <attribute name="address" attributeType="String" syncable="YES"/>
+        <attribute name="credits" attributeType="Decimal" defaultValueString="1" syncable="YES"/>
         <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="mostRecentGrade" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="otherGrades" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="room" attributeType="String" syncable="YES"/>
         <attribute name="teacher" attributeType="String" syncable="YES"/>
-        <relationship name="markingPeriods" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MarkingPeriod" inverseName="subject" inverseEntity="MarkingPeriod" syncable="YES"/>
+        <attribute name="weight" attributeType="Decimal" defaultValueString="1" syncable="YES"/>
+        <relationship name="markingPeriods" toMany="YES" deletionRule="Cascade" destinationEntity="MarkingPeriod" inverseName="subject" inverseEntity="MarkingPeriod" syncable="YES"/>
         <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="subjects" inverseEntity="Student" syncable="YES"/>
         <userInfo>
             <entry key="relatedByAttribute" value="address"/>
@@ -63,7 +66,7 @@
         <element name="Assignment" positionX="-369" positionY="369" width="128" height="150"/>
         <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="165"/>
         <element name="Student" positionX="-378" positionY="0" width="128" height="150"/>
-        <element name="Subject" positionX="-387" positionY="9" width="128" height="165"/>
+        <element name="Subject" positionX="-387" positionY="9" width="128" height="210"/>
         <element name="User" positionX="-369" positionY="-154" width="128" height="105"/>
     </elements>
 </model>

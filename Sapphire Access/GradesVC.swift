@@ -35,6 +35,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 enum Sorting: Int {
     case recent
     case alphabetical
+    case numerical
 }
 
 
@@ -168,7 +169,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                         self.hidePopUpView()
                         self.updateRefreshControl()
                         self.stopLoading()
-					
+                        self.tutorial()
                     } else {
                         self.stopLoading()
                         if error! == noGradesError {
@@ -230,6 +231,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             return [recentSort, nameSort]
         case .alphabetical:
             return [nameSort]
+        case .numerical:
+            let gradeSort = NSSortDescriptor(key: "mostRecentGrade", ascending: false, selector: #selector(NSString.localizedStandardCompare(_:)))
+            return [gradeSort, nameSort]
         }
     }
     
@@ -346,6 +350,23 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             lockVC.lockDelegate = self
         }
     }
+    
+    func tutorial() {
+        let alert = UIAlertController(title: "New Features in 1.2  🎉", message: "We added real-time GPA calculation to your profile! Be sure to update the weight and credits for each subject under course averages.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        if let storedVersion = UserDefaults.standard.string(forKey: "currVersion") {
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+            if storedVersion != version {
+                present(alert, animated: true, completion: nil)
+                UserDefaults.standard.set(version, forKey: "currVersion")
+            }
+        } else {
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+            UserDefaults.standard.set(version, forKey: "currVersion")
+            present(alert, animated: true, completion: nil)
+        }
+    }
 
     
     // MARK: - Table view data source
@@ -387,23 +408,15 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         let subject = fetchedResultsController.object(at: indexPath)
         cell.subjectNameLabel.text = subject.name
         
-        var markingPeriods: [MarkingPeriod] = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-        
-        // sort marking periods by descending number and ignore empty marking periods
-        markingPeriods = markingPeriods.filter { !$0.empty!.boolValue }.sorted { Int($0.number) > Int($1.number) }
-        
-        let recentMP = markingPeriods[0]
-        
-        // Remove %
-        let percentgradeString = recentMP.percentGrade!.components(separatedBy: CharacterSet(charactersIn: "1234567890.").inverted).joined(separator: "")
-        
         // Round the percent to the nearest whole number
-        let numberFormatter = NumberFormatter()
-        let percentGradeDouble = numberFormatter.number(from: percentgradeString)!.doubleValue
-        let roundedPercentGrade: Int = Int(round(percentGradeDouble))
-        
-        // cell.letterGradeLabel.text = self.percentToLetterGrade(roundedPercentGrade)
-        cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
+        if let grade = subject.mostRecentGrade {
+            let numberFormatter = NumberFormatter()
+            let percentGradeDouble = numberFormatter.number(from: grade)!.doubleValue
+            let roundedPercentGrade: Int = Int(round(percentGradeDouble))
+            cell.percentGradeLabel.text = String(roundedPercentGrade) + "%"
+        } else {
+            cell.percentGradeLabel.text = "N/A"
+        }
         
         let dateString: String
         if let date = subject.lastUpdated {
