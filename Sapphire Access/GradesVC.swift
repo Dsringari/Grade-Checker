@@ -169,7 +169,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                         self.hidePopUpView()
                         self.updateRefreshControl()
                         self.stopLoading()
-					
+                        self.tutorial()
                     } else {
                         self.stopLoading()
                         if error! == noGradesError {
@@ -348,6 +348,23 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         } else if segue.identifier == "lock" {
             let lockVC = segue.destination as! LockVC
             lockVC.lockDelegate = self
+        }
+    }
+    
+    func tutorial() {
+        let alert = UIAlertController(title: "New Features in 1.2  🎉", message: "We added real-time GPA calculation to your profile! Be sure to update the weight and credits for each subject under course averages.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        if let storedVersion = UserDefaults.standard.string(forKey: "currVersion") {
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+            if storedVersion != version {
+                present(alert, animated: true, completion: nil)
+                UserDefaults.standard.set(version, forKey: "currVersion")
+            }
+        } else {
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+            UserDefaults.standard.set(version, forKey: "currVersion")
+            present(alert, animated: true, completion: nil)
         }
     }
 
