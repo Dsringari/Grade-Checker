@@ -353,7 +353,6 @@ class UpdateService {
 		assigntmentIndex = String(headers.index(of: "Assignment")! + 1)
 		totalScoreIndex = String(headers.index(of: "totalScore")! + 1)
 		possibleScoreIndex = String(headers.index(of: "possibleScore")! + 1)
-        print("\(headers)")
         FIRCrashMessage("Headers: \(headers)")
 		dueDateIndex = String(headers.index(of: "DateDue")! + 1)
         if let catIndex = headers.index(of: "Category") {

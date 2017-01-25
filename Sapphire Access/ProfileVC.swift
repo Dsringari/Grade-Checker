@@ -116,12 +116,8 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 let creditWeightedGrade = weightedGrade.multiplying(by: subject.credits)
                 total = total.adding(creditWeightedGrade)
                 totalCredits = totalCredits.adding(subject.credits)
-                print("Name: \(subject.name), Credits: \(subject.credits)")
             }
         }
-        
-        print("Total Credits: \(totalCredits)")
-        print("")
         
         guard totalCredits.compare(NSDecimalNumber(value: 0)) == .orderedDescending else {
             return nil
