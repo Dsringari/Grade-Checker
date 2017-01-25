@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MagicalRecord
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -136,6 +137,11 @@ class SubjectInfoVC: UITableViewController  {
     func creditsChanged(_ textField: UITextField) {
         if verify(text: textField.text) {
             subject.credits = NSDecimalNumber(string: textField.text)
+            NSManagedObjectContext.mr_default().mr_save({ context in
+                if let subject = self.subject.mr_(in: context) {
+                    subject.credits = NSDecimalNumber(string: textField.text)
+                }
+            })
         } else {
             textField.text = subject.credits.stringValue
         }
@@ -143,7 +149,11 @@ class SubjectInfoVC: UITableViewController  {
     
     func weightChanged(_ textField: UITextField) {
         if verify(text: textField.text) {
-            subject.weight = NSDecimalNumber(string: textField.text)
+            NSManagedObjectContext.mr_default().mr_save({ context in
+                if let subject = self.subject.mr_(in: context) {
+                    subject.weight = NSDecimalNumber(string: textField.text)
+                }
+            })
         } else {
             textField.text = subject.weight.stringValue
         }

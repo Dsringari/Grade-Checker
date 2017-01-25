@@ -94,12 +94,62 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Dispose of any resources that can be recreated.
     }
     
+    func calculateGPA(weighted: Bool) -> String? {
+        var total: NSDecimalNumber = 0
+        var totalCredits: NSDecimalNumber = 0
+        
+        guard let student = student, let subjects = Subject.mr_findAll(with: NSPredicate(format: "ANY markingPeriods.empty == false AND student == %@", argumentArray: [student])) as? [Subject] else {
+            return nil
+        }
+        
+        for subject in subjects {
+            if let string = calculateAverageGrade(subject, roundToWholeNumber: false) {
+                let grade = NSDecimalNumber(string: string)
+                let weightedGrade: NSDecimalNumber
+                
+                if weighted {
+                    weightedGrade = grade.multiplying(by: subject.weight)
+                } else {
+                    weightedGrade = grade
+                }
+                
+                let creditWeightedGrade = weightedGrade.multiplying(by: subject.credits)
+                total = total.adding(creditWeightedGrade)
+                totalCredits = totalCredits.adding(subject.credits)
+                print("Name: \(subject.name), Credits: \(subject.credits)")
+            }
+        }
+        
+        print("Total Credits: \(totalCredits)")
+        print("")
+        
+        guard totalCredits.compare(NSDecimalNumber(value: 0)) == .orderedDescending else {
+            return nil
+        }
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.minimumFractionDigits = 2
+        numberFormatter.maximumFractionDigits = 2
+        numberFormatter.minimumIntegerDigits = 1
+        numberFormatter.roundingMode = .halfUp
+        numberFormatter.numberStyle = .decimal
+        
+        let gpa = total.dividing(by: totalCredits)
+        return numberFormatter.string(from: gpa)
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 1 ? "Course Averages" : nil
+        if section == 1 {
+            return "GPA"
+        } else if section == 2 {
+            return "Course Averages"
+        }
+        
+        return nil
     }
     
     // Hide the headers and footers when the switch profile section should be hidden. Also hide the header and footer for the first section
@@ -109,12 +159,26 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0 && studentCount == 1 {
+            return 0.01
+        } else if section == 0 && studentCount > 1 {
+            return 10
+        }
         return section == 0 && studentCount == 1 ? 0.01 : UITableViewAutomaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 1 {
+            return "This is calculated using the weight and credits from each subject."
+        }
+        return nil
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return studentCount > 1 ? 1 : 0
+        } else if section == 1 {
+            return 2
         } else {
             guard let subjects = subjects else {
                 return 0
@@ -145,21 +209,41 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableview.dequeueReusableCell(withIdentifier: "switchProfileCell")!
             return cell
+        } else if indexPath.section == 1 {
+            let cell = UITableViewCell(style: .value1, reuseIdentifier: "gpaCell")
+            cell.selectionStyle = .none
+            cell.detailTextLabel?.textColor = UIColor(red: 7, green: 89, blue: 128)
+            cell.detailTextLabel?.text = "N/A"
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Unweighted"
+                if let gpa = calculateGPA(weighted: false) {
+                    cell.detailTextLabel?.text = gpa + "%"
+                }
+            } else {
+                cell.textLabel?.text = "Weighted"
+                if let gpa = calculateGPA(weighted: true) {
+                    cell.detailTextLabel?.text = gpa + "%"
+                }
+            }
+            
+            return cell
         }
         
         let cell = tableview.dequeueReusableCell(withIdentifier: "profileSubjectCell") as! ProfileSubjectCell
         let subject = subjects![indexPath.row]
         cell.name.text = subject.name
         
-        if let ytd = dictionaryFromOtherGradesJSON(subject.otherGrades)?["YTD"] {
-            cell.percentGrade.text = ytd + "%"
+        if let average = calculateAverageGrade(subject) {
+            cell.percentGrade.text = average + "%"
         } else {
-            if let average = calculateAverageGrade(subject) {
-                cell.percentGrade.text = average + "%"
+            if let ytd = dictionaryFromOtherGradesJSON(subject.otherGrades)?["YTD"]  {
+                cell.percentGrade.text = ytd + "%"
             } else {
                 cell.percentGrade.text = "N/A"
             }
         }
+        
+        
         
         
         return cell
@@ -169,7 +253,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             performSegue(withIdentifier: "switchStudent", sender: self)
-        } else {
+        } else if indexPath.section == 2 {
             selectedSubject = subjects![indexPath.row]
             performSegue(withIdentifier: "subjectInfo", sender: self)
         }

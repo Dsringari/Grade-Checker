@@ -110,7 +110,7 @@ class UpdateService {
                             }
                             
                             // Delete all subjects that were not found by their address
-                            let predicate = NSPredicate(format: "NOT(address IN %@)", argumentArray: [addresses])
+                            let predicate = NSPredicate(format: "NOT(address IN %@) AND student == %@", argumentArray: [addresses, self.student])
                             Subject.mr_deleteAll(matching: predicate, in: self.context)
                             
                             let subjectDownloadTask = DispatchGroup()
