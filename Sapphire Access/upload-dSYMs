@@ -1,0 +1,7 @@
+#!/bin/bash
+for file in /Users/Dhruv/Desktop/dSYMs/*.dSYM
+do
+ filename=$(basename "$file")
+ filename="${filename%.*}"
+ /Users/Dhruv/Documents/Sapphire\ Access/Pods/FirebaseCrash/batch-upload -i /Users/Dhruv/Documents/Sapphire\ Access/Sapphire\ Access/Info.plist -p /Users/Dhruv/Documents/Sapphire\ Access/Sapphire\ Access/GoogleService-Info.plist /Users/Dhruv/Documents/Sapphire\ Access/Firebase/SapphireAccess-f239a111f035.json $filename
+donu
