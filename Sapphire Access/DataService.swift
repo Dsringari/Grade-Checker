@@ -244,7 +244,7 @@ class UpdateService {
                                                     }
                                                     
                                                     let foundAssignment = assignmentsToDelete.filter { a in
-                                                        if a.name == assignment["name"]!! && a.category == assignment["category"]!! {
+                                                        if a.name == assignment["name"]!! && a.category == assignment["category"]! {
                                                             return a.date.compare(dateCreated) == .orderedSame
                                                         }
                                                         
