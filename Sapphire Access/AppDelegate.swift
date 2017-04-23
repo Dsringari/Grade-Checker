@@ -30,8 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 		// Start the Magic!
 		MagicalRecord.setLoggingLevel(.warn)
-		MagicalRecord.setShouldDeleteStoreOnModelMismatch(false)
-        MagicalRecord.setupAutoMigratingCoreDataStack()
+		MagicalRecord.setShouldDeleteStoreOnModelMismatch(true)
+        MagicalRecord.setupCoreDataStack()
 
 		FIRApp.configure()
 

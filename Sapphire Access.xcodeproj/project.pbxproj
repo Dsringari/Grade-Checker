@@ -28,7 +28,6 @@
 		FC36A7A11D7B638700832772 /* SapphireAccessHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36A7A01D7B638700832772 /* SapphireAccessHelper.swift */; };
 		FC36FB101CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */; };
 		FC36FB111CDE604600DC2CB3 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */; };
-		FC372E2F1E4FC19F004CB383 /* NavianceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC372E2E1E4FC19F004CB383 /* NavianceCell.swift */; };
 		FC43AC421D74CF7E00D74974 /* ScheduleTodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */; };
 		FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A3EE81D1DD71500D9BC48 /* DataService.swift */; };
 		FC4AC80C1D4FA38400D004AC /* Student+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */; };
@@ -86,7 +85,6 @@
 		FC36A7A01D7B638700832772 /* SapphireAccessHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SapphireAccessHelper.swift; sourceTree = "<group>"; };
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
-		FC372E2E1E4FC19F004CB383 /* NavianceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavianceCell.swift; sourceTree = "<group>"; };
 		FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTodayCell.swift; sourceTree = "<group>"; };
 		FC4A3EE81D1DD71500D9BC48 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -237,7 +235,6 @@
 				FC07DC581D788C6500B5F3F5 /* ProfileStudentCell.swift */,
 				FC36A79C1D7B606500832772 /* AverageCell.swift */,
 				FC897DF51E37B37F004E1238 /* SubjectOptionCell.swift */,
-				FC372E2E1E4FC19F004CB383 /* NavianceCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -516,7 +513,6 @@
 				FC2800AB1D4EC04400780C3E /* ProfileSubjectCell.swift in Sources */,
 				FC4A3EE91D1DD71500D9BC48 /* DataService.swift in Sources */,
 				FC00EBFA1CBDBDEF00A461AC /* User.swift in Sources */,
-				FC372E2F1E4FC19F004CB383 /* NavianceCell.swift in Sources */,
 				FC2953191CB73BA400DD38CE /* DSHelper.swift in Sources */,
 				FC6AD9771CC9767100CE7ED2 /* SubjectTableViewCell.swift in Sources */,
 				FCFE9BFE1D4D443700B253E2 /* ProfileVC.swift in Sources */,
