@@ -36,6 +36,8 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="navianceGPA" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="navianceMP" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="school" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="subjects" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subject" inverseName="student" inverseEntity="Subject" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="students" inverseEntity="User" syncable="YES"/>
@@ -65,7 +67,7 @@
     <elements>
         <element name="Assignment" positionX="-369" positionY="369" width="128" height="150"/>
         <element name="MarkingPeriod" positionX="-362" positionY="180" width="128" height="165"/>
-        <element name="Student" positionX="-378" positionY="0" width="128" height="150"/>
+        <element name="Student" positionX="-378" positionY="0" width="128" height="180"/>
         <element name="Subject" positionX="-387" positionY="9" width="128" height="210"/>
         <element name="User" positionX="-369" positionY="-154" width="128" height="105"/>
     </elements>

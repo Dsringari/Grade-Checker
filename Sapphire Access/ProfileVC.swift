@@ -170,11 +170,18 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return nil
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 && indexPath.row == 2 {
+            return 79
+        }
+        return 44
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return studentCount > 1 ? 1 : 0
         } else if section == 1 {
-            return 2
+            return 3
         } else {
             guard let subjects = subjects else {
                 return 0
@@ -201,14 +208,24 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let blue = UIColor(red: 7, green: 89, blue: 128)
         
         if indexPath.section == 0 {
             let cell = tableview.dequeueReusableCell(withIdentifier: "switchProfileCell")!
             return cell
         } else if indexPath.section == 1 {
+            if indexPath.row == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "naviance") as! NavianceCell
+                cell.gpa.textColor = blue
+                cell.markingPeriod.textColor = blue
+                cell.gpa.text = student?.navianceGPA.stringValue
+                cell.markingPeriod.text = student?.navianceMP.stringValue
+                return cell
+            }
+            
             let cell = UITableViewCell(style: .value1, reuseIdentifier: "gpaCell")
             cell.selectionStyle = .none
-            cell.detailTextLabel?.textColor = UIColor(red: 7, green: 89, blue: 128)
+            cell.detailTextLabel?.textColor = blue
             cell.detailTextLabel?.text = "N/A"
             if indexPath.row == 0 {
                 cell.textLabel?.text = "Unweighted"

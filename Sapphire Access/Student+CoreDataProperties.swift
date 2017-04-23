@@ -19,6 +19,8 @@ extension Student {
     @NSManaged var school: String?
     @NSManaged var id: String?
     @NSManaged var subjects: NSSet?
+    @NSManaged var navianceGPA: NSDecimalNumber
+    @NSManaged var navianceMP: NSNumber
     @NSManaged var user: User?
 
 }

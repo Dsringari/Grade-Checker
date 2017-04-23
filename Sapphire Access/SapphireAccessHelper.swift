@@ -71,7 +71,6 @@ func calculateAverageGrade(_ subject: Subject, roundToWholeNumber: Bool = true) 
     
 }
 
-
 func dictionaryFromOtherGradesJSON(_ string: String?) -> [String: String]? {
     guard let jsonData = string?.data(using: String.Encoding.utf8) else {
         return nil
