@@ -86,7 +86,7 @@
 		FC36FB0E1CDE604600DC2CB3 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC36FB0F1CDE604600DC2CB3 /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		FC43AC411D74CF7E00D74974 /* ScheduleTodayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTodayCell.swift; sourceTree = "<group>"; };
-		FC4A3EE81D1DD71500D9BC48 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		FC4A3EE81D1DD71500D9BC48 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DataService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FC4AC80A1D4FA38400D004AC /* Student+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FC4AC80B1D4FA38400D004AC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		FC639F971C8F8FFD006C71A7 /* Sapphire Access.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sapphire Access.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,7 +304,6 @@
 				FC1E26251CE1378D00D14D70 /* Set Build number to "Development" */,
 				2976EB38A329D2F5C15F19B9 /* [CP] Embed Pods Frameworks */,
 				4642756918B28A00B4274C28 /* [CP] Copy Pods Resources */,
-				FC67E2311DC5082B008102C4 /* Firebase */,
 			);
 			buildRules = (
 			);
@@ -445,20 +444,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
-		};
-		FC67E2311DC5082B008102C4 /* Firebase */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Firebase;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:793866081990:ios:3c2cdd0c65dcb559\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"${SRCROOT}/Firebase/SapphireAccess-f239a111f035.json\"";
 		};
 		FCC71DA71C950DD6000913D1 /* Check for Warning Tags */ = {
 			isa = PBXShellScriptBuildPhase;

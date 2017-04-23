@@ -329,7 +329,7 @@ class UpdateService {
 		var totalScoreIndex: String
 		var possibleScoreIndex: String
 		var dueDateIndex: String
-		var categoryIndex: String? = nil
+        var categoryIndex: String? = nil
 
 		// Find under which td are the headers we want under
 		var headers: [String] = []
@@ -354,7 +354,10 @@ class UpdateService {
 		totalScoreIndex = String(headers.index(of: "totalScore")! + 1)
 		possibleScoreIndex = String(headers.index(of: "possibleScore")! + 1)
         FIRCrashMessage("Headers: \(headers)")
-		dueDateIndex = String(headers.index(of: "DateDue")! + 1)
+        guard let sIndex = headers.index(of: "DateDue") else {
+            return nil
+        }
+        dueDateIndex = String(sIndex + 1)
         if let catIndex = headers.index(of: "Category") {
             categoryIndex = String(catIndex+1)
         }
@@ -367,6 +370,7 @@ class UpdateService {
 			let text = aE.text!
 			aNames[i] = (text)
 		}
+        
 
 		// Check if we have an empty marking period
 		if (aNames.count == 0) {
@@ -422,10 +426,12 @@ class UpdateService {
 
 		// Get All the dates
 		var aDates: [Int: String] = [:]
-		for (i, aE) in doc.xpath(assignmentsXpath + "/td[" + dueDateIndex + "]").enumerated() {
-			let text = aE.text! + "-EST"
-			aDates[i] = text
-		}
+        for (i, aE) in doc.xpath(assignmentsXpath + "/td[" + dueDateIndex + "]").enumerated() {
+            let text = aE.text! + "-EST"
+            aDates[i] = text
+        }
+      
+		
 
 		// Get all the categories
 		var aCategories: [Int: String] = [:]
