@@ -35,7 +35,7 @@ class LoginOptionsVC: UITableViewController {
                 DispatchQueue.main.async {
                     if successful {
                         UserDefaults.standard.set(true, forKey: "useTouchID")
-                    } else if let error = error as? NSError {
+                    } else if let error = error as NSError? {
                         self.touchIDSwitch.setOn(false, animated: true)
                         if (error.code == LAError.Code.authenticationFailed.rawValue) {
                             let failed = UIAlertController(title: "Failed to Verify", message: "Your fingerprint did not match.", preferredStyle: .alert)

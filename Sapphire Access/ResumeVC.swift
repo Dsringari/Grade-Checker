@@ -99,7 +99,7 @@ class ResumeVC: UIViewController {
                         self.continueButton.isEnabled = true
                         if (success) {
 							self.login()
-						} else if let error = error as? NSError {
+						} else if let error = error as NSError? {
 							if (error.code == LAError.Code.authenticationFailed.rawValue) {
 								let failed = UIAlertController(title: "Failed to Login", message: "Your fingerprint did not match. Signing out.", preferredStyle: .alert)
 								let Ok = UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
