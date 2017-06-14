@@ -73,7 +73,7 @@ class UpdateService {
             Manager.sharedInstance.request(coursesURL)
                 .validate()
                 .response { response in
-                    if let error = response.error as? NSError {
+                    if let error = response.error as NSError? {
                         if error.code == NSURLErrorTimedOut {
                             completion(false, badConnectionError)
                         } else {
@@ -162,7 +162,7 @@ class UpdateService {
 		Manager.sharedInstance.request(subject.address)
 			.validate()
 			.response { response in
-				if let error = response.error as? NSError {
+				if let error = response.error as NSError? {
                     if error.code == NSURLErrorTimedOut {
                         completion(false, badConnectionError)
                     } else {
@@ -348,12 +348,12 @@ class UpdateService {
 		// Check if we have an empty marking period
 		if (headers.count == 0) {
 			return nil
-		}
-
+        }
+        
 		assigntmentIndex = String(headers.index(of: "Assignment")! + 1)
 		totalScoreIndex = String(headers.index(of: "totalScore")! + 1)
 		possibleScoreIndex = String(headers.index(of: "possibleScore")! + 1)
-        FIRCrashMessage("Headers: \(headers)")
+        FirebaseCrashMessage("Headers: \(headers)")
         guard let sIndex = headers.index(of: "DateDue") else {
             return nil
         }

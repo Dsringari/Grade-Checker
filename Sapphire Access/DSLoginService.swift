@@ -95,7 +95,7 @@ class LoginService {
                 self.completion(false, response.error as NSError?)
                 return
             }
-            if let data = response.data, let html: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String  {
+            if let data = response.data, let html: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String?  {
                 
                 if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
                     

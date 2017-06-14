@@ -81,7 +81,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     if (success) {
                         settings.set(true, forKey: "useTouchID")
                         self.performSegue(withIdentifier: "firstTimeHome", sender: nil)
-                    } else if let error = error as? NSError {
+                    } else if let error = error as NSError? {
                         settings.set(false, forKey: "useTouchID")
                         self.touchIDSwitch.setOn(false, animated: true)
                         if error.code == LAError.Code.authenticationFailed.rawValue {

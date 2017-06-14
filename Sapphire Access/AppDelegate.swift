@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		MagicalRecord.setShouldDeleteStoreOnModelMismatch(true)
         MagicalRecord.setupCoreDataStack()
 
-		FIRApp.configure()
+		FirebaseApp.configure()
 
 		return true
 	}
