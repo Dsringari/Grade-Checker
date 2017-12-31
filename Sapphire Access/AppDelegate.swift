@@ -21,13 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Set default preferences
         let appDefaults = ["useTouchID": false, "sortMethod": NSNumber(value: Sorting.recent.rawValue as Int)]
 		UserDefaults.standard.register(defaults: appDefaults)
-        
+
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.gray], for: UIControlState())
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red: 43, green: 130, blue: 201)], for: .selected)
-        
+
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        
+
 		// Start the Magic!
 		MagicalRecord.setLoggingLevel(.warn)
 		MagicalRecord.setShouldDeleteStoreOnModelMismatch(true)
@@ -51,14 +51,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 
-
 		var tabBarController: UITabBarController?
 		if let containerVC = UIApplication.shared.keyWindow?.rootViewController as? ContainerVC {
 			if let navigationController = containerVC.currentViewController as? UINavigationController {
 				tabBarController = navigationController.visibleViewController as? UITabBarController
 			}
 		}
-        
+
         if UserDefaults.standard.bool(forKey: "useTouchID") {
             if let mainTabBarController = tabBarController {
                 mainTabBarController.selectedIndex = 0
@@ -69,8 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        
-        
+
 	}
 
 	func applicationWillEnterForeground(_ application: UIApplication) {
@@ -86,4 +84,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		MagicalRecord.cleanUp()
 	}
 }
-

@@ -19,7 +19,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var daySegmentedControl: UISegmentedControl!
 
 	var student: Student?
-	
+
     var schedules: [(date: String, names: [String], teachers: [String], periods: [String], rooms: [String], times: [String], letterDay: String)] = []
     var selectedDayIndex: Int = 0
 
@@ -33,7 +33,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		tableView.delegate = self
 		tableView.dataSource = self
 		loadSchedule()
-        
+
         // Find the hairline so we can hide it
         for view in self.navigationController!.navigationBar.subviews {
             for aView in view.subviews {
@@ -45,7 +45,6 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Remove toolbar's border
         self.navigationController!.toolbar.clipsToBounds = true
 
-        
         NotificationCenter.default.addObserver(self, selector: #selector(loadSchedule), name: NSNotification.Name(rawValue: "loadStudent"), object: nil)
 	}
 
@@ -53,11 +52,11 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if let studentName = UserDefaults.standard.string(forKey: "selectedStudent") {
             student = Student.mr_findFirst(byAttribute: "name", withValue: studentName)
         }
-        
+
         guard let student = student else {
             return
         }
-        
+
 		startLoadingAnimation()
 		Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentSchedule.cfm?STUDENT_RID=\(student.id!)")
 		.validate()
@@ -69,7 +68,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.showErrorView(false)
 						self.tableView.reloadData()
 					} else {
-                        
+
 						if let doc = Kanna.HTML(html: response.data!, encoding: String.Encoding.utf8) {
 							var tbody = ""
 							var datesXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr[1]//th" // *[@id="contentPipe"]/div[2]/table/tbody/tr[1] //*[@id="contentPipe"]/div[2]/table/tbody/tr[1]/th[2]
@@ -99,16 +98,16 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                     dates.append(node.text!)
 								}
 							}
-                            
+
                             guard availableDayIndices.count != 0 else {
                                 self.stopLoadingAnimation()
                                 self.scheduleNotFound()
                                 return
                             }
-                            
+
                             self.reset()
                             for index in availableDayIndices {
-                                
+
                                 var names: [String] = []
 								let periodNameXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)tr/td[\(index)]/div/div[1]/a"
 								for node in doc.xpath(periodNameXPath) {
@@ -141,7 +140,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 								for (i, _) in nodes.enumerated() {
 									periods.append(nodes[i].text!)
 								}
-                                
+
                                 let timeXPath = "//*[@id=\"contentPipe\"]/div[2]/table/\(tbody)/tr/td[1]/div/div[5]"
                                 var times: [String] = []
                                 for node in doc.xpath(timeXPath) {
@@ -153,11 +152,11 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                 var letterDay: String
 								let text = doc.xpath(letterDayXPath)[0].text!
                                 letterDay = text.substring(from: text.index(text.endIndex, offsetBy: -1))
-                                
-                                self.schedules.append((dates[index-1],names, teachers, periods, rooms, times, letterDay))
+
+                                self.schedules.append((dates[index-1], names, teachers, periods, rooms, times, letterDay))
 							}
-                            
-                            let days = self.schedules.map{$0.date}
+
+                            let days = self.schedules.map {$0.date}
                             self.daySegmentedControl.removeAllSegments()
                             let today = self.today()
                             for index in 0..<days.count {
@@ -169,7 +168,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             }
                             self.daySegmentedControl.selectedSegmentIndex = self.selectedDayIndex
                             self.navigationController?.navigationBar.topItem?.title = self.dateToText(days[self.selectedDayIndex])
-                            
+
                             self.tableView.reloadData()
                             self.tableView.isHidden = false
                             self.stopLoadingAnimation()
@@ -178,8 +177,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 				})
 		}
 	}
-    
-    
+
     @IBAction func dayChanged(_ sender: AnyObject) {
         selectedDayIndex = daySegmentedControl.selectedSegmentIndex
         navigationController?.navigationBar.topItem?.title = self.dateToText(schedules[selectedDayIndex].date)
@@ -202,7 +200,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		formatter.dateFormat = "MM/dd/yyyy"
 		return formatter.string(from: Date())
 	}
-    
+
     func dateToDayOfWeek(_ date: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
@@ -210,7 +208,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         formatter.dateFormat = "EEE"
         return formatter.string(from: date)
     }
-    
+
     func dateToText(_ date: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
@@ -253,7 +251,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 		hideErrorView()
         loading.stopAnimating()
 	}
-    
+
     func showErrorView(_ loading: Bool) {
         if loading {
             errorView.isHidden = false
@@ -265,7 +263,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             errorText.isHidden = false
         }
     }
-    
+
     func hideErrorView() {
         errorView.isHidden = true
         errorImage.isHidden = true
@@ -284,7 +282,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return schedules.count != 0 ? schedules[selectedDayIndex].names.count+1 : 0
 	}
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
@@ -293,12 +291,12 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "today") as! ScheduleTodayCell
             cell.letterDay.text = "Letter Day: " + schedules[selectedDayIndex].letterDay
-            cell.separatorInset = UIEdgeInsetsMake(0, 10000, 0, 0)
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 10000, bottom: 0, right: 0)
             cell.indentationWidth = 10000 * -1
             cell.indentationLevel = 1
             return cell
         }
-        
+
 		let cell = tableView.dequeueReusableCell(withIdentifier: "period") as! ScheduleCell
         let schedule = schedules[selectedDayIndex]
         cell.name.text = schedule.names[safe: indexPath.row - 1]

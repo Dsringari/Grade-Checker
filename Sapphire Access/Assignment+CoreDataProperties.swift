@@ -21,7 +21,5 @@ extension Assignment {
     @NSManaged var category: String?
     @NSManaged var newUpdate: NSNumber
     @NSManaged var markingPeriod: MarkingPeriod
-    
-    
 
 }

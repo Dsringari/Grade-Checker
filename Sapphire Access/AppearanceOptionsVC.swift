@@ -9,7 +9,7 @@
 import UIKit
 
 class AppearanceOptionsVC: UITableViewController {
-    
+
     var sortMethod: Sorting = .recent
 
     override func viewDidLoad() {
@@ -41,7 +41,7 @@ class AppearanceOptionsVC: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 3
     }
-    
+
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == sortMethod.rawValue {
             cell.accessoryType = .checkmark
@@ -49,7 +49,7 @@ class AppearanceOptionsVC: UITableViewController {
             cell.accessoryType = .none
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if (indexPath.row != sortMethod.rawValue) {
@@ -58,8 +58,6 @@ class AppearanceOptionsVC: UITableViewController {
             tableView.reloadData()
         }
     }
-
-    
 
     /*
     // MARK: - Navigation

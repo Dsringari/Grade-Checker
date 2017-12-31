@@ -56,18 +56,18 @@ class UpdateService {
 	}
 
 	func updateStudentInformation(_ completion: @escaping CompletionType) {
-        
+
         guard Reachability() != nil else {
             completion(false, badConnectionError)
             return
         }
-        
+
         LoginService(refreshUserWithID: student.user!.objectID) { successful, error in
             guard successful else {
                 completion(false, badLoginError)
                 return
             }
-            
+
             // Load the main courses page
             let coursesURL: String = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + self.student.id!
             Manager.sharedInstance.request(coursesURL)
@@ -83,7 +83,7 @@ class UpdateService {
                         if let doc = Kanna.HTML(html: response.data!, encoding: String.Encoding.utf8) {
                             let subjectLinksPath = "//*[@id=\"contentPipe\"]/table//tr[@class!=\"classNotGraded\"]//td/a" // finds all the links on the visable table NOTE: DO NOT INCLUDE /tbody FOR SIMPLE TABLES WITHOUT A HEADER AND FOOTER
                             let subjectLinks = doc.xpath(subjectLinksPath)
-                            
+
                             var names: [String] = []
                             var addresses: [String] = []
                             for link in subjectLinks {
@@ -91,38 +91,38 @@ class UpdateService {
                                 let address = "https://pamet-sapphire.k12system.com" + link["href"]!
                                 addresses.append(address)
                             }
-                            
+
                             guard names.count != 0 else {
                                 completion(false, noGradesError)
                                 return
                             }
-                            
+
                             let teacherXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[2]"
                             var teachers: [String] = []
                             for teacherElement in doc.xpath(teacherXPath) {
                                 teachers.append(teacherElement.text!)
                             }
-                            
+
                             let roomXPath = "//*[@id=\"contentPipe\"]/table/tr[@class!=\"classNotGraded\"]/td[4]"
                             var rooms: [String] = []
                             for roomElement in doc.xpath(roomXPath) {
                                 rooms.append(roomElement.text!)
                             }
-                            
+
                             // Delete all subjects that were not found by their address
                             let predicate = NSPredicate(format: "NOT(address IN %@) AND student == %@", argumentArray: [addresses, self.student])
                             Subject.mr_deleteAll(matching: predicate, in: self.context)
-                            
+
                             let subjectDownloadTask = DispatchGroup()
                             var downloadTaskSuccess = true
                             var downloadTaskError: Error? = nil
-                            
-                            for (i,_) in subjectLinks.enumerated() {
+
+                            for (i, _) in subjectLinks.enumerated() {
                                 let subject = [
                                     "name": names[i],
                                     "teacher": teachers[i],
                                     "room": rooms[i],
-                                    "address": addresses[i],
+                                    "address": addresses[i]
                                 ]
                                 let importedSubject = Subject.mr_import(from: subject, in: self.context)
                                 importedSubject.student = self.student
@@ -134,10 +134,10 @@ class UpdateService {
                                         return
                                     }
                                     subjectDownloadTask.leave()
-                                    
+
                                 }
                             }
-                            
+
                             subjectDownloadTask.notify(queue: DispatchQueue.main) {
                                 guard downloadTaskSuccess else {
                                     self.context.rollback()
@@ -149,11 +149,11 @@ class UpdateService {
                                     completion(true, nil)
                                 })
                             }
-                            
+
                         }
                     }
             }
-            
+
         }
 
     }
@@ -172,20 +172,20 @@ class UpdateService {
 					if let doc = Kanna.HTML(html: response.data!, encoding: String.Encoding.utf8) {
 						let mpXPath = "//*[@id=\"contentPipe\"]/div[3]/table/tr//td[a]/a"
 						let otherXPath = "//*[@id=\"contentPipe\"]/div[3]/table/tr//td[b]"
-                        
+
                         let subjectAddress = response.response!.url!.absoluteString
                         let currentSubject = Subject.mr_findFirst(byAttribute: "address", withValue: subjectAddress, in: self.context)!
-                        
-                        let mpAddresses = doc.xpath(mpXPath).map{"https://pamet-sapphire.k12system.com" + $0["href"]!}
-                        
+
+                        let mpAddresses = doc.xpath(mpXPath).map {"https://pamet-sapphire.k12system.com" + $0["href"]!}
+
                         // Delete all mp of this subject that are not found in mpAddresses
                         let predicate = NSPredicate(format: "NOT(address IN %@) AND subject.address == %@", argumentArray: [mpAddresses, subjectAddress])
                         MarkingPeriod.mr_deleteAll(matching: predicate, in: self.context)
-                        
+
                         let mpDownloadGroup = DispatchGroup()
                         var mpDownloadTaskSuccess = true
                         var mpDownloadTaskError: Error? = nil
-                        
+
 						for (_, node) in doc.xpath(mpXPath).enumerated() {
 							if let mpAddress = node["href"] {
                                 let mp: [String: Any] = [
@@ -195,7 +195,7 @@ class UpdateService {
                                     "subjectAddress": subjectAddress
                                 ]
                                 MarkingPeriod.mr_import(from: mp, in: self.context)
-                                
+
                                 mpDownloadGroup.enter()
                                 Manager.sharedInstance.request(mp["address"]! as! String)
                                     .validate()
@@ -206,14 +206,14 @@ class UpdateService {
                                             mpDownloadGroup.leave()
                                             return
                                         }
-                                        
+
                                         guard let mpPageDoc = Kanna.HTML(html: response.data!, encoding: String.Encoding.utf8) else {
                                             mpDownloadTaskError = unknownResponseError
                                             mpDownloadTaskSuccess = false
                                             mpDownloadGroup.leave()
                                             return
                                         }
-                                        
+
                                         if let currentMP = MarkingPeriod.mr_findFirst(byAttribute: "address", withValue: response.response!.url!.absoluteString, in: self.context) {
                                             if let result = self.parseMarkingPeriodPage(html: mpPageDoc) {
                                                 let subject = currentMP.subject
@@ -224,16 +224,16 @@ class UpdateService {
                                                 if currentMP.subject.mostRecentMarkingPeriod() == currentMP {
                                                     subject.mostRecentGrade = currentMP.percentGrade
                                                 }
-                                                
+
                                                 var assignmentsToDelete = currentMP.assignments!.allObjects as! [Assignment]
                                                 for assignment in result.assignments {
                                                     let dateFormatter = DateFormatter()
                                                     // http://userguide.icu-project.org/formatparse/datetime/ <- Guidelines to format date
                                                     dateFormatter.dateFormat = "MM/dd/yy-z"
                                                     dateFormatter.timeZone = TimeZone(abbreviation: "EST")
-                                
+
                                                     let dateCreated = dateFormatter.date(from: assignment["date"]!!)!
-                                                    
+
                                                     // See if lastUpdated has the most recent date
                                                     if let lastUpdated = subject.lastUpdated {
                                                         if lastUpdated.compare(dateCreated) == .orderedAscending {
@@ -242,19 +242,19 @@ class UpdateService {
                                                     } else {
                                                         subject.lastUpdated = dateCreated
                                                     }
-                                                    
+
                                                     let foundAssignment = assignmentsToDelete.filter { a in
                                                         if a.name == assignment["name"]!! && a.category == assignment["category"]! {
                                                             return a.date.compare(dateCreated) == .orderedSame
                                                         }
-                                                        
+
                                                         return false
                                                     }.first
-                                                    
+
                                                     if let oldAssignment = foundAssignment {
                                                         assignmentsToDelete.removeObject(oldAssignment)
                                                         oldAssignment.mr_importValuesForKeys(with: assignment)
-                                                        
+
                                                         // We don't want to set assignments as old here. We should only change it in detail vc.
                                                         if !oldAssignment.changedValues().isEmpty {
                                                             oldAssignment.newUpdate = true
@@ -265,22 +265,22 @@ class UpdateService {
                                                         newA.markingPeriod = currentMP
                                                         newA.newUpdate = !self.firstLoad as NSNumber
                                                     }
-                                                    
+
                                                 }
-                                                
+
                                                 for a in assignmentsToDelete {
                                                     a.mr_deleteEntity(in: self.context)
                                                 }
-                                                
+
                                             }
                                         }
-                                        
+
                                         mpDownloadGroup.leave()
                                     })
 
 							}
 						}
-                        
+
                         mpDownloadGroup.notify(queue: DispatchQueue.main) {
                             guard mpDownloadTaskSuccess else {
                                 completion(false, mpDownloadTaskError as NSError?)
@@ -349,7 +349,7 @@ class UpdateService {
 		if (headers.count == 0) {
 			return nil
         }
-        
+
 		assigntmentIndex = String(headers.index(of: "Assignment")! + 1)
 		totalScoreIndex = String(headers.index(of: "totalScore")! + 1)
 		possibleScoreIndex = String(headers.index(of: "possibleScore")! + 1)
@@ -370,7 +370,6 @@ class UpdateService {
 			let text = aE.text!
 			aNames[i] = (text)
 		}
-        
 
 		// Check if we have an empty marking period
 		if (aNames.count == 0) {
@@ -430,8 +429,6 @@ class UpdateService {
             let text = aE.text! + "-EST"
             aDates[i] = text
         }
-      
-		
 
 		// Get all the categories
 		var aCategories: [Int: String] = [:]
@@ -441,12 +438,11 @@ class UpdateService {
                 aCategories[i] = text
             }
         }
-		
 
 		// Build the assignment dictionary
         var assignments: [[String: String?]] = []
 		for i in 0 ..< aNames.count {
-			let newA = ["name": aNames[i],"totalPoints": aTotalPoints[i],"possiblePoints": aPossiblePoints[i],"date": aDates[i],"category": aCategories[i]]
+			let newA = ["name": aNames[i], "totalPoints": aTotalPoints[i], "possiblePoints": aPossiblePoints[i], "date": aDates[i], "category": aCategories[i]]
 			assignments.append(newA)
 		}
 

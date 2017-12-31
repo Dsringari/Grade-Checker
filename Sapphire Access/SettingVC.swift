@@ -38,16 +38,16 @@ class SettingVC: StaticDataTableViewController {
             logout()
         }
     }
-    
+
     func logout() {
         User.mr_deleteAll(matching: NSPredicate(value: true))
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         UserDefaults.standard.set(nil, forKey: "selectedStudent")
-        
+
         _ = navigationController?.tabBarController?.navigationController?.popToRootViewController(animated: true)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "tabBarDismissed"), object: nil)
     }
-    
+
     /*
     // MARK: - Navigation
 

@@ -8,18 +8,17 @@
 
 import UIKit
 
-
 class SwitchStudentVC: UITableViewController {
-    
+
     var students: [Student] = []
     var selectedStudentName: String? = UserDefaults.standard.string(forKey: "selectedStudent")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if let students = Student.mr_findAll() {
             self.students = students as! [Student]
-            self.students = self.students.sorted{$0.grade! > $1.grade!}
+            self.students = self.students.sorted {$0.grade! > $1.grade!}
         }
 
         // Uncomment the following line to preserve selection between presentations
@@ -44,7 +43,7 @@ class SwitchStudentVC: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return students.count
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if selectedStudentName != students[indexPath.row].name {
@@ -54,18 +53,16 @@ class SwitchStudentVC: UITableViewController {
             NotificationCenter.default.post(name: Notification.Name("loadStudent"), object: nil)
             navigationController?.tabBarController?.selectedIndex = 0
             _ = navigationController?.popViewController(animated: false)
-            
-            
+
         }
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        
+
         cell.textLabel?.text = students[indexPath.row].name
-        
-        if let selectedStudentName = selectedStudentName , selectedStudentName == cell.textLabel?.text {
+
+        if let selectedStudentName = selectedStudentName, selectedStudentName == cell.textLabel?.text {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -75,7 +72,6 @@ class SwitchStudentVC: UITableViewController {
 
         return cell
     }
-    
 
     /*
     // Override to support conditional editing of the table view.

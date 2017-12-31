@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 
 protocol LockDelegate {
-    func logout() -> Void
+    func logout()
 }
 
 class LockVC: UIViewController {
@@ -20,7 +20,6 @@ class LockVC: UIViewController {
 
 	var user: User!
     var lockDelegate: LockDelegate!
-    
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -30,7 +29,7 @@ class LockVC: UIViewController {
 			self.continueButton.setTitle("Continue as " + student.name!, for: UIControlState())
 		}
 	}
-    
+
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -39,11 +38,11 @@ class LockVC: UIViewController {
 	func login() {
 		// Try to Login
 		self.activityIndicator.startAnimating()
-		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
+		_ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
 			DispatchQueue.main.async(execute: {
-                
+
 				self.activityIndicator.stopAnimating()
-                
+
 				if (successful) {
                     self.dismiss(animated: true, completion: nil)
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "loadStudent"), object: nil)
@@ -63,14 +62,14 @@ class LockVC: UIViewController {
                     self.present(alert, animated: true, completion: nil)
 
 				}
-                
+
 			})
 		})
 	}
-    
+
     @IBAction func continuePressed(_ sender: AnyObject) {
         let settings = UserDefaults.standard
-        
+
         if settings.bool(forKey: "useTouchID") {
             continueButton.isEnabled = false
             var error: NSError?
@@ -78,7 +77,7 @@ class LockVC: UIViewController {
                 let context: LAContext = LAContext()
                 let localizedReasonString = "Login with Touch ID"
                 context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReasonString, reply: { success, error in
-                    
+
                     DispatchQueue.main.async(execute: {
                         self.continueButton.isEnabled = true
                         if (success) {
@@ -123,16 +122,15 @@ class LockVC: UIViewController {
         } else {
             login()
         }
-        
+
     }
-    
+
     func logout() {
         self.dismiss(animated: false) {
             self.lockDelegate.logout()
         }
-        
-    }
 
+    }
 
 	/*
 	 // MARK: - Navigation

@@ -55,7 +55,7 @@ class ResumeVC: UIViewController {
 	func login() {
 		// Try to Login
 		self.activityIndicator.startAnimating()
-		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
+		_ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
 			DispatchQueue.main.async {
 				self.activityIndicator.stopAnimating()
 				if (successful) {
@@ -106,9 +106,8 @@ class ResumeVC: UIViewController {
 									self.backToLogin()
 								})
 								failed.addAction(Ok)
-								
+
                                 self.present(failed, animated: true, completion: nil)
-								
 
 								return
                             } else if error.code == LAError.Code.userFallback.rawValue {

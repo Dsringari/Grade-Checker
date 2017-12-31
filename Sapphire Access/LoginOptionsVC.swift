@@ -11,7 +11,7 @@ import LocalAuthentication
 import StaticDataTableViewController
 
 class LoginOptionsVC: UITableViewController {
-    
+
     lazy var hasTouchID: Bool = {
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }()
@@ -49,7 +49,7 @@ class LoginOptionsVC: UITableViewController {
         } else {
             UserDefaults.standard.set(false, forKey: "useTouchID")
         }
-        
+
     }
 
 }

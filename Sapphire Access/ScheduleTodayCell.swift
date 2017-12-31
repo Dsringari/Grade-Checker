@@ -11,7 +11,7 @@ import UIKit
 class ScheduleTodayCell: UITableViewCell {
 
     @IBOutlet var letterDay: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

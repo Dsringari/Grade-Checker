@@ -21,9 +21,9 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet var continueButton: UIButton!
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        
+
         hasTouchID = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-        
+
 		students = Student.mr_findAll() as! [Student]
 
 		if (students.count == 1) {
@@ -58,11 +58,10 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         willDisableContinueButton()
 	}
-    
-    
+
     @IBAction func saveSettingsAndContinue(_ sender: AnyObject) {
         let settings = UserDefaults.standard
-        
+
         if let index = selectedIndex {
             let student = students[index]
             settings.set(student.name, forKey: "selectedStudent")
@@ -70,8 +69,8 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             User.mr_deleteAll(matching: NSPredicate(value: true))
             NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
-        
-        if touchIDSwitch.isOn{
+
+        if touchIDSwitch.isOn {
             let context = LAContext()
             context.localizedFallbackTitle = "" // Removes Enter Password Button
             self.continueButton.isEnabled = false
@@ -97,10 +96,9 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             settings.set(false, forKey: "useTouchID")
             self.performSegue(withIdentifier: "firstTimeHome", sender: nil)
         }
-        
 
     }
-    
+
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -197,7 +195,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 			cell.removeMargins()
 			return cell
 		}
-        
+
 		let cell = tableView.dequeueReusableCell(withIdentifier: "touchIDCell", for: indexPath) as! TouchIDSelectionCell
         cell.isUserInteractionEnabled = hasTouchID
         cell.textLabel?.isEnabled = hasTouchID
@@ -221,7 +219,7 @@ class SelectStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 		tableView.deselectRow(at: indexPath, animated: true)
         willDisableContinueButton()
 	}
-    
+
     func willDisableContinueButton() {
         if (selectedIndex == nil) {
             continueButton.isEnabled = false

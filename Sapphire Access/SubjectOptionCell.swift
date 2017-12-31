@@ -12,7 +12,7 @@ class SubjectOptionCell: UITableViewCell {
 
     @IBOutlet var name: UILabel!
     @IBOutlet var textField: UITextField!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

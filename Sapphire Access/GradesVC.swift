@@ -10,7 +10,7 @@ import UIKit
 import MagicalRecord
 import CoreData
 import GoogleMobileAds
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l < r
@@ -21,7 +21,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l > r
@@ -30,15 +30,11 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
-
 enum Sorting: Int {
     case recent
     case alphabetical
     case numerical
 }
-
-
 
 class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate, LockDelegate, NSFetchedResultsControllerDelegate {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -47,20 +43,19 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     @IBOutlet var popUpViewButton: UIButton!
 	@IBOutlet var adView: GADBannerView!
 	@IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
-    
+
     enum Badge {
         case updated
         case mock
         case both
     }
-    
+
     enum PopUpViewType {
         case loading
         case noInternet
         case noGrades
     }
-   
-    
+
 	var settingsCompletionHandler: (() -> Void)!
 
 	// Create an instance of a UITableViewController. This will host the tableView in order to solve uirefreshcontrol bugs
@@ -71,16 +66,16 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
     var selectedSubject: Subject!
 	var badges: [Int: Badge] = [:]
 	let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
+
 	lazy var refreshControl: UIRefreshControl = {
 		let refreshControl = UIRefreshControl()
 		refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
 		refreshControl.tintColor = UIColor.lightGray
 		return refreshControl
 	}()
-    
+
     var fetchedResultsController: NSFetchedResultsController<Subject>!
-    
+
     var sortMethod: Sorting {
         let sortingNumber = UserDefaults.standard.integer(forKey: "sortMethod")
         if let sort = Sorting(rawValue: sortingNumber) {
@@ -90,7 +85,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             return .recent
         }
     }
-    
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -102,19 +97,19 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		tableViewController.tableView = tableView
 		tableViewController.refreshControl = refreshControl
 		updateRefreshControl()
-        
+
         setupAdmob()
-		
+
         hidePopUpView()
-        
+
         loadStudent()
-		
+
         popUpViewButton.addTarget(self, action: #selector(loadStudent), for: .touchUpInside)
         popUpViewButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(loadStudent), name: NSNotification.Name(rawValue: "loadStudent"), object: nil)
 	}
-    
+
     func setupAdmob() {
         // Setup Admob
         adView.adSize = kGADAdSizeSmartBannerPortrait
@@ -122,27 +117,27 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         adView.rootViewController = self
         adView.delegate = self
         let request = GADRequest()
-        request.testDevices = ["f0b003932cbcc49284626d4b1cd3a5f5"];
+        request.testDevices = ["f0b003932cbcc49284626d4b1cd3a5f5"]
         adView.load(request)
     }
-    
-    override func viewWillDisappear(_ animated: Bool){
+
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         if self.navigationController!.viewControllers.contains(self) == false  //any other hierarchy compare if it contains self or not
         {
             // the view has been removed from the navigation stack or hierarchy, back is probably the cause
             // this will be slow with a large stack however.
-            
+
             NotificationCenter.default.removeObserver(self)
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         updateFetchResultsController()
         tableView.reloadData()
     }
-    
+
     func loadStudent() {
         let selectedStudentName = UserDefaults.standard.string(forKey: "selectedStudent")!
         guard let student = Student.mr_findFirst(with: NSPredicate(format: "name == %@", argumentArray: [selectedStudentName])) else {
@@ -152,7 +147,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         self.student = student
 		// Get the first name and set it as the title. We do this here so that the name will update when the student changes in the settings
 		self.navigationItem.title = student.name!.components(separatedBy: " ")[0] + "'s Grades"
-        
+
         fetchedResultsController = createFetchResultsController()
         do {
             try self.fetchedResultsController.performFetch()
@@ -160,7 +155,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         } catch(let error) {
             print(error)
         }
-        
+
 		startLoading()
 		if let service = UpdateService(studentID: student.objectID) {
 			service.updateStudentInformation({ successful, error in
@@ -211,18 +206,18 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-    
+
     func createFetchResultsController() -> NSFetchedResultsController<Subject> {
         let fetchRequest = NSFetchRequest<Subject>(entityName: "Subject")
-        
+
         fetchRequest.sortDescriptors = sortDescriptors()
-        
+
         fetchRequest.predicate = NSPredicate(format: "ANY markingPeriods.empty == false AND student == %@", argumentArray: [student])
         let frc = NSFetchedResultsController<Subject>(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.mr_default(), sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
         return frc
     }
-    
+
     func sortDescriptors() -> [NSSortDescriptor] {
         let nameSort = NSSortDescriptor(key: "name", ascending: true)
         switch sortMethod {
@@ -236,7 +231,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             return [gradeSort, nameSort]
         }
     }
-    
+
     func updateFetchResultsController() {
         fetchedResultsController.fetchRequest.sortDescriptors = sortDescriptors()
         do {
@@ -246,7 +241,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             print(error)
         }
     }
-    
+
     func updateRefreshControl() {
         // set the refresh control's title
         let formatter: DateFormatter = DateFormatter()
@@ -255,7 +250,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         self.refreshControl.attributedTitle = attributedTitle
     }
-    
+
     func percentToLetterGrade(_ percentGrade: Int) -> String {
         switch percentGrade {
         case 0 ... 59:
@@ -272,7 +267,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             return "A"
         }
     }
-    
+
     func startLoading() {
         if !popUpView.isHidden {
             hidePopUpView()
@@ -283,15 +278,15 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             tableView.setContentOffset(CGPoint(x: 0, y: tableView.contentOffset.y - refreshControl.frame.size.height), animated: true)
         }
     }
-    
+
     func stopLoading() {
         refreshControl.endRefreshing()
         hidePopUpView()
         activityIndicator.stopAnimating()
     }
-    
+
     func showPopUpView(_ type: PopUpViewType) {
-        
+
         tableView.isUserInteractionEnabled=false
         switch type {
         case .loading:
@@ -313,13 +308,13 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             popUpViewText.text = "No courses were found in Sapphire. Tap to retry."
             break
         }
-        
+
         popUpView.isHidden = false
         UIView.animate(withDuration: 0.3, animations: {
             self.popUpView.alpha = 1
         })
     }
-    
+
     func hidePopUpView() {
         tableView.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.3, animations: {
@@ -329,7 +324,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         popUpViewButton.isHidden = true
         popUpViewText.isHidden = true
     }
-    
+
     func logout() {
         User.mr_deleteAll(matching: NSPredicate(value: true))
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
@@ -337,9 +332,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         _ = navigationController?.tabBarController?.navigationController?.popToRootViewController(animated: false)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "tabBarDismissed"), object: nil)
     }
-    
-    
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "subjectView") {
             let sV = segue.destination as! DetailVC
@@ -350,11 +343,11 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             lockVC.lockDelegate = self
         }
     }
-    
+
     func tutorial() {
         let alert = UIAlertController(title: "New Features in 1.2  🎉", message: "We added real-time GPA calculation to your profile! Be sure to update the weight and credits for each subject under course averages.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
+
         if let storedVersion = UserDefaults.standard.string(forKey: "currVersion") {
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
             if storedVersion != version {
@@ -368,9 +361,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         }
     }
 
-    
     // MARK: - Table view data source
-
 
 	func numberOfSections(in tableView: UITableView) -> Int {
         if let sections = fetchedResultsController.sections {
@@ -380,11 +371,11 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+
 		badges.removeAll()
         if let subjects = fetchedResultsController.fetchedObjects {
             let subjects = subjects as NSArray
-            for (index,subject) in subjects.enumerated() {
+            for (index, subject) in subjects.enumerated() {
                 let predicate = NSPredicate(format: "SUBQUERY(markingPeriods, $m, ANY $m.assignments.newUpdate == %@).@count != 0", argumentArray: [true])
                 if predicate.evaluate(with: subject) {
                     badges[index] = .updated
@@ -392,7 +383,7 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             }
             return subjects.count
         }
-        
+
         return 0
 	}
 
@@ -402,12 +393,12 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         configureCell(cell, indexPath: indexPath)
 		return cell
 	}
-    
+
     func configureCell(_ cell: UITableViewCell, indexPath: IndexPath) {
         let cell = cell as! SubjectTableViewCell
         let subject = fetchedResultsController.object(at: indexPath)
         cell.subjectNameLabel.text = subject.name
-        
+
         // Round the percent to the nearest whole number
         if let grade = subject.mostRecentGrade {
             let numberFormatter = NumberFormatter()
@@ -417,16 +408,16 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
         } else {
             cell.percentGradeLabel.text = "N/A"
         }
-        
+
         let dateString: String
         if let date = subject.lastUpdated {
             dateString = relativeDateStringForDate(date)
         } else {
             dateString = "N/A"
         }
-        
+
         cell.lastUpdatedLabel.text = "Last Updated: " + dateString
-        
+
         if let badge = badges[indexPath.row] {
             switch badge {
             case .updated:
@@ -445,9 +436,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
 		performSegue(withIdentifier: "subjectView", sender: nil)
 		tableView.deselectRow(at: indexPath, animated: true)
 	}
-    
+
     // MARK: - Fetched Results Controller Delegate
-    
+
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch(type) {
         case .insert:
@@ -472,9 +463,9 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
                 }
             }
         }
-        
+
     }
-    
+
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch(type) {
         case .insert:
@@ -485,39 +476,37 @@ class GradesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, GA
             break
         }
     }
-    
+
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-    
+
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-    
+
     // MARK: - Adview delegate
-    
+
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         self.tableViewBottomConstraint.constant = 50
         self.view.addSubview(self.adView)
-        
+
         if #available(iOS 9.0, *) {
             self.adView.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor)
         } else {
             // Fallback on earlier versions
             NSLayoutConstraint.constraints(withVisualFormat: "V:|[adView]|", options: [], metrics: nil, views: ["adView": self.adView])
         }
-        
+
         NSLayoutConstraint.constraints(withVisualFormat: "|-0-[adView]-0-|", options: [], metrics: nil, views: ["adView": self.adView])
-        
+
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
         })
     }
-    
+
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print(error)
     }
-
-
 
 }

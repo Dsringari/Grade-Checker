@@ -9,7 +9,6 @@
 import UIKit
 import MagicalRecord
 
-
 class ContainerVC: UIViewController {
 
 	@IBOutlet weak var containerView: UIView!
@@ -24,7 +23,7 @@ class ContainerVC: UIViewController {
 		} else {
 			currentViewController = storyboard?.instantiateViewController(withIdentifier: "resume")
 		}
-        
+
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(popToResume), name: "popToResume", object: nil)
 
 		self.currentViewController!.view.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +65,7 @@ class ContainerVC: UIViewController {
 		cycleFromViewController(currentViewController!, toViewController: newViewController!)
 		currentViewController = newViewController
 	}
-    
+
     func toResume() {
         let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "resume")
         newViewController!.view.translatesAutoresizingMaskIntoConstraints = false

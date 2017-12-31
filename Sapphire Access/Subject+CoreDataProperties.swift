@@ -25,10 +25,10 @@ extension Subject {
     @NSManaged var credits: NSDecimalNumber
     @NSManaged var markingPeriods: NSSet?
     @NSManaged var student: Student?
-    
+
     func mostRecentMarkingPeriod() -> MarkingPeriod {
         var sortedMPs = markingPeriods!.allObjects as! [MarkingPeriod]
-        sortedMPs = sortedMPs.filter{!$0.empty!.boolValue}.sorted{$0.number > $1.number}
+        sortedMPs = sortedMPs.filter {!$0.empty!.boolValue}.sorted {$0.number > $1.number}
         return sortedMPs[0]
     }
 

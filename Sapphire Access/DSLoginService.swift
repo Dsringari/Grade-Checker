@@ -21,26 +21,25 @@ class LoginService {
 		self.completion = completion
 		login()
 	}
-    
+
     // refreshes a logged in user
     @discardableResult
     init(refreshUserWithID userID: NSManagedObjectID, completion: @escaping (_ successful: Bool, _ error: NSError?) -> Void) {
         user = NSManagedObjectContext.mr_default().object(with: userID) as! User
         self.completion = completion
-        
-        
+
         let parameters = [
-            "javascrupt":"true",
-            "j_username":self.user.username!,
-            "j_password":self.user.password!,
-            "j_pin":self.user.pin!
+            "javascrupt": "true",
+            "j_username": self.user.username!,
+            "j_password": self.user.password!,
+            "j_pin": self.user.pin!
         ]
         Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm", method: .post, parameters: parameters).validate().response { response in
             guard response.error == nil else {
                 self.completion(false, response.error as NSError?)
                 return
             }
-            
+
             self.completion(true, nil)
         }
     }
@@ -52,19 +51,19 @@ class LoginService {
 				self.completion(false, error)
 				return
 			}
-            
+
             guard let username = self.user.username, let password = self.user.password, let pin = self.user.pin else {
                 self.completion(false, badLoginError)
                 return
             }
-            
+
             let parameters = [
-                "javascrupt":"true",
+                "javascrupt": "true",
                 "j_username": username,
                 "j_password": password,
                 "j_pin": pin
             ]
-            
+
             Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm", method: .post, parameters: parameters).validate().response { response in
                 guard response.error == nil else {
                     self.completion(false, response.error as NSError?)
@@ -76,7 +75,7 @@ class LoginService {
 	}
 
 	func logout(_ completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
-        
+
         Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1").validate().response { response in
             guard response.error == nil else {
                 completionHandler(false, response.error as NSError?)
@@ -89,21 +88,21 @@ class LoginService {
 	// Because of sapphire's strange cookie detection, we have to make a seperate request for the main page. Depending on the title of the page, we can determine whether the user has inputed the correct credentials.
 
 	fileprivate func getMainPageHtml() {
-        
+
         Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm").validate().response { response in
             guard response.error == nil else {
                 self.completion(false, response.error as NSError?)
                 return
             }
-            if let data = response.data, let html: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String?  {
-                
+            if let data = response.data, let html: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+
                 if let doc = Kanna.HTML(html: html, encoding: String.Encoding.utf8) {
-                    
+
                     switch (doc.title!) {
                     // This user is a student account so it has one student.
                     case " Student Backpack - Sapphire Community Web Portal ":
                         // Retrieve student information from backpack screen
-                        
+
                         let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
                         let id = i.components(separatedBy: "=")[1]
                         var student = Student.mr_findFirst(byAttribute: "id", withValue: id, in: NSManagedObjectContext.mr_default())
@@ -114,7 +113,7 @@ class LoginService {
                         let g: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[1]")[0]["title"]!
                         let grade = g.components(separatedBy: CharacterSet(charactersIn: "1234567890").inverted).joined(separator: "")
                         let school: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[1]/li/div[2]")[0]["title"]!
-                        
+
                         student?.id = id
                         student?.name = name
                         student?.grade = grade
@@ -124,10 +123,10 @@ class LoginService {
                         self.completion(true, nil)
                     // This user is a parent
                     case " Welcome - Sapphire Community Web Portal ":
-                        
+
                         // Clear Old Students
                         // Todo: Stop Deleting Entities
-                        
+
                         var ids: [String] = []
                         var names: [String] = []
                         var students: [Student] = []
@@ -145,20 +144,20 @@ class LoginService {
                             ids.append(id)
                             names.append(name)
                         }
-                        
+
                         var grades: [String] = []
                         for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/div[1]") {
                             let g = e["title"]!
                             let grade = g.components(separatedBy: CharacterSet(charactersIn: "1234567890").inverted).joined(separator: "")
                             grades.append(grade)
                         }
-                        
+
                         var schools: [String] = []
                         for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/div[2]") {
                             let school = e["title"]!
                             schools.append(school)
                         }
-                        
+
                         for index in 0 ..< ids.count {
                             students[index].id = ids[index]
                             students[index].name = names[index]
@@ -178,7 +177,7 @@ class LoginService {
             } else {
                 self.completion(false, unknownResponseError)
             }
-            
+
         }
 
 	}

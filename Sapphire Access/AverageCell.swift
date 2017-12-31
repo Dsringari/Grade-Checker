@@ -9,7 +9,7 @@
 import UIKit
 
 class AverageCell: UITableViewCell {
-    
+
     @IBOutlet var averageLabel: UILabel!
 
     override func awakeFromNib() {

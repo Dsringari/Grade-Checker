@@ -8,7 +8,7 @@
 
 import UIKit
 import MagicalRecord
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l < r
@@ -19,16 +19,15 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+class SubjectInfoVC: UITableViewController {
 
-class SubjectInfoVC: UITableViewController  {
-    
     var subject: Subject!
     var average: String = "N/A"
     var calculatedAverage: String = "N/A"
     var markingPeriods: [MarkingPeriod] = []
     var selectedMPNumber: String = "1"
-    var cells : [CellType] = []
-    
+    var cells: [CellType] = []
+
     var accessoryView: UIView = {
         let keyboardDoneButtonView = UIToolbar()
         keyboardDoneButtonView.sizeToFit()
@@ -36,8 +35,7 @@ class SubjectInfoVC: UITableViewController  {
         keyboardDoneButtonView.items = [doneButton]
         return keyboardDoneButtonView
     }()
-    
-    
+
     enum CellType {
         case markingPeriod(number: String, grade: String)
         case other(name: String, grade: String)
@@ -45,51 +43,48 @@ class SubjectInfoVC: UITableViewController  {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        
+
         self.title = subject.name
         markingPeriods = subject.markingPeriods!.allObjects as! [MarkingPeriod]
-        markingPeriods = markingPeriods.filter{!$0.empty!.boolValue}
-        markingPeriods.sort{$0.number < $1.number}
-        
+        markingPeriods = markingPeriods.filter {!$0.empty!.boolValue}
+        markingPeriods.sort {$0.number < $1.number}
+
         let otherInfo = dictionaryFromOtherGradesJSON(subject.otherGrades)
-        
+
         if let ytd = otherInfo?["YTD"] {
             average = ytd + "%"
         }
-        
+
         if let average = calculateAverageGrade(subject, roundToWholeNumber: false) {
             calculatedAverage = average + "%"
         }
-        
+
         // ORDER IS VERY IMPORTANT HERE
-        
+
         for mp in markingPeriods {
             if Int(mp.number)! <= 2 {
                 cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade! + "%"))
             }
         }
-        
+
         if let mt = otherInfo?["MT"] {
             cells.append(CellType.other(name: "Mid-Term", grade: mt))
         }
-        
+
         for mp in markingPeriods {
             if Int(mp.number)! > 2 {
                 cells.append(CellType.markingPeriod(number: mp.number, grade: mp.percentGrade! + "%"))
             }
         }
-        
+
         if let fe = otherInfo?["FE"] {
             cells.append(CellType.other(name: "Final Exam", grade: fe))
         }
-        
 
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,7 +93,7 @@ class SubjectInfoVC: UITableViewController  {
     }
 
     // MARK: - Table view data source
-    
+
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Averages"
@@ -108,7 +103,7 @@ class SubjectInfoVC: UITableViewController  {
             return "Settings"
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 0 {
             return "The official average is the YTD, which is updated at the end of the marking period. The calculated average is determined by weighing each marking period as 20% of your final grade. The final exam and midterm make up the last 20%."
@@ -133,7 +128,7 @@ class SubjectInfoVC: UITableViewController  {
             return 2
         }
     }
-    
+
     func creditsChanged(_ textField: UITextField) {
         if verify(text: textField.text) {
             subject.credits = NSDecimalNumber(string: textField.text)
@@ -146,7 +141,7 @@ class SubjectInfoVC: UITableViewController  {
             textField.text = subject.credits.stringValue
         }
     }
-    
+
     func weightChanged(_ textField: UITextField) {
         if verify(text: textField.text) {
             NSManagedObjectContext.mr_default().mr_save({ context in
@@ -158,7 +153,7 @@ class SubjectInfoVC: UITableViewController  {
             textField.text = subject.weight.stringValue
         }
     }
-    
+
     func verify(text: String?) -> Bool {
         if let text = text, text != "" {
             if let decimal = Decimal(string: text) {
@@ -168,7 +163,6 @@ class SubjectInfoVC: UITableViewController  {
         return false
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
@@ -196,10 +190,10 @@ class SubjectInfoVC: UITableViewController  {
             }
             return cell
         }
-        
+
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         let cellInfo = cells[indexPath.row]
-        
+
         switch cellInfo {
         case let .markingPeriod(number, grade):
             cell.textLabel?.text = "Marking Period \(number)"
@@ -215,21 +209,21 @@ class SubjectInfoVC: UITableViewController  {
             cell.contentView.layoutIfNeeded()
             cell.selectionStyle = .none
         }
-        
+
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard indexPath.section == 1 else {return}
-        
+
         if case let CellType.markingPeriod(number, _) = cells[indexPath.row] {
             selectedMPNumber = number
             performSegue(withIdentifier: "showMP", sender: self)
         }
-        
+
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMP" {
             let detailVC = segue.destination as! DetailVC

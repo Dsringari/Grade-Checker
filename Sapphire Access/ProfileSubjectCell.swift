@@ -12,7 +12,6 @@ class ProfileSubjectCell: UITableViewCell {
     @IBOutlet var name: UILabel!
     @IBOutlet var percentGrade: UILabel!
 
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

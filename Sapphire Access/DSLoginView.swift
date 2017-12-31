@@ -17,11 +17,10 @@ class DSLoginView: UIViewController {
 	@IBOutlet var usernameField: UITextField!
 	@IBOutlet var passwordField: UITextField!
 	@IBOutlet var pinField: UITextField!
-    
-    
+
 	@IBOutlet var loginButton: SpringButton!
     var loginButtonTitleText: String!
-    
+
 	@IBOutlet var forgotPasswordButton: UIButton!
 	var containerVC: ContainerVC!
 
@@ -75,15 +74,13 @@ class DSLoginView: UIViewController {
 		deregisterFromKeyboardNotifications()
 	}
 
-	func registerForKeyboardNotifications()
-	{
+	func registerForKeyboardNotifications() {
 		// Adding notifies on keyboard appearing
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 	}
 
-	func deregisterFromKeyboardNotifications()
-	{
+	func deregisterFromKeyboardNotifications() {
 		// Removing notifies on keyboard appearing
 		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -91,7 +88,7 @@ class DSLoginView: UIViewController {
 
 	func keyboardWillShow(_ notification: Notification) {
 		if (isHidden) {
-            
+
 			if let kbFrame = (notification as NSNotification).userInfo?[UIKeyboardFrameEndUserInfoKey] {
                 isHidden = false
 				let keyboardAnimationDuration = (notification as NSNotification).userInfo![UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
@@ -108,8 +105,7 @@ class DSLoginView: UIViewController {
 		}
 	}
 
-	func keyboardWillHide(_ notification: Notification)
-	{
+	func keyboardWillHide(_ notification: Notification) {
 		if let constant = setConstant {
 			isHidden = true
 			let animationDuration = (notification as NSNotification).userInfo![UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
@@ -142,7 +138,7 @@ class DSLoginView: UIViewController {
 
 	func loginUser(_ user: User) {
 		// Try to Login
-		let _ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
+		_ = LoginService(loginUserWithID: user.objectID, completionHandler: { successful, error in
 
 			DispatchQueue.main.async(execute: {
 				if (successful) {

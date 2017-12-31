@@ -10,7 +10,7 @@ import UIKit
 
 class TouchIDSelectionCell: UITableViewCell {
     @IBOutlet var touchIDSwitch: UISwitch!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -125,11 +125,10 @@ extension UIView {
 	}
 }
 
-
 extension UIImageView {
     public func imageFromUrl(_ urlString: String) {
         if let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
+            URLSession.shared.dataTask(with: url, completionHandler: {data, _, _ in
                 self.image = UIImage(data: data!, scale: 1)
             })
         }
@@ -176,17 +175,15 @@ func relativeDateStringForDate(_ date: Date) -> String {
         dateFormatter.dateFormat = "MM/dd/yy"
         return dateFormatter.string(from: date)
     }
-    
-    
-}
 
+}
 
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int) {
         let newRed = CGFloat(red)/255
         let newGreen = CGFloat(green)/255
         let newBlue = CGFloat(blue)/255
-        
+
         self.init(red: newRed, green: newGreen, blue: newBlue, alpha: 1.0)
     }
 }
