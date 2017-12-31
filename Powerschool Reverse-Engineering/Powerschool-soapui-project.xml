@@ -1,0 +1,3449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="72461cc6-2621-45ee-928b-69c08e0195f0" activeEnvironment="Default" name="Powerschool" resourceRoot="" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="1c8f9c8c-4756-47de-9330-da220c837a94" wsaVersion="NONE" name="PublicPortalServiceSoap12Binding" type="wsdl" bindingName="{http://publicportal.rest.powerschool.pearson.com}PublicPortalServiceSoap12Binding" soapVersion="1_2" anonymous="optional" definition="http://powerschool.methacton.org/pearson-rest/services/PublicPortalService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:endpoint>https://powerschool.methacton.org:8443/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpsSoap12Endpoint/</con:endpoint></con:endpoints><con:operation id="4b7d674a-d339-4982-a282-fcd5ba97bd6d" isOneWay="false" action="urn:getAllCourseRequests" name="getAllCourseRequests" bindingOperationName="getAllCourseRequests" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ac2ed88b-1afc-447b-bd95-1633305726df" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:getAllCourseRequests>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <studentId>?</studentId>
+      </xsd:getAllCourseRequests>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getAllCourseRequests"/></con:call></con:operation><con:operation id="30b85569-15a5-451c-af45-ac43536476b9" isOneWay="false" action="urn:getCredentialComplexityRules" name="getCredentialComplexityRules" bindingOperationName="getCredentialComplexityRules" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="be94c946-c807-4f0a-bd70-ee4989c35807" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:getCredentialComplexityRules>
+         <!--Optional:-->
+         <userType>?</userType>
+      </xsd:getCredentialComplexityRules>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getCredentialComplexityRules"/></con:call></con:operation><con:operation id="177c35ad-35f8-4a9f-af47-bfbd52821113" isOneWay="false" action="urn:getSchoolMapBySchoolNumber" name="getSchoolMapBySchoolNumber" bindingOperationName="getSchoolMapBySchoolNumber" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="95a23e0d-39f5-4eb8-bd9e-f9dea57007a6" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:getSchoolMapBySchoolNumber>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <schoolNumber>?</schoolNumber>
+      </xsd:getSchoolMapBySchoolNumber>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getSchoolMapBySchoolNumber"/></con:call></con:operation><con:operation id="4da28b2f-1920-4365-9834-6d555ddf8c68" isOneWay="false" action="urn:getStartStopTimeForAllSections" name="getStartStopTimeForAllSections" bindingOperationName="getStartStopTimeForAllSections" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bb80975f-8c74-430b-addf-41616f72f76a" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:getStartStopTimeForAllSections>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Zero or more repetitions:-->
+         <studentIDs>?</studentIDs>
+         <!--Optional:-->
+         <month>?</month>
+         <!--Optional:-->
+         <year>?</year>
+      </xsd:getStartStopTimeForAllSections>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getStartStopTimeForAllSections"/></con:call></con:operation><con:operation id="2c986bf5-2cac-4087-8c50-0ecfbb5d0e9f" isOneWay="false" action="urn:getStudentData" name="getStudentData" bindingOperationName="getStudentData" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5b7c3d82-48ed-4222-bef3-d53fdea66de6" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:getStudentData>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Zero or more repetitions:-->
+         <studentIDs>?</studentIDs>
+         <!--Optional:-->
+         <qil>
+            <!--Zero or more repetitions:-->
+            <includes>?</includes>
+         </qil>
+      </xsd:getStudentData>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getStudentData"/></con:call></con:operation><con:operation id="45655907-fa86-419f-9d87-dfda8cb52357" isOneWay="false" action="urn:getStudentPhoto" name="getStudentPhoto" bindingOperationName="getStudentPhoto" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5675f525-6be0-40d7-adf4-7fafc59bf5fe" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:getStudentPhoto>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <studentID>?</studentID>
+      </xsd:getStudentPhoto>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getStudentPhoto"/></con:call></con:operation><con:operation id="8f33e8ab-1124-4373-8fa0-30ec5ca8f595" isOneWay="false" action="urn:linkDeviceTokenToUser" name="linkDeviceTokenToUser" bindingOperationName="linkDeviceTokenToUser" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5835bac4-1465-46a6-b9ee-e24d2ae3b7f0" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:linkDeviceTokenToUser>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <deviceToken>?</deviceToken>
+      </xsd:linkDeviceTokenToUser>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:linkDeviceTokenToUser"/></con:call></con:operation><con:operation id="94df16e6-f5f8-49e3-89cc-6d70647251c1" isOneWay="false" action="urn:login" name="login" bindingOperationName="login" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9a41a29f-3438-411d-8057-eacdf6409398" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:login>
+         <!--Optional:-->
+         <username>?</username>
+         <!--Optional:-->
+         <password>?</password>
+         <!--Optional:-->
+         <userType>?</userType>
+      </xsd:login>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:login"/></con:call></con:operation><con:operation id="d7520a65-5a17-4ddf-96ff-94dca4111373" isOneWay="false" action="urn:loginToPublicPortal" name="loginToPublicPortal" bindingOperationName="loginToPublicPortal" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="580a6772-9ecd-4de9-9f31-7a4d4be4050b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:loginToPublicPortal>
+         <!--Optional:-->
+         <username>?</username>
+         <!--Optional:-->
+         <password>?</password>
+      </xsd:loginToPublicPortal>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:loginToPublicPortal"/></con:call></con:operation><con:operation id="87d0bde8-07b8-4b5a-af3e-869ab2de73b8" isOneWay="false" action="urn:logout" name="logout" bindingOperationName="logout" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2b3cd495-f210-4747-b339-62ccd2a21b5c" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:logout>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+      </xsd:logout>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:logout"/></con:call></con:operation><con:operation id="b44cfd40-1d78-41e5-8fc7-80858fa02337" isOneWay="false" action="urn:logoutAndDelinkDeviceToken" name="logoutAndDelinkDeviceToken" bindingOperationName="logoutAndDelinkDeviceToken" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="560c4a70-8d74-4ee8-9f47-12c36e81714d" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:logoutAndDelinkDeviceToken>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <deviceToken>?</deviceToken>
+      </xsd:logoutAndDelinkDeviceToken>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:logoutAndDelinkDeviceToken"/></con:call></con:operation><con:operation id="e0a1f244-bdc4-4054-b4fd-97f0b850ad9e" isOneWay="false" action="urn:recoverPassword" name="recoverPassword" bindingOperationName="recoverPassword" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="cac3161c-b893-4ef8-abff-84a1e539d2bf" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:recoverPassword>
+         <!--Optional:-->
+         <userType>?</userType>
+         <!--Optional:-->
+         <userName>?</userName>
+         <!--Optional:-->
+         <recoveryToken>?</recoveryToken>
+         <!--Optional:-->
+         <newPassword>?</newPassword>
+      </xsd:recoverPassword>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:recoverPassword"/></con:call></con:operation><con:operation id="3153b09a-ec52-4853-8b1e-d70caf8c6b21" isOneWay="false" action="urn:recoverUsername" name="recoverUsername" bindingOperationName="recoverUsername" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2d8d0677-55d5-4a06-ac7c-f3035758be26" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:recoverUsername>
+         <!--Optional:-->
+         <emailAddress>?</emailAddress>
+      </xsd:recoverUsername>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:recoverUsername"/></con:call></con:operation><con:operation id="92962fb5-efe6-4cd9-b578-9c8a02b9bf9d" isOneWay="false" action="urn:sendPasswordRecoveryEmail" name="sendPasswordRecoveryEmail" bindingOperationName="sendPasswordRecoveryEmail" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a432e99e-5579-4a57-bd9b-7b3e51c0c53a" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:sendPasswordRecoveryEmail>
+         <!--Optional:-->
+         <userType>?</userType>
+         <!--Optional:-->
+         <userName>?</userName>
+         <!--Optional:-->
+         <emailAddress>?</emailAddress>
+      </xsd:sendPasswordRecoveryEmail>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:sendPasswordRecoveryEmail"/></con:call></con:operation><con:operation id="d263ad52-ee9d-452e-be4f-9b0b6915ca5d" isOneWay="false" action="urn:storeCourseRequests" name="storeCourseRequests" bindingOperationName="storeCourseRequests" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bf008f3c-1df8-454a-859d-03292dfb18e8" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:storeCourseRequests>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <studentId>?</studentId>
+         <!--Zero or more repetitions:-->
+         <courseRequestGroups>
+            <!--Zero or more repetitions:-->
+            <courses>
+               <!--Optional:-->
+               <courseName>?</courseName>
+               <!--Optional:-->
+               <courseNumber>?</courseNumber>
+               <!--Optional:-->
+               <creditHours>?</creditHours>
+            </courses>
+            <!--Optional:-->
+            <description>?</description>
+            <!--Optional:-->
+            <emptyAdvice>?</emptyAdvice>
+            <!--Optional:-->
+            <gradeLevel>?</gradeLevel>
+            <!--Optional:-->
+            <id>?</id>
+            <!--Optional:-->
+            <itemType>?</itemType>
+            <!--Optional:-->
+            <maxCourseCount>?</maxCourseCount>
+            <!--Optional:-->
+            <minCourseCount>?</minCourseCount>
+            <!--Optional:-->
+            <name>?</name>
+            <!--Optional:-->
+            <requestType>?</requestType>
+            <!--Zero or more repetitions:-->
+            <requests>
+               <!--Optional:-->
+               <courseName>?</courseName>
+               <!--Optional:-->
+               <courseNumber>?</courseNumber>
+               <!--Optional:-->
+               <creditHours>?</creditHours>
+            </requests>
+            <!--Optional:-->
+            <schoolId>?</schoolId>
+            <!--Optional:-->
+            <sortOrder>?</sortOrder>
+            <!--Optional:-->
+            <yearId>?</yearId>
+         </courseRequestGroups>
+      </xsd:storeCourseRequests>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:storeCourseRequests"/></con:call></con:operation><con:operation id="17926b93-78c8-423e-a12a-e4a7e458bd00" isOneWay="false" action="urn:storeNotificationSettings" name="storeNotificationSettings" bindingOperationName="storeNotificationSettings" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="87ffc24f-e8f1-48a2-a8f7-ee7fc3f51e37" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soap:Header/>
+   <soap:Body>
+      <xsd:storeNotificationSettings>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <ns>
+            <!--Optional:-->
+            <applyToAllStudents>?</applyToAllStudents>
+            <!--Optional:-->
+            <balanceAlerts>?</balanceAlerts>
+            <!--Optional:-->
+            <detailedAssignments>?</detailedAssignments>
+            <!--Optional:-->
+            <detailedAttendance>?</detailedAttendance>
+            <!--Zero or more repetitions:-->
+            <emailAddresses>?</emailAddresses>
+            <!--Optional:-->
+            <frequency>?</frequency>
+            <!--Optional:-->
+            <gradeAndAttSummary>?</gradeAndAttSummary>
+            <!--Optional:-->
+            <guardianStudentId>?</guardianStudentId>
+            <!--Optional:-->
+            <mainEmail>?</mainEmail>
+            <!--Optional:-->
+            <schoolAnnouncements>?</schoolAnnouncements>
+            <!--Optional:-->
+            <sendNow>?</sendNow>
+         </ns>
+      </xsd:storeNotificationSettings>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:storeNotificationSettings"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="87167789-36ba-42b5-b998-e0ada5e5b839" wsaVersion="NONE" name="PublicPortalServiceSoap11Binding" type="wsdl" bindingName="{http://publicportal.rest.powerschool.pearson.com}PublicPortalServiceSoap11Binding" soapVersion="1_1" anonymous="optional" definition="http://powerschool.methacton.org/pearson-rest/services/PublicPortalService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://powerschool.methacton.org/pearson-rest/services/PublicPortalService?wsdl"><con:part><con:url>http://powerschool.methacton.org/pearson-rest/services/PublicPortalService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://publicportal.rest.powerschool.pearson.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://publicportal.rest.powerschool.pearson.com/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ax287="http://util.java/xsd" xmlns:ax285="http://model.rest.powerschool.pearson.com/xsd" xmlns:ax284="http://vo.rest.powerschool.pearson.com/xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:axis2="http://publicportal.rest.powerschool.pearson.com">
+  <wsdl:documentation>PublicPortalService</wsdl:documentation>
+  <wsdl:types>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://util.java/xsd">
+      <xs:complexType name="Locale">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ISO3Country" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ISO3Language" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="country" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="displayCountry" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="displayLanguage" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="displayName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="displayScript" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="displayVariant" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="extensionKeys" nillable="true" type="ax287:Set"/>
+          <xs:element minOccurs="0" name="language" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="script" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="unicodeLocaleAttributes" nillable="true" type="ax287:Set"/>
+          <xs:element minOccurs="0" name="unicodeLocaleKeys" nillable="true" type="ax287:Set"/>
+          <xs:element minOccurs="0" name="variant" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Set">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="empty" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://publicportal.rest.powerschool.pearson.com/xsd" xmlns:ax289="http://vo.rest.powerschool.pearson.com/xsd">
+      <xs:import namespace="http://vo.rest.powerschool.pearson.com/xsd"/>
+      <xs:element name="login">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="username" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="userType" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="loginResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="logout">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="logoutResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getSchoolMapBySchoolNumber">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element minOccurs="0" name="schoolNumber" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getSchoolMapBySchoolNumberResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:base64Binary"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getStudentPhoto">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element minOccurs="0" name="studentID" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getStudentPhotoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:base64Binary"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getStudentData">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="studentIDs" type="xs:long"/>
+            <xs:element minOccurs="0" name="qil" nillable="true" type="ax284:QueryIncludeListVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getStudentDataResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="loginToPublicPortal">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="username" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="loginToPublicPortalResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="storeNotificationSettings">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element minOccurs="0" name="ns" nillable="true" type="ax284:NotificationSettingsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="storeNotificationSettingsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="linkDeviceTokenToUser">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element minOccurs="0" name="deviceToken" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="linkDeviceTokenToUserResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:MessageVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="sendPasswordRecoveryEmail">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userType" type="xs:int"/>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="emailAddress" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="sendPasswordRecoveryEmailResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:MessageVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getCredentialComplexityRules">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userType" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getCredentialComplexityRulesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:CredentialComplexityRulesVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getStartStopTimeForAllSections">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="studentIDs" type="xs:long"/>
+            <xs:element minOccurs="0" name="month" type="xs:int"/>
+            <xs:element minOccurs="0" name="year" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getStartStopTimeForAllSectionsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getAllCourseRequests">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element minOccurs="0" name="studentId" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getAllCourseRequestsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="storeCourseRequests">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element minOccurs="0" name="studentId" type="xs:long"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="courseRequestGroups" nillable="true" type="ax284:CourseRequestGroupVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="storeCourseRequestsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="logoutAndDelinkDeviceToken">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            <xs:element minOccurs="0" name="deviceToken" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="logoutAndDelinkDeviceTokenResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:ResultsVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="recoverPassword">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userType" type="xs:int"/>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="recoveryToken" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="newPassword" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="recoverPasswordResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:PasswordResetVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="recoverUsername">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="emailAddress" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="recoverUsernameResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax284:MessageVO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://vo.rest.powerschool.pearson.com/xsd" xmlns:ax288="http://util.java/xsd" xmlns:ax286="http://model.rest.powerschool.pearson.com/xsd">
+      <xs:import namespace="http://model.rest.powerschool.pearson.com/xsd"/>
+      <xs:import namespace="http://util.java/xsd"/>
+      <xs:complexType name="BaseResultsVO">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="messageVOs" nillable="true" type="ax284:MessageVO"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MessageVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="msgCode" type="xs:int"/>
+          <xs:element minOccurs="0" name="title" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ResultsVO">
+        <xs:complexContent>
+          <xs:extension base="ax284:BaseResultsVO">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="courseRequestGroupsVOs" nillable="true" type="ax284:CourseRequestGroupVO"/>
+              <xs:element minOccurs="0" name="courseRequestRulesVO" nillable="true" type="ax284:CourseRequestRulesVO"/>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="studentDataVOs" nillable="true" type="ax284:StudentDataVO"/>
+              <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax284:UserSessionVO"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="CourseRequestGroupVO">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="courses" nillable="true" type="ax284:CourseRequestVO"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="emptyAdvice" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gradeLevel" type="xs:int"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="itemType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="maxCourseCount" type="xs:float"/>
+          <xs:element minOccurs="0" name="minCourseCount" type="xs:float"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="requestType" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="requests" nillable="true" type="ax284:CourseRequestVO"/>
+          <xs:element minOccurs="0" name="schoolId" type="xs:long"/>
+          <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+          <xs:element minOccurs="0" name="yearId" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CourseRequestVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="courseName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="courseNumber" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="creditHours" type="xs:float"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CourseRequestRulesVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="maxCredits" type="xs:double"/>
+          <xs:element minOccurs="0" name="minCredits" type="xs:double"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StudentDataVO">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="activities" nillable="true" type="ax284:ActivityVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="archivedFinalGrades" nillable="true" type="ax284:ArchivedFinalGradeVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="assignmentCategories" nillable="true" type="ax284:AsmtCatVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="assignmentScores" nillable="true" type="ax284:AssignmentScoreVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="assignments" nillable="true" type="ax284:AssignmentVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="attendance" nillable="true" type="ax284:AttendanceVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="attendanceCodes" nillable="true" type="ax284:AttendanceCodeVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="bulletins" nillable="true" type="ax286:BulletinLite"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="citizenCodes" nillable="true" type="ax284:CitizenCodeVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="citizenGrades" nillable="true" type="ax284:CitizenGradeVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="courseRequests" nillable="true" type="ax284:CourseRequestVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="enrollments" nillable="true" type="ax284:SectionEnrollmentVO"/>
+          <xs:element minOccurs="0" name="feeBalance" nillable="true" type="ax284:FeeBalanceVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="feeTransactions" nillable="true" type="ax284:FeeTransactionVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="feeTypes" nillable="true" type="ax284:FeeTypeVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="finalGrades" nillable="true" type="ax284:FinalGradeVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="gradeScales" nillable="true" type="ax284:GradeScaleVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="lunchTransactions" nillable="true" type="ax284:LunchTransactionVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="notInSessionDays" nillable="true" type="ax284:NotInSessionDayVO"/>
+          <xs:element minOccurs="0" name="notificationSettingsVO" nillable="true" type="ax284:NotificationSettingsVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="periods" nillable="true" type="ax284:PeriodVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="remoteSchools" nillable="true" type="ax284:SchoolVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="reportingTerms" nillable="true" type="ax284:ReportingTermVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="schools" nillable="true" type="ax284:SchoolVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="sections" nillable="true" type="ax284:SectionVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="standards" nillable="true" type="ax284:StandardVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="standardsGrades" nillable="true" type="ax284:StandardGradeVO"/>
+          <xs:element minOccurs="0" name="student" nillable="true" type="ax284:StudentVO"/>
+          <xs:element minOccurs="0" name="studentDcid" type="xs:long"/>
+          <xs:element minOccurs="0" name="studentId" type="xs:long"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="teachers" nillable="true" type="ax284:TeacherVO"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="terms" nillable="true" type="ax284:TermVO"/>
+          <xs:element minOccurs="0" name="yearId" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ActivityVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="category" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="required" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FinalGradeVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="commentValue" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="dateStored" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="grade" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="percent" type="xs:double"/>
+          <xs:element minOccurs="0" name="reportingTermId" type="xs:long"/>
+          <xs:element minOccurs="0" name="sectionid" type="xs:long"/>
+          <xs:element minOccurs="0" name="storeType" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArchivedFinalGradeVO">
+        <xs:complexContent>
+          <xs:extension base="ax284:FinalGradeVO">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="courseName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="courseNumber" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="schoolId" type="xs:long"/>
+              <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+              <xs:element minOccurs="0" name="storeCode" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="teacherName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="termEndDate" nillable="true" type="xs:dateTime"/>
+              <xs:element minOccurs="0" name="termId" type="xs:long"/>
+              <xs:element minOccurs="0" name="termStartDate" nillable="true" type="xs:dateTime"/>
+              <xs:element minOccurs="0" name="yearId" type="xs:long"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="AsmtCatVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AssignmentScoreVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="assignmentId" type="xs:long"/>
+          <xs:element minOccurs="0" name="collected" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="exempt" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="late" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="letterGrade" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="missing" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="percent" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="score" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="scoretype" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AssignmentVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalCategoryIds" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="assignmentid" type="xs:long"/>
+          <xs:element minOccurs="0" name="categoryId" type="xs:int"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="dueDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="includeinfinalgrades" type="xs:int"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="pointspossible" type="xs:double"/>
+          <xs:element minOccurs="0" name="publishDaysBeforeDue" type="xs:int"/>
+          <xs:element minOccurs="0" name="publishState" type="xs:int"/>
+          <xs:element minOccurs="0" name="publishonspecificdate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="publishscores" type="xs:int"/>
+          <xs:element minOccurs="0" name="sectionDcid" type="xs:long"/>
+          <xs:element minOccurs="0" name="sectionid" type="xs:long"/>
+          <xs:element minOccurs="0" name="type" type="xs:int"/>
+          <xs:element minOccurs="0" name="weight" type="xs:double"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AttendanceVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="adaValueCode" type="xs:double"/>
+          <xs:element minOccurs="0" name="adaValueTime" type="xs:double"/>
+          <xs:element minOccurs="0" name="admValue" type="xs:double"/>
+          <xs:element minOccurs="0" name="attCodeid" type="xs:long"/>
+          <xs:element minOccurs="0" name="attComment" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="attDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="attFlags" type="xs:int"/>
+          <xs:element minOccurs="0" name="attInterval" type="xs:int"/>
+          <xs:element minOccurs="0" name="attModeCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ccid" type="xs:long"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="periodid" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+          <xs:element minOccurs="0" name="studentid" type="xs:long"/>
+          <xs:element minOccurs="0" name="totalMinutes" type="xs:double"/>
+          <xs:element minOccurs="0" name="transactionType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="yearid" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AttendanceCodeVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="attCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="codeType" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+          <xs:element minOccurs="0" name="sortorder" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="yearid" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CitizenCodeVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codeName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CitizenGradeVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codeId" type="xs:long"/>
+          <xs:element minOccurs="0" name="reportingTermId" type="xs:long"/>
+          <xs:element minOccurs="0" name="sectionId" type="xs:long"/>
+          <xs:element minOccurs="0" name="storeType" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SectionEnrollmentVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="endDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="enrollStatus" type="xs:int"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FeeBalanceVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="balance" type="xs:double"/>
+          <xs:element minOccurs="0" name="credit" type="xs:double"/>
+          <xs:element minOccurs="0" name="debit" type="xs:double"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+          <xs:element minOccurs="0" name="yearid" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FeeTransactionVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="adjustment" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="courseName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="courseNumber" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="creationdate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="dateValue" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="departmentName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="feeAmount" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="feeBalance" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="feeCategoryName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="feePaid" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="feeTypeId" type="xs:long"/>
+          <xs:element minOccurs="0" name="feeTypeName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="feecharged" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="groupTransactionId" type="xs:long"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="modificationdate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="originalfee" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="priority" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="proRated" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="schoolfeeId" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+          <xs:element minOccurs="0" name="termid" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FeeTypeVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="descript" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="feeCategoryName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolNumber" type="xs:int"/>
+          <xs:element minOccurs="0" name="sort" type="xs:int"/>
+          <xs:element minOccurs="0" name="title" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GradeScaleVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="gradeScaleItems" nillable="true" type="ax284:GradeScaleItemVO"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="numeric" type="xs:int"/>
+          <xs:element minOccurs="0" name="numericMax" type="xs:int"/>
+          <xs:element minOccurs="0" name="numericMin" type="xs:int"/>
+          <xs:element minOccurs="0" name="numericPrecision" type="xs:int"/>
+          <xs:element minOccurs="0" name="numericScale" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GradeScaleItemVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="cutoffPercent" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="defaultZeroCutoff" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+          <xs:element minOccurs="0" name="gradeLabel" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="percentValue" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="pointsValue" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LunchTransactionVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="cash" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="credit" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="dateValue" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="debit" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="0" name="mealprice" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="neteffect" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="0" name="time" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NotInSessionDayVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="calType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="calendarDay" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolNumber" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NotificationSettingsVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="applyToAllStudents" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="balanceAlerts" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="detailedAssignments" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="detailedAttendance" type="xs:boolean"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="emailAddresses" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="frequency" type="xs:int"/>
+          <xs:element minOccurs="0" name="gradeAndAttSummary" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="guardianStudentId" type="xs:long"/>
+          <xs:element minOccurs="0" name="mainEmail" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolAnnouncements" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="sendNow" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PeriodVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="periodNumber" type="xs:int"/>
+          <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+          <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+          <xs:element minOccurs="0" name="yearid" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SchoolVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="address" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="disabledFeatures" nillable="true" type="ax284:DisabledFeaturesVO"/>
+          <xs:element minOccurs="0" name="highGrade" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="lowGrade" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="mapMimeType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolDisabled" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="schoolDisabledMessage" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolDisabledTitle" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolId" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolMapModifiedDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="schoolNumber" type="xs:long"/>
+          <xs:element minOccurs="0" name="schooladdress" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolcity" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolcountry" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolfax" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolphone" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolstate" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolzip" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DisabledFeaturesVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activities" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="assignments" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="attendance" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="citizenship" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="currentGpa" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="emailalerts" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="fees" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="finalGrades" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="meals" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="standards" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ReportingTermVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="endDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+          <xs:element minOccurs="0" name="sendingGrades" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+          <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="suppressGrades" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="suppressPercents" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="termid" type="xs:long"/>
+          <xs:element minOccurs="0" name="title" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="yearid" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SectionVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="courseCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="dcid" type="xs:long"/>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="enrollments" nillable="true" type="ax284:SectionEnrollmentVO"/>
+          <xs:element minOccurs="0" name="expression" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="periodSort" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="roomName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolCourseTitle" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolNumber" type="xs:long"/>
+          <xs:element minOccurs="0" name="sectionNum" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="startStopDates" nillable="true" type="ax284:StartStopDateVO"/>
+          <xs:element minOccurs="0" name="teacherID" type="xs:long"/>
+          <xs:element minOccurs="0" name="termID" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StartStopDateVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sectionEnrollmentId" type="xs:long"/>
+          <xs:element minOccurs="0" name="start" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="stop" nillable="true" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StandardVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+          <xs:element minOccurs="0" name="gradeScaleID" type="xs:long"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="identifier" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="parentStandardID" type="xs:long"/>
+          <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StandardGradeVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="commentLastUpdated" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="exempt" type="xs:int"/>
+          <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+          <xs:element minOccurs="0" name="gradeEntered" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gradeLastUpdated" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="gradeType" type="xs:int"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="late" type="xs:int"/>
+          <xs:element minOccurs="0" name="missing" type="xs:int"/>
+          <xs:element minOccurs="0" name="reportingTermId" type="xs:long"/>
+          <xs:element minOccurs="0" name="sectionDcid" type="xs:long"/>
+          <xs:element minOccurs="0" name="sectionId" type="xs:long"/>
+          <xs:element minOccurs="0" name="standardId" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StudentVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="currentGPA" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="currentMealBalance" type="xs:double"/>
+          <xs:element minOccurs="0" name="currentTerm" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="dcid" type="xs:long"/>
+          <xs:element minOccurs="0" name="dob" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="ethnicity" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="firstName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gender" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="gradeLevel" type="xs:int"/>
+          <xs:element minOccurs="0" name="guardianAccessDisabled" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="lastName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="middleName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="photoDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="startingMealBalance" type="xs:double"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TeacherVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="email" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="firstName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="lastName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolPhone" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TermVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="abbrev" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="endDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="parentTermId" type="xs:long"/>
+          <xs:element minOccurs="0" name="schoolNumber" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="title" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UserSessionVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="locale" nillable="true" type="ax288:Locale"/>
+          <xs:element minOccurs="0" name="serverCurrentTime" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="serverInfo" nillable="true" type="ax286:ServerInfo"/>
+          <xs:element minOccurs="0" name="serviceTicket" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="studentIDs" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="userId" type="xs:long"/>
+          <xs:element minOccurs="0" name="userType" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="QueryIncludeListVO">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="includes" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CredentialComplexityRulesVO">
+        <xs:complexContent>
+          <xs:extension base="ax284:BaseResultsVO">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="lettersAndNumRequired" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="mixOfCaseRequired" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="requiredCharacterCount" type="xs:int"/>
+              <xs:element minOccurs="0" name="specialCharacterRequired" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="successful" type="xs:boolean"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="PasswordResetVO">
+        <xs:complexContent>
+          <xs:extension base="ax284:BaseResultsVO">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="minPasswordLength" type="xs:int"/>
+              <xs:element minOccurs="0" name="serviceTicket" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="successful" type="xs:boolean"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://model.rest.powerschool.pearson.com/xsd">
+      <xs:complexType name="BulletinLite">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="audience" type="xs:long"/>
+          <xs:element minOccurs="0" name="body" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="endDate" nillable="true" type="xs:date"/>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+          <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="schoolId" type="xs:long"/>
+          <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+          <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:date"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ServerInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="apiVersion" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="dayLightSavings" type="xs:int"/>
+          <xs:element minOccurs="0" name="parentSAMLEndPoint" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="publicPortalDisabled" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="publicPortalDisabledMessage" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="rawOffset" type="xs:int"/>
+          <xs:element minOccurs="0" name="serverTime" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="studentSAMLEndPoint" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="teacherSAMLEndPoint" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="timeZoneName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCredentialComplexityRulesRequest">
+    <wsdl:part name="parameters" element="ns:getCredentialComplexityRules"/>
+  </wsdl:message>
+  <wsdl:message name="getCredentialComplexityRulesResponse">
+    <wsdl:part name="parameters" element="ns:getCredentialComplexityRulesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="logoutAndDelinkDeviceTokenRequest">
+    <wsdl:part name="parameters" element="ns:logoutAndDelinkDeviceToken"/>
+  </wsdl:message>
+  <wsdl:message name="logoutAndDelinkDeviceTokenResponse">
+    <wsdl:part name="parameters" element="ns:logoutAndDelinkDeviceTokenResponse"/>
+  </wsdl:message>
+  <wsdl:message name="loginRequest">
+    <wsdl:part name="parameters" element="ns:login"/>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="parameters" element="ns:loginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getStudentDataRequest">
+    <wsdl:part name="parameters" element="ns:getStudentData"/>
+  </wsdl:message>
+  <wsdl:message name="getStudentDataResponse">
+    <wsdl:part name="parameters" element="ns:getStudentDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="sendPasswordRecoveryEmailRequest">
+    <wsdl:part name="parameters" element="ns:sendPasswordRecoveryEmail"/>
+  </wsdl:message>
+  <wsdl:message name="sendPasswordRecoveryEmailResponse">
+    <wsdl:part name="parameters" element="ns:sendPasswordRecoveryEmailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="logoutRequest">
+    <wsdl:part name="parameters" element="ns:logout"/>
+  </wsdl:message>
+  <wsdl:message name="logoutResponse">
+    <wsdl:part name="parameters" element="ns:logoutResponse"/>
+  </wsdl:message>
+  <wsdl:message name="loginToPublicPortalRequest">
+    <wsdl:part name="parameters" element="ns:loginToPublicPortal"/>
+  </wsdl:message>
+  <wsdl:message name="loginToPublicPortalResponse">
+    <wsdl:part name="parameters" element="ns:loginToPublicPortalResponse"/>
+  </wsdl:message>
+  <wsdl:message name="linkDeviceTokenToUserRequest">
+    <wsdl:part name="parameters" element="ns:linkDeviceTokenToUser"/>
+  </wsdl:message>
+  <wsdl:message name="linkDeviceTokenToUserResponse">
+    <wsdl:part name="parameters" element="ns:linkDeviceTokenToUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="recoverUsernameRequest">
+    <wsdl:part name="parameters" element="ns:recoverUsername"/>
+  </wsdl:message>
+  <wsdl:message name="recoverUsernameResponse">
+    <wsdl:part name="parameters" element="ns:recoverUsernameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getStudentPhotoRequest">
+    <wsdl:part name="parameters" element="ns:getStudentPhoto"/>
+  </wsdl:message>
+  <wsdl:message name="getStudentPhotoResponse">
+    <wsdl:part name="parameters" element="ns:getStudentPhotoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="recoverPasswordRequest">
+    <wsdl:part name="parameters" element="ns:recoverPassword"/>
+  </wsdl:message>
+  <wsdl:message name="recoverPasswordResponse">
+    <wsdl:part name="parameters" element="ns:recoverPasswordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getSchoolMapBySchoolNumberRequest">
+    <wsdl:part name="parameters" element="ns:getSchoolMapBySchoolNumber"/>
+  </wsdl:message>
+  <wsdl:message name="getSchoolMapBySchoolNumberResponse">
+    <wsdl:part name="parameters" element="ns:getSchoolMapBySchoolNumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="storeNotificationSettingsRequest">
+    <wsdl:part name="parameters" element="ns:storeNotificationSettings"/>
+  </wsdl:message>
+  <wsdl:message name="storeNotificationSettingsResponse">
+    <wsdl:part name="parameters" element="ns:storeNotificationSettingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="storeCourseRequestsRequest">
+    <wsdl:part name="parameters" element="ns:storeCourseRequests"/>
+  </wsdl:message>
+  <wsdl:message name="storeCourseRequestsResponse">
+    <wsdl:part name="parameters" element="ns:storeCourseRequestsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getAllCourseRequestsRequest">
+    <wsdl:part name="parameters" element="ns:getAllCourseRequests"/>
+  </wsdl:message>
+  <wsdl:message name="getAllCourseRequestsResponse">
+    <wsdl:part name="parameters" element="ns:getAllCourseRequestsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getStartStopTimeForAllSectionsRequest">
+    <wsdl:part name="parameters" element="ns:getStartStopTimeForAllSections"/>
+  </wsdl:message>
+  <wsdl:message name="getStartStopTimeForAllSectionsResponse">
+    <wsdl:part name="parameters" element="ns:getStartStopTimeForAllSectionsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="PublicPortalServicePortType">
+    <wsdl:operation name="getCredentialComplexityRules">
+      <wsdl:input message="axis2:getCredentialComplexityRulesRequest" wsaw:Action="urn:getCredentialComplexityRules"/>
+      <wsdl:output message="axis2:getCredentialComplexityRulesResponse" wsaw:Action="urn:getCredentialComplexityRulesResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="logoutAndDelinkDeviceToken">
+      <wsdl:input message="axis2:logoutAndDelinkDeviceTokenRequest" wsaw:Action="urn:logoutAndDelinkDeviceToken"/>
+      <wsdl:output message="axis2:logoutAndDelinkDeviceTokenResponse" wsaw:Action="urn:logoutAndDelinkDeviceTokenResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="axis2:loginRequest" wsaw:Action="urn:login"/>
+      <wsdl:output message="axis2:loginResponse" wsaw:Action="urn:loginResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentData">
+      <wsdl:input message="axis2:getStudentDataRequest" wsaw:Action="urn:getStudentData"/>
+      <wsdl:output message="axis2:getStudentDataResponse" wsaw:Action="urn:getStudentDataResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="sendPasswordRecoveryEmail">
+      <wsdl:input message="axis2:sendPasswordRecoveryEmailRequest" wsaw:Action="urn:sendPasswordRecoveryEmail"/>
+      <wsdl:output message="axis2:sendPasswordRecoveryEmailResponse" wsaw:Action="urn:sendPasswordRecoveryEmailResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdl:input message="axis2:logoutRequest" wsaw:Action="urn:logout"/>
+      <wsdl:output message="axis2:logoutResponse" wsaw:Action="urn:logoutResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="loginToPublicPortal">
+      <wsdl:input message="axis2:loginToPublicPortalRequest" wsaw:Action="urn:loginToPublicPortal"/>
+      <wsdl:output message="axis2:loginToPublicPortalResponse" wsaw:Action="urn:loginToPublicPortalResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="linkDeviceTokenToUser">
+      <wsdl:input message="axis2:linkDeviceTokenToUserRequest" wsaw:Action="urn:linkDeviceTokenToUser"/>
+      <wsdl:output message="axis2:linkDeviceTokenToUserResponse" wsaw:Action="urn:linkDeviceTokenToUserResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="recoverUsername">
+      <wsdl:input message="axis2:recoverUsernameRequest" wsaw:Action="urn:recoverUsername"/>
+      <wsdl:output message="axis2:recoverUsernameResponse" wsaw:Action="urn:recoverUsernameResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentPhoto">
+      <wsdl:input message="axis2:getStudentPhotoRequest" wsaw:Action="urn:getStudentPhoto"/>
+      <wsdl:output message="axis2:getStudentPhotoResponse" wsaw:Action="urn:getStudentPhotoResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="recoverPassword">
+      <wsdl:input message="axis2:recoverPasswordRequest" wsaw:Action="urn:recoverPassword"/>
+      <wsdl:output message="axis2:recoverPasswordResponse" wsaw:Action="urn:recoverPasswordResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getSchoolMapBySchoolNumber">
+      <wsdl:input message="axis2:getSchoolMapBySchoolNumberRequest" wsaw:Action="urn:getSchoolMapBySchoolNumber"/>
+      <wsdl:output message="axis2:getSchoolMapBySchoolNumberResponse" wsaw:Action="urn:getSchoolMapBySchoolNumberResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="storeNotificationSettings">
+      <wsdl:input message="axis2:storeNotificationSettingsRequest" wsaw:Action="urn:storeNotificationSettings"/>
+      <wsdl:output message="axis2:storeNotificationSettingsResponse" wsaw:Action="urn:storeNotificationSettingsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="storeCourseRequests">
+      <wsdl:input message="axis2:storeCourseRequestsRequest" wsaw:Action="urn:storeCourseRequests"/>
+      <wsdl:output message="axis2:storeCourseRequestsResponse" wsaw:Action="urn:storeCourseRequestsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCourseRequests">
+      <wsdl:input message="axis2:getAllCourseRequestsRequest" wsaw:Action="urn:getAllCourseRequests"/>
+      <wsdl:output message="axis2:getAllCourseRequestsResponse" wsaw:Action="urn:getAllCourseRequestsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getStartStopTimeForAllSections">
+      <wsdl:input message="axis2:getStartStopTimeForAllSectionsRequest" wsaw:Action="urn:getStartStopTimeForAllSections"/>
+      <wsdl:output message="axis2:getStartStopTimeForAllSectionsResponse" wsaw:Action="urn:getStartStopTimeForAllSectionsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PublicPortalServiceSoap11Binding" type="axis2:PublicPortalServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="getCredentialComplexityRules">
+      <soap:operation soapAction="urn:getCredentialComplexityRules" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logoutAndDelinkDeviceToken">
+      <soap:operation soapAction="urn:logoutAndDelinkDeviceToken" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="urn:login" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentData">
+      <soap:operation soapAction="urn:getStudentData" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendPasswordRecoveryEmail">
+      <soap:operation soapAction="urn:sendPasswordRecoveryEmail" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <soap:operation soapAction="urn:logout" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="loginToPublicPortal">
+      <soap:operation soapAction="urn:loginToPublicPortal" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="linkDeviceTokenToUser">
+      <soap:operation soapAction="urn:linkDeviceTokenToUser" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="recoverUsername">
+      <soap:operation soapAction="urn:recoverUsername" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentPhoto">
+      <soap:operation soapAction="urn:getStudentPhoto" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="recoverPassword">
+      <soap:operation soapAction="urn:recoverPassword" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSchoolMapBySchoolNumber">
+      <soap:operation soapAction="urn:getSchoolMapBySchoolNumber" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeNotificationSettings">
+      <soap:operation soapAction="urn:storeNotificationSettings" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeCourseRequests">
+      <soap:operation soapAction="urn:storeCourseRequests" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCourseRequests">
+      <soap:operation soapAction="urn:getAllCourseRequests" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStartStopTimeForAllSections">
+      <soap:operation soapAction="urn:getStartStopTimeForAllSections" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PublicPortalServiceSoap12Binding" type="axis2:PublicPortalServicePortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="getCredentialComplexityRules">
+      <soap12:operation soapAction="urn:getCredentialComplexityRules" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logoutAndDelinkDeviceToken">
+      <soap12:operation soapAction="urn:logoutAndDelinkDeviceToken" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap12:operation soapAction="urn:login" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentData">
+      <soap12:operation soapAction="urn:getStudentData" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendPasswordRecoveryEmail">
+      <soap12:operation soapAction="urn:sendPasswordRecoveryEmail" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <soap12:operation soapAction="urn:logout" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="loginToPublicPortal">
+      <soap12:operation soapAction="urn:loginToPublicPortal" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="linkDeviceTokenToUser">
+      <soap12:operation soapAction="urn:linkDeviceTokenToUser" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="recoverUsername">
+      <soap12:operation soapAction="urn:recoverUsername" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentPhoto">
+      <soap12:operation soapAction="urn:getStudentPhoto" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="recoverPassword">
+      <soap12:operation soapAction="urn:recoverPassword" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSchoolMapBySchoolNumber">
+      <soap12:operation soapAction="urn:getSchoolMapBySchoolNumber" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeNotificationSettings">
+      <soap12:operation soapAction="urn:storeNotificationSettings" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeCourseRequests">
+      <soap12:operation soapAction="urn:storeCourseRequests" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCourseRequests">
+      <soap12:operation soapAction="urn:getAllCourseRequests" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStartStopTimeForAllSections">
+      <soap12:operation soapAction="urn:getStartStopTimeForAllSections" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PublicPortalServiceHttpBinding" type="axis2:PublicPortalServicePortType">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="getCredentialComplexityRules">
+      <http:operation location="PublicPortalService/getCredentialComplexityRules"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="getCredentialComplexityRules"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="getCredentialComplexityRules"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logoutAndDelinkDeviceToken">
+      <http:operation location="PublicPortalService/logoutAndDelinkDeviceToken"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="logoutAndDelinkDeviceToken"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="logoutAndDelinkDeviceToken"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <http:operation location="PublicPortalService/login"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="login"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="login"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentData">
+      <http:operation location="PublicPortalService/getStudentData"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="getStudentData"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="getStudentData"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendPasswordRecoveryEmail">
+      <http:operation location="PublicPortalService/sendPasswordRecoveryEmail"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="sendPasswordRecoveryEmail"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="sendPasswordRecoveryEmail"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <http:operation location="PublicPortalService/logout"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="logout"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="logout"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="loginToPublicPortal">
+      <http:operation location="PublicPortalService/loginToPublicPortal"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="loginToPublicPortal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="loginToPublicPortal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="linkDeviceTokenToUser">
+      <http:operation location="PublicPortalService/linkDeviceTokenToUser"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="linkDeviceTokenToUser"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="linkDeviceTokenToUser"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="recoverUsername">
+      <http:operation location="PublicPortalService/recoverUsername"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="recoverUsername"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="recoverUsername"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentPhoto">
+      <http:operation location="PublicPortalService/getStudentPhoto"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="getStudentPhoto"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="getStudentPhoto"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="recoverPassword">
+      <http:operation location="PublicPortalService/recoverPassword"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="recoverPassword"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="recoverPassword"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSchoolMapBySchoolNumber">
+      <http:operation location="PublicPortalService/getSchoolMapBySchoolNumber"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="getSchoolMapBySchoolNumber"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="getSchoolMapBySchoolNumber"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeNotificationSettings">
+      <http:operation location="PublicPortalService/storeNotificationSettings"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="storeNotificationSettings"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="storeNotificationSettings"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeCourseRequests">
+      <http:operation location="PublicPortalService/storeCourseRequests"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="storeCourseRequests"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="storeCourseRequests"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCourseRequests">
+      <http:operation location="PublicPortalService/getAllCourseRequests"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="getAllCourseRequests"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="getAllCourseRequests"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStartStopTimeForAllSections">
+      <http:operation location="PublicPortalService/getStartStopTimeForAllSections"/>
+      <wsdl:input>
+        <mime:content type="text/xml" part="getStartStopTimeForAllSections"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content type="text/xml" part="getStartStopTimeForAllSections"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PublicPortalService">
+    <wsdl:port name="PublicPortalServiceHttpSoap11Endpoint" binding="axis2:PublicPortalServiceSoap11Binding">
+      <soap:address location="http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/"/>
+    </wsdl:port>
+    <wsdl:port name="PublicPortalServiceHttpsSoap11Endpoint" binding="axis2:PublicPortalServiceSoap11Binding">
+      <soap:address location="https://powerschool.methacton.org:8443/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpsSoap11Endpoint/"/>
+    </wsdl:port>
+    <wsdl:port name="PublicPortalServiceHttpSoap12Endpoint" binding="axis2:PublicPortalServiceSoap12Binding">
+      <soap12:address location="http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap12Endpoint/"/>
+    </wsdl:port>
+    <wsdl:port name="PublicPortalServiceHttpsSoap12Endpoint" binding="axis2:PublicPortalServiceSoap12Binding">
+      <soap12:address location="https://powerschool.methacton.org:8443/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpsSoap12Endpoint/"/>
+    </wsdl:port>
+    <wsdl:port name="PublicPortalServiceHttpsEndpoint" binding="axis2:PublicPortalServiceHttpBinding">
+      <http:address location="https://powerschool.methacton.org:8443/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpsEndpoint/"/>
+    </wsdl:port>
+    <wsdl:port name="PublicPortalServiceHttpEndpoint" binding="axis2:PublicPortalServiceHttpBinding">
+      <http:address location="http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpEndpoint/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:endpoint>https://powerschool.methacton.org:8443/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpsSoap11Endpoint/</con:endpoint></con:endpoints><con:operation id="173be237-ca65-44c7-a03b-520832568316" isOneWay="false" action="urn:getAllCourseRequests" name="getAllCourseRequests" bindingOperationName="getAllCourseRequests" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="409f13bb-7a6a-4c86-b0b6-468d3b1c595e" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:getAllCourseRequests>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <studentId>?</studentId>
+      </xsd:getAllCourseRequests>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getAllCourseRequests"/></con:call></con:operation><con:operation id="aca2d7a1-0489-4dd4-82b8-80fd8db870ad" isOneWay="false" action="urn:getCredentialComplexityRules" name="getCredentialComplexityRules" bindingOperationName="getCredentialComplexityRules" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="28c4e917-ca2a-465e-8640-1a56e18d3029" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:getCredentialComplexityRules>
+         <!--Optional:-->
+         <userType>?</userType>
+      </xsd:getCredentialComplexityRules>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getCredentialComplexityRules"/></con:call></con:operation><con:operation id="851140be-4609-4a1a-858a-507e5c722261" isOneWay="false" action="urn:getSchoolMapBySchoolNumber" name="getSchoolMapBySchoolNumber" bindingOperationName="getSchoolMapBySchoolNumber" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d295e55c-3f88-4815-b8a1-8b2b06959d44" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:getSchoolMapBySchoolNumber>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <schoolNumber>?</schoolNumber>
+      </xsd:getSchoolMapBySchoolNumber>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getSchoolMapBySchoolNumber"/></con:call></con:operation><con:operation id="55c130d7-4c44-4520-a8af-328327c50ade" isOneWay="false" action="urn:getStartStopTimeForAllSections" name="getStartStopTimeForAllSections" bindingOperationName="getStartStopTimeForAllSections" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="945ebc95-8d62-4a6b-9193-a0cfd7d6b968" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:getStartStopTimeForAllSections>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Zero or more repetitions:-->
+         <studentIDs>?</studentIDs>
+         <!--Optional:-->
+         <month>?</month>
+         <!--Optional:-->
+         <year>?</year>
+      </xsd:getStartStopTimeForAllSections>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getStartStopTimeForAllSections"/></con:call></con:operation><con:operation id="4f1aa406-6a6d-43fc-a37c-165857561786" isOneWay="false" action="urn:getStudentData" name="getStudentData" bindingOperationName="getStudentData" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="cb472e41-dcf8-4716-a84b-df518ffc7af4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:getStudentData>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Zero or more repetitions:-->
+         <studentIDs>?</studentIDs>
+         <!--Optional:-->
+         <qil>
+            <!--Zero or more repetitions:-->
+            <includes>?</includes>
+         </qil>
+      </xsd:getStudentData>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getStudentData"/></con:call></con:operation><con:operation id="2a7d5935-26b0-499f-a152-1f39ee318e28" isOneWay="false" action="urn:getStudentPhoto" name="getStudentPhoto" bindingOperationName="getStudentPhoto" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1790bd0b-de0c-4db6-8e37-c6bafb16d9f3" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:getStudentPhoto>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <studentID>?</studentID>
+      </xsd:getStudentPhoto>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:getStudentPhoto"/></con:call></con:operation><con:operation id="48a891c8-d8d9-4c81-a750-fe6e422996a5" isOneWay="false" action="urn:linkDeviceTokenToUser" name="linkDeviceTokenToUser" bindingOperationName="linkDeviceTokenToUser" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b1f38447-907d-4349-97d3-e655db4254cd" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:linkDeviceTokenToUser>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <deviceToken>?</deviceToken>
+      </xsd:linkDeviceTokenToUser>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:linkDeviceTokenToUser"/></con:call></con:operation><con:operation id="3ef6be44-2662-4bd0-9662-1f3e7dea84db" isOneWay="false" action="urn:login" name="login" bindingOperationName="login" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8166f35a-d863-4dc2-90b8-8b2fe7b108a4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:login>
+         <!--Optional:-->
+         <username>?</username>
+         <!--Optional:-->
+         <password>?</password>
+         <!--Optional:-->
+         <userType>?</userType>
+      </xsd:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:login"/></con:call></con:operation><con:operation id="c399fb94-ee5f-4e19-998a-d39e7c37ca76" isOneWay="false" action="urn:loginToPublicPortal" name="loginToPublicPortal" bindingOperationName="loginToPublicPortal" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="0b6ae36f-625f-4bfc-b486-819695320d9c" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:loginToPublicPortal>
+         <!--Optional:-->
+         <username>?</username>
+         <!--Optional:-->
+         <password>?</password>
+      </xsd:loginToPublicPortal>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:loginToPublicPortal"/></con:call><con:call id="37f12b4c-cfeb-45be-a3ac-df33323b3431" name="Request 2" wssPasswordType="PasswordDigest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:loginToPublicPortal>
+         <!--Optional:-->
+         <username>nsringari</username>
+         <!--Optional:-->
+         <password>Stars123$</password>
+      </xsd:loginToPublicPortal>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:username>pearson</con:username><con:password>m0bApP5</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:loginToPublicPortal"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="086d2223-078d-4c8e-b0dc-eb63dfbc954a" isOneWay="false" action="urn:logout" name="logout" bindingOperationName="logout" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d0bf30e8-02dc-4d1e-86c1-229943107dd0" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:logout>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+      </xsd:logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:logout"/></con:call></con:operation><con:operation id="5c9556b9-dcd7-49a3-8a52-21f00b390e8d" isOneWay="false" action="urn:logoutAndDelinkDeviceToken" name="logoutAndDelinkDeviceToken" bindingOperationName="logoutAndDelinkDeviceToken" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c34e2d53-a5ef-45aa-bb3f-70d64d9354d7" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:logoutAndDelinkDeviceToken>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <deviceToken>?</deviceToken>
+      </xsd:logoutAndDelinkDeviceToken>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:logoutAndDelinkDeviceToken"/></con:call></con:operation><con:operation id="20a995ab-f189-4aee-847e-ca6576ce0088" isOneWay="false" action="urn:recoverPassword" name="recoverPassword" bindingOperationName="recoverPassword" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bb8d03ef-ec6b-4913-a274-888308cd6e9e" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:recoverPassword>
+         <!--Optional:-->
+         <userType>?</userType>
+         <!--Optional:-->
+         <userName>?</userName>
+         <!--Optional:-->
+         <recoveryToken>?</recoveryToken>
+         <!--Optional:-->
+         <newPassword>?</newPassword>
+      </xsd:recoverPassword>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:recoverPassword"/></con:call></con:operation><con:operation id="29c7ce91-1f4e-4b8c-b30c-b2bc448cd81f" isOneWay="false" action="urn:recoverUsername" name="recoverUsername" bindingOperationName="recoverUsername" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d588b9de-8166-4d03-bf43-b391180f7b1c" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:recoverUsername>
+         <!--Optional:-->
+         <emailAddress>?</emailAddress>
+      </xsd:recoverUsername>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:recoverUsername"/></con:call></con:operation><con:operation id="e34494f6-4635-4390-9ca3-93620fa4b6a4" isOneWay="false" action="urn:sendPasswordRecoveryEmail" name="sendPasswordRecoveryEmail" bindingOperationName="sendPasswordRecoveryEmail" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a22402bc-857d-417c-a09b-3df5d9b486d5" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:sendPasswordRecoveryEmail>
+         <!--Optional:-->
+         <userType>?</userType>
+         <!--Optional:-->
+         <userName>?</userName>
+         <!--Optional:-->
+         <emailAddress>?</emailAddress>
+      </xsd:sendPasswordRecoveryEmail>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:sendPasswordRecoveryEmail"/></con:call></con:operation><con:operation id="47ecdee0-3353-4006-ab83-29e3241b3900" isOneWay="false" action="urn:storeCourseRequests" name="storeCourseRequests" bindingOperationName="storeCourseRequests" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2de496e3-e879-4e6c-839f-559e1b2a28f7" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:storeCourseRequests>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <studentId>?</studentId>
+         <!--Zero or more repetitions:-->
+         <courseRequestGroups>
+            <!--Zero or more repetitions:-->
+            <courses>
+               <!--Optional:-->
+               <courseName>?</courseName>
+               <!--Optional:-->
+               <courseNumber>?</courseNumber>
+               <!--Optional:-->
+               <creditHours>?</creditHours>
+            </courses>
+            <!--Optional:-->
+            <description>?</description>
+            <!--Optional:-->
+            <emptyAdvice>?</emptyAdvice>
+            <!--Optional:-->
+            <gradeLevel>?</gradeLevel>
+            <!--Optional:-->
+            <id>?</id>
+            <!--Optional:-->
+            <itemType>?</itemType>
+            <!--Optional:-->
+            <maxCourseCount>?</maxCourseCount>
+            <!--Optional:-->
+            <minCourseCount>?</minCourseCount>
+            <!--Optional:-->
+            <name>?</name>
+            <!--Optional:-->
+            <requestType>?</requestType>
+            <!--Zero or more repetitions:-->
+            <requests>
+               <!--Optional:-->
+               <courseName>?</courseName>
+               <!--Optional:-->
+               <courseNumber>?</courseNumber>
+               <!--Optional:-->
+               <creditHours>?</creditHours>
+            </requests>
+            <!--Optional:-->
+            <schoolId>?</schoolId>
+            <!--Optional:-->
+            <sortOrder>?</sortOrder>
+            <!--Optional:-->
+            <yearId>?</yearId>
+         </courseRequestGroups>
+      </xsd:storeCourseRequests>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:storeCourseRequests"/></con:call></con:operation><con:operation id="fbad6fcf-e64c-4dcf-ab44-8e12b944c2fa" isOneWay="false" action="urn:storeNotificationSettings" name="storeNotificationSettings" bindingOperationName="storeNotificationSettings" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="282d8126-5349-4b4a-ab08-2261f77daac9" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://powerschool.methacton.org:8080/pearson-rest/services/PublicPortalService.PublicPortalServiceHttpSoap11Endpoint/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://publicportal.rest.powerschool.pearson.com/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:storeNotificationSettings>
+         <!--Optional:-->
+         <userSessionVO>
+            <!--Optional:-->
+            <locale>
+               <!--Optional:-->
+               <ISO3Country>?</ISO3Country>
+               <!--Optional:-->
+               <ISO3Language>?</ISO3Language>
+               <!--Optional:-->
+               <country>?</country>
+               <!--Optional:-->
+               <displayCountry>?</displayCountry>
+               <!--Optional:-->
+               <displayLanguage>?</displayLanguage>
+               <!--Optional:-->
+               <displayName>?</displayName>
+               <!--Optional:-->
+               <displayScript>?</displayScript>
+               <!--Optional:-->
+               <displayVariant>?</displayVariant>
+               <!--Optional:-->
+               <extensionKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </extensionKeys>
+               <!--Optional:-->
+               <language>?</language>
+               <!--Optional:-->
+               <script>?</script>
+               <!--Optional:-->
+               <unicodeLocaleAttributes>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleAttributes>
+               <!--Optional:-->
+               <unicodeLocaleKeys>
+                  <!--Optional:-->
+                  <empty>?</empty>
+               </unicodeLocaleKeys>
+               <!--Optional:-->
+               <variant>?</variant>
+            </locale>
+            <!--Optional:-->
+            <serverCurrentTime>?</serverCurrentTime>
+            <!--Optional:-->
+            <serverInfo>
+               <!--Optional:-->
+               <apiVersion>?</apiVersion>
+               <!--Optional:-->
+               <dayLightSavings>?</dayLightSavings>
+               <!--Optional:-->
+               <parentSAMLEndPoint>?</parentSAMLEndPoint>
+               <!--Optional:-->
+               <publicPortalDisabled>?</publicPortalDisabled>
+               <!--Optional:-->
+               <publicPortalDisabledMessage>?</publicPortalDisabledMessage>
+               <!--Optional:-->
+               <rawOffset>?</rawOffset>
+               <!--Optional:-->
+               <serverTime>?</serverTime>
+               <!--Optional:-->
+               <studentSAMLEndPoint>?</studentSAMLEndPoint>
+               <!--Optional:-->
+               <teacherSAMLEndPoint>?</teacherSAMLEndPoint>
+               <!--Optional:-->
+               <timeZoneName>?</timeZoneName>
+            </serverInfo>
+            <!--Optional:-->
+            <serviceTicket>?</serviceTicket>
+            <!--Zero or more repetitions:-->
+            <studentIDs>?</studentIDs>
+            <!--Optional:-->
+            <userId>?</userId>
+            <!--Optional:-->
+            <userType>?</userType>
+         </userSessionVO>
+         <!--Optional:-->
+         <ns>
+            <!--Optional:-->
+            <applyToAllStudents>?</applyToAllStudents>
+            <!--Optional:-->
+            <balanceAlerts>?</balanceAlerts>
+            <!--Optional:-->
+            <detailedAssignments>?</detailedAssignments>
+            <!--Optional:-->
+            <detailedAttendance>?</detailedAttendance>
+            <!--Zero or more repetitions:-->
+            <emailAddresses>?</emailAddresses>
+            <!--Optional:-->
+            <frequency>?</frequency>
+            <!--Optional:-->
+            <gradeAndAttSummary>?</gradeAndAttSummary>
+            <!--Optional:-->
+            <guardianStudentId>?</guardianStudentId>
+            <!--Optional:-->
+            <mainEmail>?</mainEmail>
+            <!--Optional:-->
+            <schoolAnnouncements>?</schoolAnnouncements>
+            <!--Optional:-->
+            <sendNow>?</sendNow>
+         </ns>
+      </xsd:storeNotificationSettings>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:storeNotificationSettings"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
