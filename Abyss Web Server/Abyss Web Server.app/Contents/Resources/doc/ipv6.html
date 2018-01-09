@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>IPv6 Addresses and Ranges</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="IP Addresses and Ranges Format"
+HREF="ipformat.html"><LINK
+REL="PREVIOUS"
+TITLE="IP Addresses and Ranges Format"
+HREF="ipformat.html"><LINK
+REL="NEXT"
+TITLE="Patterns Format"
+HREF="patternsformat.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="IPv6 Addresses and Ranges"><META
+NAME="Description"
+CONTENT="IPv6 Addresses and Ranges"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="ipformat.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Appendix B. IP Addresses and Ranges Format</H2
+></HEADER
+><A
+HREF="patternsformat.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="IPV6"
+>IPv6 Addresses and Ranges</A
+></H1
+><P
+>			An IPv6 address is made of 8 groups of 16-bit hexadecimal values separated by colons as in <KBD
+CLASS="USERINPUT"
+>2001:0db8:85a3:0000:0000:8a2e:0370:7334</KBD
+>.
+		</P
+><P
+>			IPv6 addresses can be abbreviated by omitting leading zeroes in 16-bit values and by replacing each group of consecutive zeroes by a double colon. As such, <KBD
+CLASS="USERINPUT"
+>2001:0db8:85a3:0000:0000:8a2e:0370:7334</KBD
+> is equivalent to <KBD
+CLASS="USERINPUT"
+>2001:db8:85a3::8a2e:370:7334</KBD
+>.
+		</P
+><P
+>			An IPv6 address range must conform to one of the following forms:
+			<UL
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>*</KBD
+>: the range includes all valid IP addresses,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>ipA-ipB</KBD
+>: the range includes the IPv6 addresses between  <KBD
+CLASS="USERINPUT"
+>ipA</KBD
+> and <KBD
+CLASS="USERINPUT"
+>ipB</KBD
+>,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>ipA/n</KBD
+>: the range includes all the IPv6 addresses which first <KBD
+CLASS="USERINPUT"
+>n</KBD
+> bits are identical to the first <KBD
+CLASS="USERINPUT"
+>n</KBD
+> bits of <KBD
+CLASS="USERINPUT"
+>ipA</KBD
+>,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>ipA-ipB/n</KBD
+>: An IPv6 address that is included in this range is comprised between <KBD
+CLASS="USERINPUT"
+>ipA</KBD
+> and <KBD
+CLASS="USERINPUT"
+>ipB</KBD
+>, and has its first <KBD
+CLASS="USERINPUT"
+>n</KBD
+> bits identical to the first <KBD
+CLASS="USERINPUT"
+>n</KBD
+> bits of <KBD
+CLASS="USERINPUT"
+>ipA</KBD
+> and <KBD
+CLASS="USERINPUT"
+>ipB</KBD
+>.
+					</P
+></LI
+></UL
+>
+		</P
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="ipformat.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="ipformat.html"
+ACCESSKEY="P"
+>Prev</A
+>IP Addresses and Ranges Format</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="patternsformat.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Patterns Format</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

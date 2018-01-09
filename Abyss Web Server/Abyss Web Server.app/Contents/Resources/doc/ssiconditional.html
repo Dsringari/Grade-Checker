@@ -1,0 +1,510 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Conditional blocks</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="eXtended Server Side Includes"
+HREF="ssi.html"><LINK
+REL="PREVIOUS"
+TITLE="Directives"
+HREF="directives.html"><LINK
+REL="NEXT"
+TITLE="Encoding"
+HREF="ssiencoding.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Conditional blocks"><META
+NAME="Description"
+CONTENT="Conditional blocks"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="directives.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 7. eXtended Server Side Includes</H2
+></HEADER
+><A
+HREF="ssiencoding.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SSICONDITIONAL"
+>Conditional blocks</A
+></H1
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2771"
+>Syntax</A
+></H2
+><P
+>				Conditional blocks in XSSI look as follows:
+<PRE
+CLASS="PROGRAMLISTING"
+>   &#60;!-- #if expr="test_expr_1" --&#62;
+           Content to process if test_expr_1 is true
+   &#60;!-- #elif expr="test_expr_2" --&#62;
+           Content to process if test_expr_2 is true
+           .
+           .
+   &#60;!-- #elif expr="test_expr_n" --&#62;
+   		Content to process if test_expr_n is true
+   &#60;!-- #else --&#62;
+   		Content to process if all the above tests are false
+   &#60;!-- #endif --&#62;</PRE
+>
+	
+				<KBD
+CLASS="USERINPUT"
+>#elif</KBD
+> sections are optional. A conditional block can have zero or many of them. The <KBD
+CLASS="USERINPUT"
+>#else</KBD
+> is optional and a conditional block can have either no <KBD
+CLASS="USERINPUT"
+>#else</KBD
+> or exactly one.
+    		</P
+><P
+>    			Conditional blocks can be nested.
+    		</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2779"
+>Expression evaluation</A
+></H2
+><P
+>    			The value of the <KBD
+CLASS="USERINPUT"
+>expr</KBD
+> attribute inside <KBD
+CLASS="USERINPUT"
+>#if</KBD
+> and <KBD
+CLASS="USERINPUT"
+>#elif</KBD
+> directives is considered as an expression which evaluates to true or false according to these rules:
+    			
+    			
+    			<DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string</I
+></SPAN
+></DT
+><DD
+><P
+>                    		Evaluates to true if <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string</I
+></SPAN
+> is not empty.
+                    	</P
+></DD
+><DT
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>&#60;</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+>, <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>&#60;=</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+>, <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>&#62;</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+>, <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>&#62;=</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+>, <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>==</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+></DT
+><DD
+><P
+>							Performs a lexicographic comparison between <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> and <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+>.
+						</P
+></DD
+><DT
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>=</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+>, <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>!=</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+></DT
+><DD
+><P
+>							Performs a lexicographic comparison between <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_1</I
+></SPAN
+> and <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+>. If <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>string_2</I
+></SPAN
+> has the form <KBD
+CLASS="USERINPUT"
+>/</KBD
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>regex</I
+></SPAN
+><KBD
+CLASS="USERINPUT"
+>/</KBD
+>, a regular expression matching operation will take place instead. Matched sub-strings are captured inside the variables <KBD
+CLASS="USERINPUT"
+>$0</KBD
+>, <KBD
+CLASS="USERINPUT"
+>$1</KBD
+>, ..., <KBD
+CLASS="USERINPUT"
+>$9</KBD
+>. For more information about backreferences, refer to the "<A
+HREF="regex.html"
+>Regular Expressions</A
+>" appendix.
+						</P
+></DD
+><DT
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>&#38;&#38;</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr_2</I
+></SPAN
+></DT
+><DD
+><P
+>							Evaluates to true if both <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr_1</I
+></SPAN
+> and <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr_2</I
+></SPAN
+> expressions are true.
+						</P
+></DD
+><DT
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr_1</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>||</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr_2</I
+></SPAN
+></DT
+><DD
+><P
+>							Evaluates to true if at least one of the expressions <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr_1</I
+></SPAN
+> and <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr_2</I
+></SPAN
+> is true.
+						</P
+></DD
+><DT
+><KBD
+CLASS="USERINPUT"
+>!</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr</I
+></SPAN
+></DT
+><DD
+><P
+>							Evaluates to true if <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr</I
+></SPAN
+> is false.
+						</P
+></DD
+><DT
+><KBD
+CLASS="USERINPUT"
+>(</KBD
+> <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr</I
+></SPAN
+> <KBD
+CLASS="USERINPUT"
+>)</KBD
+></DT
+><DD
+><P
+>							Evaluates to true if <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>test_expr</I
+></SPAN
+> is true. Parentheses are used to enclose sub-expressions and supersede the priorities of their operators.
+						</P
+></DD
+></DL
+></DIV
+>
+    		
+			</P
+><P
+>				<KBD
+CLASS="USERINPUT"
+>!</KBD
+> has higher priority than <KBD
+CLASS="USERINPUT"
+>&#38;&#38;</KBD
+> and <KBD
+CLASS="USERINPUT"
+>||</KBD
+> which at their turn have higher priority than <KBD
+CLASS="USERINPUT"
+>=</KBD
+>, <KBD
+CLASS="USERINPUT"
+>!=</KBD
+>, <KBD
+CLASS="USERINPUT"
+>==</KBD
+>, <KBD
+CLASS="USERINPUT"
+>&#60;=</KBD
+>, <KBD
+CLASS="USERINPUT"
+>&#62;=</KBD
+>, <KBD
+CLASS="USERINPUT"
+>&#60;</KBD
+>, and <KBD
+CLASS="USERINPUT"
+>&#62;</KBD
+>.
+    		</P
+></SECTION
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="ssi.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="directives.html"
+ACCESSKEY="P"
+>Prev</A
+>Directives</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="ssiencoding.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Encoding</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html>
+	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+>
+		
+			<title> Account Settings - Sapphire Community Web Portal </title>
+			<link rel="icon" href="../Sapphire/images/parent_web_portal16.png" type="image/png" />
+			<link rel="shortcut icon" href="../Sapphire/images/parent_web_portal16.ico" type="image/x-icon" />
+			<link rel="stylesheet" type="text/css" href="../Sapphire/styles/bootstrap3.min.css" />
+			
+			<script type="text/javascript" src="../Sapphire/jschooser.cfm/frameworks_min.js"></script>
+			
+			<script type="text/javascript" src="../Sapphire/jschooser.cfm/base_extensions_min.js"></script>
+		
+			<script type="text/javascript" src="../Sapphire/jschooser.cfm/sapphirelib_min.js"></script>
+		
+			<script type="text/javascript" src="Account/AccountInfo.js"></script>
+			<link rel="stylesheet" type="text/css" href="Styles/CWPStyles.css" />
+			
+	</head>
+
+	<body>
+		
+			<div id="cwp_page_structure_div">
+				<table id="cwp_page_structure" class="cwp_frame">
+					<tr>
+						<td></td>
+						<td>
+				<div id="cwp_pageHeader">
+					<img src="Images/hdr_sapphiresoftware.jpg" style="cursor: pointer; float: right; margin: 0px; padding: 0px;" />
+					<img src="Images/hdr_CWPstudentbackpack.jpg" style="cursor: pointer; margin: 0px; padding: 0px;" onclick="window.location='/CommunityWebPortal/Welcome.cfm';" title="Home" />
+				</div>
+			</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="outside_left"><div style="background-color: #F0EFEA; float: right; height: 15px; width:100%;">&nbsp;</div></td>
+						<td>
+				<div id="cwp_menuLine">
+					
+					<ul id="cwp_topMenu">
+						
+								<li><b><a href="Welcome.cfm.html" title="Home">Home</a></b></li>
+							
+								<li>
+									
+										<a href="AccountInfo.cfm.html" title="Account Profile"><b>Sangeetha Sringari</b></a>
+									
+								</li>
+							
+								<li><b><a href="https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1">Logout</a></b></li>
+								<script src="CWPFunctions.js" type="text/javascript"></script>
+								<li><b><a class="qmitem-m qmparent" href="javascript:void(0)" onClick="openHelpPopup(ProductID='CWP',ScreenID='');">Help</a></b></li>
+							
+					</ul>
+				</div>
+			</td>
+						<td class="outside_right"></td>
+					</tr>
+					<tr>
+						<td class="outside_left">&nbsp;</td>
+						<td id="cwp_content">
+			
+			<table id="pageContent" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					
+					<td id="leftPipe">
+						
+		<div class="lp_section_header">ACCOUNT SETTINGS</div>
+		<ul class="lp_menu">
+			<li><a href="AccountInfo.cfm-ACCOUNT_TAB=General.html"><img src="../Sapphire/images/icons/icon31_accountinformation.png" />General</a></li>
+			
+				<li class="selected"><a href="AccountInfo.cfm-ACCOUNT_TAB=Students.html"><img src="../Sapphire/images/icons/icon31_students.png" />Students</a></li>
+			
+			<li><a href="AccountInfo.cfm-ACCOUNT_TAB=Notifications.html"><img src="../Sapphire/images/icons/icon31_mailyes.png" />Notifications</a></li>
+		</ul>
+		
+					</td>
+					
+					<td id="contentPipe">
+						
+
+	<script type="text/javascript">
+	<!--
+		function validateForm() {
+			var fieldLen=0;
+			var numOfChildren=0;
+			for (i=1;i<5;i++) {
+				fieldLen=$('main_form')['FIRST_NAME_'+i].value.length+$('main_form')['LAST_NAME_'+i].value.length+$('main_form')['BIRTH_DATE_'+i].value.length+$('main_form')['GRADE_LEVEL_'+i].value.length+$('main_form')['SCHOOL_ID_'+i].value.length;
+
+				if(fieldLen > 0) {
+					if ($('main_form')['FIRST_NAME_'+i].value.length==0 || $('main_form')['LAST_NAME_'+i].value.length==0 || $('main_form')['BIRTH_DATE_'+i].value.length==0 || $('main_form')['GRADE_LEVEL_'+i].value.length==0 || $('main_form')['SCHOOL_ID_'+i].value.length==0) {
+						alert('Please fill in the student name, birth date, grade level, and school for student '+i+'.');
+						return false;
+					}
+					numOfChildren=numOfChildren+1;
+				}
+			}
+			if(numOfChildren == 0) {
+				alert('No children requested.');
+				return false;
+			}
+			return true;
+		}
+	//-->
+	</script>
+
+	
+		<div id="pageTitle"><img src="../Sapphire/images/icons/icon75_search.png" />Account Settings - Request Access to Additional Children</div><br style="clear: both;" />
+		<div style="padding-left: 15px;">
+			<form id="main_form" name="main_form" method="post" action="/CommunityWebPortal/AccountInfo.cfm?ACCOUNT_TAB=NewStudents" class="smartform smartform:trackdirty">
+				<input type="hidden" name="Action" value="" />
+				<div style="text-align: center;">Enter the name, birth date, grade, and school below for the students you wish to access.<br />A request will be sent to the school district for approval.</div>
+				<br />
+				<table id="newStudentRequest">
+					
+					<tr>
+						<th style="text-align: center;">&nbsp;</th>
+						<th style="text-align: center;">First Name</th>
+						<th style="text-align: center;">Last Name</th>
+						<th style="text-align: center;">Birthday</th>
+						<th style="text-align: center;">Grade</th>
+						<th style="text-align: center;">School</th>
+					</td>
+					
+						<tr>
+							<td style="padding-right: 3px;">1)</td>
+							<td><input type="text" name="FIRST_NAME_1" size="25" maxlength="40" class="trimfield" value="" /></td>
+							<td><input type="text" name="LAST_NAME_1" size="25" maxlength="40" class="trimfield" value="" /></td>
+							<td><input type="text" name="BIRTH_DATE_1" size="10" maxlength="10" class="date_picker16 validate-date trimfield removespaces" value="" /></td>
+							<td><input type="text" name="GRADE_LEVEL_1" size="5" maxlength="5" class="trimfield" value="" /></td>
+							<td>
+								<select name="SCHOOL_ID_1" style="font-size: 9pt; width: 170px;">
+									
+										<option value=""></option>
+									
+										<option value="007" >Arcola Intermediate School</option>
+									
+										<option value="001" >Arrowhead Elementary</option>
+									
+										<option value="002" >Audubon Elementary</option>
+									
+										<option value="004" >Eagleville Elementary</option>
+									
+										<option value="009" >Methacton High School</option>
+									
+										<option value="012" >Skyview Upper Elementary School</option>
+									
+										<option value="005" >Woodland Elementary</option>
+									
+										<option value="006" >Worcester Elementary</option>
+									
+								</select>
+							</td>
+						</tr>
+					
+						<tr>
+							<td style="padding-right: 3px;">2)</td>
+							<td><input type="text" name="FIRST_NAME_2" size="25" maxlength="40" class="trimfield" value="" /></td>
+							<td><input type="text" name="LAST_NAME_2" size="25" maxlength="40" class="trimfield" value="" /></td>
+							<td><input type="text" name="BIRTH_DATE_2" size="10" maxlength="10" class="date_picker16 validate-date trimfield removespaces" value="" /></td>
+							<td><input type="text" name="GRADE_LEVEL_2" size="5" maxlength="5" class="trimfield" value="" /></td>
+							<td>
+								<select name="SCHOOL_ID_2" style="font-size: 9pt; width: 170px;">
+									
+										<option value=""></option>
+									
+										<option value="007" >Arcola Intermediate School</option>
+									
+										<option value="001" >Arrowhead Elementary</option>
+									
+										<option value="002" >Audubon Elementary</option>
+									
+										<option value="004" >Eagleville Elementary</option>
+									
+										<option value="009" >Methacton High School</option>
+									
+										<option value="012" >Skyview Upper Elementary School</option>
+									
+										<option value="005" >Woodland Elementary</option>
+									
+										<option value="006" >Worcester Elementary</option>
+									
+								</select>
+							</td>
+						</tr>
+					
+						<tr>
+							<td style="padding-right: 3px;">3)</td>
+							<td><input type="text" name="FIRST_NAME_3" size="25" maxlength="40" class="trimfield" value="" /></td>
+							<td><input type="text" name="LAST_NAME_3" size="25" maxlength="40" class="trimfield" value="" /></td>
+							<td><input type="text" name="BIRTH_DATE_3" size="10" maxlength="10" class="date_picker16 validate-date trimfield removespaces" value="" /></td>
+							<td><input type="text" name="GRADE_LEVEL_3" size="5" maxlength="5" class="trimfield" value="" /></td>
+							<td>
+								<select name="SCHOOL_ID_3" style="font-size: 9pt; width: 170px;">
+									
+										<option value=""></option>
+									
+										<option value="007" >Arcola Intermediate School</option>
+									
+										<option value="001" >Arrowhead Elementary</option>
+									
+										<option value="002" >Audubon Elementary</option>
+									
+										<option value="004" >Eagleville Elementary</option>
+									
+										<option value="009" >Methacton High School</option>
+									
+										<option value="012" >Skyview Upper Elementary School</option>
+									
+										<option value="005" >Woodland Elementary</option>
+									
+										<option value="006" >Worcester Elementary</option>
+									
+								</select>
+							</td>
+						</tr>
+					
+						<tr>
+							<td style="padding-right: 3px;">4)</td>
+							<td><input type="text" name="FIRST_NAME_4" size="25" maxlength="40" class="trimfield" value="" /></td>
+							<td><input type="text" name="LAST_NAME_4" size="25" maxlength="40" class="trimfield" value="" /></td>
+							<td><input type="text" name="BIRTH_DATE_4" size="10" maxlength="10" class="date_picker16 validate-date trimfield removespaces" value="" /></td>
+							<td><input type="text" name="GRADE_LEVEL_4" size="5" maxlength="5" class="trimfield" value="" /></td>
+							<td>
+								<select name="SCHOOL_ID_4" style="font-size: 9pt; width: 170px;">
+									
+										<option value=""></option>
+									
+										<option value="007" >Arcola Intermediate School</option>
+									
+										<option value="001" >Arrowhead Elementary</option>
+									
+										<option value="002" >Audubon Elementary</option>
+									
+										<option value="004" >Eagleville Elementary</option>
+									
+										<option value="009" >Methacton High School</option>
+									
+										<option value="012" >Skyview Upper Elementary School</option>
+									
+										<option value="005" >Woodland Elementary</option>
+									
+										<option value="006" >Worcester Elementary</option>
+									
+								</select>
+							</td>
+						</tr>
+					
+				</table>
+				<input type="button" value="Submit Request" onclick="if (!document.loaded) { alert('Please wait for the screen to finish loading.'); return false; } if ($('main_form').onsubmit) { if (!$('main_form').onsubmit()) { return false; } } if(!validateForm()){return false;}; $('main_form').Action.value='Save'; $('main_form').Action.disabled=false; if ($('main_form').smartsubmit) { $('main_form').smartsubmit(true); } else { $('main_form').submit(); }"/>
+			</form>
+		</div>
+	
+					</td>
+					
+					
+					
+				</tr>
+			</table>
+			</td>
+						<td class="outside_right">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="outside_bottom_left">&nbsp;</td>
+						<td class="outside_bottom">&nbsp;</td>
+						<td class="outside_bottom_right">&nbsp;</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+				<div id="cwp_footer">
+					<a href="Public/FAQ.cfm.html" target="_FAQ">FAQ</a> | <a href="Files/SapphireCommunityPortal-ParentManual.pdf" target="_Blank">Parent Manual</a> | <a href="Policies.cfm.html" target="_UserPolicy">Policies</a> | <a href="javascript:void(0);" onclick="window.open('/CommunityWebPortal/Public/TermsOfUse.cfm','Terms_of_Use','width=450,height=450,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,copyhistory=no,resizable=no'); return false;">Terms of Use</a> | 06/12/2016 5:15PM 
+					<br />
+					<br />
+					
+					Site contents Copyright &copy; 2012-2016 by K12 Systems, Inc. unless otherwise indicated.<br />
+					Product information and the associated logos are trademarks of K12 Systems.&nbsp; All rights reserved.
+				</div>
+			</td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+		
+	</body>
+</html>

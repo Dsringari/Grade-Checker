@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Server Activity</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Server Management"
+HREF="server.html"><LINK
+REL="PREVIOUS"
+TITLE="Server Statistics"
+HREF="serverstats.html"><LINK
+REL="NEXT"
+TITLE="General server configuration"
+HREF="servergeneral.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Server Activity"><META
+NAME="Description"
+CONTENT="Server Activity"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="serverstats.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 4. Server Management</H2
+></HEADER
+><A
+HREF="servergeneral.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SERVERACTIVITY"
+>Server Activity</A
+></H1
+><A
+NAME="SERVER-ACTIVITY"
+></A
+><P
+>			Open the console and select <B
+CLASS="GUILABEL"
+>Server Activity</B
+>. The console displays a dialog listing the current active connections. For each connection, the following properties are reported: 
+			<UL
+><LI
+><P
+>The IP address of the client</P
+></LI
+><LI
+><P
+>The HTTP verb of the request being served on the connection</P
+></LI
+><LI
+><P
+>The URL being served on the connection</P
+></LI
+><LI
+><P
+>The HTTP status code of  the response served on the connection</P
+></LI
+><LI
+><P
+>The elapsed time since the beginning of the service of the request associated to the connection</P
+></LI
+><LI
+><P
+>The amount of data sent so far as a response on the connection</P
+></LI
+></UL
+>
+		</P
+><P
+>			The list of the active connections is automatically refreshed every 10 seconds. Pressing the <B
+CLASS="GUIBUTTON"
+>Refresh</B
+> button forces an immediate update of the view.
+		</P
+><P
+>			Press <B
+CLASS="GUIBUTTON"
+>OK</B
+> to go back to the main console page.
+		</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>				Connections that are still established waiting for a subsequent request are shown with the text <B
+CLASS="GUILABEL"
+>Kept-alive connection</B
+>. These connections are actually made from HTTP/1.1 clients which support the HTTP keep-alive feature (serving more than a single request on one connection.)
+			</P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>				The listing may include the connection serving the URL associated with the <B
+CLASS="GUILABEL"
+>Server Activity</B
+> feature.
+			</P
+></BLOCKQUOTE
+></DIV
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="server.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="serverstats.html"
+ACCESSKEY="P"
+>Prev</A
+>Server Statistics</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="servergeneral.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>General server configuration</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

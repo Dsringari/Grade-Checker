@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Encoding</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="eXtended Server Side Includes"
+HREF="ssi.html"><LINK
+REL="PREVIOUS"
+TITLE="Conditional blocks"
+HREF="ssiconditional.html"><LINK
+REL="NEXT"
+TITLE="Custom Directory Listings"
+HREF="dirlist.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Encoding"><META
+NAME="Description"
+CONTENT="Encoding"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="ssiconditional.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 7. eXtended Server Side Includes</H2
+></HEADER
+><A
+HREF="dirlist.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SSIENCODING"
+>Encoding</A
+></H1
+><P
+>			In Abyss Web Server, the directives <KBD
+CLASS="USERINPUT"
+>#echo</KBD
+>, <KBD
+CLASS="USERINPUT"
+>#exec</KBD
+>, <KBD
+CLASS="USERINPUT"
+>#fsize</KBD
+>, <KBD
+CLASS="USERINPUT"
+>#flastmod</KBD
+>, and <KBD
+CLASS="USERINPUT"
+>#include</KBD
+> accept an optional argument <KBD
+CLASS="USERINPUT"
+>encoding</KBD
+>.
+		</P
+><P
+>			The value of this argument determines which conversion method is to be applied to the output of an XSSI directive. It can be:
+			<UL
+><LI
+><P
+>					<KBD
+CLASS="USERINPUT"
+>none</KBD
+>: No conversion  is performed and the output is transmitted without any modification.
+				</P
+></LI
+><LI
+><P
+>					<KBD
+CLASS="USERINPUT"
+>entity</KBD
+>: The output is converted using the XML/HTML escaping: <KBD
+CLASS="USERINPUT"
+>&#60;</KBD
+> is converted to <KBD
+CLASS="USERINPUT"
+>&#38;lt;</KBD
+>, <KBD
+CLASS="USERINPUT"
+>&#62;</KBD
+> to <KBD
+CLASS="USERINPUT"
+>&#38;gt;</KBD
+>, <KBD
+CLASS="USERINPUT"
+>&#38;</KBD
+> to <KBD
+CLASS="USERINPUT"
+>&#38;amp;</KBD
+>,
+						<KBD
+CLASS="USERINPUT"
+>"</KBD
+> to <KBD
+CLASS="USERINPUT"
+>&#38;quot;</KBD
+>, and <KBD
+CLASS="USERINPUT"
+>'</KBD
+> to <KBD
+CLASS="USERINPUT"
+>&#38;#39;</KBD
+>.
+				</P
+></LI
+><LI
+><P
+>					<KBD
+CLASS="USERINPUT"
+>url</KBD
+>: All non-alphanumerical characters in the output except <KBD
+CLASS="USERINPUT"
+>-_.!~*'()/</KBD
+> are replaced with a percent sign <KBD
+CLASS="USERINPUT"
+>%</KBD
+> followed by two hexadecimal digits. This conversion conforms to the URL encoding scheme as described in <A
+HREF="http://www.ietf.org/rfc/rfc1738.txt"
+TARGET="_top"
+>RFC1738</A
+> and is useful to output well formed URLs.
+				</P
+></LI
+><LI
+><P
+>					<KBD
+CLASS="USERINPUT"
+>reverse-url</KBD
+>: Sequences made of a percent sign <KBD
+CLASS="USERINPUT"
+>%</KBD
+> followed by two hexadecimal digits are decoded according to the URL encoding scheme.
+				</P
+></LI
+></UL
+>
+		</P
+><P
+>			If no <KBD
+CLASS="USERINPUT"
+>encoding</KBD
+> argument is present in <KBD
+CLASS="USERINPUT"
+>#echo</KBD
+>, <KBD
+CLASS="USERINPUT"
+>#fsize</KBD
+>, or <KBD
+CLASS="USERINPUT"
+>#flastmod</KBD
+> directives, the server will perform <KBD
+CLASS="USERINPUT"
+>entity</KBD
+> conversion.
+		</P
+><P
+>			If the <KBD
+CLASS="USERINPUT"
+>encoding</KBD
+> argument is present in <KBD
+CLASS="USERINPUT"
+>#exec</KBD
+> or <KBD
+CLASS="USERINPUT"
+>#include</KBD
+> directives, the server will perform no conversion of the output.
+		</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN2929"
+></A
+><P
+><B
+>Example 7-2. Using the encoding argument in #include</B
+></P
+><P
+><PRE
+CLASS="PROGRAMLISTING"
+>   &#60;HTML&#62;
+       &#60;HEAD&#62;&#60;TITLE&#62;XSSI Test&#60;/TITLE&#62;&#60;/HEAD&#62;
+       &#60;BODY&#62;
+            The HTML source code of page test.html is:
+            &#60;PRE&#62;&#60;!-- #include file="test.html" encoding="entity" --&#62;&#60;/PRE&#62;
+       &#60;/BODY&#62;
+   &#60;/HTML&#62;</PRE
+>
+			</P
+></DIV
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="ssi.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="ssiconditional.html"
+ACCESSKEY="P"
+>Prev</A
+>Conditional blocks</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="dirlist.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Custom Directory Listings</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

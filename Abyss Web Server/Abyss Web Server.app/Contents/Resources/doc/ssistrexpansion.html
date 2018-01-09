@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Attribute Values</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="eXtended Server Side Includes"
+HREF="ssi.html"><LINK
+REL="PREVIOUS"
+TITLE="XSSI Syntax"
+HREF="ssisyntax.html"><LINK
+REL="NEXT"
+TITLE="Directives"
+HREF="directives.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Attribute Values"><META
+NAME="Description"
+CONTENT="Attribute Values"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="ssisyntax.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 7. eXtended Server Side Includes</H2
+></HEADER
+><A
+HREF="directives.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SSISTREXPANSION"
+>Attribute Values</A
+></H1
+><P
+>			If an attribute value is enclosed between single quotes, only character escaping is performed on it.
+		</P
+><P
+>			If an attribute value is enclosed between double quotes, both character escaping and variables expansion are performed on it.
+		</P
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2516"
+>Character Escaping</A
+></H2
+><P
+>				To preserve the literal value of a special character (<KBD
+CLASS="USERINPUT"
+>\</KBD
+>, <KBD
+CLASS="USERINPUT"
+>"</KBD
+>, <KBD
+CLASS="USERINPUT"
+>'</KBD
+>, <KBD
+CLASS="USERINPUT"
+></KBD
+>, <KBD
+CLASS="USERINPUT"
+>{</KBD
+>, <KBD
+CLASS="USERINPUT"
+>}</KBD
+> or <KBD
+CLASS="USERINPUT"
+>$</KBD
+>), precede it with a backslash <KBD
+CLASS="USERINPUT"
+>\</KBD
+> character.
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2527"
+>Variables Expansion</A
+></H2
+><P
+>				Parts of the attribute value string that are of the form <KBD
+CLASS="USERINPUT"
+>$VARNAME</KBD
+> are substituted with the actual value of variable <KBD
+CLASS="USERINPUT"
+>VARNAME</KBD
+>. If <KBD
+CLASS="USERINPUT"
+>VARNAME</KBD
+> is not declared, it is replaced by an empty string.  The variable name must be enclosed between braces as in <KBD
+CLASS="USERINPUT"
+>${VARNAME}</KBD
+> if the characters following it may be considered as part of the name.
+			</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN2534"
+></A
+><P
+><B
+>Example 7-1. Variable Expansion Example</B
+></P
+><P
+>					If variable <KBD
+CLASS="USERINPUT"
+>DOCUMENT_NAME</KBD
+> is set to <KBD
+CLASS="USERINPUT"
+>test.shtml</KBD
+> and variable <KBD
+CLASS="USERINPUT"
+>REMOTE_PORT</KBD
+> is set to <KBD
+CLASS="USERINPUT"
+>12345</KBD
+>, then the directive:
+					
+					
+<PRE
+CLASS="PROGRAMLISTING"
+>   &#60;!-- #set var="Foo" value="${DOCUMENT_NAME}_$REMOTE_PORT" --&#62;</PRE
+>
+
+					will set the variable <KBD
+CLASS="USERINPUT"
+>Foo</KBD
+> to <KBD
+CLASS="USERINPUT"
+>test.shtml_12345</KBD
+>.
+				</P
+></DIV
+></SECTION
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="ssi.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="ssisyntax.html"
+ACCESSKEY="P"
+>Prev</A
+>XSSI Syntax</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="directives.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Directives</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>IP Addresses and Ranges Format</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Startup Configuration"
+HREF="startup.html"><LINK
+REL="NEXT"
+TITLE="IPv6 Addresses and Ranges"
+HREF="ipv6.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Abyss Web Server Help"></HEAD
+><BODY
+CLASS="APPENDIX"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="startup.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><A
+HREF="ipv6.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><DIV
+CLASS="APPENDIX"
+><H1
+><A
+NAME="IPFORMAT"
+></A
+>Appendix B. IP Addresses and Ranges Format</H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="ipformat.html#IPV4"
+>IPv4 Addresses and Ranges</A
+></DT
+><DT
+><A
+HREF="ipv6.html"
+>IPv6 Addresses and Ranges</A
+></DT
+></DL
+></DIV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="IPV4"
+>IPv4 Addresses and Ranges</A
+></H1
+><P
+>			An IPv4 address is made of 4 numbers separated by dots as in <KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd</KBD
+>, each number ranges from 0 to 255.
+		</P
+><P
+>			An IPv4 address range must conform to one of the following forms:
+			<UL
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>*</KBD
+>: the range includes all valid IP addresses,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>aaa.*</KBD
+>: the range includes the IPv4 addresses which first part is equal to <KBD
+CLASS="USERINPUT"
+>aaa</KBD
+>,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>aaa.bbb.*</KBD
+>: the range includes the IPv4 addresses which first and second parts are respectively equal to <KBD
+CLASS="USERINPUT"
+>aaa</KBD
+> and <KBD
+CLASS="USERINPUT"
+>bbb</KBD
+>,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.*</KBD
+>: the range includes the IPv4 addresses which first, second, and third parts are respectively equal to <KBD
+CLASS="USERINPUT"
+>aaa</KBD
+>, <KBD
+CLASS="USERINPUT"
+>bbb</KBD
+>, and <KBD
+CLASS="USERINPUT"
+>ccc</KBD
+>,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd-iii.jjj.kkk.lll</KBD
+>: the range includes the IPv4 addresses between  <KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd</KBD
+> and <KBD
+CLASS="USERINPUT"
+>iii.jjj.kkk.lll</KBD
+>,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd/n</KBD
+>: the range includes all the IPv4 addresses that belong to the subnet which network prefix or CIDR (Classless Interdomain Routing) notation is <KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd/n</KBD
+>. An IPv4 address that is included in this range has its first <KBD
+CLASS="USERINPUT"
+>n</KBD
+> bits identical to the first <KBD
+CLASS="USERINPUT"
+>n</KBD
+> bits of <KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd</KBD
+>,
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd-iii.jjj.kkk.lll/n</KBD
+>: An IPv4 address that is included in this range is comprised between <KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd</KBD
+> and <KBD
+CLASS="USERINPUT"
+>iii.jjj.kkk.lll</KBD
+>, and has its first <KBD
+CLASS="USERINPUT"
+>n</KBD
+> bits identical to the first <KBD
+CLASS="USERINPUT"
+>n</KBD
+> bits of <KBD
+CLASS="USERINPUT"
+>aaa.bbb.ccc.ddd</KBD
+> and <KBD
+CLASS="USERINPUT"
+>iii.jjj.kkk.lll</KBD
+>.
+					</P
+></LI
+></UL
+>
+		</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN3276"
+></A
+><P
+><B
+>Example B-1. 				CIDR Notation Example
+			</B
+></P
+><P
+>				<KBD
+CLASS="USERINPUT"
+>220.78.168.0/21</KBD
+> represents IPv4 addresses between <KBD
+CLASS="USERINPUT"
+>220.78.168.0</KBD
+> and <KBD
+CLASS="USERINPUT"
+>220.78.175.255</KBD
+>.
+				Actually, 220.78.168.0 in binary is 11011100 01001110 10101000 00000000. So <KBD
+CLASS="USERINPUT"
+>220.78.168.0/21</KBD
+> includes all the IPv4 addresses which 21 first bits are 11011100 01001110 10101. Therefore, it represents the range <KBD
+CLASS="USERINPUT"
+>220.78.168.0-220.78.175.255</KBD
+> (in binary 11011100 01001110 10101<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>000 00000000</I
+></SPAN
+> - 11011100 01001110 10101<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>111 11111111</I
+></SPAN
+>.)
+			</P
+></DIV
+></SECTION
+></DIV
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="startup.html"
+ACCESSKEY="P"
+>Prev</A
+>Startup Configuration</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="ipv6.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>IPv6 Addresses and Ranges</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

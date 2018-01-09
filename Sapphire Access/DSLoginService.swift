@@ -29,12 +29,12 @@ class LoginService {
         self.completion = completion
 
         let parameters = [
-            "javascrupt": "true",
+            "javascript": "true",
             "j_username": self.user.username!,
             "j_password": self.user.password!,
             "j_pin": self.user.pin!
         ]
-        Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm", method: .post, parameters: parameters).validate().response { response in
+        Manager.sharedInstance.request("http://localhost/CommunityWebPortal/Welcome.cfm.html", method: .post, parameters: parameters).response { response in
             guard response.error == nil else {
                 self.completion(false, response.error as NSError?)
                 return
@@ -58,13 +58,13 @@ class LoginService {
             }
 
             let parameters = [
-                "javascrupt": "true",
+                "javascript": "true",
                 "j_username": username,
                 "j_password": password,
                 "j_pin": pin
             ]
 
-            Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm", method: .post, parameters: parameters).validate().response { response in
+            Manager.sharedInstance.request("http://localhost/CommunityWebPortal/Welcome.cfm.html", method: .post, parameters: parameters).response { response in
                 guard response.error == nil else {
                     self.completion(false, response.error as NSError?)
                     return
@@ -76,7 +76,7 @@ class LoginService {
 
 	func logout(_ completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
 
-        Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1").validate().response { response in
+        Manager.sharedInstance.request("http://localhost/CommunityWebPortal/Welcome.cfm.html?logout=1").validate().response { response in
             guard response.error == nil else {
                 completionHandler(false, response.error as NSError?)
                 return
@@ -89,7 +89,7 @@ class LoginService {
 
 	fileprivate func getMainPageHtml() {
 
-        Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm").validate().response { response in
+        Manager.sharedInstance.request("http://localhost/CommunityWebPortal/Welcome.cfm.html").validate().response { response in
             guard response.error == nil else {
                 self.completion(false, response.error as NSError?)
                 return
@@ -104,7 +104,8 @@ class LoginService {
                         // Retrieve student information from backpack screen
 
                         let i: String = doc.xpath("//*[@id=\"leftPipe\"]/ul[2]/li[4]/a")[0]["href"]!
-                        let id = i.components(separatedBy: "=")[1]
+                        var id = i.components(separatedBy: "=")[1]
+                        id = id.replacingOccurrences(of: ".html", with: "")
                         var student = Student.mr_findFirst(byAttribute: "id", withValue: id, in: NSManagedObjectContext.mr_default())
                         if student == nil {
                             student = Student.mr_createEntity(in: NSManagedObjectContext.mr_default())
@@ -133,6 +134,7 @@ class LoginService {
                         for e in doc.xpath("//*[@id=\"leftPipe\"]/ul//li/a") {
                             var id = e["href"]!
                             id = id.components(separatedBy: "=")[1]
+                            id = id.replacingOccurrences(of: ".html", with: "")
                             if let oldStudent = Student.mr_findFirst(byAttribute: "id", withValue: id, in: NSManagedObjectContext.mr_default()) {
                                 students.append(oldStudent)
                             } else {

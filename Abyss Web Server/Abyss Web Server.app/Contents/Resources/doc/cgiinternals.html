@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>How are they run?</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="CGI, FastCGI, and ISAPI"
+HREF="scripting.html"><LINK
+REL="PREVIOUS"
+TITLE="CGI, FastCGI, and ISAPI"
+HREF="scripting.html"><LINK
+REL="NEXT"
+TITLE="CGI environment variables"
+HREF="cgivars.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="How are they run?"><META
+NAME="Description"
+CONTENT="How are they run?"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="scripting.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 6. CGI, FastCGI, and ISAPI</H2
+></HEADER
+><A
+HREF="cgivars.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CGIINTERNALS"
+>How are they run?</A
+></H1
+><P
+>			When the server is asked for a document, it first checks if it is a script.
+			Scripts must belong to one of the script paths or their subpaths,
+			or must match with one of the path patterns listed in the Script Paths table.
+		</P
+><P
+>				Abyss Web Server is able to run standalone CGI or FastCGI executable files (files which executable attribute is set using the command
+				<KBD
+CLASS="USERINPUT"
+>chmod +x &#60;File&#62;</KBD
+>; see <B
+CLASS="COMMAND"
+>chmod</B
+> reference in your system's manual).
+				 For other kinds of scripts, the server tries to find the suitable interpreter to run them by checking the
+				 <B
+CLASS="GUILABEL"
+>Interpreters</B
+> table and matching the script's extension with a declared interpreter.
+			</P
+><P
+>			Abyss Web Server can also run standalone ISAPI extensions. The <B
+CLASS="GUILABEL"
+>Script Paths</B
+> table must contain explicitly the virtual path of a module or a matching pattern
+			to have it executed. A file is considered as being an ISAPI module if its file name extension matches one of the declared ISAPI file name extensions.
+		</P
+><P
+>			Abyss Web Server automatically detects NPH (Non Parsed Headers) scripts. NPH scripts output is
+			sent directly to the browser without prior header decoding by the server. It is up to NPH scripts to generate correctly all the necessary HTTP response headers.
+			Abyss Web Server considers a script to be NPH if the first line it outputs starts with the string <KBD
+CLASS="USERINPUT"
+>HTTP/</KBD
+>.
+		</P
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="scripting.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="scripting.html"
+ACCESSKEY="P"
+>Prev</A
+>CGI, FastCGI, and ISAPI</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="cgivars.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>CGI environment variables</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Console Configuration</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Using The Console"
+HREF="console.html"><LINK
+REL="PREVIOUS"
+TITLE="Console interface basics"
+HREF="consoleinterface.html"><LINK
+REL="NEXT"
+TITLE="Server Management"
+HREF="server.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Console Configuration"><META
+NAME="Description"
+CONTENT="Console Configuration"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="consoleinterface.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 3. Using The Console</H2
+></HEADER
+><A
+HREF="server.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CONSOLECONFIG"
+>Console Configuration</A
+></H1
+><P
+>			To change the console parameters, open the console and select <B
+CLASS="GUILABEL"
+>Console Configuration</B
+>.
+		</P
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CONSOLE-PARAMETERS"
+>Changing the console port and protocol</A
+></H2
+><P
+>                In the <B
+CLASS="GUILABEL"
+>Console Configuration</B
+> dialog, select <B
+CLASS="GUILABEL"
+>Parameters</B
+>.  In the displayed dialog, <B
+CLASS="GUILABEL"
+>Protocol</B
+> can be set to <B
+CLASS="GUILABEL"
+>HTTP</B
+> or <B
+CLASS="GUILABEL"
+>HTTPS</B
+>. If <B
+CLASS="GUILABEL"
+>HTTPS</B
+> is selected, the console will be accessible through secure connections using SSL/TLS and you will have to set <B
+CLASS="GUILABEL"
+>Certificate</B
+> to the name of the certificate you want to use for console accesses. A certificate that will be used for the console can be a self-signed certificate and it is recommended to set its <B
+CLASS="GUILABEL"
+>Host Name (Common Name)</B
+> to <KBD
+CLASS="USERINPUT"
+>*</KBD
+> to have it match with any host name you may use when accessing the console.
+            </P
+><P
+>                You can also choose a new port number that will be used for the console in the <B
+CLASS="GUILABEL"
+>Port</B
+> field. Press <B
+CLASS="GUIBUTTON"
+>OK</B
+> to validate the changes.
+			</P
+><P
+>				If the port number is invalid or is already used by another application on your computer,
+				the console displays an error and asks you to enter another value.
+			</P
+><P
+>				Advanced configuration options of the console can be accessed by pressing <B
+CLASS="GUILABEL"
+>Edit...</B
+> next to <A
+NAME="CONSOLE-PARAMETERS-ADVANCED"
+></A
+><B
+CLASS="GUILABEL"
+>Advanced Parameters</B
+>. The advanced parameters dialog contains the following fields:
+					<UL
+><LI
+><P
+><A
+NAME="CONSOLE-PARAMETERS-ADVANCED-BINDIP"
+></A
+>
+							<B
+CLASS="GUILABEL"
+>Bind to IP Address</B
+>: The IP address of the network interface that the console should listen on. When empty or set to <KBD
+CLASS="USERINPUT"
+>*</KBD
+>, the host listens for incoming connections on all available network interface (which the default and the recommended setting.)
+						</P
+></LI
+><LI
+><P
+><A
+NAME="CONSOLE-PARAMETERS-ADVANCED-SECURELAYER"
+></A
+>
+							<B
+CLASS="GUILABEL"
+>SSL/TLS Parameters</B
+>: Detailed parameters of the SSL/TLS secure layer are accessible by pressing <B
+CLASS="GUILABEL"
+>Edit...</B
+>. In the displayed dialog, SNI support (which is enabled by default) can be disabled. SNI stands for Server Name Indication as is an extension to the SSL/TLS protocol meant for allowing virtual hosting on SSL/TLS. Original SSL/TLS protocol was limiting each IP address and port to have a single certificate which limited HTTPS ports sharing. SNI makes cetificate negotiation possible and lifts restrictions. The displayed dialog makes also the SSL/TLS profile selection possible. It is highly recommended to let the profile set to its default and recommended value. If you set it <B
+CLASS="GUILABEL"
+>Custom</B
+>, it becomes possible to select the accepted protocols and configure the <B
+CLASS="GUILABEL"
+>Ciphers</B
+> parameter to select the ciphers that the server can accept to use when negotiating with a browser establishing a HTTPS connection to the console. When set to <B
+CLASS="GUILABEL"
+>Strong</B
+>, no weak cipher (any cipher with a key length strictly less than 128 bits) will be used. But this can restrict access from some old browsers which do not support modern and strong ciphers. For custom ciphers specification, set this parameter to <B
+CLASS="GUILABEL"
+>Custom Specification</B
+> and fill the displayed text field with a string conforming to the <A
+HREF="http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT"
+TARGET="_top"
+>OpenSSL Ciphers List Format</A
+>.
+						</P
+></LI
+></UL
+>
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CONSOLE-CREDENTIALS"
+>Changing the console access credentials</A
+></H2
+><P
+>				Because the console access needs authorization, it is important to keep your console access credentials secret.
+				It is also highly recommended not to choose them similar to your system login or password or any valuable credentials.
+				Indeed, as the console relies on the browser to perform the authorization and as browsers use a relatively weak
+				authorization scheme, console access information could be intercepted and deciphered by malicious persons on the network.
+			</P
+><P
+>				To change the console access credentials:
+				<UL
+><LI
+><P
+>Go to the <B
+CLASS="GUILABEL"
+>Console Configuration</B
+> dialog and select <B
+CLASS="GUILABEL"
+>Access Credentials</B
+>.</P
+></LI
+><LI
+><P
+>Enter an administrator login.</P
+></LI
+><LI
+><P
+>Enter a password. It is recommended to choose a password containing characters, digits, and special symbols. This password should not be a dictionary word.</P
+></LI
+><LI
+><P
+>Reenter the same password.</P
+></LI
+><LI
+><P
+>Press <B
+CLASS="GUIBUTTON"
+>OK</B
+>.</P
+></LI
+></UL
+>
+			</P
+><P
+>				Once the change is made, the browser asks you to enter the new login and password.
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CONSOLE-LANGUAGE"
+>Changing the language</A
+></H2
+><P
+>				To change the language used in the console:
+				<UL
+><LI
+><P
+>Go to the <B
+CLASS="GUILABEL"
+>Console Configuration</B
+> dialog and select <B
+CLASS="GUILABEL"
+>Language</B
+>.</P
+></LI
+><LI
+><P
+>Select a language by pressing one of displayed buttons.</P
+></LI
+></UL
+>
+			</P
+><P
+>				To add support for an additional language, download the corresponding language file from <KBD
+CLASS="USERINPUT"
+><A
+HREF="http://www.aprelium.com/abyssws/languages"
+TARGET="_top"
+>http://www.aprelium.com/abyssws/languages</A
+></KBD
+> and save it inside <KBD
+CLASS="USERINPUT"
+>&#60;Abyss Web Server directory&#62;/lang</KBD
+>. You may need to restart the server to have it take into account the new language file.
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CONSOLE-IPCONTROL"
+>Controlling the access to the console</A
+></H2
+><P
+>				To restrict or grant access to the console to an IP address or an IP address range, go to the <B
+CLASS="GUILABEL"
+>Console Configuration</B
+> dialog and select <B
+CLASS="GUILABEL"
+>IP Address Control</B
+>.
+			</P
+><P
+>				The displayed dialog contains the following items:
+				
+				<UL
+><LI
+><P
+><A
+NAME="CONSOLE-IPCONTROL-ORDER"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Order</B
+>: The order that the server follows to check if access is granted to a client based on its IP address.
+                                                If it is set to <B
+CLASS="GUILABEL"
+>Allow/Deny</B
+>, access is denied by default and is allowed only if the
+                                                IP address is in the <B
+CLASS="GUILABEL"
+>Allow for</B
+> list and is not in the
+                                                <B
+CLASS="GUILABEL"
+>Deny for</B
+> list.
+                                                If it is set to <B
+CLASS="GUILABEL"
+>Deny/Allow</B
+>, access is allowed by default and is denied only if the
+                                                IP address is in the <B
+CLASS="GUILABEL"
+>Deny for</B
+> list and is not in the
+                                                <B
+CLASS="GUILABEL"
+>Allow for</B
+> list.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="CONSOLE-IPCONTROL-ALLOW"
+></A
+>
+                                                <B
+CLASS="GUILABEL"
+>Allowed IP Addresses</B
+>: The list of IP addresses and IP address ranges for which access is allowed. Refer to "<A
+HREF="ipformat.html"
+>IP Addresses and Ranges Format</A
+>" appendix for more information about the IP addresses and ranges.
+                                        </P
+></LI
+><LI
+><P
+><A
+NAME="CONSOLE-IPCONTROL-DENY"
+></A
+>
+                                                <B
+CLASS="GUILABEL"
+>Denied IP Addresses</B
+>:  The list of IP addresses and IP address ranges for which access is denied. Refer to "<A
+HREF="ipformat.html"
+>IP Addresses and Ranges Format</A
+>" appendix for more information about the IP addresses and ranges.
+                                        </P
+></LI
+></UL
+>
+				</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>							The access to the console is always allowed for the computer on which Abyss Web Server runs (which IPv4 address is <KBD
+CLASS="USERINPUT"
+>127.0.0.1</KBD
+> and IPv6 address is <KBD
+CLASS="USERINPUT"
+>::1</KBD
+>.)
+						</P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>							If <B
+CLASS="GUILABEL"
+>Denied IP Addresses</B
+> list is empty and the order is <B
+CLASS="GUILABEL"
+>Deny/Allow</B
+>, access is granted to any IP address.
+						</P
+></BLOCKQUOTE
+></DIV
+></SECTION
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="console.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="consoleinterface.html"
+ACCESSKEY="P"
+>Prev</A
+>Console interface basics</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="server.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Server Management</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

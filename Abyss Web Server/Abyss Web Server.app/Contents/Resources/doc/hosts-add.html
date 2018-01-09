@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Declaring a new host</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Hosts Management"
+HREF="hosts.html"><LINK
+REL="PREVIOUS"
+TITLE="Hosts Management"
+HREF="hosts.html"><LINK
+REL="NEXT"
+TITLE="Configuring a host"
+HREF="hosts-configuration.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Declaring a new host"><META
+NAME="Description"
+CONTENT="Declaring a new host"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="hosts.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 5. Hosts Management</H2
+></HEADER
+><A
+HREF="hosts-configuration.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="HOSTS-ADD"
+>Declaring a new host</A
+></H1
+><P
+>			To add a new host to the web server, go to the main console dialog and press <B
+CLASS="GUILABEL"
+>Add</B
+> in the <B
+CLASS="GUILABEL"
+>Hosts</B
+> table.
+		</P
+><P
+>			The displayed dialog contains the following fields:
+			<UL
+><LI
+><P
+><A
+NAME="HOSTS-ADD-PROTOCOL"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>Protocol</B
+>: Set it to <B
+CLASS="GUILABEL"
+>HTTP</B
+> if the host will use normal non-secure connections. If you want to have the host serve content over secure connections only using SSL/TLS, set it to <B
+CLASS="GUILABEL"
+>HTTPS</B
+>. If you are on Abyss Web Server X2, you can also choose to have the host serve content on both secure and non-secure connections by setting <B
+CLASS="GUILABEL"
+>Protocol</B
+> to <B
+CLASS="GUILABEL"
+>HTTP+HTTPS</B
+>. In such a situation, you can configure some virtual paths to be accessible on secure connections only by adding them to the <B
+CLASS="GUILABEL"
+>Exclusively Serve On HTTPS</B
+> table.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ADD-PROTOCOL-0PANE-PORT"
+></A
+>
+					<A
+NAME="HOSTS-ADD-PROTOCOL-2PANE-PORT"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>HTTP Port</B
+>: The port on which the new host will wait for HTTP connections. Its default value is 80. This field is not available if the <B
+CLASS="GUILABEL"
+>Protocol</B
+> is set to <B
+CLASS="GUILABEL"
+>HTTPS</B
+> only.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ADD-PROTOCOL-1PANE-SECUREPORT"
+></A
+>
+            		<A
+NAME="HOSTS-ADD-PROTOCOL-2-PANE-SECUREPORT"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>HTTPS Port</B
+>: The port on which the new host will wait for secure HTTPS connections. Its default value is 443. This field is not available if the <B
+CLASS="GUILABEL"
+>Protocol</B
+> is set to <B
+CLASS="GUILABEL"
+>HTTP</B
+> only.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ADD-PROTOCOL-1PANE-CERTIFICATE"
+></A
+>
+					<A
+NAME="HOSTS-ADD-PROTOCOL-2PANE-CERTIFICATE"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>Certificate</B
+>: The certificate that will be used for secure connections with the new host. This field is not available if the <B
+CLASS="GUILABEL"
+>Protocol</B
+> is set to <B
+CLASS="GUILABEL"
+>HTTP</B
+> only. Note that the certificate's <B
+CLASS="GUILABEL"
+>Host Name (Common Name)</B
+> should be equal to or match with the names of the new host that you are declaring. Otherwise, visitors' browsers will report a warning about mismatched names on every access to the host.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ADD-NAME"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>Host Name</B
+>: The main name of the new host. If the field is empty, the host will not be associated with any name and will answer to all requests that reach it on the configured port. The host can also have more than one name: additional names should be declared later in the <B
+CLASS="GUILABEL"
+>Host Names</B
+> table in the <B
+CLASS="GUILABEL"
+>General</B
+> dialog related to the host. The host name may be an Internation Domain Name (IDN) containing non-Latin characters. The host name can also be a pattern such as <KBD
+CLASS="USERINPUT"
+>*.mysite.com</KBD
+>. Refer to the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ADD-PATH"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>Documents Path</B
+>: The path of the web site files. If it is a relative path then it is
+					considered as a subpath of the server root.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ADD-LOG"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>Log File</B
+>: The path of the log file. If it is relative, it is considered as a subpath of
+					the server root. If empty, logging is disabled.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ADD-TEMPLATE"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>Copy Configuration From</B
+>: The configuration of the new host is cloned from the configuration of already defined hosts or from the default configuration.
+				</P
+></LI
+></UL
+>
+		</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>				Adding a new host is only possible in Abyss Web Server X2. Abyss Web Server X1 can only manage a single host.
+			</P
+></BLOCKQUOTE
+></DIV
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="hosts.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="hosts.html"
+ACCESSKEY="P"
+>Prev</A
+>Hosts Management</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="hosts-configuration.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Configuring a host</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

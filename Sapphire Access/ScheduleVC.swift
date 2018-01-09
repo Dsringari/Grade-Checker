@@ -58,7 +58,7 @@ class ScheduleVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
 
 		startLoadingAnimation()
-		Manager.sharedInstance.request("https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentSchedule.cfm?STUDENT_RID=\(student.id!)")
+		Manager.sharedInstance.request("http://localhost/CommunityWebPortal/Backpack/StudentSchedule.cfm-STUDENT_RID=\(student.id!)" + ".html")
 		.validate()
         .response { response in
 				DispatchQueue.main.async(execute: {

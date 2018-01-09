@@ -1,0 +1,290 @@
+/*******************************************/
+
+
+
+/******************************************/
+HTML {
+    font-family: Lucida Grande, Arial, sans-serif;
+    font-size: 0.8em;
+}
+
+BODY ADDRESS {
+	line-height: 1.3;
+	margin: .6em 0;
+}
+
+BODY BLOCKQUOTE.NOTE {
+	border: 1px solid #aaa;
+	margin-top: 1.25em .75em;
+	padding: 0 1.5ex;
+	line-height: 1.2;
+	background-color: #def;
+}
+
+BODY BLOCKQUOTE {
+	margin-top: .75em;
+	line-height: 1.5;
+	margin-bottom: .75em;
+}
+
+HTML BODY {
+	margin: 2em 2em 2em 2em;
+	line-height: 1.2;
+}
+
+KBD {
+	line-height: 1.2;
+	font-family: monospace;
+    /*white-space: pre;*/
+    font-size: 1.2em;
+}
+
+.LEGALNOTICE {
+	font-size: small;
+	font-variant: small-caps;
+}
+
+.LEGALNOTICE A {
+	font-variant: normal;
+}
+
+footer.COPYRIGHT {
+	margin: 1em;
+	text-align: center;
+	font-size: 0.8em;
+}
+
+BODY SECTION.SECT1, BODY DIV.TOC, BODY DIV.GLOSSDIV, BODY DIV.APPENDIX, BODY DIV.QANDASET {
+	margin: 0 1em 0 1em;
+}
+
+BODY SECTION.SECT2 {
+	margin: 0 1em 0 2em;
+}
+
+BODY SECTION.SECT3 {
+	margin: 0 1em 0 2em;
+}
+
+BODY SECTION.SECT3 H3 {
+	margin: .8em 0 0 0em;
+}
+
+BODY DIV, BODY section, BODY nav, BODY header{
+	margin-left: 0;
+}
+
+DL {
+	margin: .8em 0;
+	line-height: 1.2;
+}
+
+BODY FORM {
+	margin: .6em 0;
+}
+
+H1, H2, H3, H4, H5, H6,
+.QUESTION,
+DIV.TABLE P B,
+DIV.PROCEDURE P B {
+	color: #00f;
+}
+
+.NAVHEADER H1 {
+	color: initial;
+	font-size: 1em;
+}
+BODY H1, BODY H2, BODY H3, BODY H4, BODY H5, BODY H6 {
+	line-height: 1.3;
+	margin-left: 0;
+}
+
+P {
+	text-align: justify;
+}
+
+BODY H1, BODY H2 {
+	margin: .8em 0 0 0;
+}
+
+BODY H3, BODY H4 {
+	margin: .8em 0 0 1em;
+}
+
+BODY H5 {
+	margin: .8em 0 0 2em;
+}
+
+BODY H6 {
+	margin: .8em 0 0 3em;
+}
+
+BODY HR {
+	
+	border: 0;
+	color: #aaa;
+	background-color: #aaa;
+}
+
+BODY IMG.NAVHEADER {
+	margin: 0 0 0 3em;
+}
+
+OL {
+	margin: 0 0 0 1em;
+	line-height: 1.2;
+}
+
+BODY PRE {
+	margin: .75em 0;
+	line-height: 1.0;
+	font-size: 1.2em;
+    border: 1px solid #aaa;
+}
+
+BODY TD, BODY TH {
+	line-height: 1.2;
+}
+
+UL, BODY DIR, BODY MENU {
+	margin: 0 0 0 1em;
+	line-height: 1.2;
+}
+
+HTML {
+	margin: 0; 
+	padding: 0;
+}
+
+.GUIMENU, .GUIMENUITEM, .GUISUBMENU,
+.GUILABEL, .INTERFACE, .GUIBUTTON,
+.SHORTCUT, .SHORTCUT .KEYCAP {
+}
+
+.ACCEL {
+	text-decoration: underline;
+} 
+
+.PROGRAMLISTING, .SCREEN {
+	margin-left: 3ex;
+	font-family: monospace;
+    white-space: pre;
+	    overflow-y: scroll;
+}
+
+/************************************************************************/
+HEADER H2 {
+	font-size: 1em;
+	color : grey;
+	text-align: center;
+}
+
+SECTION H1 {
+	font-size: 2em;
+}
+
+.NAVHEADER {
+	display: table;
+    	width: 100%;
+    	position: relative;
+	border-bottom: 1px dotted;
+}
+.NAVHEADER .prev {
+	position: relative;
+}
+
+.NAVHEADER .next {
+	position: absolute;
+    	right: 0;
+    	top: 50%;
+}
+.next {
+	float: right;
+}
+.NAVFOOTER {
+	border-top: 1px dotted;
+}
+.NAVFOOTER  .prev  {
+    float: left;
+}
+
+.NAVFOOTER br {
+	display: none;
+}
+
+.NAVFOOTER, .NAVHEADER H1 {
+	text-align: center;
+}
+
+.NAVFOOTER .prev A {
+    margin-right: 1em;
+}
+
+.NAVFOOTER .next A {
+    margin-left: 1em;
+}
+
+
+@media only screen and (max-width: 768px) {
+	HTML {
+		font-size: initial;
+	}
+	HTML BODY{
+		margin: 0 3px;
+	}
+	BODY SECTION.SECT2{
+	    margin: 0 0 0 .5em;
+	}
+	UL{
+	    margin: 0 0 0 3ex;
+	    padding: initial;
+	}
+	blockquote {
+		margin: 0 0 0 3ex; 
+	}
+	nav.NAVFOOTER a, nav.NAVFOOTER span, nav.NAVHEADER a, nav.NAVHEADER span{
+		display: block;
+		padding-top: 2px;
+	}
+	.NAVHEADER {
+		margin-top: 1ex;
+		text-align: center;
+		position: initial;
+		display: table;
+	    	width: 100%;
+	}
+	.NAVHEADER H1 {
+		display: table-header-group;
+	}
+	.NAVHEADER  .prev  {
+		display: table-header-group;
+	    	float: initial;
+		position: initial;
+	}
+	.NAVHEADER .next {
+		display: table-header-group;
+		float: initial;
+		position: initial;
+	    	right: initial;
+	    	top: initial;
+	}
+	.NAVHEADER header {
+		display: table-footer-group;
+	}
+	.next {
+		float: initial;
+	}
+
+	.NAVFOOTER  .prev  {
+	    	float: initial;
+	}
+
+	.NAVFOOTER .prev A {
+	    margin-right: initial;
+	}
+
+	.NAVFOOTER .next A {
+	    margin-left: initial;
+	}
+}
+

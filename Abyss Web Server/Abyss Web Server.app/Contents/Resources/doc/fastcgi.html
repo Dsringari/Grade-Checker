@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>FastCGI</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="CGI, FastCGI, and ISAPI"
+HREF="scripting.html"><LINK
+REL="PREVIOUS"
+TITLE="CGI environment variables"
+HREF="cgivars.html"><LINK
+REL="NEXT"
+TITLE="ISAPI Extensions"
+HREF="isapi.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="FastCGI"><META
+NAME="Description"
+CONTENT="FastCGI"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="cgivars.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 6. CGI, FastCGI, and ISAPI</H2
+></HEADER
+><A
+HREF="isapi.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FASTCGI"
+>FastCGI</A
+></H1
+><P
+>			Abyss Web Server features a full support for the FastCGI responder role as described in the FastCGI specification version 1.0 available in <KBD
+CLASS="USERINPUT"
+><A
+HREF="http://www.fastcgi.com/devkit/doc/fcgi-spec.html"
+TARGET="_top"
+>http://www.fastcgi.com/devkit/doc/fcgi-spec.html</A
+></KBD
+>. 
+		</P
+><P
+>            It supports mono-threaded and multi-threaded FastCGI applications and automatically spawns the required number of FastCGI processes to accommodate the current server load. Processes that have not been used after a period of time (as set in <B
+CLASS="GUILABEL"
+>FastCGI Processes Timeout</B
+>) are aborted. Abyss Web Server supports also connecting to and using remote FastCGI servers. 
+		</P
+><P
+>			FastCGI developers benefit also from advanced debugging capabilities in Abyss Web Server since it can be configured to log errors only or all the input/output and low level information exchanged between the FastCGI application and the server.
+		</P
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="scripting.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="cgivars.html"
+ACCESSKEY="P"
+>Prev</A
+>CGI environment variables</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="isapi.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>ISAPI Extensions</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

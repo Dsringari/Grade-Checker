@@ -1,0 +1,36 @@
+#cwp_menuLine {
+	background-color: #8D5EB7;
+	background-image:url('../Images/topnav1_BP.jpg');
+	background-repeat: no-repeat;
+}
+
+#reg_menuLine {
+	background-color: #8D5EB7;
+	background-image:url('../Images/topnav1_BP.jpg');
+	background-repeat: no-repeat;
+}
+
+div.contentBlock div.contentHeader {
+	background: url('../Images/subnavhighlight_BP_right.jpg') 0% 0% no-repeat;
+	background-color: #8D5EB7;
+}
+
+div.classFolderHeader {
+	background: url('../Images/subnavhighlight_BP_right.jpg') 0% 0% no-repeat;
+	background-color: #8D5EB7;
+}
+
+h1.right {
+	background: url('../Images/subnavhighlight_BP_left.jpg') top right no-repeat;
+	background-color: #8D5EB7;
+}
+
+div.rightBlock div.rightHeader {
+	background: url('../Images/subnavhighlight_BP_right.jpg') 0% 0% no-repeat;
+	background-color: #8D5EB7;
+}
+
+div#pageTitle {
+	background: url('../Images/subnavhighlight_BP_left.jpg') top right no-repeat;
+	background-color: #8D5EB7;
+}

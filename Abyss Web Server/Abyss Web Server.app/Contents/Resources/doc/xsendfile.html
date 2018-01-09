@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>X-Sendfile Support</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="CGI, FastCGI, and ISAPI"
+HREF="scripting.html"><LINK
+REL="PREVIOUS"
+TITLE="ISAPI Extensions"
+HREF="isapi.html"><LINK
+REL="NEXT"
+TITLE="eXtended Server Side Includes"
+HREF="ssi.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="X-Sendfile Support"><META
+NAME="Description"
+CONTENT="X-Sendfile Support"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="isapi.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 6. CGI, FastCGI, and ISAPI</H2
+></HEADER
+><A
+HREF="ssi.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="XSENDFILE"
+>X-Sendfile Support</A
+></H1
+><P
+>			Scripts and Web applications using CGI, FastCGI or ISAPI   can accelerate file service by emitting the special CGI header <KBD
+CLASS="USERINPUT"
+>X-Sendfile</KBD
+>.
+			Such an acceleration is actually performed by delegating to the low-level parts of the Web server the service of the static file to the client. 
+		</P
+><P
+>			For that header to be processed, the script or Web application must be in a script path declared with <B
+CLASS="GUILABEL"
+>X-Sendfile Support</B
+> enabled as outlined in the description of "<A
+HREF="hosts-configuration.html#HOSTS-SCRIPTING-PATHS"
+>Script Paths</A
+>".
+		</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN2477"
+></A
+><P
+><B
+>Example 6-2. A very simple script taking advanatge of X-Sendfile support (PHP version)</B
+></P
+><PRE
+CLASS="PROGRAMLISTING"
+>   &#60;?php
+   
+   /* Output the special header */
+   header("X-Sendfile: hello.txt")
+   
+   ?&#62;</PRE
+><P
+>			The virtual path of the above script should be added to <B
+CLASS="GUILABEL"
+>Script Paths</B
+>. The declared script path should have its <B
+CLASS="GUILABEL"
+>X-Sendfile Support</B
+> enabled and its <B
+CLASS="GUILABEL"
+>Files Root Path</B
+> set to the real directory from which the file <KBD
+CLASS="USERINPUT"
+>hello.txt</KBD
+> should be served.
+			</P
+></DIV
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="scripting.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="isapi.html"
+ACCESSKEY="P"
+>Prev</A
+>ISAPI Extensions</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="ssi.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>eXtended Server Side Includes</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

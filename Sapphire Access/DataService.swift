@@ -69,7 +69,7 @@ class UpdateService {
             }
 
             // Load the main courses page
-            let coursesURL: String = "https://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentClasses.cfm?STUDENT_RID=" + self.student.id!
+            let coursesURL: String = "http://localhost/CommunityWebPortal/Backpack/StudentClasses.cfm-STUDENT_RID=" + self.student.id! + ".html"
             Manager.sharedInstance.request(coursesURL)
                 .validate()
                 .response { response in
@@ -88,7 +88,7 @@ class UpdateService {
                             var addresses: [String] = []
                             for link in subjectLinks {
                                 names.append(link.text!.substring(to: link.text!.index(before: link.text!.endIndex))) // Remove the space after the name
-                                let address = "https://pamet-sapphire.k12system.com" + link["href"]!
+                                let address = "http://localhost/CommunityWebPortal/Backpack/" + link["href"]!
                                 addresses.append(address)
                             }
 
@@ -176,7 +176,7 @@ class UpdateService {
                         let subjectAddress = response.response!.url!.absoluteString
                         let currentSubject = Subject.mr_findFirst(byAttribute: "address", withValue: subjectAddress, in: self.context)!
 
-                        let mpAddresses = doc.xpath(mpXPath).map {"https://pamet-sapphire.k12system.com" + $0["href"]!}
+                        let mpAddresses = doc.xpath(mpXPath).map {"http://localhost/CommunityWebPortal/Backpack/" + $0["href"]!}
 
                         // Delete all mp of this subject that are not found in mpAddresses
                         let predicate = NSPredicate(format: "NOT(address IN %@) AND subject.address == %@", argumentArray: [mpAddresses, subjectAddress])
@@ -189,9 +189,9 @@ class UpdateService {
 						for (_, node) in doc.xpath(mpXPath).enumerated() {
 							if let mpAddress = node["href"] {
                                 let mp: [String: Any] = [
-                                    "address": "https://pamet-sapphire.k12system.com" + mpAddress,
+                                    "address": "http://localhost/CommunityWebPortal/Backpack/" + mpAddress,
                                     "empty": true,
-                                    "number": mpAddress.components(separatedBy: "MP_CODE=")[1],
+                                    "number": mpAddress.components(separatedBy: "MP_CODE=")[1].replacingOccurrences(of: ".html", with: ""),
                                     "subjectAddress": subjectAddress
                                 ]
                                 MarkingPeriod.mr_import(from: mp, in: self.context)
@@ -452,7 +452,7 @@ class UpdateService {
 	func refreshLastUpdatedDates(_ completion: @escaping CompletionType) {
 		// Get the landing page
 
-		Manager.sharedInstance.request("http://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm?STUDENT_RID=" + student.id!)
+		Manager.sharedInstance.request("http://pamet-sapphire.k12system.com/CommunityWebPortal/Backpack/StudentHome.cfm-STUDENT_RID=" + student.id! + ".html")
 			.validate()
 			.response(completionHandler: { response in
 				if (response.error != nil) {

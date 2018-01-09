@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0066)https://mvsd-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title> Sapphire Community Portal - Logon </title>
+		<link rel="stylesheet" href="./Sapphire Community Portal - Logon_files/CWPStyles.css" type="text/css"> <link rel="icon" href="https://mvsd-sapphire.k12system.com/Sapphire/images/parent_web_portal16.png?ver=dev20171231" type="image/png"> <link rel="shortcut icon" href="https://mvsd-sapphire.k12system.com/Sapphire/images/parent_web_portal16.ico?ver=dev20171231" type="image/x-icon"> <script src="./Sapphire Community Portal - Logon_files/frameworks_min.js" type="text/javascript"></script><style></style> <script src="./Sapphire Community Portal - Logon_files/base_extensions_min.js" type="text/javascript"></script> <script src="./Sapphire Community Portal - Logon_files/sapphirelib_min.js" type="text/javascript"></script> <script src="./Sapphire Community Portal - Logon_files/CWPFunctions.js" type="text/javascript"></script>
+			<script type="text/javascript"><!--
+				Event.addLoadEvent(function() { document.login.j_username.focus(); });
+				function showBrowsers(obj) {
+					Position.clone(obj, $('browsers'), { setTop: true, setLeft: true, setWidth: false, setHeight: false, offsetTop: -200, offsetLeft: -50});
+					Element.show($('browsers_shadow'));
+					Element.show($('browsers'));
+					Position.clone($('browsers'), $('browsers_shadow'), { setTop: true, setLeft: true, setWidth: true, setHeight: true, offsetTop: 5, offsetLeft: 5});
+					return false;
+				}
+
+				function hideBrowsers() {
+					Element.hide($('browsers_shadow'));
+					Element.hide($('browsers'));
+					return false;
+				}
+
+				function checkFields() {
+					if(document.login.j_username.value.length == 0 || document.login.j_password.value.length == 0 || document.login.j_pin.value.length == 0){
+						alert('Please enter username password and PIN to continue.');
+						return false;
+					} else {
+						return true;
+					}
+				}
+				// -->
+			</script>
+
+	<link rel="stylesheet" href="./Sapphire Community Portal - Logon_files/jquery-ui-1.10.3.custom.css" type="text/css"></head>
+	<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"><div id="__preloadedimgs" style="position: absolute; top: -5000px; height: 10px; width: 10px; display: inline;"><img src="./Sapphire Community Portal - Logon_files/progress.gif"></div>
+
+			<table id="cwp_page_structure" class="cwp_frame" style="margin-top: 5px; width: 930px;">
+				<tbody><tr>
+					<td></td>
+					<td>
+				<div id="cwp_pageHeader" style="margin-left: 15px; text-align: right;">
+					<img src="./Sapphire Community Portal - Logon_files/hdr_sapphiresoftware.jpg" style="margin: 0px; padding: 0px;">
+				</div>
+			</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="outside_left"><div style="background-color: #F0EFEA; float: right; height: 16px; width:100%;">&nbsp;</div></td>
+					<td id="cwp_content">
+			<form name="login" method="post" style="display: inline;" action="https://mvsd-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm" autocomplete="off">
+				<input type="hidden" name="javascript" value="true">
+				<script type="text/javascript">
+				<!--
+					document.login.javascript.value="true";
+				// -->
+				</script>
+
+			<table class="loginTable" border="0" cellspacing="0" cellpadding="0" style="background-color: white; margin-left: auto; margin-right: auto; width: 900px;">
+				<tbody><tr>
+
+						<td colspan="2" style="height: 187px; width: 617px;"><img src="./Sapphire Community Portal - Logon_files/loginheader_left.jpg" style="width: 617px;"></td>
+						<td style="height: 187px; width: 283px;"><img src="./Sapphire Community Portal - Logon_files/loginportrait_05top.jpg"></td>
+
+				</tr>
+				<tr>
+					<td style="border-right: 2px solid #CCCCCC; padding-top: 15px; padding-bottom: 15px; width: 325px;">
+
+							<div style="text-align: center;">
+								<img src="./Sapphire Community Portal - Logon_files/ufzK4SKe_400x400.jpeg" style="max-height: 90px; max-width: 275px;">
+							</div>
+
+						<div style="font-size: 14pt; font-weight: bold; margin-bottom: 10px; margin-top: 10px; text-align: center">Methacton School District</div>
+						<table class="loginTable" border="0" cellspacing="0" cellpadding="0">
+							<tbody><tr>
+								<td class="label">
+									Username
+								</td>
+								<td class="entry">
+									<input type="text" name="j_username" autocomplete="off" style="width: 200px;" tabindex="1" value="" data-com.agilebits.onepassword.user-edited="yes">
+								</td>
+							</tr>
+							<tr>
+								<td class="label">
+									Password
+								</td>
+								<td class="entry">
+									<input type="password" name="j_password" autocomplete="off" style="width: 200px;" tabindex="2" value="" data-com.agilebits.onepassword.user-edited="yes">
+								</td>
+							</tr>
+							<tr>
+								<td class="label">
+									PIN
+								</td>
+								<td class="entry">
+									<input type="password" name="j_pin" size="5" maxlength="5" autocomplete="off" style="width:5em;" class="textInput" tabindex="3" data-com.agilebits.onepassword.user-edited="yes">
+								</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2" style="text-align: right;">
+									<input type="image" class="" alt="Login" title="Login" src="./Sapphire Community Portal - Logon_files/navbtnbar_login.gif" autocomplete="off" onmouseover="this.src = &#39;/CommunityWebPortal/Images/navbtnbar_login.gif&#39;; this.className = &#39;&#39;; " onmouseout="this.src = &#39;/CommunityWebPortal/Images/navbtnbar_login.gif&#39;; this.className=&#39;&#39;; " onclick="window.open(&#39;/invalidLogin.html&#39;); return false;" ondblclick="; return false;" onmousedown="this.src = &#39;/CommunityWebPortal/Images/navbtnbar_login.gif&#39;; this.className=&#39;&#39;; " onmouseup="if (this.blur) { this.blur(); } "><img alt="" src="./Sapphire Community Portal - Logon_files/navbtnbar_login.gif" style="position:absolute;top:-5000px;height:1px;width:1px;padding:0px;margin:0px;border:0px;"><img alt="" src="./Sapphire Community Portal - Logon_files/navbtnbar_login.gif" style="position:absolute;top:-5000px;height:1px;width:1px;padding:0px;margin:0px;border:0px;">
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="font-size: 11pt; padding-top: 10px; text-align: left;">
+									<ul class="loginList"><li><a href="https://mvsd-sapphire.k12system.com/CommunityWebPortal/Public/DistrictCheck.cfm" target="_blank"></a><a href="https://mvsd-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm#" onclick="window.open(&#39;/CommunityWebPortal/Public/ForgotPassword.cfm&#39;,&#39;_blank&#39;,&#39;width=450,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,copyhistory=no,resizable=no&#39;); return false;">Forgot your password?</a></li></ul>
+								</td>
+							</tr>
+
+								<tr>
+									<td></td>
+									<td style="font-size: 11pt; padding-top: 10px; text-align: left;">
+										<ul class="loginList"><li><a href="https://mvsd-sapphire.k12system.com/CommunityWebPortal/Public/DistrictCheck.cfm" target="_blank">Create a Web Portal account</a></li></ul>
+									</td>
+								</tr>
+
+						</tbody></table>
+					</td>
+					<td style="padding-left: 15px; padding-top: 15px; width: 292px;">
+
+							<div style=" overflow: hidden; max-height: 200px; max-width: 250px;">
+
+							</div>
+
+					</td>
+
+						<td style="height: 185px; vertical-align: top; width: 283px;"><img src="./Sapphire Community Portal - Logon_files/loginportrait_05bottom.jpg"></td>
+
+				</tr>
+
+				<tr>
+					<td colspan="3" style="height: 20px;">&nbsp;</td>
+				</tr>
+			</tbody></table>
+			</form>
+			</td>
+					<td class="outside_right">&nbsp;</td>
+				</tr>
+				<tr>
+					<td class="outside_bottom_left">&nbsp;</td>
+					<td class="outside_bottom">&nbsp;</td>
+					<td class="outside_bottom_right">&nbsp;</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+				<div id="cwp_footer">
+					<a href="javascript:void(0);" onclick="return showBrowsers(this);">Browser Recommendations</a> | <a href="https://mvsd-sapphire.k12system.com/CommunityWebPortal/Public/FAQ.cfm" target="_FAQ">FAQ</a> | <a href="javascript:void(0);" onclick="window.open(&#39;/CommunityWebPortal/Public/TermsOfUse.cfm&#39;,&#39;Terms_of_Use&#39;,&#39;width=450,height=450,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,copyhistory=no,resizable=no&#39;); return false;">Terms of Use</a> | 12/31/2017 5:14PM
+					<br>
+					<br>
+
+					Site contents Copyright © 2012-2017 by K12 Systems, Inc. unless otherwise indicated.<br>
+					Product information and the associated logos are trademarks of K12 Systems.&nbsp; All rights reserved.
+				</div>
+			</td>
+					<td></td>
+				</tr>
+			</tbody></table>
+		<div class="popupbox" id="browsers" style="display:none; text-align:left;">
+	<div>
+		Sapphire Software is certified for use with many browsers.&nbsp;  Sapphire's recommendation is that the latest version of a modern browser be used, such as:
+		<ul style="margin:5px 0px 5px 0px;">
+			<li>Firefox</li>
+			<li>Google Chrome</li>
+			<li>Safari<sup>*</sup></li>
+			<li>Internet Explorer</li>
+		</ul>
+		<div style="font-size:.8em;">
+			<sup>*</sup> Safari partially supports some modern standards and uniquely supports some modern standards.
+		</div>
+	</div>
+
+	<p style="margin:10px 0px 5px 0px; font-size:.8em; color:#333333;">
+		<b>Note</b>: Beta browsers will not be supported until after they are officially released and have been fully tested with Sapphire Products.
+	</p>
+
+	<p style="margin:15px 0px 5px 0px; text-align:center;">
+		<input type="button" value="Close this window" onclick="return hideBrowsers();">
+	</p>
+</div>
+<div class="popupbox_shadow" id="browsers_shadow" style="display:none;"></div>
+
+
+</body></html>

@@ -1,0 +1,688 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Abyss Web Server  For  MacOS X   User's Guide</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="NEXT"
+TITLE="Before You Begin"
+HREF="preface.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Abyss Web Server Help"></HEAD
+><BODY
+CLASS="BOOK"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+>Abyss Web Server  For  MacOS X   User's Guide</A
+></H1
+><P
+CLASS="COPYRIGHT"
+><A
+HREF="ln96.html"
+>Copyright</A
+> &copy; 2001-2016 Aprelium</P
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="preface.html"
+>Before You Begin</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="preface.html#SYSREQ"
+>System requirements</A
+></DT
+><DT
+><A
+HREF="altformats.html"
+>Alternative formats</A
+></DT
+><DT
+><A
+HREF="knowledge.html"
+>What you should know</A
+></DT
+><DT
+><A
+HREF="chapters.html"
+>Chapter quick reference</A
+></DT
+><DT
+><A
+HREF="conventions.html"
+>Conventions used in this guide</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="conventions.html#AEN177"
+>Typographical conventions</A
+></DT
+><DT
+><A
+HREF="conventions.html#AEN196"
+>Terminology</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>1. <A
+HREF="intro.html"
+>Introduction</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="intro.html#WHATISAWS"
+>What is Abyss Web Server?</A
+></DT
+><DT
+><A
+HREF="howdowswork.html"
+>How do web servers work?</A
+></DT
+></DL
+></DD
+><DT
+>2. <A
+HREF="start.html"
+>Getting Started</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="start.html#GETAWS"
+>Getting the software</A
+></DT
+><DT
+><A
+HREF="install.html"
+>Installing/Upgrading the software</A
+></DT
+><DT
+><A
+HREF="contact1.html"
+>First contact</A
+></DT
+><DT
+><A
+HREF="setupsimple.html"
+>Setting up a web site</A
+></DT
+><DT
+><A
+HREF="shutdown.html"
+>Shutting down the server</A
+></DT
+><DT
+><A
+HREF="asksupport.html"
+>Asking for support</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="console.html"
+>Using The Console</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="console.html#WHATISCONSOLE"
+>What is the console?</A
+></DT
+><DT
+><A
+HREF="accessconsole.html"
+>Accessing the console</A
+></DT
+><DT
+><A
+HREF="consoleinterface.html"
+>Console interface basics</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="consoleinterface.html#HELPBUTTON"
+>Help buttons</A
+></DT
+><DT
+><A
+HREF="consoleinterface.html#TABLES"
+>Tables</A
+></DT
+><DT
+><A
+HREF="consoleinterface.html#APPLYCHANGES"
+>Applying configuration changes</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="consoleconfig.html"
+>Console Configuration</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="consoleconfig.html#CONSOLE-PARAMETERS"
+>Changing the console port and protocol</A
+></DT
+><DT
+><A
+HREF="consoleconfig.html#CONSOLE-CREDENTIALS"
+>Changing the console access credentials</A
+></DT
+><DT
+><A
+HREF="consoleconfig.html#CONSOLE-LANGUAGE"
+>Changing the language</A
+></DT
+><DT
+><A
+HREF="consoleconfig.html#CONSOLE-IPCONTROL"
+>Controlling the access to the console</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>4. <A
+HREF="server.html"
+>Server Management</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="server.html#SMOVERVIEW"
+>Overview</A
+></DT
+><DT
+><A
+HREF="serverstats.html"
+>Server Statistics</A
+></DT
+><DT
+><A
+HREF="serveractivity.html"
+>Server Activity</A
+></DT
+><DT
+><A
+HREF="servergeneral.html"
+>General server configuration</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="servergeneral.html#SERVER-PARAMETERS"
+>Parameters</A
+></DT
+><DT
+><A
+HREF="servergeneral.html#SERVER-MIMETYPES"
+>MIME Types</A
+></DT
+><DT
+><A
+HREF="servergeneral.html#SERVER-THROTTLE"
+>Global Bandwidth Limits</A
+></DT
+><DT
+><A
+HREF="servergeneral.html#SERVER-ANTIHACK"
+>Anti-Hacking Protection</A
+></DT
+><DT
+><A
+HREF="servergeneral.html#SERVER-LOG"
+>Logging Parameters</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="ssl.html"
+>SSL/TLS Certificates</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="ssl.html#SSL-OVERVIEW"
+>Overview</A
+></DT
+><DT
+><A
+HREF="ssl.html#CERTIFICATES-PKEYS"
+>Generating a private key</A
+></DT
+><DT
+><A
+HREF="ssl.html#CERTIFICATES-PKEYS-IMPORT"
+>Importing a private key</A
+></DT
+><DT
+><A
+HREF="ssl.html#CERTIFICATES-CSR"
+>Generating a CSR</A
+></DT
+><DT
+><A
+HREF="ssl.html#CERTIFICATES-CERTS"
+>Adding a signed certificate</A
+></DT
+><DT
+><A
+HREF="ssl.html#CERTIFICATES-CERTS-SS"
+>Creating a self-signed certificate</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>5. <A
+HREF="hosts.html"
+>Hosts Management</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="hosts.html#HOSTS-OVERVIEW"
+>Overview</A
+></DT
+><DT
+><A
+HREF="hosts-add.html"
+>Declaring a new host</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html"
+>Configuring a host</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-GENERAL"
+>General</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-INDEXES"
+>Index Files</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-DIRLIST"
+>Directory Listing</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-ALIASES"
+>Aliases</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-SSI"
+>XSSI Parameters</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-UG"
+>Users and Groups</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-CUSTOMERRORS"
+>Custom Error Pages</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-SCRIPTING"
+>Scripting Parameters</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-AC"
+>Access Control</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-IPCONTROL"
+>IP Address Control</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-URLREWRITE"
+>URL Rewriting</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-COMPRESS"
+>Compression</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-THROTTLE"
+>Bandwidth Limits</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-LOG"
+>Logging</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-REVPROXY"
+>Reverse Proxy</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-RESDNLD"
+>Restricted Downloads Areas</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-ANTILEECH"
+>Anti-Leeching</A
+></DT
+><DT
+><A
+HREF="hosts-configuration.html#HOSTS-STATS"
+>Statistics</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>6. <A
+HREF="scripting.html"
+>CGI, FastCGI, and ISAPI</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="scripting.html#INTERPRETER"
+>Setting up an interpreter</A
+></DT
+><DT
+><A
+HREF="cgiinternals.html"
+>How are they run?</A
+></DT
+><DT
+><A
+HREF="cgivars.html"
+>CGI environment variables</A
+></DT
+><DT
+><A
+HREF="fastcgi.html"
+>FastCGI</A
+></DT
+><DT
+><A
+HREF="isapi.html"
+>ISAPI Extensions</A
+></DT
+><DT
+><A
+HREF="xsendfile.html"
+>X-Sendfile Support</A
+></DT
+></DL
+></DD
+><DT
+>7. <A
+HREF="ssi.html"
+>eXtended Server Side Includes</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="ssi.html#WHATARESSI"
+>What are XSSI?</A
+></DT
+><DT
+><A
+HREF="ssisyntax.html"
+>XSSI Syntax</A
+></DT
+><DT
+><A
+HREF="ssistrexpansion.html"
+>Attribute Values</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="ssistrexpansion.html#AEN2516"
+>Character Escaping</A
+></DT
+><DT
+><A
+HREF="ssistrexpansion.html#AEN2527"
+>Variables Expansion</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="directives.html"
+>Directives</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="directives.html#AEN2546"
+>#config</A
+></DT
+><DT
+><A
+HREF="directives.html#ECHO"
+>#echo</A
+></DT
+><DT
+><A
+HREF="directives.html#AEN2674"
+>#exec</A
+></DT
+><DT
+><A
+HREF="directives.html#AEN2703"
+>#flastmod</A
+></DT
+><DT
+><A
+HREF="directives.html#AEN2718"
+>#fsize</A
+></DT
+><DT
+><A
+HREF="directives.html#AEN2734"
+>#include</A
+></DT
+><DT
+><A
+HREF="directives.html#AEN2750"
+>#printenv</A
+></DT
+><DT
+><A
+HREF="directives.html#AEN2758"
+>#set</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="ssiconditional.html"
+>Conditional blocks</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="ssiconditional.html#AEN2771"
+>Syntax</A
+></DT
+><DT
+><A
+HREF="ssiconditional.html#AEN2779"
+>Expression evaluation</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="ssiencoding.html"
+>Encoding</A
+></DT
+></DL
+></DD
+><DT
+>8. <A
+HREF="dirlist.html"
+>Custom Directory Listings</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="dirlist.html#DIRLIST-TEMPLATE"
+>Defining a template</A
+></DT
+><DT
+><A
+HREF="dirscript.html"
+>Scripts</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="glossary.html"
+>Glossary</A
+></DT
+><DT
+>A. <A
+HREF="startup.html"
+>Startup Configuration</A
+></DT
+><DT
+>B. <A
+HREF="ipformat.html"
+>IP Addresses and Ranges Format</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="ipformat.html#IPV4"
+>IPv4 Addresses and Ranges</A
+></DT
+><DT
+><A
+HREF="ipv6.html"
+>IPv6 Addresses and Ranges</A
+></DT
+></DL
+></DD
+><DT
+>C. <A
+HREF="patternsformat.html"
+>Patterns Format</A
+></DT
+><DT
+>D. <A
+HREF="regex.html"
+>Regular Expressions</A
+></DT
+><DT
+>E. <A
+HREF="uninstall.html"
+>Uninstalling The Software</A
+></DT
+><DT
+>F. <A
+HREF="portsproblems.html"
+>Solving Ports Listening Problems</A
+></DT
+><DT
+>G. <A
+HREF="troubleshooting.html"
+>Troubleshooting Guide</A
+></DT
+></DL
+></DIV
+></DIV
+><NAV
+CLASS="NAVFOOTER"
+><HR><SPAN
+CLASS="next"
+><A
+HREF="preface.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Before You Begin</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

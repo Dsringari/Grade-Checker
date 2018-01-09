@@ -1,0 +1,75 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {CheckUpdates = id; VisitAbyss = id; VisitAprelium = id; show = id; }; 
+            CLASS = AboutDialog; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {copyrightText = NSTextField; panel = NSPanel; versionText = NSTextField; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {autoDetectPort = id; setPort = id; show = id; }; 
+            CLASS = ConsoleDialog; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {panel = NSPanel; portInput = NSTextField; webServer = WebServer; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {getKey = id; registerNow = id; }; 
+            CLASS = Registration; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {input = NSTextField; registerNowButton = NSButton; window = NSWindow; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {setStartupMethod = id; show = id; }; 
+            CLASS = StartupDialog; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                automaticStartup = NSButtonCell; 
+                manualStartup = NSButtonCell; 
+                panel = NSPanel; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {myAction = id; write = id; }; 
+            CLASS = TTY; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {textView = NSTextView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                doBrowseSite = id; 
+                doFixSetuid = id; 
+                doGettingStarted = id; 
+                doHostAdd = id; 
+                doInstallStartupItem = id; 
+                doRegister = id; 
+                doUninstallStartupItem = id; 
+                myAction = id; 
+                run = id; 
+                showConsole = id; 
+                stop = id; 
+            }; 
+            CLASS = WebServer; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                BrowseSiteMenuItem = NSMenuItem; 
+                ConsoleMenuItem = NSMenuItem; 
+                FixSetUidMenuItem = NSMenuItem; 
+                HostPopUp = NSMenu; 
+                HostsAddMenuItem = NSMenuItem; 
+                HostsMenu = NSMenu; 
+                RegisterMenuItem = NSMenuItem; 
+                RegistrationObject = Registration; 
+                tty = TTY; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

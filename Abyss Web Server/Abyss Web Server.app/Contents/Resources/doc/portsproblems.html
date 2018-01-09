@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Solving Ports Listening Problems</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Uninstalling The Software"
+HREF="uninstall.html"><LINK
+REL="NEXT"
+TITLE="Troubleshooting Guide"
+HREF="troubleshooting.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Abyss Web Server Help"></HEAD
+><BODY
+CLASS="APPENDIX"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="uninstall.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><A
+HREF="troubleshooting.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><DIV
+CLASS="APPENDIX"
+><H1
+><A
+NAME="PORTSPROBLEMS"
+></A
+>Appendix F. Solving Ports Listening Problems</H1
+><P
+>		TCP/IP ports range from 1 to 65535. Abyss Web Server reports a listening problem on a port when one of the following situations is happening:
+		
+		<UL
+><LI
+><P
+>                                        
+				Another instance of Abyss Web Server is already running on your computer.
+			</P
+></LI
+><LI
+><P
+>				The user has not the privilege to use the port: 
+				 By design, MacOS X allows the applications to only use ports ranging from 1024 to 65535. Using ports 1 to 1023 is only possible when
+				authorized by an administrator of the computer. To activate them, run Abyss Web Server, select <B
+CLASS="GUILABEL"
+>Activate ports below 1024</B
+> in the
+				<B
+CLASS="GUILABEL"
+>Server</B
+> menu, and ask an administrator of the computer (you or another person) to authenticate himself/herself. This is a one-time operation.
+				Ports' activation remains valid until you reinstall Abyss Web Server or until you move the executable file to another folder.
+			</P
+></LI
+><LI
+><P
+>				The port is already used by another application: Try stopping the other applications running on your computer to know which one is already using
+				this port. More specifically, port 80 is usually 
+				used by other web servers. So if Abyss Web Server cannot listen to this port, there are chances that another web server is already running. 
+				
+				Mac OS X comes with a web sharing feature that, when enabled, uses port 80. To disable it and to make this port available for Abyss Web Server,
+				open <B
+CLASS="GUILABEL"
+>System Preferences</B
+>, select <B
+CLASS="GUILABEL"
+>Sharing</B
+> and uncheck <B
+CLASS="GUILABEL"
+>Personal Web Sharing</B
+>.
+			</P
+></LI
+></UL
+>
+	</P
+><P
+>	
+		An alternative solution would be to configure Abyss Web Server to use another web host or console port. For more information about changing the host port, refer to
+		"<A
+HREF="hosts.html"
+>Hosts Management</A
+>".
+	</P
+><P
+>	
+		If you have to change the console port, 
+						
+						
+						
+							select <B
+CLASS="GUILABEL"
+>Settings&#8230;</B
+> in the main window,
+							enter a new value in the <B
+CLASS="GUILABEL"
+>Port</B
+> field , press
+							<B
+CLASS="GUILABEL"
+>OK</B
+> and confirm starting the server.
+						
+						
+						
+	</P
+></DIV
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="uninstall.html"
+ACCESSKEY="P"
+>Prev</A
+>Uninstalling The Software</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="troubleshooting.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Troubleshooting Guide</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

@@ -1,0 +1,1406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html>
+	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+>
+		
+			<title> Class Grades - Sapphire Community Web Portal </title>
+			<link rel="icon" href="../../Sapphire/images/parent_web_portal16.png" type="image/png" />
+			<link rel="shortcut icon" href="../../Sapphire/images/parent_web_portal16.ico" type="image/x-icon" />
+			
+			<script type="text/javascript" src="../../Sapphire/jschooser.cfm/frameworks_min.js"></script>
+			
+			<script type="text/javascript" src="../../Sapphire/jschooser.cfm/base_extensions_min.js"></script>
+		
+			<script type="text/javascript" src="../../Sapphire/jschooser.cfm/sapphirelib_min.js"></script>
+		
+			<link rel="stylesheet" type="text/css" href="../Styles/CWPStyles.css" />
+			
+	</head>
+
+	<body>
+		
+			<div id="cwp_page_structure_div">
+				<table id="cwp_page_structure" class="cwp_frame">
+					<tr>
+						<td></td>
+						<td>
+				<div id="cwp_pageHeader">
+					<img src="../Images/hdr_sapphiresoftware.jpg" style="cursor: pointer; float: right; margin: 0px; padding: 0px;" />
+					<img src="../Images/hdr_CWPstudentbackpack.jpg" style="cursor: pointer; margin: 0px; padding: 0px;" onclick="window.location='/CommunityWebPortal/Welcome.cfm';" title="Home" />
+				</div>
+			</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="outside_left"><div style="background-color: #F0EFEA; float: right; height: 15px; width:100%;">&nbsp;</div></td>
+						<td>
+				<div id="cwp_menuLine">
+					
+					<ul id="cwp_topMenu">
+						
+								<li><b><a href="../Welcome.cfm.html" title="Home">Home</a></b></li>
+							
+								<li>
+									
+										<a href="../AccountInfo.cfm.html" title="Account Profile"><b>Sangeetha Sringari</b></a>
+									
+								</li>
+							
+								<li><b><a href="https://pamet-sapphire.k12system.com/CommunityWebPortal/Welcome.cfm?logout=1">Logout</a></b></li>
+								<script src="../CWPFunctions.js" type="text/javascript"></script>
+								<li><b><a class="qmitem-m qmparent" href="javascript:void(0)" onClick="openHelpPopup(ProductID='CWP',ScreenID='');">Help</a></b></li>
+							
+					</ul>
+				</div>
+			</td>
+						<td class="outside_right"></td>
+					</tr>
+					<tr>
+						<td class="outside_left">&nbsp;</td>
+						<td id="cwp_content">
+			
+			<div style="display:none;">
+				<form id="id_view_test" method="post" target="_blank" action="/CommunityWebPortal/Backpack/StudentOnlineWorkSetup.cfm">
+					<input id="id_test_rid" type="hidden" name="TEST_RID" value="" />
+					<input id="id_teacher_rid" type="hidden" name="TEACHER_RID" value="" />
+					<input id="id_course_id" type="hidden" name="COURSE_ID" value="" />
+					<input id="id_section_id" type="hidden" name="SECTION_ID" value="" />
+					<input id="id_assignment_code" type="hidden" name="ASSIGNMENT_CODE" value="" />
+					<input id="id_mp_code" type="hidden" name="MP_CODE" value="" />
+					<input type="hidden" name="STUDENT_RID" value="1500961" />
+				</form>
+			</div>
+			<table id="pageContent" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					
+					<td id="leftPipe">
+						
+						
+		<ul class="StudentList">
+			
+			<li>
+				<a href="StudentHome.cfm-STUDENT_RID=1500961.html" class="student" title="Dev Sringari"><div class="thumbnailHomeDiv"><img id="img_220019" class="studentThumbnail" src="../GetPic.cfm-id=1500961.jpeg" /></div>Dev Sringari</a>
+				
+					<div class="enrollRow" title="Grade: 06">Grade: 06</div>
+					<div class="enrollRow" title="Skyview Upper Elementary School">Skyview Upper Elementary School</div>
+				
+			</li>
+		</ul>
+		<div style="clear: both; margin-bottom: 10px;"></div>
+		
+			<div class="lp_section_header">STUDENT BACKPACK</div>
+			<ul class="lp_menu">
+				
+					<li><a href="StudentInfo.cfm-STUDENT_RID=1500961.html"><img src="../../Sapphire/images/icons/icon31_studentinformation.png" />Student Information</a></li>
+				<li><a href="StudentSchedule.cfm-STUDENT_RID=1500961.html"><img src="../../Sapphire/images/icons/icon31_studentschedule.png" />Current Schedule</a></li>
+				<li><a href="Calendar.cfm-STUDENT_RID=1500961.html"><img src="../../Sapphire/images/icons/Calendar31.png" />Student Calendar</a></li>
+				<li class="selected"><a href="StudentClasses.cfm-STUDENT_RID=1500961.html"><img src="../../Sapphire/images/icons/icon31_coursesandgrades.png" />Courses &amp; Grades</a></li> <li><a href="StudentAttendance.cfm-STUDENT_RID=1500961.html"><img src="../../Sapphire/images/icons/icon31_attendance.png" />Attendance</a></li> <li><a href="StudentDiscipline.cfm-STUDENT_RID=1500961.html"><img src="../../Sapphire/images/icons/icon31_discipline.png" />Discipline</a></li> 
+					<li class="lp_menu_subheader"><img src="../../Sapphire/images/icons/icon31_reports.png" />Reports</li>
+					<li id="gradeReportMenu">
+						<ul class="lp_menu">
+							<li><a href="ReportCards.cfm-STUDENT_RID=1500961.html">- Report Cards</a></li> <li><a href="ProgressReports.cfm-STUDENT_RID=1500961.html">- Progress Reports</a></li> <li><a href="Transcript.cfm-STUDENT_RID=1500961.html">- Transcript</a></li> <li><a href="Letters.cfm-STUDENT_RID=1500961.html">- Letters</a></li> <li><a href="DocumentCenter.cfm-STUDENT_RID=1500961.html">- File Cabinet</a></li>
+						</ul>
+					</li>
+				
+				
+			</ul>
+			
+		<div class="lp_section_header"><a href="../ParentHome.cfm.html" style="color: white; font-weight: bold;">MY STUDENTS (3)</a></div>
+		<ul class="StudentList">
+			
+				<li>
+					<a href="StudentHome.cfm-STUDENT_RID=200054.html" class="student" title="Tara Sringari"><div class="thumbnailDiv"><img id="img_200054" class="studentThumbnail" src="../GetPic.cfm-id=200054.jpeg" /></div>Tara Sringari</a>
+					
+						<div class="enrollRow" title="Grade: 08">Grade: 08</div>
+						<div class="enrollRow" title="Arcola Intermediate School">Arcola Intermediate School</div>
+					
+				</li>
+				
+				<li>
+					<a href="StudentHome.cfm-STUDENT_RID=181012.html" class="student" title="Dhruv Sringari"><div class="thumbnailDiv"><img id="img_181012" class="studentThumbnail" src="../GetPic.cfm-id=181012.jpeg" /></div>Dhruv Sringari</a>
+					
+						<div class="enrollRow" title="Grade: 10">Grade: 10</div>
+						<div class="enrollRow" title="Methacton High School">Methacton High School</div>
+					
+				</li>
+				
+				<li>
+					<a href="StudentHome.cfm-STUDENT_RID=1500961.html" class="student" title="Dev Sringari"><div class="thumbnailDiv"><img id="img_220019" class="studentThumbnail" src="../GetPic.cfm-id=1500961.jpeg" /></div>Dev Sringari</a>
+					
+						<div class="enrollRow" title="Grade: 06">Grade: 06</div>
+						<div class="enrollRow" title="Skyview Upper Elementary School">Skyview Upper Elementary School</div>
+					
+				</li>
+				
+		</ul>
+		<br style="clear: both;"/>
+		
+					</td>
+					
+					<td id="contentPipe">
+						<form name="report" method="post" action="/CommunityWebPortal/ReportViewer.cfm" target="_blank">
+							<input type="hidden" name="REPORT_ID" value="" />
+						</form>
+						<div style="padding-left: 15px;">
+							<a href="StudentClasses.cfm-STUDENT_RID=1500961.html">Courses &amp; Grades</a> &gt;
+							<a href="StudentClassPage.cfm-STUDENT_RID=1500961&amp;COURSE_SECTION_GUID=780356C3-97AE-449E-848E-2603E61B1A56.html">Math - Grade 6</a> &gt; 
+							Class Grades
+						</div>
+						<div id="pageTitle"><img src="../../Sapphire/images/icons/icon75_coursesandgrades.png" />Math - Grade 6 - Teacher: Emily Otero</div>
+						
+						
+						<div style="font-size: 14pt; font-weight: bold; text-align: center;">Marking Period: 3</div>
+						<br style="clear: both;" />
+						<div style="padding-left: 15px;">
+							<div id="assignmentFinalGrade">
+								
+									<div class="noprint" style="float: right; margin-top: -10px; padding-right: 5px;">
+										
+											<a href="StudentClassGrades.cfm-STUDENT_RID=1500961&amp;COURSE_SECTION_GUID=780356C3-97AE-449E-848E-2603E61B1A56&amp;MP_CODE=3.html">View Assignments Sorted By Date</a>
+										
+									</div>
+								
+									<b>Current Grade:</b>&nbsp;
+									96.28%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										
+										<b>Points: </b>
+										549 / 572*
+										<div style="font-size: 8pt; padding-top: 5px;">*Total points over possible points may not reflect the student's final average if the teacher sets categories to be a specific percentage of a student's marking period average.</div>
+									
+							</div>
+							
+							<div class="assignmentSectionHeaders">Assignments</div>
+							<table id="assignments">
+								
+											<tr>
+												<td colspan="5" class="assignmentCategoryHeader">
+													<b>Category:</b> Classwork <div><b>Category Grade:</b> 86.75%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Points: </b>131 / 151&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div> <div>Number of Assignments: 14</div> 
+												</td>
+											</tr>
+										
+										<tr>
+											<th style="padding-left: 5px;">Assignment</th>
+											<th colspan="2" style="text-align: center;">Score</th>
+											
+												<th>Date<br />Due</th>
+											
+												<th></th>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Perimeter Practice2</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>4/6/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Parallelogram work
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Perimeter Practice</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>4/5/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Students were asked to work on perimeter problems at Daily Math- expected to finish 4/6 problems in school.  Was checked for completion.
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 870</td>
+										<td style="text-align: right; width: 55px;">
+											7 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;16
+										</td>
+										
+											<td>4/4/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Students completed this page in class, but were asked to finish over the weekend to be collected/graded.
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Daily Math 816</td>
+										<td style="text-align: right; width: 55px;">
+											17 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;17
+										</td>
+										
+											<td>3/11/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Vocab Worksheet8</td>
+										<td style="text-align: right; width: 55px;">
+											9 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;9
+										</td>
+										
+											<td>3/2/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Daily Math 594</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/24/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Daily Math 572</td>
+										<td style="text-align: right; width: 55px;">
+											6 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;6
+										</td>
+										
+											<td>2/19/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Daily Math CW</td>
+										<td style="text-align: right; width: 55px;">
+											2 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;8
+										</td>
+										
+											<td>2/18/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Study Guide 7</td>
+										<td style="text-align: right; width: 55px;">
+											10 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;10
+										</td>
+										
+											<td>2/17/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Daily Math </td>
+										<td style="text-align: right; width: 55px;">
+											14 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;14
+										</td>
+										
+											<td>2/5/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Exit Slip7.3</td>
+										<td style="text-align: right; width: 55px;">
+											2 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;2
+										</td>
+										
+											<td>2/5/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Chapter 5 Review</td>
+										<td style="text-align: right; width: 55px;">
+											19 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;19
+										</td>
+										
+											<td>2/3/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Students were guided through mini lessons for Chapter 5 in class.  A review sheet was assigned as an assessment.
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Integer Review</td>
+										<td style="text-align: right; width: 55px;">
+											25 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;30
+										</td>
+										
+											<td>2/3/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Students were given a lessons with notes about basic  integer computation.  A review sheet was given in Daily math for 2 days, if not completed it was homework.  Students were allowed to use notes.
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Snoopy Picture</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>1/28/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Coordinate Grid Practice
+											</td>
+										</tr>
+									
+											<tr>
+												<td colspan="5" class="assignmentCategoryHeader">
+													<b>Category:</b> Homework <div><b>Category Grade:</b> 100.00%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Points: </b>223 / 223&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div> <div>Number of Assignments: 35</div> 
+												</td>
+											</tr>
+										
+										<tr>
+											<th style="padding-left: 5px;">Assignment</th>
+											<th colspan="2" style="text-align: center;">Score</th>
+											
+												<th>Date<br />Due</th>
+											
+												<th></th>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">12.3 Worksheet</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>4/6/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 877</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>4/5/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 869</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>4/4/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">PSSA Packet</td>
+										<td style="text-align: right; width: 55px;">
+											15 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;15
+										</td>
+										
+											<td>3/31/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Test Prep HW 11</td>
+										<td style="text-align: right; width: 55px;">
+											10 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;10
+										</td>
+										
+											<td>3/31/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 851</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/30/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Study Guide 11</td>
+										<td style="text-align: right; width: 55px;">
+											10 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;10
+										</td>
+										
+											<td>3/30/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 843</td>
+										<td style="text-align: right; width: 55px;">
+											ex 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/23/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Lesson 4 practice</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/22/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Lesson 3 Practice</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/21/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 835</td>
+										<td style="text-align: right; width: 55px;">
+											ex 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/18/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Lesson 2 Homework sheet</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/17/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Lesson 3 Reteaching Worksheet</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/17/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Lesson 2 Problem Solving</td>
+										<td style="text-align: right; width: 55px;">
+											10 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;10
+										</td>
+										
+											<td>3/15/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												2 sides... double worksheet, measures of center
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 823</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/14/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">On-Line Chapter Review</td>
+										<td style="text-align: right; width: 55px;">
+											8 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;8
+										</td>
+										
+											<td>3/7/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Test Prep HW</td>
+										<td style="text-align: right; width: 55px;">
+											10 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;10
+										</td>
+										
+											<td>3/7/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Study Guide 8</td>
+										<td style="text-align: right; width: 55px;">
+											10 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;10
+										</td>
+										
+											<td>3/4/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 623</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>3/2/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Quiz Review 8.1</td>
+										<td style="text-align: right; width: 55px;">
+											abs 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/29/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 609 #10</td>
+										<td style="text-align: right; width: 55px;">
+											abs 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;8
+										</td>
+										
+											<td>2/26/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 601</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/25/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Students were not only required to bring their homework page, but their function tables to accompany their linear equations graphs.  If they did not have these, they receive no credit.  They can show me later today, or tomorrow for partial credit.
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 593</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/24/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 585</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/23/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 578</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/22/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Chapter 7 review worksheet</td>
+										<td style="text-align: right; width: 55px;">
+											10 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;10
+										</td>
+										
+											<td>2/18/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Homework for test preparation.  
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 567</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/17/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 557</td>
+										<td style="text-align: right; width: 55px;">
+											17 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;17
+										</td>
+										
+											<td>2/12/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Quiz Review</td>
+										<td style="text-align: right; width: 55px;">
+											18 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;18
+										</td>
+										
+											<td>2/9/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 541</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/8/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 531</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/5/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Page 519</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>2/4/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Chapter 5 Packet page 2</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>1/28/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Packet page 2
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Chapter 5 Packet</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>1/26/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Review packet completion with teacher guidance and homework problems
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">L2 worksheet</td>
+										<td style="text-align: right; width: 55px;">
+											5 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;5
+										</td>
+										
+											<td>1/26/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Chapter 5 Lesson 2 review - Absolute Value
+											</td>
+										</tr>
+									
+											<tr>
+												<td colspan="5" class="assignmentCategoryHeader">
+													<b>Category:</b> Quizzes and Projects <div><b>Category Grade:</b> 98.46%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Points: </b>64 / 65&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div> <div>Number of Assignments: 6</div> 
+												</td>
+											</tr>
+										
+										<tr>
+											<th style="padding-left: 5px;">Assignment</th>
+											<th colspan="2" style="text-align: center;">Score</th>
+											
+												<th>Date<br />Due</th>
+											
+												<th></th>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Expressions Review</td>
+										<td style="text-align: right; width: 55px;">
+											8 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;8
+										</td>
+										
+											<td>3/29/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Egg-cellent Expressions or Expressions Maze
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Quiz 11.2</td>
+										<td style="text-align: right; width: 55px;">
+											15 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;15
+										</td>
+										
+											<td>3/22/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Quiz on Measures of Variation
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Pi Day Activity Sheet</td>
+										<td style="text-align: right; width: 55px;">
+											8 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;8
+										</td>
+										
+											<td>3/15/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												On Pi Day students were given an activity sheet with all things Pi.  They were due 2 days later.
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Quiz 11.1</td>
+										<td style="text-align: right; width: 55px;">
+											15 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;16
+										</td>
+										
+											<td>3/15/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Quiz 8.1</td>
+										<td style="text-align: right; width: 55px;">
+											ex 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;17
+										</td>
+										
+											<td>2/29/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Quiz 7.1</td>
+										<td style="text-align: right; width: 55px;">
+											18 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;18
+										</td>
+										
+											<td>2/9/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+											<tr>
+												<td colspan="5" class="assignmentCategoryHeader">
+													<b>Category:</b> Unit Tests <div><b>Category Grade:</b> 98.49%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Points: </b>131 / 133&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div> <div>Number of Assignments: 4</div> 
+												</td>
+											</tr>
+										
+										<tr>
+											<th style="padding-left: 5px;">Assignment</th>
+											<th colspan="2" style="text-align: center;">Score</th>
+											
+												<th>Date<br />Due</th>
+											
+												<th></th>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Chapter 11 Test </td>
+										<td style="text-align: right; width: 55px;">
+											44 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;44
+										</td>
+										
+											<td>3/31/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Chapter 8 Test</td>
+										<td style="text-align: right; width: 55px;">
+											38 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;41
+										</td>
+										
+											<td>3/8/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												Test was on inequalities and linear functions.  Graphs needed to have function tables and inequalities needed to be solved correctly, and graphed correctly.
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Extra Credit</td>
+										<td style="text-align: right; width: 55px;">
+											1 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;0
+										</td>
+										
+											<td>3/8/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												A question on the test was given as a bonus question.  To those who completed it correctly, a point shows here.  If they did not attempt, or it was incorrect there is no point.  It does not count against.
+											</td>
+										</tr>
+									
+									<tr>
+										<td style="padding-left: 20px;">Chapter 7 Test </td>
+										<td style="text-align: right; width: 55px;">
+											48 
+										</td>
+										<td style="width: 55px;">
+											&nbsp;/&nbsp;48
+										</td>
+										
+											<td>2/18/16</td>
+										
+										<td>
+											
+											
+										</td>
+									</tr>
+									
+										<tr>
+											<td class="assignDesc" colspan="5">
+												<b>Assignment Description</b>:<br />
+												This test focused on showing work to balance equations.  Each lesson focused on another type of one-step equation to solve properly.  Points were given on this test for both accuracy and work.  Work was required to be show and shown properly as this is the basis for algebraic expressions.
+											</td>
+										</tr>
+									
+							</table>
+							
+								<div style="border-top: 1px solid #AAAAAA; font-weight: bold; padding-top: 5px; padding-left: 5px;">Grade Key</div>
+								<div class="assignmentGradeKey">EX: This assignment will be ignored for grade calculation.</div><div class="assignmentGradeKey">ABS: This assignment will be ignored for grade calculation because the student was absent.</div> 
+						</div>
+					</td>
+					
+					<td id="rightPipe" style="display: none;">
+						
+					</td>
+				</tr>
+			</table>
+			</td>
+						<td class="outside_right">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="outside_bottom_left">&nbsp;</td>
+						<td class="outside_bottom">&nbsp;</td>
+						<td class="outside_bottom_right">&nbsp;</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+				<div id="cwp_footer">
+					<a href="../Public/FAQ.cfm.html" target="_FAQ">FAQ</a> | <a href="../Files/SapphireCommunityPortal-ParentManual.pdf" target="_Blank">Parent Manual</a> | <a href="../Policies.cfm.html" target="_UserPolicy">Policies</a> | <a href="javascript:void(0);" onclick="window.open('/CommunityWebPortal/Public/TermsOfUse.cfm','Terms_of_Use','width=450,height=450,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,copyhistory=no,resizable=no'); return false;">Terms of Use</a> | 06/12/2016 5:17PM 
+					<br />
+					<br />
+					
+					Site contents Copyright &copy; 2012-2016 by K12 Systems, Inc. unless otherwise indicated.<br />
+					Product information and the associated logos are trademarks of K12 Systems.&nbsp; All rights reserved.
+				</div>
+			</td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+		
+	</body>
+</html>

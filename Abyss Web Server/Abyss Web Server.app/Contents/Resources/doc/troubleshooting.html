@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Troubleshooting Guide</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Solving Ports Listening Problems"
+HREF="portsproblems.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Abyss Web Server Help"></HEAD
+><BODY
+CLASS="APPENDIX"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR><A
+HREF="portsproblems.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HR></NAV
+><DIV
+CLASS="APPENDIX"
+><H1
+><A
+NAME="TROUBLESHOOTING"
+></A
+>Appendix G. Troubleshooting Guide</H1
+><DIV
+CLASS="QANDASET"
+><DL
+><DT
+>1. <A
+HREF="troubleshooting.html#AEN3584"
+>						The console or the web site cannot be accessed from the computer on which Abyss Web Server is running.
+					</A
+></DT
+><DT
+>2. <A
+HREF="troubleshooting.html#AEN3595"
+>						Abyss Web Server reports the following error at startup: "Cannot start the host XXX (listening problem)"
+					</A
+></DT
+><DT
+>3. <A
+HREF="troubleshooting.html#AEN3601"
+>						Abyss Web Server reports the following error at startup: "Cannot start the console (listening problem)"
+					</A
+></DT
+></DL
+><DIV
+CLASS="QANDAENTRY"
+><DIV
+CLASS="QUESTION"
+><P
+><A
+NAME="AEN3584"
+></A
+><B
+>1. 						The console or the web site cannot be accessed from the computer on which Abyss Web Server is running.
+					</B
+></P
+></DIV
+><DIV
+CLASS="ANSWER"
+><P
+><B
+> </B
+>						If you cannot browse <KBD
+CLASS="USERINPUT"
+>127.0.0.1</KBD
+>, <KBD
+CLASS="USERINPUT"
+>::1</KBD
+>, or <KBD
+CLASS="USERINPUT"
+>localhost</KBD
+>, check if you have configured a
+						HTTP proxy in the browser. If so, disable proxy usage for <KBD
+CLASS="USERINPUT"
+>127.0.0.1</KBD
+>,  <KBD
+CLASS="USERINPUT"
+>::1</KBD
+>, and <KBD
+CLASS="USERINPUT"
+>localhost</KBD
+>.						
+					</P
+></DIV
+></DIV
+><DIV
+CLASS="QANDAENTRY"
+><DIV
+CLASS="QUESTION"
+><P
+><A
+NAME="AEN3595"
+></A
+><B
+>2. 						Abyss Web Server reports the following error at startup: "Cannot start the host XXX (listening problem)"
+					</B
+></P
+></DIV
+><DIV
+CLASS="ANSWER"
+><P
+><B
+> </B
+>						This error arises when the XXX's host port is already used by another application or if you do not have the privilege to use it.
+						You have to choose another port for the host using the console. Refer to "<A
+HREF="portsproblems.html"
+>Solving Ports Listening Problems</A
+>"
+						for more information.
+					</P
+></DIV
+></DIV
+><DIV
+CLASS="QANDAENTRY"
+><DIV
+CLASS="QUESTION"
+><P
+><A
+NAME="AEN3601"
+></A
+><B
+>3. 						Abyss Web Server reports the following error at startup: "Cannot start the console (listening problem)"
+					</B
+></P
+></DIV
+><DIV
+CLASS="ANSWER"
+><P
+><B
+> </B
+>						This error occurs when the console port is already used by another application or if you do not have the privilege to use it.
+						
+						
+						Refer also to "<A
+HREF="portsproblems.html"
+>Solving Ports Listening Problems</A
+>" for more information.
+					</P
+></DIV
+></DIV
+></DIV
+></DIV
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="portsproblems.html"
+ACCESSKEY="P"
+>Prev</A
+>Solving Ports Listening Problems</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

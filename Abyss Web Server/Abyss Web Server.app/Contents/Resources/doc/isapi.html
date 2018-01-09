@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>ISAPI Extensions</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="CGI, FastCGI, and ISAPI"
+HREF="scripting.html"><LINK
+REL="PREVIOUS"
+TITLE="FastCGI"
+HREF="fastcgi.html"><LINK
+REL="NEXT"
+TITLE="X-Sendfile Support"
+HREF="xsendfile.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="ISAPI Extensions"><META
+NAME="Description"
+CONTENT="ISAPI Extensions"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="fastcgi.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 6. CGI, FastCGI, and ISAPI</H2
+></HEADER
+><A
+HREF="xsendfile.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="ISAPI"
+>ISAPI Extensions</A
+></H1
+><P
+>			Abyss Web Server supports a large subset of the ISAPI 5.0 specification suitable for running most of the ISAPI extensions available to date. ISAPI extensions are loaded in the server process space on demand. They remain there until the
+			server is restarted or stopped. Since ISAPI extensions <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>live</I
+></SPAN
+> in the server process space (contrarily to CGI application which are launched in their own process), any ISAPI error or crash affects the whole server.
+			But thanks to the APX (Anti-crash Protection eXtension) architecture of Abyss Web Server such problems can be immediately detected and the server is restarted with almost no noticeable downtime.
+		</P
+><P
+>			Abyss Web Server makes ISAPI development easier thanks to its advanced debugging capabilities: With the help of the <B
+CLASS="GUILABEL"
+>Debugging Level</B
+> parameter in <B
+CLASS="GUILABEL"
+>ISAPI Parameters</B
+>, you can
+			configure the server to log unhandled callback to the ISAPI extension, all callbacks, or all callbacks with all the exchanged input/output between the extension and the server.
+		</P
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="scripting.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="fastcgi.html"
+ACCESSKEY="P"
+>Prev</A
+>FastCGI</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="xsendfile.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>X-Sendfile Support</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

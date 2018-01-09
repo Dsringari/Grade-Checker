@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Scripts</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Custom Directory Listings"
+HREF="dirlist.html"><LINK
+REL="PREVIOUS"
+TITLE="Custom Directory Listings"
+HREF="dirlist.html"><LINK
+REL="NEXT"
+TITLE="Glossary"
+HREF="glossary.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Scripts"><META
+NAME="Description"
+CONTENT="Scripts"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="dirlist.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 8. Custom Directory Listings</H2
+></HEADER
+><A
+HREF="glossary.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="DIRSCRIPT"
+>Scripts</A
+></H1
+><P
+>			When a directory listing is generated through a script, the server gathers the information related to the files inside the listed directory and packs it in a special string. Then the script is executed and the special string is <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>POST</I
+></SPAN
+>ed to it inside a variable called <KBD
+CLASS="USERINPUT"
+>files</KBD
+>. The server also <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>POST</I
+></SPAN
+>s the directory virtual path in a variable which name is <KBD
+CLASS="USERINPUT"
+>path</KBD
+> as well as an URL encoded (escaped) version of the virtual path in a variable named <KBD
+CLASS="USERINPUT"
+>encoded_path</KBD
+>.
+		</P
+><P
+>			This special string passed in the <KBD
+CLASS="USERINPUT"
+>files</KBD
+> variable is of the form:
+   		</P
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN3040"
+></A
+><TABLE
+BORDER="0"
+FRAME="void"
+CLASS="CALSTABLE"
+><COL
+WIDTH="96"><COL
+WIDTH="96"><COL
+WIDTH="96"><COL
+WIDTH="96"><COL
+WIDTH="96"><TBODY
+><TR
+><TD
+>name<SUB
+>1</SUB
+>&#8594;</TD
+><TD
+>url<SUB
+>1</SUB
+>&#8594;</TD
+><TD
+>size<SUB
+>1</SUB
+>&#8594;</TD
+><TD
+>date<SUB
+>1</SUB
+>&#8594;</TD
+><TD
+>MIME-type<SUB
+>1</SUB
+>[CR]</TD
+></TR
+><TR
+><TD
+>name<SUB
+>2</SUB
+>&#8594;</TD
+><TD
+>url<SUB
+>2</SUB
+>&#8594;</TD
+><TD
+>size<SUB
+>2</SUB
+>&#8594;</TD
+><TD
+>date<SUB
+>2</SUB
+>&#8594;</TD
+><TD
+>MIME-type<SUB
+>2</SUB
+>[CR]</TD
+></TR
+><TR
+><TD
+>.</TD
+><TD
+>.</TD
+><TD
+>.</TD
+><TD
+>.</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>.</TD
+><TD
+>.</TD
+><TD
+>.</TD
+><TD
+>.</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+>name<SUB
+>n-1</SUB
+>&#8594;</TD
+><TD
+>url<SUB
+>n-1</SUB
+>&#8594;</TD
+><TD
+>size<SUB
+>n-1</SUB
+>&#8594;</TD
+><TD
+>date<SUB
+>n-1</SUB
+>&#8594;</TD
+><TD
+>MIME-type<SUB
+>n-1</SUB
+>[CR]</TD
+></TR
+><TR
+><TD
+>name<SUB
+>n</SUB
+>&#8594;</TD
+><TD
+>url<SUB
+>n</SUB
+>&#8594;</TD
+><TD
+>size<SUB
+>n</SUB
+>&#8594;</TD
+><TD
+>date<SUB
+>n</SUB
+>&#8594;</TD
+><TD
+>MIME-type<SUB
+>n</SUB
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>			&#8594; represents the tabulation character (ASCII code 9 - <KBD
+CLASS="USERINPUT"
+>\t</KBD
+>) and [CR] represents the carriage return character (ASCII code 13 - <KBD
+CLASS="USERINPUT"
+>\n</KBD
+>). The tuple <KBD
+CLASS="USERINPUT"
+>(name<SUB
+>i</SUB
+>, url<SUB
+>i</SUB
+>, size<SUB
+>i</SUB
+>, date<SUB
+>i</SUB
+>, MIME-type<SUB
+>i</SUB
+>)</KBD
+> is the information related to the i<SUP
+>th</SUP
+> file in the listing.
+		</P
+><P
+>			The name and the URL of every file are UTF-8 encoded. The size is in bytes. The date is conforming to the format <KBD
+CLASS="USERINPUT"
+>YYYY-MM-DD hh:mm:ss</KBD
+> which is equivalent in <KBD
+CLASS="USERINPUT"
+>strftime</KBD
+> semantics to <KBD
+CLASS="USERINPUT"
+>%Y-%m-%d %H:%M:%S</KBD
+>.
+		</P
+><P
+>			The MIME type of a directory is empty, i.e. it is equal to the empty string. The name of a directory contains always a trailing slash.
+		</P
+><P
+>			The script should split the <KBD
+CLASS="USERINPUT"
+>files</KBD
+> variable value on the carriage return characters then split each line on the tabulation character to have the information related to each file.
+		</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN3119"
+></A
+><P
+><B
+>Example 8-2. A very simple directory listing script (PHP version)</B
+></P
+><PRE
+CLASS="PROGRAMLISTING"
+>   &#60;HTML&#62;
+     &#60;HEAD&#62;
+       &#60;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"&#62;
+       &#60;TITLE&#62;
+           Index of &#60;?php echo $_POST['path']; ?&#62;
+       &#60;/TITLE&#62;
+     &#60;/HEAD&#62;
+   
+     &#60;BODY&#62;
+   
+       &#60;TABLE BORDER="0"&#62;
+   
+         &#60;TR&#62;
+           &#60;TD&#62;Name&#60;/TD&#62;
+           &#60;TD&#62;Size&#60;/TD&#62;
+           &#60;TD&#62;Date&#60;/TD&#62;
+           &#60;TD&#62;MIME Type&#60;/TD&#62;
+         &#60;/TR&#62;
+   
+         &#60;?php
+   
+           /* Split and get the lines */
+           $lines = explode("\n", $_POST['files']);
+   
+           /* For each line do... */
+           foreach ($lines as $line)
+           {
+             /* Split the line and get the file information */
+             list($name, $url, $size, $date, $mimetype) = explode("\t", $line);
+   	  
+             if ($mimetype == "")
+               $mimetype = "Directory";
+   
+             echo "&#60;TR&#62;&#60;TD&#62;&#60;A HREF=\"$url\"&#62;" . htmlentities($name) .
+                       "&#60;/A&#62;&#60;/TD&#62;&#60;TD&#62;$size&#60;/TD&#62;&#60;TD&#62;$date&#60;/TD&#62;&#60;TD&#62;$mimetype&#60;/TD&#62;&#60;/TR&#62;";
+           }
+        ?&#62;
+   
+        &#60;/TABLE&#62;
+      &#60;/BODY&#62;
+   &#60;/HTML&#62;</PRE
+></DIV
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN3122"
+></A
+><P
+><B
+>Example 8-3. A very simple directory listing script (Python version)</B
+></P
+><PRE
+CLASS="PROGRAMLISTING"
+>   import cgi, string, os
+   
+   posted_data = cgi.FieldStorage()
+   
+   # Write the CGI header
+   print "Content-Type: text/html; charset=utf-8"
+   print
+   
+   print "&#60;HTML&#62;&#60;HEAD&#62;"
+   print "&#60;META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=utf-8\"&#62;"
+   print "&#60;TITLE&#62;Index of %s&#60;/TITLE&#62;&#60;/HEAD&#62;" % posted_data["path"].value
+   
+   print "&#60;TABLE BORDER='0'&#62;&#60;TR&#62;&#60;TD&#62;Name&#60;/TD&#62;&#60;TD&#62;Size&#60;/TD&#62;&#60;TD&#62;Date&#60;/TD&#62;&#60;TD&#62;MIME Type&#60;/TD&#62;&#60;/TR&#62;"
+   
+   # Split and get the lines
+   lines = (posted_data["files"].value).split("\n")
+   
+   # for each line do...
+   for line in lines:
+           # Split the line and get the file information
+           (name, url, size, date, mimetype) = line.split("\t")
+   
+           if (mimetype == ""):
+                   mimetype = "Directory"
+   
+           print "&#60;TR&#62;&#60;TD&#62;&#60;A HREF=\"%s\"&#62;%s&#60;/A&#62;&#60;/TD&#62;" % ( url, cgi.escape(name) )
+           print "&#60;TD&#62;%d&#60;/TD&#62;&#60;TD&#62;%s&#60;/TD&#62;&#60;TD&#62;%s&#60;/TD&#62;&#60;/TR&#62;" % (int(size), date, mimetype)
+   
+   print "&#60;/TABLE&#62;&#60;/BODY&#62;&#60;/HTML&#62;"</PRE
+></DIV
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="dirlist.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="dirlist.html"
+ACCESSKEY="P"
+>Prev</A
+>Custom Directory Listings</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="glossary.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>Glossary</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>

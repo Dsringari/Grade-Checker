@@ -1,0 +1,3675 @@
+<!DOCTYPE HTML>
+<HTML
+><HEAD
+><TITLE
+>Configuring a host</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Abyss Web Server  For  MacOS X   User's Guide"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Hosts Management"
+HREF="hosts.html"><LINK
+REL="PREVIOUS"
+TITLE="Declaring a new host"
+HREF="hosts-add.html"><LINK
+REL="NEXT"
+TITLE="CGI, FastCGI, and ISAPI"
+HREF="scripting.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="stylesheet.css"><META
+CHARSET="iso-8859-1"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"><META
+NAME="AppleIcon"
+CONTENT="icon.png"><META
+NAME="AppleTitle"
+CONTENT="Configuring a host"><META
+NAME="Description"
+CONTENT="Configuring a host"><META
+NAME="AppleOrder"
+CONTENT=""></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><NAV
+CLASS="NAVHEADER"
+><H1
+>Abyss Web Server  For  MacOS X   User's Guide</H1
+><HR> <A
+HREF="hosts-add.html"
+ACCESSKEY="P"
+CLASS="prev"
+>Prev</A
+><HEADER
+><H2
+>Chapter 5. Hosts Management</H2
+></HEADER
+><A
+HREF="scripting.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+><HR></NAV
+><SECTION
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="HOSTS-CONFIGURATION"
+>Configuring a host</A
+></H1
+><P
+>                        To open the configuration dialog of a host, go to the main console dialog and press the <B
+CLASS="GUILABEL"
+>Configure</B
+> button located on the same line as the host name in the <B
+CLASS="GUILABEL"
+>Hosts</B
+> dialog.
+                </P
+><P
+>			The following subsections describe all the host configuration options.
+		</P
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-GENERAL"
+>General</A
+></H2
+><P
+>				The <B
+CLASS="GUILABEL"
+>General</B
+> dialog contains the general configuration parameters of a host.
+			</P
+><P
+>				This dialog has the following elements:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-PATH"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Documents Path</B
+>: The path of the web site files. If it is a relative path then it is
+						considered as a subpath of the server root.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-PROTOCOL"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>Protocol</B
+>: Set it to <B
+CLASS="GUILABEL"
+>HTTP</B
+> to configure the host to use normal non-secure connections. To have the host serve content over secure connections only using SSL/TLS, set it to <B
+CLASS="GUILABEL"
+>HTTPS</B
+>. On Abyss Web Server X2, the host can be configured to serve content on both secure and non-secure connections by setting <B
+CLASS="GUILABEL"
+>Protocol</B
+> to <B
+CLASS="GUILABEL"
+>HTTP+HTTPS</B
+>. In such a situation, you can configure some virtual paths to be accessible on secure connections only by adding them to the <B
+CLASS="GUILABEL"
+>Exclusively Serve On HTTPS</B
+> table.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-PROTOCOL-0PANE-PORT"
+></A
+>
+					<A
+NAME="HOSTS-GENERAL-PROTOCOL-2PANE-PORT"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>HTTP Port</B
+>: The port on which the host waits for HTTP connections. Its default value is 80. This field is not available if the <B
+CLASS="GUILABEL"
+>Protocol</B
+> is set to <B
+CLASS="GUILABEL"
+>HTTPS</B
+> only.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-PROTOCOL-1PANE-SECUREPORT"
+></A
+>
+            		<A
+NAME="HOSTS-GENERAL-PROTOCOL-2PANE-SECUREPORT"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>HTTPS Port</B
+>: The port on which the host waits for secure HTTPS connections. Its default value is 443. This field is not available if the <B
+CLASS="GUILABEL"
+>Protocol</B
+> is set to <B
+CLASS="GUILABEL"
+>HTTP</B
+> only.
+				</P
+></LI
+><LI
+><P
+>					<A
+NAME="HOSTS-GENERAL-PROTOCOL-1PANE-CERTIFICATE"
+></A
+>
+            		<A
+NAME="HOSTS-GENERAL-PROTOCOL-2PANE-CERTIFICATE"
+></A
+>
+					<B
+CLASS="GUILABEL"
+>Certificate</B
+>: The certificate that is used for secure connections with the current host. This field is not available if the <B
+CLASS="GUILABEL"
+>Protocol</B
+> is set to <B
+CLASS="GUILABEL"
+>HTTP</B
+> only. Note that the certificate's <B
+CLASS="GUILABEL"
+>Host Name (Common Name)</B
+> should be equal to or match with the names associated with the current host. Otherwise, visitors' browsers will report a warning about mismatched names on every access to the host.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-NAMES"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Host Names</B
+>: This table contains the names associated with the current host. If the table is empty, the host is not associated with a specific name and will answer any request that reaches it on the configured port. A host can also have one or more names. Names may contain non-Latin characters ans Abyss Web Server supports International Domain Names (IDN) natively. A host name in this table can also be a pattern such as <KBD
+CLASS="USERINPUT"
+>*.mysite.com</KBD
+>. Refer to the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Advanced Parameters</B
+>: Press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to open the advanced parameters dialog which contains the following fields:
+							<UL
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-BINDIP"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Bind to IP Address</B
+>: The IP address of the network interface that the host should listen on. When empty or set to <KBD
+CLASS="USERINPUT"
+>*</KBD
+>, the host listens for incoming connections on all available network interface (which the default and the recommended setting.)
+								</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-SECURELAYER"
+></A
+>
+							<B
+CLASS="GUILABEL"
+>SSL/TLS Parameters</B
+>: Detailed parameters of the SSL/TLS secure layer are accessible by pressing <B
+CLASS="GUILABEL"
+>Edit...</B
+>. In the displayed disalog, it is possible to set the SSL/TLS profile. It is highly recommended to let it set to its default and recommended value. If you set it <B
+CLASS="GUILABEL"
+>Custom</B
+>, it becomes possible to select the accepted protocols and configure the <B
+CLASS="GUILABEL"
+>Ciphers</B
+> parameter to select the ciphers that the server can accept to use when negotiating with a browser establishing a HTTPS connection to the console. When set to <B
+CLASS="GUILABEL"
+>Strong</B
+>, no weak cipher (any cipher with a key length strictly less than 128 bits) will be used. But this can restrict access from some old browsers which do not support modern and strong ciphers. For custom ciphers specification, set this parameter to <B
+CLASS="GUILABEL"
+>Custom Specification</B
+> and fill the displayed text field with a string conforming to the <A
+HREF="http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT"
+TARGET="_top"
+>OpenSSL Ciphers List Format</A
+>.
+								</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-DISABLERANGE"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Disable Download Resuming for</B
+>: Download resuming (through the <KBD
+CLASS="USERINPUT"
+>Range</KBD
+> HTTP header) is disabled for requests which path matches one of the virtual paths listed in this table.
+								</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-DISABLEIFMODIFIED"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Disable Caching Negotiation for</B
+>: Caching negotiation with the browser (through the <KBD
+CLASS="USERINPUT"
+>If-modified</KBD
+> HTTP headers) is disabled for requests which path matches one of the virtual paths listed in this table.
+								</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-CUSTOMHEADERS"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Custom HTTP Headers</B
+>: Use this table to declare custom HTTP headers that will be included in the server responses. A custom header is added when the request's virtual path matches with the value or the pattern of its associated <B
+CLASS="GUILABEL"
+>Virtual Path</B
+> field. See the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns. The HTTP headers <KBD
+CLASS="USERINPUT"
+>Server</KBD
+>, <KBD
+CLASS="USERINPUT"
+>Connection</KBD
+>, <KBD
+CLASS="USERINPUT"
+>Keep-Alive</KBD
+>, <KBD
+CLASS="USERINPUT"
+>Transfer-Encoding</KBD
+>, and <KBD
+CLASS="USERINPUT"
+>Content-Length</KBD
+> cannot be customized.</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-SECUREONLY"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Exclusively Serve On HTTPS</B
+>: If a request's virtual path matches with one of the paths or the patterns declared in that table, and if the request was received on a non-secure (HTTP) connection, the server generates a redirection to the same virtual path but using HTTPS to force it to be served on a secure connection. The <B
+CLASS="GUILABEL"
+>Exclusively Serve On HTTPS</B
+> table is available on Abyss Web Server X2 only when the current host's <B
+CLASS="GUILABEL"
+>Protocol</B
+> is set to <B
+CLASS="GUILABEL"
+>HTTP+HTTPS</B
+>.</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-REQUESTBODY"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Request Body Restrictions</B
+>: Restriction on the request body (sent by client for HTTP POST requests for example) are applied for requests which path matches one of the virtual paths listed in this table. Each of these virtual paths could be associated with a restriction on the total length of request body (controlled through the <B
+CLASS="GUILABEL"
+>Maximum Length</B
+> parameter.) Similarly, request bodies which are sent by the client using chunked encoding could be automatically dechunked and served as normal request bodies to scripts and Web applications which are not compatible with chunked encoding. Note that CGI and FastCGI compatible scripts and Web applications need dechunking as these specification do not support chunked encoding. The parameter <B
+CLASS="GUILABEL"
+>Dechunk</B
+> controls the support of that feature for a given virtual path and <B
+CLASS="GUILABEL"
+>Maximum Dechunk Length</B
+> defines the maximum size of the dechunk buffer. Since dechunking requires buffering in the memory, do not set this limit too high especially on busy servers.</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-EXPIRES"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>File Expiration Times</B
+>: If the virtual path of a request matches with one of the paths or the patterns declared in this table and if it refers to a static file, the MIME type of the file is compared to the one in the matching rule. If it matches, an <KBD
+CLASS="USERINPUT"
+>Expire</KBD
+> HTTP header is injected in the reply. The expiration date is set using the value of the <B
+CLASS="GUILABEL"
+>Time Delta</B
+> field relatively to the <B
+CLASS="GUILABEL"
+>Time Base</B
+> which is either the file's last modification date or the current date (now.)</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-GENERAL-ADVANCED-FILEWITHPATHINFO"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Do not serve file requests with Pathinfo in</B
+>: By default, if a virtual path such as <KBD
+CLASS="USERINPUT"
+>/photos/2014/house.jpg</KBD
+> refers to an actual static file or SSI page, a request for virtual path <KBD
+CLASS="USERINPUT"
+>/photos/2014/house.jpg/extra/goes/here</KBD
+> will be successful and will serve the same content as the previous and shorter virtual path. <KBD
+CLASS="USERINPUT"
+>/extra/goes/here</KBD
+> is called the path information (or simply <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Pathinfo</I
+></SPAN
+>.)</P
+><P
+>If the virtual path of a request matches with one of the paths or the patterns declared in this table, if it refers to a static or SSI file, and if path information is present, the server replies with an error which status code is 404 (Not found) instead of serving the file.</P
+></LI
+></UL
+>
+
+					</P
+></LI
+></UL
+>
+			</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>					The <B
+CLASS="GUILABEL"
+>Host Names</B
+> table is only available in Abyss Web Server X2. Abyss Web Server X1 answers to all the requests that reach the main host on the configured port regardless of the host name used in the browser.
+				</P
+></BLOCKQUOTE
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-INDEXES"
+>Index Files</A
+></H2
+><P
+>				When a browser asks for a URL that does not contain a filename, the server checks for the existence of each index
+				file in the mapped directory. If none is found and automatic directory indexing is enabled,
+                                a directory listing is generated and sent to the browser. Otherwise, an error is reported.
+			</P
+><P
+>				To edit, remove or add index filenames, use the <B
+CLASS="GUILABEL"
+>Index Files</B
+> table in the
+				<B
+CLASS="GUILABEL"
+>Index Files</B
+> dialog.
+			</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN1170"
+></A
+><P
+><B
+>Example 5-1. index.htm and index.html as index files</B
+></P
+><P
+>					Assume that <KBD
+CLASS="USERINPUT"
+>index.html</KBD
+> and <KBD
+CLASS="USERINPUT"
+>index.htm</KBD
+> are set as index filenames.
+					If a browser asks for <KBD
+CLASS="USERINPUT"
+>http://&#60;your host name&#62;:&#60;host  port&#62;/hello/</KBD
+>,
+					the server checks if <KBD
+CLASS="USERINPUT"
+>&#60;documents path&#62;/hello/index.html</KBD
+> exists.
+					If not, it checks if <KBD
+CLASS="USERINPUT"
+>&#60;documents path&#62;/hello/index.htm</KBD
+> exists.
+					If so, it is sent to the browser. If not, a listing of the directory
+					<KBD
+CLASS="USERINPUT"
+>&#60;documents path&#62;/hello/</KBD
+> is generated and sent to the browser if
+                                        automatic directory indexing is enabled. If it is disabled, the server replies with a forbidden error message.
+				</P
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-DIRLIST"
+>Directory Listing</A
+></H2
+><P
+>				When a browser asks for a URL that does not contain a filename, and if the server does not find an index
+				file in the mapped directory, it generates a directory listing.
+			</P
+><P
+>				This dialog contains the following elements:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-DIRLIST-TYPE"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Type</B
+>: The type of listing that should be generated. It can be:
+						<UL
+><LI
+><P
+>								<B
+CLASS="GUILABEL"
+>Disabled</B
+>:  Disables directory listing. In this case, the server generates error 403 instead of a listing.
+							</P
+></LI
+><LI
+><P
+>								<B
+CLASS="GUILABEL"
+>Standard Listing</B
+>:  A listing based on a standard and fixed basic template is generated. 
+							</P
+></LI
+><LI
+><P
+>                                <A
+NAME="HOSTS-DIRLIST-TYPE-2PANE-MIMETYPE"
+></A
+>
+                                <A
+NAME="HOSTS-DIRLIST-TYPE-2PANE-HEADER"
+></A
+>
+                                <A
+NAME="HOSTS-DIRLIST-TYPE-2PANE-LINE"
+></A
+>
+                                <A
+NAME="HOSTS-DIRLIST-TYPE-2PANE-FOOTER"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>From Template</B
+>:  A listing is generated according to the configured custom template. See the "<A
+HREF="dirlist.html"
+>Custom Directory Listings</A
+>" chapter for detailed information about creating custom templates.
+							</P
+></LI
+><LI
+><P
+>                                <A
+NAME="HOSTS-DIRLIST-TYPE-3PANE-SCRIPT"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>From Script</B
+>:  A listing is generated by the script configured in the <B
+CLASS="GUILABEL"
+>Script</B
+> field. Refer to the "<A
+HREF="dirlist.html"
+>Custom Directory Listings</A
+>" chapter for detailed information about creating directory listing scripts.
+							</P
+></LI
+></UL
+>
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-DIRLIST-SCOPE"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Scope</B
+>: Press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to configure the virtual paths where directory listing is permitted. The displayed dialog has the following items:
+							<UL
+><LI
+><P
+><A
+NAME="HOSTS-DIRLIST-SCOPE-ORDER"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Order</B
+>: The order that the server follows to check if directory listing is permitted for a virtual path.
+									If it is set to <B
+CLASS="GUILABEL"
+>Allow/Deny</B
+>, listing is denied by default and is allowed only if the
+									virtual path is in the <B
+CLASS="GUILABEL"
+>Allow for</B
+> list and is not in the
+									<B
+CLASS="GUILABEL"
+>Deny for</B
+> list.
+									If it is set to <B
+CLASS="GUILABEL"
+>Deny/Allow</B
+>, listing is allowed by default and is denied only if the
+									virtual path is in the <B
+CLASS="GUILABEL"
+>Deny for</B
+> list and is not in the
+									<B
+CLASS="GUILABEL"
+>Allow for</B
+> list.
+								</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-DIRLIST-SCOPE-ALLOW"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Allow for</B
+>: The list of virtual paths for which directory listing is allowed. The table can contain also path patterns. See the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+								</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-DIRLIST-SCOPE-DENY"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Deny for</B
+>:  The list of virtual paths for which directory listing is denied. The table can contain also path patterns. See the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+								</P
+></LI
+></UL
+>				
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-DIRLIST-HIDDEN"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Hidden Files</B
+>: The file names that are equal or that match with the listed file name patterns in this table are not included in the directory listings. See the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns. This table should only contain file names with no path references.
+					</P
+></LI
+></UL
+>
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-ALIASES"
+>Aliases</A
+></H2
+><P
+>				Select <B
+CLASS="GUILABEL"
+>Aliases</B
+> in the host configuration menu to display the aliases table.
+			</P
+><P
+>				If a URL matches an alias' virtual path, the web server maps it to the alias' associated real path.
+			</P
+><P
+>				Use the displayed table to edit, remove or add aliases.
+			</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN1246"
+></A
+><P
+><B
+>Example 5-2. Relative real path</B
+></P
+><P
+>					Assume that there exists an alias which virtual path is <KBD
+CLASS="USERINPUT"
+>/images</KBD
+> and which real path
+					is <KBD
+CLASS="USERINPUT"
+>web/artwork</KBD
+>.
+					If a browser asks for <KBD
+CLASS="USERINPUT"
+>http://&#60;your host name&#62;:&#60;host  port&#62;/images/logo.jpg</KBD
+>,
+					the server maps the requested URL to the file <KBD
+CLASS="USERINPUT"
+>&#60;server root&#62;/web/artwork/logo.jpg</KBD
+>.
+					The <KBD
+CLASS="USERINPUT"
+>&#60;server root&#62;</KBD
+> is added because the real path was relative.
+				</P
+></DIV
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN1254"
+></A
+><P
+><B
+>Example 5-3. Absolute real path</B
+></P
+><P
+>					Assume now that there exists an alias which virtual path is <KBD
+CLASS="USERINPUT"
+>/images</KBD
+>
+					and which real path is
+					<KBD
+CLASS="USERINPUT"
+>/usr/local/web/artwork</KBD
+>.
+					If a browser asks for <KBD
+CLASS="USERINPUT"
+>http://&#60;your host name&#62;:&#60;host  port&#62;/images/logo.jpg</KBD
+>,
+					the server maps the requested URL to the file <KBD
+CLASS="USERINPUT"
+>/usr/local/web/artwork/logo.jpg</KBD
+>.
+					The difference with the previous example is that the real path is absolute and not relative.
+				</P
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-SSI"
+>XSSI Parameters</A
+></H2
+><P
+>				To configure XSSI (eXtended Server Side Includes), select <B
+CLASS="GUILABEL"
+>XSSI Parameters</B
+> in the
+				host configuration menu.
+			</P
+><P
+>				This dialog includes the following fields:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-SSI-ENABLED"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Enable XSSI Processing</B
+>: Enable/disable XSSI processing.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SSI-ERRORMESSAGE"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>XSSI Error Message</B
+>: The default error message that the server inserts when an error is detected while processing an XSSI directive.
+                                                If empty, an accurate error description with debugging information is generated.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SSI-TIMEFORMAT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Time Format String</B
+>: The default time format string that the server uses to display times while processing XSSI directives.
+                                                If empty, the string <KBD
+CLASS="USERINPUT"
+>%A, %d-%b-%Y %H:%M:%S %Z</KBD
+> is used. For the complete reference of the time format string, read the description of <KBD
+CLASS="USERINPUT"
+>&#60;!-- #config timefmt="time_format" --&#62;</KBD
+> directive in  "<A
+HREF="ssi.html"
+>eXtended Server Side Includes</A
+>" chapter.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SSI-ABBREVIATESIZE"
+></A
+>
+                                                <B
+CLASS="GUILABEL"
+>Abbreviated File Size</B
+>: The default way to display file sizes. If it is checked, file sizes are displayed in KB or MB. Otherwise, they are displayed in bytes.
+                                        </P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SSI-EXECCMD"
+></A
+>
+                                                <B
+CLASS="GUILABEL"
+>Process "#Exec cmd" Directives</B
+>: Enable/disable the execution of shell commands in XSSI.
+                                        </P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SSI-EXTENSIONS"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Associated Extensions</B
+>: If a file name extension matches with one of these extensions or extensions patterns, it is processed as an XSSI file.
+						Read the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns. By default, the server is configured to process XSSI directives in files which extensions are <KBD
+CLASS="USERINPUT"
+>shtml</KBD
+>, <KBD
+CLASS="USERINPUT"
+>shtm</KBD
+>, or <KBD
+CLASS="USERINPUT"
+>stm</KBD
+>.
+				</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SSI-EXECGIPATHS"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>"#Exec cgi" Search Paths</B
+>: If the argument of a <KBD
+CLASS="USERINPUT"
+>#exec cgi</KBD
+> directive is a relative path, the server will try to locate the file inside the directory containing the currently processed XSSI file. If it is not found there, it will search for it inside the virtual paths listed in <B
+CLASS="GUILABEL"
+>'#exec cgi' Search Paths</B
+>.						
+				</P
+></LI
+></UL
+>
+			</P
+><P
+>                                For more information about XSSI, refer to "<A
+HREF="ssi.html"
+>eXtended Server Side Includes</A
+>" chapter.
+                        </P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-UG"
+>Users and Groups</A
+></H2
+><P
+>				Select <B
+CLASS="GUILABEL"
+>Users and Groups</B
+> in the host configuration menu to display the users and groups tables.
+			</P
+><P
+>				Use the displayed tables to edit, remove or add users and groups.
+			</P
+><P
+>                                A user is defined by its name and its password. A group is defined by its name
+                                and its members which can be users and other groups.
+                        </P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>                                        The console hides automatically groups that can lead to circular references when editing a group.
+                                </P
+></BLOCKQUOTE
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-CUSTOMERRORS"
+>Custom Error Pages</A
+></H2
+><P
+>				With Abyss Web Server, you can override the standard error pages and replace them with yours. To do so,
+                                select <B
+CLASS="GUILABEL"
+>Custom Error Pages</B
+> in the host configuration menu.
+			</P
+><P
+>				This dialog includes the following elements:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-CUSTOMERRORS-ERRORS"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Custom Error Pages</B
+>: This table contains the customized errors and their associated URLs.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-CUSTOMERRORS-DEFAULT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Default Custom Error Page</B
+>: The URL used when an error which code is not listed in the <B
+CLASS="GUILABEL"
+>Custom Error Pages</B
+> table occurs.
+                                                If empty, Abyss Web Server generates automatically a standard error page.
+					</P
+></LI
+></UL
+>
+			</P
+><P
+>                                An error URL can be:
+                                <UL
+><LI
+><P
+>						Local: If it begins with a slash <KBD
+CLASS="USERINPUT"
+>/</KBD
+>, the URL is local to the web server.
+					</P
+></LI
+><LI
+><P
+>						Global: If it begins with <KBD
+CLASS="USERINPUT"
+>http://</KBD
+>, the URL is global and the web server informs the browser a redirect to that URL when an error occurs.
+					</P
+></LI
+></UL
+>
+                        </P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>                                        It is only relevant to set 4xx and 5xx error codes. Other error codes are handled
+                                        internally in the web server and do not lead to displaying an error page.
+                                </P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>                                        When using a local URL that is a CGI script or an XSSI page as a custom error page, the server operates an internal redirection and
+                                        adds to the custom error page's environment variables all the faulty request environment variables prefixed with <KBD
+CLASS="USERINPUT"
+>REDIRECT_</KBD
+>.
+                                        It adds also the special variables <KBD
+CLASS="USERINPUT"
+>REDIRECT_STATUS</KBD
+> and <KBD
+CLASS="USERINPUT"
+>REDIRECT_STATUS_CODE</KBD
+> which contain the status code of
+                                        the faulty request. For more information, read "<A
+HREF="cgivars.html"
+>CGI environment variables</A
+>" section
+                                        in "<A
+HREF="scripting.html"
+>CGI, FastCGI, and ISAPI</A
+>" chapter.
+                                </P
+></BLOCKQUOTE
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-SCRIPTING"
+>Scripting Parameters</A
+></H2
+><P
+>				To configure CGI, FastCGI, ISAPI, and scripts execution, select <B
+CLASS="GUILABEL"
+>Scripting Parameters</B
+> in the host configuration menu.
+			</P
+><P
+>				This dialog includes the following fields:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-ENABLED"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Enable Scripts Execution</B
+>: Enable/disable CGI, FastCGI, ISAPI, and scripts execution.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-CGI"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>CGI Parameters</B
+>: Press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to access the CGI parameters dialog which contains the following elements:
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-CGI-ERRORFILE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Error File</B
+>: The path of the file where CGI scripts write error messages.
+								You can leave it empty if you do not want to trace CGI scripts' errors.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-CGI-TIMEOUT"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>I/O Timeout</B
+>: How long (in seconds) the server should wait for a CGI script or application
+								to deliver content before aborting it.
+							</P
+></LI
+></UL
+>
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-ISAPI"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>ISAPI Parameters</B
+>: Press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to access the ISAPI parameters dialog which contains the following elements:
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-ISAPI-ERRORFILE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Error File</B
+>: The path of the file where ISAPI extensions write error messages and where the server logs ISAPI activity when <B
+CLASS="GUILABEL"
+>Debugging Level</B
+> is set to a value other than <B
+CLASS="GUILABEL"
+>None</B
+>.
+								You can leave it empty if you do not want to trace ISAPI errors.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-ISAPI-DEBUGLEVEL"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Debugging Level</B
+>: The type of information Abyss Web Server should log when an ISAPI is invoked. It should be set the <B
+CLASS="GUILABEL"
+>None</B
+> unless you are developing or debugging an ISAPI extension.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-ISAPI-EXTENSIONS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>ISAPI Filename Extensions</B
+>: This table contains the file name extensions that helps the server recognize if a file is an ISAPI or not. It is filled with <KBD
+CLASS="USERINPUT"
+>dll</KBD
+> by default. This table is used for example to know if a declared interpreter is an ISAPI extension or not.
+							</P
+></LI
+></UL
+>
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-FASTCGI"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>FastCGI Parameters</B
+>: Press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to access the FastCGI parameters dialog which contains the following elements:
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-FASTCGI-ERRORFILE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Error File</B
+>: The path of the file where FastCGI executables and interpreters write error messages and where the server logs their activity when <B
+CLASS="GUILABEL"
+>Debugging Level</B
+> is set to a value other than <B
+CLASS="GUILABEL"
+>None</B
+>.
+								You can leave it empty if you do not want to trace FastCGI errors.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-FASTCGI-DEBUGLEVEL"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Debugging Level</B
+>: The type of information Abyss Web Server should log when a FastCGI executable or interpreter is running.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-FASTCGI-IOTIMEOUT"
+></A
+>
+                                <B
+CLASS="GUILABEL"
+>I/O Timeout</B
+>: How long (in seconds) the server should wait for a FastCGI process
+								to deliver content before aborting the connection with it and reporting an error.
+                            </P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-FASTCGI-TIMEOUT"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>FastCGI Processes Timeout</B
+>: How long (in seconds) the server should let an unused FastCGI process wait before aborting it.
+							</P
+></LI
+></UL
+>
+					</P
+></LI
+></UL
+>
+			</P
+><P
+>				The dialog contains also the following tables:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Interpreters</B
+>: The server uses this table to know which interpreter to use
+						to execute a script. The choice is based on the script's file name extension: an interpreter
+						runs a script if the extension of that script matches with one of the
+						associated extensions or extensions patterns of the interpreter.
+					</P
+><P
+>						Each interpreter is defined by its:
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Interface</B
+>: It has to be set to <B
+CLASS="GUILABEL"
+>FastCGI (Local - Pipes)</B
+> or <B
+CLASS="GUILABEL"
+>FastCGI (Local - TCP/IP Sockets)</B
+> if the interpreter supports FastCGI and its executable is available on the computer where the Web server is installed.
+								If you have a standalone or remote FastCGI server, set it to <B
+CLASS="GUILABEL"
+>FastCGI (Remote - Pipes)</B
+> or <B
+CLASS="GUILABEL"
+>FastCGI (Remote - TCP/IP Sockets)</B
+> depending on the type of network protocol it supports.
+								Otherwise, <B
+CLASS="GUILABEL"
+>Interface</B
+> should be set to <B
+CLASS="GUILABEL"
+>CGI/ISAPI</B
+>. Note that for most FastCGI compliant interpreters, you can either choose <B
+CLASS="GUILABEL"
+>FastCGI (Local - Pipes)</B
+> or <B
+CLASS="GUILABEL"
+>FastCGI (Local - TCP/IP Sockets)</B
+> with no noticeable difference as both modes provide comparable performances. But some FastCGI interpreters such as PHP 5.1.3 and later only support a single mode of operation. So if an interpreter fails to work in a given mode, select the other and retry. You can also refer to Aprelium's Web site to know which mode is supported by that interpreter.
+                                
+							</P
+></LI
+><LI
+><P
+>							<A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-0PANE-FILE"
+></A
+>
+							<A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-FILE"
+></A
+>
+							<A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-FILE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Interpreter</B
+>: The path of the FastCGI/CGI executable or the ISAPI extension (not available if <B
+CLASS="GUILABEL"
+>Interface</B
+> is set to <B
+CLASS="GUILABEL"
+>FastCGI (Remote - Pipes)</B
+> or <B
+CLASS="GUILABEL"
+>FastCGI (Remote - TCP/IP Sockets)</B
+>).
+							</P
+></LI
+><LI
+><P
+>							<A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-0PANE-ARGUMENTS"
+></A
+>
+							<A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ARGUMENTS"
+></A
+>
+							<A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ARGUMENTS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Arguments</B
+>: The additional arguments that are used to run a FastCGI/CGI executable (not available if <B
+CLASS="GUILABEL"
+>Interface</B
+> is set to <B
+CLASS="GUILABEL"
+>FastCGI (Remote - Pipes)</B
+> or <B
+CLASS="GUILABEL"
+>FastCGI (Remote - TCP/IP Sockets)</B
+>). These arguments are ignored if the interpreter is an ISAPI extension. Any occurrence of <KBD
+CLASS="USERINPUT"
+>%1</KBD
+> or <KBD
+CLASS="USERINPUT"
+>$1</KBD
+> in the arguments is replaced by the script file name when running the FastCGI/CGI interpreter.
+							</P
+></LI
+><LI
+><P
+>                                <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ADVANCED"
+></A
+>
+                                <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ADVANCED"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Advanced Parameters</B
+>: If  <B
+CLASS="GUILABEL"
+>Interface</B
+> is set to <B
+CLASS="GUILABEL"
+>FastCGI (Local - Pipes)</B
+> or <B
+CLASS="GUILABEL"
+>FastCGI (Local - TCP/IP Sockets)</B
+>, press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to access the advanced parameters dialog which contains the following elements:
+                            <UL
+><LI
+><P
+>                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ADVANCED-MINPROCESSES"
+></A
+>
+                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ADVANCED-MINPROCESSES"
+></A
+>
+                                    <B
+CLASS="GUILABEL"
+>Minimum Processes</B
+>: The minimum number of processes of the FastCGI interpreter that the Web server will maintain available and running. If this field is empty, no processes are maintained running and new ones are created on demand.
+                                </P
+></LI
+><LI
+><P
+>                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ADVANCED-MAXPROCESSES"
+></A
+>
+                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ADVANCED-MAXPROCESSES"
+></A
+>
+                                    <B
+CLASS="GUILABEL"
+>Maximum Processes</B
+>: The maximum number of processes of the FastCGI interpreter that the Web server will allow to be running at the same time. If this field is empty, no maximum limit is imposed.
+                                </P
+></LI
+><LI
+><P
+>                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ADVANCED-CONSERVATIVETHRESHOLD"
+></A
+>
+                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ADVANCED-CONSERVATIVETHRESHOLD"
+></A
+>
+                                    <B
+CLASS="GUILABEL"
+>Conservative Behavior Process Count Threshold</B
+>: When the number of processes of the FastCGI interpreter reaches this parameter's value, new processes are not immediately created on demand: the Web server will wait for some amount of time for an already running process to be ready. If no process is ready after that wait, a new one is created. If empty, no such soft limit exists.
+                                </P
+></LI
+><LI
+><P
+>                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ADVANCED-CONSERVATIVEPOLLINGTIMEOUT"
+></A
+>
+                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ADVANCED-CONSERVATIVEPOLLINGTIMEOUT"
+></A
+>
+                                    <B
+CLASS="GUILABEL"
+>Conservative Behavior Polling Interval</B
+>: The amount of time in milliseconds the Web server waits for before creating a new process for the FastCGI interpreter if the <B
+CLASS="GUILABEL"
+>Conservative Behavior Process Count Threshold</B
+> is reached and no process becomes available. If empty, it defaults to 1000 milliseconds (1 second.)
+                                </P
+></LI
+><LI
+><P
+>                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ADVANCED-MAXREQUESTS"
+></A
+>
+                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ADVANCED-MAXREQUESTS"
+></A
+>
+                                    <B
+CLASS="GUILABEL"
+>Request Count Before Process Recycling</B
+>: When a given process of the current FastCGI interpreter has processed as many requests as indicated by this parameter, it is gracefully shut down and restarted. An <B
+CLASS="GUILABEL"
+>Unlimited</B
+> value means that no recycling will ever occur.
+                                </P
+></LI
+><LI
+><P
+>                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ADVANCED-MAXAGE"
+></A
+>
+                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ADVANCED-MAXAGE"
+></A
+>
+                                    <B
+CLASS="GUILABEL"
+>Maximum Process Age Before Recycling</B
+>: When a given process of the current FastCGI interpreter has been running for the duration indicated by this parameter, it is gracefully shut down and restarted. No recycling will ever occur if this parameter is set to <B
+CLASS="GUILABEL"
+>Unlimited</B
+>.
+                                </P
+></LI
+><LI
+><P
+>                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-1PANE-ADVANCED-MONITOREDFILE"
+></A
+>
+                                    <A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-2PANE-ADVANCED-MONITOREDFILE"
+></A
+>
+                                    <B
+CLASS="GUILABEL"
+>Recycle when the following file changes</B
+>: If this field is not empty, any change to the specified file will trigger the the restart of all the processes associated with the current FastCGI interpreter.
+                                </P
+></LI
+></UL
+>
+					    </P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-3PANE-PIPE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Pipe Path</B
+>: The full path of the pipe that will be used to communicate with the interpreter if <B
+CLASS="GUILABEL"
+>Interface</B
+> is set to <B
+CLASS="GUILABEL"
+>FastCGI (Remote - Pipes)</B
+>.
+								
+                                
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-4PANE-ADDR"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Remote Server IP Address</B
+>: The IP address of the computer that is hosting the interpreter's FastCGI server (available only if <B
+CLASS="GUILABEL"
+>Interface</B
+> is set to <B
+CLASS="GUILABEL"
+>FastCGI (Remote - TCP/IP Sockets)</B
+>).
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-INTERFACE-4PANE-PORT"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Port</B
+>: The number of the port the interpreter's FastCGI server is listening on (available only if <B
+CLASS="GUILABEL"
+>Interface</B
+> is set to <B
+CLASS="GUILABEL"
+>FastCGI (Remote - TCP/IP Sockets)</B
+>).
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-CHECKEXISTS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Check for file existence before execution</B
+>: If enabled, the server will report an error when the script file requested is not physically available on the disk. If this option is disabled, the server will launch the interpreter associated with the requested script without even if its file does not exist on the disk. It is then up to the interpreter to report an error or to act accordingly.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-TYPE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Type</B
+>: Some interpreters are not fully conforming to the FastCGI/CGI or the ISAPI specifications. By setting this parameter to the correct value, the server activates a special <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>workaround</I
+></SPAN
+> mode to support them. PHP interpreters (both FastCGI/CGI and ISAPI version) and Shorthand ISAPI should have their <B
+CLASS="GUILABEL"
+>Type</B
+> set to <B
+CLASS="GUILABEL"
+>PHP Style</B
+>. ActiveState ActivePerl ISAPI should have its <B
+CLASS="GUILABEL"
+>Type</B
+> set to <B
+CLASS="GUILABEL"
+>ActivePerl ISAPI</B
+>. For any other interpreter, set <B
+CLASS="GUILABEL"
+>Type</B
+> to <B
+CLASS="GUILABEL"
+>Standard</B
+>.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-EXTENSIONS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Associated Extensions</B
+>: The list of file name extensions that are to be handled by the current interpreter. You can also define an extension pattern. Refer to the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns. To associate more than a single extension with an interpreter, press <B
+CLASS="GUILABEL"
+>Add...</B
+> for every extension to declare it.
+							</P
+></LI
+></UL
+>
+					</P
+><P
+><A
+NAME="HOSTS-SCRIPTING-INTERPRETERS-UPDATEPATHS"
+></A
+>
+							When adding or editing an interpreter, letting <B
+CLASS="GUILABEL"
+>Use the associated extensions to automatically update the Script Paths</B
+> checked
+							makes Abyss Web Server automatically add/remove the pattern <KBD
+CLASS="USERINPUT"
+>/*.ext</KBD
+> in the <B
+CLASS="GUILABEL"
+>Script Paths</B
+> table
+							for every added/removed extension <KBD
+CLASS="USERINPUT"
+>ext</KBD
+> in the <B
+CLASS="GUILABEL"
+>Associated Extensions</B
+> list.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-PATHS"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Script Paths</B
+>: Only files that are in one of the <B
+CLASS="GUILABEL"
+>Script Paths</B
+> or their subpaths, or that
+						match with one of the <B
+CLASS="GUILABEL"
+>Script Paths</B
+> patterns can be processed as scripts. These paths are virtual paths. See the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns. An executable located in each path or its subpaths is considered as CGI or FastCGI applications according to the setting of <B
+CLASS="GUILABEL"
+>Interface type of executables in this path</B
+> of the corresponding script path. If <B
+CLASS="GUILABEL"
+>X-SendFile Support</B
+> is enabled, scripts or executables can emit an <KBD
+CLASS="USERINPUT"
+>X-Sendfile</KBD
+> CGI header which value will be used to serve a static file relative to the <B
+CLASS="GUILABEL"
+>Files Root Path</B
+>. For more details about that feature, refer to the "<A
+HREF="xsendfile.html"
+>X-Sendfile Support</A
+>" section. It is also possible to enable or disable bufering the output of scripts or executables in that path by setting the value of <B
+CLASS="GUILABEL"
+>Output Buffer Size</B
+>.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-SCRIPTING-ENVIRONMENT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Custom Environment Variables</B
+>: This table contains the variables you want to add
+						to the execution environment of the FastCGI/CGI interpreters and scripts. Each variable is defined by its name and its value.
+					</P
+></LI
+></UL
+>
+			</P
+><P
+>                                For more information about scripts, see "<A
+HREF="scripting.html"
+>CGI, FastCGI, and ISAPI</A
+>" chapter.
+                        </P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-AC"
+>Access Control</A
+></H2
+><P
+>				To restrict and manage the access to paths in your web site, select <B
+CLASS="GUILABEL"
+>Access Control</B
+> in the host configuration.
+			</P
+><P
+>				To edit, remove or add path access rules, use the displayed table.
+			</P
+><P
+><A
+NAME="HOSTS-AC-RULES"
+></A
+>
+                                The path access edition dialog contains the following fields:
+                                <UL
+><LI
+><P
+><A
+NAME="HOSTS-AC-RULES-PATH"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Virtual Path</B
+>: The virtual path which contents' access is to be restricted. It must always begin with a slash <KBD
+CLASS="USERINPUT"
+>/</KBD
+>.
+						This field accepts also path patterns. In that case, the access rule applies to any virtual path that matches with the specified pattern.
+						Refer to the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-AC-RULES-REALM"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Realm</B
+>: A short description of the path's contents. It is prompted to users by the browser when it asks them for credentials.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-AC-RULES-ORDER"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Order</B
+>: The order that the server follows to check if access is granted to a user.
+                                                If it is set to <B
+CLASS="GUILABEL"
+>Allow/Deny</B
+>, access is denied by default and is allowed only if the
+                                                user is in the <B
+CLASS="GUILABEL"
+>Allow for</B
+> list and is not in the
+                                                <B
+CLASS="GUILABEL"
+>Deny for</B
+> list.
+                                                If it is set to <B
+CLASS="GUILABEL"
+>Deny/Allow</B
+>, access is allowed by default and is denied only if the
+                                                user is in the <B
+CLASS="GUILABEL"
+>Deny for</B
+> list and is not in the
+                                                <B
+CLASS="GUILABEL"
+>Allow for</B
+> list.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-AC-RULES-ALLOW"
+></A
+>
+                                                <B
+CLASS="GUILABEL"
+>Allow for</B
+>: The list of users and groups for whom access is allowed.
+                                        </P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-AC-RULES-DENY"
+></A
+>
+                                                <B
+CLASS="GUILABEL"
+>Deny for</B
+>: The list of users and groups for whom access is denied.
+                                        </P
+></LI
+></UL
+>
+                        </P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>                                        If <B
+CLASS="GUILABEL"
+>Deny for</B
+> list is empty and the order is <B
+CLASS="GUILABEL"
+>Deny/Allow</B
+>, access is
+                                        granted to all declared users and groups.
+                                </P
+></BLOCKQUOTE
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-IPCONTROL"
+>IP Address Control</A
+></H2
+><P
+>				To restrict and manage the access to paths in your web site, select <B
+CLASS="GUILABEL"
+>IP Address Control</B
+> in the host configuration.
+			</P
+><P
+>				To edit, remove or add path IP Address Control rules, use the displayed table.
+			</P
+><P
+><A
+NAME="HOSTS-IPCONTROL-RULES"
+></A
+>
+				The IP address control rule edition dialog contains the following fields:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-IPCONTROL-RULES-VPATH"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Virtual Path</B
+>: The virtual path which contents' access is to be restricted. It must always begin with a slash <KBD
+CLASS="USERINPUT"
+>/</KBD
+>.
+						This field accepts also path patterns. In that case, the access rule applies to any virtual path that matches with the specified pattern.
+						Refer to the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-IPCONTROL-RULES-ORDER"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Order</B
+>: The order that the server follows to check if access is granted to a client according to its IP address.
+                                                If it is set to <B
+CLASS="GUILABEL"
+>Allow/Deny</B
+>, access is denied by default and is allowed only if the
+                                                client IP address is in the <B
+CLASS="GUILABEL"
+>Allowed IP Addresses</B
+> list and is not in the
+                                                <B
+CLASS="GUILABEL"
+>Denied IP Addresses</B
+> list.
+                                                If it is set to <B
+CLASS="GUILABEL"
+>Deny/Allow</B
+>, access is allowed by default and is denied only if the
+                                                client IP address is in the <B
+CLASS="GUILABEL"
+>Denied IP Addresses</B
+> list and is not in the
+                                                <B
+CLASS="GUILABEL"
+>Allowed IP Addresses</B
+> list.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-IPCONTROL-RULES-ALLOW"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Allowed IP Addresses</B
+>: The list of IP addresses or IP address ranges for which access is allowed. Refer to "<A
+HREF="ipformat.html"
+>IP Addresses and Ranges Format</A
+>" appendix for more information about the IP addresses and ranges.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-IPCONTROL-RULES-DENY"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Denied IP Addresses</B
+>: The list of IP addresses or IP address ranges for which access is denied. Refer to "<A
+HREF="ipformat.html"
+>IP Addresses and Ranges Format</A
+>" appendix for more information about the IP addresses and ranges.
+					</P
+></LI
+></UL
+>
+			</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>					If <B
+CLASS="GUILABEL"
+>Denied IP Addresses</B
+> list is empty and the order is <B
+CLASS="GUILABEL"
+>Deny/Allow</B
+>, access is granted to any client.
+                </P
+></BLOCKQUOTE
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-URLREWRITE"
+>URL Rewriting</A
+></H2
+><P
+>				To automatically redirect certain requests or rewrite their URL, select <B
+CLASS="GUILABEL"
+>URL Rewriting</B
+> in the host configuration menu.
+			</P
+><P
+>				This dialog includes the following elements:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-RULES"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>URL Rewriting Rules</B
+>: Use this table to edit, remove or add URL rewriting rules. The URL rewriting rule definition dialog contains the following items:
+                                                                        
+                        
+						
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-RULES-ENABLED"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Enabled Rule</B
+>: Enable/disable the current URL rewriting rule.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-RULES-TYPE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Type</B
+>: The rule can be <B
+CLASS="GUILABEL"
+>Global</B
+> or <B
+CLASS="GUILABEL"
+>Relative</B
+> (the paths will be defined relatively to a base path defined in the <B
+CLASS="GUILABEL"
+>Base Virtual Path</B
+>.)
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-RULES-PATTERN"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Virtual Path Regular Expression</B
+>: If <B
+CLASS="GUILABEL"
+>Type</B
+> is set to <B
+CLASS="GUILABEL"
+>Global</B
+>, the current URL rewriting rule will be examined for virtual paths which match with this regular expression. But if <B
+CLASS="GUILABEL"
+>Type</B
+> is set to <B
+CLASS="GUILABEL"
+>Relative</B
+>, the URL rewriting rule will only be applied for virtual paths which head equals <B
+CLASS="GUILABEL"
+>Base Virtual Path</B
+> and which tail matches with this regular expression.
+								For more information about regular expressions syntax, see the "<A
+HREF="regex.html"
+>Regular Expressions</A
+>" appendix.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-RULES-CASESENSITIVE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Case Sensitive</B
+>: The above regular expression is matched case sensitively if this option is checked. Otherwise, no difference between lower and upper cases is made while matching.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-RULES-CONDITIONS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Conditions</B
+>: If all the conditions in this table are verified (are true), the URL rewriting rule will apply.
+								Otherwise, it is skipped and ignored. Each condition consists in a test of the value of a CGI variable of the current
+								request with an operator and possibly an operand. Three kinds of operators are available: string operators (regular expression matching,
+								and lexicographical ordering), numerical operators (numerical ordering), and file operators (is a file, is a directory,
+								is not a file or is empty).
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-RULES-SUBREQUESTS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Apply to subrequests too</B
+>: If checked, the rule is tested on subrequests too. Subrequests are requests that are internally generated by the server and not directly invoked by a client. For instance, XSSI include directives generate subrequests.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-RULES-REDIRECT"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>If the rule matches</B
+>: The action to perform when the virtual path matches with the regular
+								expression and when all the conditions are verified:
+								
+								<UL
+><LI
+><P
+><B
+CLASS="GUILABEL"
+>Perform an internal redirection</B
+>: The server will continue the processing of the request
+									as if the requested virtual path was the one that is specified in <B
+CLASS="GUILABEL"
+>Redirect to</B
+>. That virtual path could
+									contain backreferences to the groups of the regular expression specified in <B
+CLASS="GUILABEL"
+>Virtual Path Regular Expression</B
+>. Occurrences of
+									<KBD
+CLASS="USERINPUT"
+>$1</KBD
+> are substituted with the backreference of the first group (if any), occurrences of
+									<KBD
+CLASS="USERINPUT"
+>$2</KBD
+> are substituted with the backreference of the second group (if any), and so on. Occurrences of
+									<KBD
+CLASS="USERINPUT"
+>%1</KBD
+>, <KBD
+CLASS="USERINPUT"
+>%2</KBD
+>, ..., <KBD
+CLASS="USERINPUT"
+>%9</KBD
+> are substituted with the backreferences of the groups (if any) of the last evaluated condition. For more information about backreferences, refer to the "<A
+HREF="regex.html"
+>Regular Expressions</A
+>" appendix. Occurrences of
+									<KBD
+CLASS="USERINPUT"
+>%{VARIABLE}</KBD
+> are substituted with the value of the CGI variable <KBD
+CLASS="USERINPUT"
+>VARIABLE</KBD
+> (see "<A
+HREF="cgivars.html"
+>CGI environment variables</A
+>" in the "<A
+HREF="scripting.html"
+>CGI, FastCGI, and ISAPI</A
+>" chapter.) 
+									
+									You also decide with <B
+CLASS="GUILABEL"
+>Next Action</B
+> if URL rewriting has to be stopped, restarted, or continued after the application of the current URL rewriting rule.
+																		
+									</P
+></LI
+><LI
+><P
+><B
+CLASS="GUILABEL"
+>Perform an external redirection</B
+>: The server will redirect the client to the URL or the virtual path set in <B
+CLASS="GUILABEL"
+>Redirect to</B
+>.
+									That URL or virtual path could
+									contain backreferences to the groups of the regular expression specified in <B
+CLASS="GUILABEL"
+>Virtual Path Regular Expression</B
+>.
+									For more information about backreferences, refer to the "<A
+HREF="regex.html"
+>Regular Expressions</A
+>" appendix.
+									By default, the external redirection results in a HTTP response with a 302 status code but you can choose a more appropriate
+									one by setting <B
+CLASS="GUILABEL"
+>Status Code</B
+> to another value between 300 and 399.
+									</P
+></LI
+><LI
+><P
+><B
+CLASS="GUILABEL"
+>Report an error to the client</B
+>: The server will report an error to the client.
+									The <B
+CLASS="GUILABEL"
+>Status Code</B
+> of that error must be in the 400-999 range.
+									</P
+></LI
+><LI
+><P
+><B
+CLASS="GUILABEL"
+>Abort connection</B
+>: The server will abruptly abort the connection with the client without further processing. This action is not recommended as it breaks the HTTP protocol. It should only be used in a few special situations inside a set of rules aimed at banning bandwidth consuming bots or automated clients.
+									</P
+></LI
+></UL
+>
+								
+								</P
+><P
+>When a <B
+CLASS="GUILABEL"
+>Redirect To</B
+> field is available, the checkbox <B
+CLASS="GUILABEL"
+>Append Query String</B
+> is used to control the automatic addition of the original query string to the final redirected URL or virtual path. The original query string is the substring after the <KBD
+CLASS="USERINPUT"
+>?</KBD
+> character in the original request URL. If <B
+CLASS="GUILABEL"
+>Redirect To</B
+> already contains a query string and if the original URL's query string is not empty, both are concatenated in the final URL or virtual path that the request will be redirected to.
+								</P
+><P
+>The <B
+CLASS="GUILABEL"
+>Escape Redirection Location</B
+> option should be unchecked only when the <B
+CLASS="GUILABEL"
+>Redirect To</B
+> field contains a location which is already URL escaped.
+								</P
+><P
+>								Note that if <B
+CLASS="GUILABEL"
+>Type</B
+> is set to <B
+CLASS="GUILABEL"
+>Relative</B
+> and the virtual path resulting from the processing of <B
+CLASS="GUILABEL"
+>Redirect to</B
+> is relative (which means that it does not begin with <KBD
+CLASS="USERINPUT"
+>/</KBD
+>), the value of <B
+CLASS="GUILABEL"
+>Base Virtual Path</B
+> is prepended to it.
+								</P
+></LI
+></UL
+>
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-ADVANCED"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Advanced Parameters</B
+>: Press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to access the advanced parameters dialog which contains the following elements:
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-ADVANCED-DEBUGFILE"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Log File</B
+>: The path of the file where the Abyss Web Server will log extensive debugging information about the processing of each request by the URL rewriting engine. The size of that file can become very huge very quickly as each request results in several dozen lines of logged debugging information. For that reason, it is recommended to turn it off on production servers.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-URLREWRITE-ADVANCED-LOGVARS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Log variables</B
+>: If checked, the CGI variables of each request are logged along with the URL rewriting processing details.
+							</P
+></LI
+></UL
+>
+					</P
+></LI
+></UL
+>
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-COMPRESS"
+>Compression</A
+></H2
+><P
+>				Compression is performed on any content (be it static or dynamically generated) provided that all the following conditions are satisfied:
+				<UL
+><LI
+><P
+>The browser requesting the content claims support for HTTP decompression by including an <KBD
+CLASS="USERINPUT"
+>Accept-Encoding</KBD
+> header in the HTTP request;</P
+></LI
+><LI
+><P
+>The virtual path of the content belongs to the compression <A
+HREF="hosts-configuration.html#HOSTS-COMPRESS-SCOPE"
+>scope</A
+>;</P
+></LI
+><LI
+><P
+>The MIME type of the content  matches with one of the MIME types listed in the <A
+HREF="hosts-configuration.html#HOSTS-COMPRESS-MIMES"
+>MIME Types</A
+> table.</P
+></LI
+></UL
+>
+			</P
+><P
+>				If one or more of the above conditions is not met, the current content is sent back to the browser uncompressed.
+			</P
+><P
+>				The <B
+CLASS="GUILABEL"
+>Compression</B
+> dialog contains the following elements:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-COMPRESS-LEVEL"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Level</B
+>: The compression level. It ranges from 1 (Minimum compression - Faster) to 9 (Maximum compression - Slower). If it is set to 0, compression is disabled.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-COMPRESS-SCOPE"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Scope</B
+>: Press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to configure the virtual paths where compression is considered. The displayed dialog has the following items:
+							<UL
+><LI
+><P
+><A
+NAME="HOSTS-COMPRESS-SCOPE-ORDER"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Order</B
+>: The order that the server follows to check if compression is considered for a virtual path.
+									If it is set to <B
+CLASS="GUILABEL"
+>Allow/Deny</B
+>, compression is denied by default and is allowed only if the
+									virtual path is in the <B
+CLASS="GUILABEL"
+>Allow for</B
+> list and is not in the
+									<B
+CLASS="GUILABEL"
+>Deny for</B
+> list.
+									If it is set to <B
+CLASS="GUILABEL"
+>Deny/Allow</B
+>, compression is allowed by default and is denied only if the
+									virtual path is in the <B
+CLASS="GUILABEL"
+>Deny for</B
+> list and is not in the
+									<B
+CLASS="GUILABEL"
+>Allow for</B
+> list.
+								</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-COMPRESS-SCOPE-ALLOW"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Allow for</B
+>: The list of virtual paths for which compression is allowed. The table can contain also path patterns. See the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+								</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-COMPRESS-SCOPE-DENY"
+></A
+>
+									<B
+CLASS="GUILABEL"
+>Deny for</B
+>:  The list of virtual paths for which compression is denied. The table can contain also path patterns. See the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+								</P
+></LI
+></UL
+>				
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-COMPRESS-ERRORPAGES"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Compress Error Pages</B
+>: Enable/Disable compression of responses which status codes correspond to an error.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-COMPRESS-MIMES"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>MIME Types</B
+>: Compression is considered for contents which MIME types are equal or match with the listed MIME type patterns in this table. See the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+					</P
+></LI
+></UL
+>
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-THROTTLE"
+>Bandwidth Limits</A
+></H2
+><P
+>				With Abyss Web Server, you can have fine control on the bandwidth every host uses. You can even control the bandwidth allowed for a particular file or script, or for the contents of a directory.				
+			</P
+><P
+>				The <B
+CLASS="GUILABEL"
+>Bandwidth Limits</B
+> dialog has the following fields:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-THROTTLE-ENABLED"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Enable Bandwidth Throttling</B
+>: Enable/Disable bandwidth throttling for the current host.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-THROTTLE-RULES"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Limits</B
+>: This table contains the bandwidth limits that are configured for this host.
+					</P
+><P
+>						Each limit is defined by its:
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-THROTTLE-RULES-PATHS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Scope</B
+>: This table contains the virtual paths for which this bandwidth limit applies.
+								A virtual path must begin with a slash <KBD
+CLASS="USERINPUT"
+>/</KBD
+>. It can also be a path patterns. In such a case, the limit applies for any virtual path
+								that matches with the specified pattern.
+								Refer to the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-THROTTLE-RULES-MAXSPEED"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Maximum Bandwidth</B
+>: The amount of output bandwidth that the host should not exceed for all the requests which virtual path matches with one of paths listed in the <B
+CLASS="GUILABEL"
+>Scope</B
+> table.
+								If set to <B
+CLASS="GUILABEL"
+>Unlimited</B
+>, no such bandwidth restriction will apply.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-THROTTLE-RULES-MAXSPEEDPERIP"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Maximum Bandwidth Per IP Address</B
+>: The total amount of output bandwidth that the host should not exceed for all the requests  made by a single IP address and which virtual path matches with one of paths listed in the <B
+CLASS="GUILABEL"
+>Scope</B
+> table.
+								If this parameter is set to <KBD
+CLASS="USERINPUT"
+>Unlimited</KBD
+>, no limit will be applied.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-THROTTLE-RULES-MAXCONNECTIONSPERIP"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Maximum Connections Per IP Address</B
+>: The maximum number of simultaneous requests made by a single IP address to the host and which virtual path matches with one of paths listed in the <B
+CLASS="GUILABEL"
+>Scope</B
+> table.
+								No limit will ever be applied if this parameter is set to <KBD
+CLASS="USERINPUT"
+>Unlimited</KBD
+>.
+							</P
+></LI
+></UL
+>
+					</P
+></LI
+></UL
+>
+			</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>					To set a limitation on the bandwidth of the whole host, add a bandwidth limit with <KBD
+CLASS="USERINPUT"
+>/</KBD
+> as its scope.
+				</P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>					If the virtual path of a request matches with more than a single bandwidth limit, Abyss Web Server will respect all of them.
+				</P
+></BLOCKQUOTE
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-LOG"
+>Logging</A
+></H2
+><P
+>				Select <B
+CLASS="GUILABEL"
+>Logging</B
+> in the host configuration menu to display the <B
+CLASS="GUILABEL"
+>Logging</B
+> options.
+			</P
+><P
+>				The dialog contains the following fields:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-LOG-FILE"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Log File</B
+>: The path of the log file. If it is relative, it is considered as a subpath of
+						the server root. If empty, logging is disabled.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-LOG-ROTATION"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Log Rotation</B
+>: To prevent the log file from growing indefinitely, press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to configure the way it is rotated:
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-LOG-ROTATION-TYPE"
+></A
+>No rotation is performed if <B
+CLASS="GUILABEL"
+>Type</B
+> is set to <B
+CLASS="GUILABEL"
+>Disabled</B
+>. 
+							</P
+></LI
+><LI
+><P
+>Rotation can occur when the size of the log file reaches a certain threshold set in <B
+CLASS="GUILABEL"
+>Maximum Log Size Before Rotation</B
+>. The rotated files are then stored in the directory set in <B
+CLASS="GUILABEL"
+>Rotated Files Path</B
+>. Rotated file names are made of the concatenation of the value in <B
+CLASS="GUILABEL"
+>Rotated File Names Prefix</B
+> and an ordinal number. The last rotated file has number 0. The previous one has number 1, the so forth.The maximum number of preserved rotated files is set in <B
+CLASS="GUILABEL"
+>Maximum Number of Retained Rotated Files </B
+>.
+							</P
+></LI
+><LI
+><P
+>Rotation is time based when <B
+CLASS="GUILABEL"
+>Type</B
+> is set to <B
+CLASS="GUILABEL"
+>By Time</B
+>. Use  <B
+CLASS="GUILABEL"
+>Rotation Frequency</B
+> to set when rotation should occur. If <B
+CLASS="GUILABEL"
+>Use Local Time</B
+> is unchecked, the clock is converted to UTC/GMT to determine if a period of time relative to the frequency lapsed and rotation has to happen or not. The rotated files are then stored in the directory set in <B
+CLASS="GUILABEL"
+>Rotated Files Path</B
+>. Rotated file names are made of the concatenation of the value in <B
+CLASS="GUILABEL"
+>Rotated File Names Prefix</B
+> and a time reference which depends on the value of <B
+CLASS="GUILABEL"
+>Rotation Frequency</B
+>. For example, if rotation is on yearly basis, the time reference is the year only <KBD
+CLASS="USERINPUT"
+>YYYY</KBD
+>. If the rotation is on a hourly basis, the time reference is of the form <KBD
+CLASS="USERINPUT"
+>HH-DD-MM-YYYY</KBD
+>.
+							</P
+></LI
+></UL
+>		
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-LOG-FORMAT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Logging Format</B
+>: This parameter sets the format to be used in the log file for the current host. It offers the choice between the standard formats <B
+CLASS="GUILABEL"
+>Common Log Format</B
+> or the <B
+CLASS="GUILABEL"
+>Combined Log Format</B
+>, and the custom logging formats defined under the <B
+CLASS="GUILABEL"
+>Logging Parameter</B
+> dialog in <B
+CLASS="GUILABEL"
+>Server Configuration</B
+>.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-LOG-DENIEDPATHS"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Do not Log Requests for</B
+>: This table contains the virtual paths for which logging is disabled. A virtual path must begin with a slash <KBD
+CLASS="USERINPUT"
+>/</KBD
+>. It can also be a path patterns. In such a case, the logging is disabled for any virtual path that matches with the specified pattern.
+						Refer to the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-LOG-DENIEDIPS"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Do not Log Requests from</B
+>: This table contains the IP addresses or IP address ranges for which logging is disabled. Refer to "<A
+HREF="ipformat.html"
+>IP Addresses and Ranges Format</A
+>" appendix for more information about the IP addresses and ranges.
+					</P
+></LI
+></UL
+>
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-REVPROXY"
+>Reverse Proxy</A
+></H2
+><P
+>				Abyss Web Server can act as a reverse proxy to provide content transparently from another Web server behind it (commonly called a back-end server.) The proxied server can be another Web server or an application server with a restricted or even a trivial HTTP support that has to be shielded from external clients. Reverse proxying is also the recommended way to take advantage of JSP (Java Servlet Pages) and Tomcat Web applications. Abyss Web Server automatically selects the best version of the HTTP protocol when communicating with a back-end server. It is also able to keep-alive connections with HTTP/1.1 back-end servers and sharing pools of connections between several requests and hosts.
+			</P
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES"
+></A
+>
+				Select <B
+CLASS="GUILABEL"
+>Reverse Proxy</B
+> in the host configuration menu to display a dialog containing the <B
+CLASS="GUILABEL"
+>Reverse Proxy Rules</B
+> table. Use that table to to edit, remove or add reverse proxy mapping rules rewriting rules.
+			</P
+><P
+>				Each reverse proxy mapping rule is defined by the following parameters:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-LOCALPATH"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Local Virtual Path</B
+>: The local virtual path on the current host which contents will be mapped to the remote virtual path on the reverse proxy.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-REMOTEIP"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Remote IP Address</B
+>: The IP address of the back-end server.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-REMOTEPORT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Remote Port</B
+>: The port on which the Web server is listening on the back-end server.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-REMOTEPATH"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Remote Virtual Path</B
+>
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-ADVANCED"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Advanced Parameters</B
+>: Press <B
+CLASS="GUILABEL"
+>Edit...</B
+> to access the advanced parameters dialog. This dialog exposes the following fields:
+						
+						<UL
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-ADVANCED-FIXCOOKIES"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Fix URLs in Cookies</B
+>: If checked, HTTP Cookies received from the back-end are rewritten to appear as if they were originated from the current host.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-ADVANCED-FIXLOCATIONS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Fix URLs in Location Response Headers</B
+>: If checked, the <KBD
+CLASS="USERINPUT"
+>Location</KBD
+>, <KBD
+CLASS="USERINPUT"
+>Content-Location</KBD
+>, and <KBD
+CLASS="USERINPUT"
+>URI</KBD
+> HTTP headers received from the back-end are rewritten to appear as if they were originated from the current host.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-ADVANCED-EXTRAHEADERS"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Extra Request Headers</B
+>: The HTTP headers defined in this table are added to each request targeting the the back-end.
+							</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-ADVANCED-TIMEOUT"
+></A
+>
+								<B
+CLASS="GUILABEL"
+>Timeout</B
+>: The timeout value in seconds is used to determine how long to wait for an inactive connection to the back-end before closing it.
+							</P
+></LI
+></UL
+>
+					</P
+></LI
+></UL
+>								
+			</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN1970"
+></A
+><P
+><B
+>Example 5-4. An example of a reverse proxy rule</B
+></P
+><P
+>					Let's assume that the current host includes a reverse proxy rule defined with the following parameters:
+					<UL
+><LI
+><P
+>							<B
+CLASS="GUILABEL"
+>Local Virtual Path</B
+>: <KBD
+CLASS="USERINPUT"
+>/app/photo</KBD
+>
+						</P
+></LI
+><LI
+><P
+>							<B
+CLASS="GUILABEL"
+>Remote IP Address</B
+>: <KBD
+CLASS="USERINPUT"
+>192.168.1.233</KBD
+>
+						</P
+></LI
+><LI
+><P
+>							<B
+CLASS="GUILABEL"
+>Remote Port</B
+>: <KBD
+CLASS="USERINPUT"
+>8080</KBD
+>
+						</P
+></LI
+><LI
+><P
+>							<B
+CLASS="GUILABEL"
+>Remote Virtual Path</B
+>: <KBD
+CLASS="USERINPUT"
+>/txp</KBD
+>
+						</P
+></LI
+></UL
+>
+					If a client makes a request to the virtual path <KBD
+CLASS="USERINPUT"
+>/app/photo/abc/test.py</KBD
+> on the current host, the local Web server will forward the request to the URL <KBD
+CLASS="USERINPUT"
+>http://192.168.1.233:8080/txp/abc/test.py</KBD
+>. The retrieved result is sent back to the client.
+				</P
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-RESDNLD"
+>Restricted Downloads Areas</A
+></H2
+><P
+>				To prevent direct access to files contained in some directories, it is possible to create links to them which expire after a certain duration and which may be restricted to a certain IP address. Such links are to be generated using scripts and look like:
+				<PRE
+CLASS="PROGRAMLISTING"
+>   http://www.mysite.com/dir1/dir2/1d0dc35b10df59a45638a78228fdfe4d/5183d1da/file.txt</PRE
+>
+			</P
+><P
+><A
+NAME="HOSTS-RESDNLD-AREAS"
+></A
+>
+				To configure virtual paths associated with such a behavior, select <B
+CLASS="GUILABEL"
+>Restricted Downloads Areas</B
+> in the host configuration menu. Each restricted downloads area is defined by the following parameters:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-RESDNLD-AREAS-VIRTUAL"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Virtual Path</B
+>: The virtual path associated with the restricted downloads area. This virtual path will be prepended to all URLs referring to that area.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-AREAS-REAL"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Files Root Path</B
+>: The real directory which contains the files that are served from that area.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-AREAS-SECRET"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Secret String</B
+>: The secret string which is used to compute the hash included in the URL.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-AREAS-TIMEOUT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Timeout</B
+>: The maximum duration of validity of URLs referring to files in that area  (in seconds.)
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-REVPROXY-RULES-BYIPLIMIT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Limit To Originating IP</B
+>: If checked, the hash should be generated including the originating IP address and validity of URLs in that area takes into account that information.
+					</P
+></LI
+></UL
+>								
+			</P
+><P
+>				An URL referring to a restricted download area is of the form: <KBD
+CLASS="USERINPUT"
+>http://&#60;your host name&#62;:&#60;host port&#62;/vpath/hash/hextimestamp/file.ext</KBD
+>:
+				<UL
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>/vpath</KBD
+> is the virtual path associated with the area.
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>hextimestamp</KBD
+> is the hexadecimal representation of the number of seconds since January 1st, 1970 GMT. The timestamp is used to determine if the link is still valid based on the <B
+CLASS="GUILABEL"
+>Timeout</B
+> value.
+					</P
+></LI
+><LI
+><P
+>						<B
+CLASS="GUILABEL"
+>file.ext</B
+> is the path of the file inside the <B
+CLASS="GUILABEL"
+>Files Root Path</B
+>.
+					</P
+></LI
+><LI
+><P
+>						<KBD
+CLASS="USERINPUT"
+>hash</KBD
+> is a hexadecimal string which is the value of <KBD
+CLASS="USERINPUT"
+>MD5(secret + "/file.ext" + hextimestamp)</KBD
+> if <B
+CLASS="GUILABEL"
+>Limit To Originating IP</B
+> is unchecked. Otherwise, it is the value of <KBD
+CLASS="USERINPUT"
+>MD5(secret + "/file.ext" + hextimestamp + ip)</KBD
+> where <KBD
+CLASS="USERINPUT"
+>ip</KBD
+> is the IP of the client.
+					</P
+></LI
+></UL
+>
+				
+			</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN2041"
+></A
+><P
+><B
+>Example 5-5. Script to generate a restricted download URL (PHP version)</B
+></P
+><PRE
+CLASS="PROGRAMLISTING"
+>   &#60;HTML&#62;
+     &#60;HEAD&#62;
+       &#60;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"&#62;
+       &#60;TITLE&#62;
+           Test
+       &#60;/TITLE&#62;
+     &#60;/HEAD&#62;
+   
+     &#60;BODY&#62;
+   
+   	&#60;?php
+   
+   		$secret_string = "secret string";
+   		$virtual_path = "/downloads/";
+   		$limit_by_ip = false;
+   		$hex_timestamp = dechex(time());
+   		$file_name = "/file_to_protect.txt";
+   
+   		if ($limit_by_ip) {
+   			$t = $secret_string . $file_name . $hex_timestamp . $_SERVER['REMOTE_ADDR'];
+   		}
+   		else {
+   			$t = $secret_string . $file_name . $hex_timestamp;
+   		}
+   
+   		$hash = md5($t);
+   		$url = $virtual_path . $hash . "/" . $hex_timestamp . $file_name;
+   
+   		echo "&#60;TR&#62;&#60;TD&#62;&#60;A HREF=\"$url\"&#62;Click here to download the file&#60;/A&#62;";
+   	?&#62;
+   
+      &#60;/BODY&#62;
+   &#60;/HTML&#62;</PRE
+></DIV
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN2044"
+></A
+><P
+><B
+>Example 5-6. Script to generate a restricted download URL (Python version)</B
+></P
+><PRE
+CLASS="PROGRAMLISTING"
+>   import os, time, hashlib
+   
+   secret_string = "secret string"
+   virtual_path = "/downloads/"
+   limit_by_ip = False
+   hex_timestamp = "{0:x}".format(int(time.time()))
+   file_name = "/file_to_protect.txt"
+   
+   if limit_by_ip:
+     t = secret_string + file_name + hex_timestamp + os.environ["REMOTE_ADDR"]
+   else:
+     t = secret_string + file_name + hex_timestamp
+   
+   hash = hashlib.md5(t).hexdigest()
+   url = virtual_path + hash + "/" + hex_timestamp + file_name
+   
+   # Output CGI headers
+   print "Content-Type : text/html"
+   print
+   
+   # Output body
+   print '&#60;HTML&#62;&#60;BODY&#62;&#60;A SRC="%s"&#62;Click here to download the file&#60;/A&#62;&#60;/BODY&#62;&#60;/HTML&#62;' % url</PRE
+></DIV
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-ANTILEECH"
+>Anti-Leeching</A
+></H2
+><P
+>				<B
+CLASS="GUILABEL"
+>Anti-Leeching</B
+> is a system that prevents web pages not belonging to your host from referring or linking to materials available in your web site. <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Leeching</I
+></SPAN
+> is also known as <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>cross-site linking</I
+></SPAN
+>. 
+			</P
+><P
+>				When a request is sent to the host, and if its virtual path is in the configured <B
+CLASS="GUILABEL"
+>Anti-Leeching Scope</B
+>, the server checks if the <KBD
+CLASS="USERINPUT"
+>Referer</KBD
+> header in the request matches with the current host or with one of the host names or the patterns in the <B
+CLASS="GUILABEL"
+>Allow Links from</B
+> table. The <KBD
+CLASS="USERINPUT"
+>Referer</KBD
+> header is usually set by the browser to indicate to the server from which web page the current URL was requested (or linked to.) If it does not match, the request is considered as a leeching attempt and is redirected to the URL configured in the <B
+CLASS="GUILABEL"
+>Redirect Leechers to URL</B
+> parameter.
+			</P
+><P
+>				The dialog contains the following fields:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-ANTILEECH-PATHS"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Anti-Leeching Scope</B
+>: Any request which virtual path is in or matches with one of listed virtual paths in this table is protected against leeching.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ANTILEECH-REDIRECT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Redirect Leechers to URL</B
+>: A request that is considered as a leeching request is redirected to this URL. It can be a full URL referencing another web site or a virtual path pointing on a document in the current host. If this field is empty, the server returns error 403 to the client.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ANTILEECH-STRICT"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Refuse Requests with no "Referer" Header</B
+>: If checked, the system adopts a strict behavior and will consider requests that do not contain a <KBD
+CLASS="USERINPUT"
+>Referer</KBD
+> header as anti-leeching requests. It is not recommended to check this parameter since it may prevent browsers configured to not send the <KBD
+CLASS="USERINPUT"
+>Referer</KBD
+> header from viewing documents in your host.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-ANTILEECH-ALLOWED"
+></A
+>
+						<B
+CLASS="GUILABEL"
+>Allow Links from</B
+>: This table contains the names of hosts that are allowed to link to files and materials in the current host and that are not monitored against leeching. A host name in this table can also be a pattern such as <KBD
+CLASS="USERINPUT"
+>*.mysite.com</KBD
+>. Refer to the "<A
+HREF="patternsformat.html"
+>Patterns Format</A
+>" appendix for more information about patterns.
+					</P
+></LI
+></UL
+>
+			</P
+></SECTION
+><SECTION
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOSTS-STATS"
+>Statistics</A
+></H2
+><P
+>				The <B
+CLASS="GUILABEL"
+>Statistics</B
+> dialog displays a set of statistics on the host's activity since the server installation or the last host statistics reset:
+				<UL
+><LI
+><P
+><A
+NAME="HOSTS-STATS-UPTIME"
+></A
+>
+						<B
+CLASS="GUIBUTTON"
+>Total Uptime</B
+>: The total time during which the host was up.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-STATS-CURRENT-UPTIME"
+></A
+>
+						<B
+CLASS="GUIBUTTON"
+>Uptime since Last Restart</B
+>: The time during which the host was up since the last server start or restart. If the host is stopped, its value is zero.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-STATS-TOTAL"
+></A
+>
+						<B
+CLASS="GUIBUTTON"
+>Total Hits</B
+>: The total number of requests processed by the current host.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOST-STATS-TOTAL-COMPRESSED"
+></A
+><B
+CLASS="GUIBUTTON"
+>Compressed Hits</B
+>: The number of requests processed by the current host that resulted in compressed responses.</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-STATS-ERROR"
+></A
+>
+						<B
+CLASS="GUIBUTTON"
+>Error Hits</B
+>: The number of requests targeting the current host that resulted in an error.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-STATS-HTML"
+></A
+>
+						<B
+CLASS="GUIBUTTON"
+>HTML Hits</B
+>: The number of requests the host replied to by a document which
+						MIME type was <KBD
+CLASS="USERINPUT"
+>text/html</KBD
+>.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-STATS-IMAGE"
+></A
+>
+						<B
+CLASS="GUIBUTTON"
+>Image Hits</B
+>: The number of requests the host replied to by a document which
+						MIME type starts with <KBD
+CLASS="USERINPUT"
+>image/</KBD
+>.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-STATS-NOTMODIFIED"
+></A
+>
+						<B
+CLASS="GUIBUTTON"
+>Not Modified Hits</B
+>: The number of requests for which the host detected that the requested
+						document has not changed.</P
+></LI
+><LI
+><P
+><A
+NAME="HOSTS-STATS-BYTES"
+></A
+>
+						<B
+CLASS="GUIBUTTON"
+>Transferred Data</B
+>: The total size of the payload sent by the current host to the clients.
+					</P
+></LI
+><LI
+><P
+><A
+NAME="HOST-STATS-COMPRESSION-SAVINGS"
+></A
+><B
+CLASS="GUIBUTTON"
+>Compression Savings</B
+>: The amount of data that was saved thanks to the compressed responses sent by the current host to the clients.</P
+></LI
+></UL
+>
+			</P
+><P
+>				The host statistics are refreshed automatically every 10 seconds. You can also press <B
+CLASS="GUIBUTTON"
+>Refresh</B
+>
+				for immediate refreshing. They can be reset by pressing <B
+CLASS="GUIBUTTON"
+>Reset</B
+>.
+			</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>					The statistics are preserved when the server is shut down or when the host is stopped.
+				</P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>					The host statistics are also available in real time to scripts and XSSI pages. Refer to the "<A
+HREF="cgivars.html"
+>CGI environment variables</A
+>" for more information.
+				</P
+></BLOCKQUOTE
+></DIV
+></SECTION
+></SECTION
+><NAV
+CLASS="NAVFOOTER"
+><HR><A
+HREF="index.html"
+ACCESSKEY="H"
+CLASS="home"
+>Home</A
+> <A
+HREF="hosts.html"
+ACCESSKEY="U"
+CLASS="up"
+>Up</A
+><BR><SPAN
+CLASS="prev"
+><A
+HREF="hosts-add.html"
+ACCESSKEY="P"
+>Prev</A
+>Declaring a new host</SPAN
+><BR><SPAN
+CLASS="next"
+><A
+HREF="scripting.html"
+ACCESSKEY="N"
+CLASS="next"
+>Next</A
+>CGI, FastCGI, and ISAPI</SPAN
+><BR></NAV
+><FOOTER
+CLASS="COPYRIGHT"
+><HR>Copyright © 2001-2016 Aprelium</FOOTER
+></BODY
+></HTML
+>
